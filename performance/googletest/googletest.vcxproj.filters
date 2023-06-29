@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\zhang\source\repos\amazon-timestream-odbc-driver\performance\googletest\CMakeFiles\97b953795b397eb6b26336c164a1bd87\googletest-mkdir.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\zhang\source\repos\amazon-timestream-odbc-driver\performance\googletest\CMakeFiles\97b953795b397eb6b26336c164a1bd87\googletest-download.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\zhang\source\repos\amazon-timestream-odbc-driver\performance\googletest\CMakeFiles\97b953795b397eb6b26336c164a1bd87\googletest-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\zhang\source\repos\amazon-timestream-odbc-driver\performance\googletest\CMakeFiles\97b953795b397eb6b26336c164a1bd87\googletest-patch.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\zhang\source\repos\amazon-timestream-odbc-driver\performance\googletest\CMakeFiles\97b953795b397eb6b26336c164a1bd87\googletest-configure.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\zhang\source\repos\amazon-timestream-odbc-driver\performance\googletest\CMakeFiles\97b953795b397eb6b26336c164a1bd87\googletest-build.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\zhang\source\repos\amazon-timestream-odbc-driver\performance\googletest\CMakeFiles\97b953795b397eb6b26336c164a1bd87\googletest-install.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\zhang\source\repos\amazon-timestream-odbc-driver\performance\googletest\CMakeFiles\97b953795b397eb6b26336c164a1bd87\googletest-test.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\zhang\source\repos\amazon-timestream-odbc-driver\performance\googletest\CMakeFiles\99f496c79b02112b988a8402226f69ce\googletest-complete.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\zhang\source\repos\amazon-timestream-odbc-driver\performance\googletest\CMakeFiles\da7c0972e6ae7a7587b0d0e2b8e52111\googletest.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\zhang\source\repos\amazon-timestream-odbc-driver\performance\googletest\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\zhang\source\repos\amazon-timestream-odbc-driver\performance\googletest\CMakeFiles\googletest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{5221DF38-8703-33D1-9D53-A055D7FF2347}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

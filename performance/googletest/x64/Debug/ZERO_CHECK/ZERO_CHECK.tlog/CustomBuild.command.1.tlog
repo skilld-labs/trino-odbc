@@ -1,0 +1,10 @@
+^C:\USERS\ZHANG\SOURCE\REPOS\AMAZON-TIMESTREAM-ODBC-DRIVER\PERFORMANCE\GOOGLETEST\CMAKEFILES\DA7C0972E6AE7A7587B0D0E2B8E52111\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest -BC:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/googletest-download.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

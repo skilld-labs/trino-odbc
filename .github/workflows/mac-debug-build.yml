@@ -1,0 +1,186 @@
+name: ODBC Driver for Mac (Debug)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  CI_OUTPUT_PATH: "ci-output"
+  ODBC_LIB_PATH: "${{github.workspace}}/build/odbc/lib"
+  ODBC_BIN_PATH: "${{github.workspace}}/build/odbc/bin"
+  ODBC_BUILD_PATH: "${{github.workspace}}/build/odbc/build"
+  TIMESTREAM_LOG_PATH: "${{github.workspace}}/build/odbc/logs"
+  TIMESTREAM_LOG_LEVEL: "4"
+  ODBCINSTINI: "${{github.workspace}}/build/odbc/lib/timestream-odbc-install.ini"
+  ODBCINI: "${{github.workspace}}/odbc.ini"
+  BIG_TABLE_PAGINATION_TEST_ENABLE: "TRUE"
+
+  # # AAD Test environment variables. Uncomment out to use GitHub secrets to enable AAD integration tests
+  # ENABLE_AAD_TEST: "TRUE"
+  # AAD_APP_ID: ${{secrets.AAD_APP_ID}}
+  # AAD_ROLE_ARN: ${{secrets.AAD_ROLE_ARN}}
+  # AAD_IDP_ARN: ${{secrets.AAD_IDP_ARN}}
+  # AAD_TENANT: ${{secrets.AAD_TENANT}}
+  # AAD_USER: ${{secrets.AAD_USER}}
+  # AAD_USER_PWD: ${{secrets.AAD_USER_PWD}}
+  # AAD_CLIENT_SECRET: ${{secrets.AAD_CLIENT_SECRET}}
+
+  # # OKTA Test environment variables. Uncomment out to use GitHub secrets to enable AAD integration tests
+  # ENABLE_OKTA_TEST: "TRUE"
+  # OKTA_HOST: ${{secrets.OKTA_HOST}}
+  # OKTA_USER: ${{secrets.OKTA_USER}}
+  # OKTA_USER_PWD: ${{secrets.OKTA_USER_PWD}}
+  # OKTA_APP_ID: ${{secrets.OKTA_APP_ID}}
+  # OKTA_ROLE_ARN: ${{secrets.OKTA_ROLE_ARN}}
+  # OKTA_IDP_ARN: ${{secrets.OKTA_IDP_ARN}}  
+
+jobs:
+  build-mac-debug:
+    runs-on: macos-11
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: run-cppcheck
+      run: |
+        brew install cppcheck
+        sh run_cppcheck.sh
+    - name: upload-cppcheck-results
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: cppcheck-results
+        path: cppcheck-results.log
+
+    - name: get-dependencies
+      run: |
+        brew tap homebrew/services
+        brew unlink unixodbc
+        brew install libiodbc
+        brew link --overwrite --force libiodbc
+        brew install cmake
+        brew install boost
+        pip3 install gcovr
+
+# if action `EnricoMi/publish-unit-test-result-action/composite@v1.30`
+# recognizes Python in Library/Developer/CommandLineTools instead of in /usr/local/bin/, then errors would occur
+    - name: set-PATH
+      run: |
+        echo "/Library/Developer/CommandLineTools/usr/bin" >> $GITHUB_PATH
+        echo "/usr/local/bin/" >> $GITHUB_PATH
+
+    - name: configure-and-build-driver
+      run: |
+        ./build_mac_debug64.sh
+
+    - name: update-environment-with-ODBC_DRIVER_VERSION
+      run: |
+        read -r ODBC_DRIVER_VERSION < ./src/ODBC_DRIVER_VERSION.txt
+        echo "ODBC_DRIVER_VERSION=$ODBC_DRIVER_VERSION" >> $GITHUB_ENV
+
+    - name: upload-package
+      uses: actions/upload-artifact@v3
+      with:
+        name: AmazonTimestreamODBC-${{env.ODBC_DRIVER_VERSION}}.pkg
+        path: ./cmake-build64/AmazonTimestreamODBC-${{env.ODBC_DRIVER_VERSION}}.pkg
+
+    - name: register-odbc-driver
+      run: |
+        chmod +x scripts/register_driver_unix.sh
+        ./scripts/register_driver_unix.sh
+
+      env:
+        RUN_CODE_COVERAGE: ${{ true }}
+        BOOST_TEST_CATCH_SYSTEM_ERRORS: no
+
+    - name: configure-aws-credentials-for-tests
+      if: success()
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-west-2
+
+    - name: run-unit-tests
+      id: rununittests
+      run: |
+        mkdir -p "${{env.TIMESTREAM_LOG_PATH}}"
+        export DYLD_LIBRARY_PATH=${{env.ODBC_LIB_PATH}}:$DYLD_LIBRARY_PATH
+        ./build/odbc/bin/timestream-odbc-unit-tests --catch_system_errors=false
+
+    - name: upload-unit-test-report
+      if: always()
+      uses: EnricoMi/publish-unit-test-result-action/composite@v1.30
+      with:
+        check_name: "MacOS Big Sur 11 Debug Build Unit Test Results Check"
+        comment_title: "MacOS Big Sur 11 Debug Build Unit Test Results"
+        files: ./odbc_unit_test_result.xml
+
+    - name: run-integration-tests
+      id: runintegrationtests
+      run: |
+        export DYLD_LIBRARY_PATH=${{env.ODBC_LIB_PATH}}:$DYLD_LIBRARY_PATH
+        ./build/odbc/bin/timestream-odbc-integration-tests --catch_system_errors=false
+        gcovr -r .. --exclude-directories=cmake-build64/tests/integration-test/CMakeFiles/timestream-odbc-integration-tests.dir$ --exclude-directories=cmake-build64/tests/unit-test/CMakeFiles/timestream-odbc-unit-tests.dir$ --cobertura --output coverage.cobertura.xml
+
+    - name: upload-coverage
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: code-coverage
+        path: coverage.cobertura.xml
+  
+    - name: upload-integration-test-report
+      if: always()
+      uses: EnricoMi/publish-unit-test-result-action/composite@v1.30
+      with:
+        check_name: "MacOS Big Sur 11 Debug Build Integration Test Results Check"
+        comment_title: "MacOS Big Sur 11 Debug Build Integration Test Results"
+        files: ./odbc_test_result.xml
+
+    - name: upload-test-file
+      if: always() && ((steps.runintegrationtests.outcome == 'failure') || (steps.rununittests.outcome == 'failure'))
+      uses: actions/upload-artifact@v3
+      with:
+        name: odbc-test-results
+        path: |
+          ./odbc_unit_test_result.xml
+          ./odbc_test_result.xml
+          ./build/odbc/logs/timestream_odbc_*.log        
+
+  comment_PR_mac_coverage:
+    runs-on: ubuntu-latest
+    needs: build-mac-debug
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Retrieve coverage
+      uses: actions/download-artifact@v2
+      with:
+        name: code-coverage
+
+    - name: Code Coverage Summary Report
+      uses: irongut/CodeCoverageSummary@v1.2.0
+      with:
+        filename: coverage.cobertura.xml
+        badge: true
+        format: markdown
+        indicators: true
+        output: both
+    
+    - name: Add Header for Code Coverage Summary Report
+      run: |
+        echo "## MacOS Big Sur 11 Debug Build Code Coverage Unit and Integration Test Result" > coverage-cobertura.md
+        cat code-coverage-results.md >> coverage-cobertura.md
+    
+    - name: Add Coverage PR Comment
+      uses: marocchino/sticky-pull-request-comment@v2
+      if: github.event_name == 'pull_request'
+      with:
+        header: macOS
+        recreate: true
+        path: coverage-cobertura.md
+

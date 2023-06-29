@@ -1,0 +1,1 @@
+Amazon Timestream ODBC Driver is a read-only ODBC driver for connecting to Amazon Timestream.

@@ -1,0 +1,16 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-3.26/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in
+C:/Program Files/CMake/share/cmake-3.26/Modules/CMakePackageConfigHelpers.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/CheckCSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/CheckIncludeFile.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/CheckLibraryExists.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/FindPythonInterp.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/FindThreads.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/WriteBasicConfigVersionFile.cmake
+C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/googletest-src/googletest/CMakeLists.txt
+C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/googletest-src/googletest/cmake/Config.cmake.in
+C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/googletest-src/googletest/cmake/gtest.pc.in
+C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/googletest-src/googletest/cmake/gtest_main.pc.in
+C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/googletest-src/googletest/cmake/internal_utils.cmake

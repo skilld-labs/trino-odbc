@@ -1,0 +1,3 @@
+C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/CMakeFiles/googletest.dir
+C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/CMakeFiles/ALL_BUILD.dir
+C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/CMakeFiles/ZERO_CHECK.dir

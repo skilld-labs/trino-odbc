@@ -1,0 +1,280 @@
+name: ODBC Driver for Linux
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  CI_OUTPUT_PATH: "ci-output"
+  ODBC_LIB_PATH: "${{github.workspace}}/build/odbc/lib"
+  ODBC_BIN_PATH: "${{github.workspace}}/build/odbc/bin"
+  ODBC_BUILD_PATH: "${{github.workspace}}/build/odbc/build"
+  TIMESTREAM_LOG_PATH: "${{github.workspace}}/build/odbc/logs"
+  TIMESTREAM_LOG_LEVEL: "4"
+  BIG_TABLE_PAGINATION_TEST_ENABLE: "TRUE"
+
+  # # AAD Test environment variables. Uncomment out to use GitHub secrets to enable AAD integration tests
+  # ENABLE_AAD_TEST: "TRUE"
+  # AAD_APP_ID: ${{secrets.AAD_APP_ID}}
+  # AAD_ROLE_ARN: ${{secrets.AAD_ROLE_ARN}}
+  # AAD_IDP_ARN: ${{secrets.AAD_IDP_ARN}}
+  # AAD_TENANT: ${{secrets.AAD_TENANT}}
+  # AAD_USER: ${{secrets.AAD_USER}}
+  # AAD_USER_PWD: ${{secrets.AAD_USER_PWD}}
+  # AAD_CLIENT_SECRET: ${{secrets.AAD_CLIENT_SECRET}}
+
+  # # OKTA Test environment variables. Uncomment out to use GitHub secrets to enable AAD integration tests
+  # ENABLE_OKTA_TEST: "TRUE"
+  # OKTA_HOST: ${{secrets.OKTA_HOST}}
+  # OKTA_USER: ${{secrets.OKTA_USER}}
+  # OKTA_USER_PWD: ${{secrets.OKTA_USER_PWD}}
+  # OKTA_APP_ID: ${{secrets.OKTA_APP_ID}}
+  # OKTA_ROLE_ARN: ${{secrets.OKTA_ROLE_ARN}}
+  # OKTA_IDP_ARN: ${{secrets.OKTA_IDP_ARN}}  
+
+jobs:
+  build-linux64:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Get latest version of CMake
+      uses: lukka/get-cmake@latest
+
+    - name: run-cppcheck
+      run: |
+        sudo apt install cppcheck
+        sh run_cppcheck.sh
+  
+    - name: upload-cppcheck-results
+      if: failure()
+      uses: actions/upload-artifact@v2
+      with:
+        name: cppcheck-results
+        path: cppcheck-results.log
+
+    - name: get-dependencies
+      if: success()
+      run: |
+        sudo apt update
+        sudo apt install libcurl4-openssl-dev libssl-dev uuid-dev zlib1g-dev libpulse-dev linux-headers-$(uname -r) gcc gcc-multilib  g++ g++-multilib linux-headers-$(uname -r) build-essential valgrind libboost-all-dev libsasl2-dev lcov
+   
+    - name: configure-and-build-driver
+      run: |
+        ./build_linux_release64_deb.sh
+
+    - name: update-environment-with-ODBC_DRIVER_VERSION
+      run: |
+        read -r ODBC_DRIVER_VERSION < ./src/ODBC_DRIVER_VERSION.txt
+        echo "ODBC_DRIVER_VERSION=$ODBC_DRIVER_VERSION" >> $GITHUB_ENV
+
+    - name: upload-package
+      uses: actions/upload-artifact@v3
+      with:
+        name: AmazonTimestreamODBC_${{env.ODBC_DRIVER_VERSION}}_RELEASE_x86_64
+        path: cmake-build64/AmazonTimestreamODBC_${{env.ODBC_DRIVER_VERSION}}_RELEASE_x86_64.deb
+
+    - name: register-odbc-driver
+      run: |
+        chmod +r -R ${{env.ODBC_LIB_PATH}}
+        chmod +x scripts/register_driver_unix.sh
+        sudo bash scripts/register_driver_unix.sh
+
+    - name: configure-aws-credentials-for-tests
+      if: success()
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-west-2
+
+    # run unit tests
+    - name: run-unit-tests
+      id: rununittests
+      run: |
+        mkdir -p "${{env.TIMESTREAM_LOG_PATH}}"
+        ./build/odbc/bin/timestream-odbc-unit-tests --catch_system_errors=false
+
+    - name: upload-unit-test-report
+      if: always()
+      uses: EnricoMi/publish-unit-test-result-action/composite@v2.7.0
+      with:
+        check_name: "Ubuntu 20.04 Build Unit Test Results Check"
+        comment_title: "Ubuntu 20.04 Build Unit Test Results"
+        files: ./odbc_unit_test_result.xml
+
+    - name: upload-odbc-unit-test-file
+      if: always() && (steps.rununittests.outcome == 'failure')
+      uses: actions/upload-artifact@v2
+      with:
+        name: odbc-unit-test-results
+        path: |
+          ./odbc_unit_test_result.xml
+          ./build/odbc/logs/timestream_odbc_*.log 
+          ./aws_sdk_*.log
+
+    # run odbc tests
+    - name: run-odbc-tests
+      id: runodbctests
+      run: |
+        ./build/odbc/bin/timestream-odbc-integration-tests --catch_system_errors=false
+
+    - name: upload-odbc-test-report
+      if: always()
+      uses: EnricoMi/publish-unit-test-result-action/composite@v2.7.0
+      with:
+        check_name: "Ubuntu 20.04 Build Integration Test Results Check"
+        comment_title: "Ubuntu 20.04 Build Integration Test Results"
+        files: ./odbc_test_result.xml
+
+    - name: upload-odbc-test-file
+      if: always() && (steps.runodbctests.outcome == 'failure')
+      uses: actions/upload-artifact@v2
+      with:
+        name: odbc-test-results
+        path: |
+          ./odbc_test_result.xml
+          ./build/odbc/logs/timestream_odbc_*.log 
+          ./aws_sdk_*.log
+
+  build-linux64-debug:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Get gcovr
+      run: | 
+        pip install gcovr
+
+    - name: Get latest version of CMake
+      uses: lukka/get-cmake@latest
+
+    - name: run-cppcheck
+      run: |
+        sudo apt install cppcheck
+        sh run_cppcheck.sh
+  
+    - name: upload-cppcheck-results
+      if: failure()
+      uses: actions/upload-artifact@v2
+      with:
+        name: cppcheck-results
+        path: cppcheck-results.log
+
+    - name: get-dependencies
+      if: success()
+      run: |
+        sudo apt update
+        sudo apt install libcurl4-openssl-dev libssl-dev uuid-dev zlib1g-dev libpulse-dev linux-headers-$(uname -r) gcc gcc-multilib  g++ g++-multilib linux-headers-$(uname -r) build-essential valgrind libboost-all-dev libsasl2-dev lcov
+
+    - name: configure-and-build-driver
+      run: |
+        ./build_linux_debug64_deb.sh
+
+    - name: update-environment-with-ODBC_DRIVER_VERSION
+      run: |
+        read -r ODBC_DRIVER_VERSION < ./src/ODBC_DRIVER_VERSION.txt
+        echo "ODBC_DRIVER_VERSION=$ODBC_DRIVER_VERSION" >> $GITHUB_ENV
+
+    - name: upload-package
+      uses: actions/upload-artifact@v3
+      with:
+        name: AmazonTimestreamODBC_${{env.ODBC_DRIVER_VERSION}}_DEBUG_x86_64
+        path: cmake-build64/AmazonTimestreamODBC_${{env.ODBC_DRIVER_VERSION}}_DEBUG_x86_64.deb
+
+    - name: register-odbc-driver
+      run: |
+        chmod +r -R ${{env.ODBC_LIB_PATH}}
+        chmod +x scripts/register_driver_unix.sh
+        sudo bash scripts/register_driver_unix.sh
+
+    - name: configure-aws-credentials-for-tests
+      if: success()
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-west-2
+
+    # run unit tests
+    - name: run-unit-tests
+      id: rununittests
+      run: |
+        mkdir -p "${{env.TIMESTREAM_LOG_PATH}}"
+        ./build/odbc/bin/timestream-odbc-unit-tests --catch_system_errors=false
+  
+    - name: upload-test-report
+      if: always()
+      uses: EnricoMi/publish-unit-test-result-action/composite@v2.7.0
+      with:
+        check_name: "Ubuntu 20.04 Debug Build Unit Test Results Check"
+        comment_title: "Ubuntu 20.04 Debug Build Unit Test Results"
+        files: ./odbc_unit_test_result.xml
+
+    - name: upload-unit-test-file
+      if: always() && (steps.rununittests.outcome == 'failure')
+      uses: actions/upload-artifact@v3
+      with:
+        name: odbc-unit-test-results-linux-debug
+        path: |
+          ./odbc_unit_test_result.xml
+          ./build/odbc/logs/timestream_odbc_*.log 
+          ./aws_sdk_*.log
+
+    # run odbc tests
+    - name: run-odbc-tests
+      id: runodbctests
+      run: |
+        ./build/odbc/bin/timestream-odbc-integration-tests --catch_system_errors=false
+        gcovr --exclude-directories=cmake-build64/tests/integration-test/CMakeFiles/timestream-odbc-integration-tests.dir$ --exclude-directories=cmake-build64/tests/unit-test/CMakeFiles/timestream-odbc-unit-tests.dir$ --cobertura --output coverage.cobertura.xml
+
+    - name: Code Coverage Summary Report
+      uses: irongut/CodeCoverageSummary@v1.2.0
+      with:
+        filename: coverage.cobertura.xml
+        badge: true
+        format: markdown
+        indicators: true
+        output: both
+
+    - name: Add Header for Code Coverage Summary Report
+      run: |
+        echo "## Ubuntu 20.04 Debug Build Test Results Check" > coverage-cobertura.md
+        cat code-coverage-results.md >> coverage-cobertura.md
+    
+    - name: Add Coverage PR Comment
+      uses: marocchino/sticky-pull-request-comment@v2
+      if: github.event_name == 'pull_request'
+      with:
+        header: linux
+        recreate: true
+        path: coverage-cobertura.md
+  
+    - name: upload-odbc-test-report
+      if: always()
+      uses: EnricoMi/publish-unit-test-result-action/composite@v2.7.0
+      with:
+        check_name: "Ubuntu 20.04 Debug Build Integration Test Results Check"
+        comment_title: "Ubuntu 20.04 Debug Build Integration Test Results"
+        files: ./odbc_test_result.xml
+
+    - name: upload-odbc-test-file
+      if: always() && (steps.runodbctests.outcome == 'failure')
+      uses: actions/upload-artifact@v3
+      with:
+        name: odbc-test-results-linux-debug
+        path: |
+          ./odbc_test_result.xml
+          ./build/odbc/logs/timestream_odbc_*.log 
+          ./aws_sdk_*.log   
+
+    - name: upload-coverage
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: code-coverage-Linux
+        path: cmake-build64/ccov/all-merged

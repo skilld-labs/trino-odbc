@@ -1,0 +1,14 @@
+# Target labels
+ googletest
+# Source files and their labels
+C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/CMakeFiles/googletest
+C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/CMakeFiles/da7c0972e6ae7a7587b0d0e2b8e52111/googletest.rule
+C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/CMakeFiles/99f496c79b02112b988a8402226f69ce/googletest-complete.rule
+C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/CMakeFiles/97b953795b397eb6b26336c164a1bd87/googletest-build.rule
+C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/CMakeFiles/97b953795b397eb6b26336c164a1bd87/googletest-configure.rule
+C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/CMakeFiles/97b953795b397eb6b26336c164a1bd87/googletest-download.rule
+C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/CMakeFiles/97b953795b397eb6b26336c164a1bd87/googletest-install.rule
+C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/CMakeFiles/97b953795b397eb6b26336c164a1bd87/googletest-mkdir.rule
+C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/CMakeFiles/97b953795b397eb6b26336c164a1bd87/googletest-patch.rule
+C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/CMakeFiles/97b953795b397eb6b26336c164a1bd87/googletest-test.rule
+C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/googletest/CMakeFiles/97b953795b397eb6b26336c164a1bd87/googletest-update.rule

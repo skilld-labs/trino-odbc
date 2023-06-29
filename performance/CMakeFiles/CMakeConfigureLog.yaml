@@ -1,0 +1,410 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeDetermineSystem.cmake:204 (message)"
+      - "CMakeLists.txt:16 (project)"
+    message: |
+      The system is: Windows - 10.0.19045 - AMD64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:16 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      MSBuild version 17.4.1+9a89d02ff for .NET Framework
+      Build started 2023-04-05 10:34:21 AM.
+      Project "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\3.26.2\\CompilerIdC\\CompilerIdC.vcxproj" on node 1 (default targets).
+      PrepareForBuild:
+        Creating directory "Debug\\".
+        Creating directory "Debug\\CompilerIdC.tlog\\".
+      InitializeBuildStatus:
+        Creating "Debug\\CompilerIdC.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+      VcpkgTripletSelection:
+        Using triplet "x64-windows" from "C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\"
+        Using normalized configuration "Release"
+      ClCompile:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /I"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\include" /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TC /FC /errorReport:queue CMakeCCompilerId.c
+        CMakeCCompilerId.c
+      Link:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdC.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\lib" /LIBPATH:"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\lib\\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\lib\\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdC.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdC.lib" /MACHINE:X64 Debug\\CMakeCCompilerId.obj
+        CompilerIdC.vcxproj -> C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\3.26.2\\CompilerIdC\\CompilerIdC.exe
+      AppLocalFromInstalled:
+        pwsh.exe -ExecutionPolicy Bypass -noprofile -File "C:\\Users\\zhang\\source\\repos\\vcpkg\\scripts\\buildsystems\\msbuild\\applocal.ps1" "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\3.26.2\\CompilerIdC\\CompilerIdC.exe" "C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\bin" "Debug\\CompilerIdC.tlog\\CompilerIdC.write.1u.tlog" "Debug\\vcpkg.applocal.log"
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_C_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_C_COMPILER=C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe
+      FinalizeBuildStatus:
+        Deleting file "Debug\\CompilerIdC.tlog\\unsuccessfulbuild".
+        Touching "Debug\\CompilerIdC.tlog\\CompilerIdC.lastbuildstate".
+      Done Building Project "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\3.26.2\\CompilerIdC\\CompilerIdC.vcxproj" (default targets).
+      
+      Build succeeded.
+          0 Warning(s)
+          0 Error(s)
+      
+      Time Elapsed 00:00:01.80
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.vcxproj"
+      
+      The C compiler identification is MSVC, found in:
+        C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/3.26.2/CompilerIdC/CompilerIdC.exe
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:16 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      MSBuild version 17.4.1+9a89d02ff for .NET Framework
+      Build started 2023-04-05 10:34:23 AM.
+      Project "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\3.26.2\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
+      PrepareForBuild:
+        Creating directory "Debug\\".
+        Creating directory "Debug\\CompilerIdCXX.tlog\\".
+      InitializeBuildStatus:
+        Creating "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+      VcpkgTripletSelection:
+        Using triplet "x64-windows" from "C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\"
+        Using normalized configuration "Release"
+      ClCompile:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /I"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\include" /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TP /FC /errorReport:queue CMakeCXXCompilerId.cpp
+        CMakeCXXCompilerId.cpp
+      Link:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCXX.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\lib" /LIBPATH:"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\lib\\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\lib\\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCXX.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCXX.lib" /MACHINE:X64 Debug\\CMakeCXXCompilerId.obj
+        CompilerIdCXX.vcxproj -> C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\3.26.2\\CompilerIdCXX\\CompilerIdCXX.exe
+      AppLocalFromInstalled:
+        pwsh.exe -ExecutionPolicy Bypass -noprofile -File "C:\\Users\\zhang\\source\\repos\\vcpkg\\scripts\\buildsystems\\msbuild\\applocal.ps1" "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\3.26.2\\CompilerIdCXX\\CompilerIdCXX.exe" "C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\bin" "Debug\\CompilerIdCXX.tlog\\CompilerIdCXX.write.1u.tlog" "Debug\\vcpkg.applocal.log"
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_CXX_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_CXX_COMPILER=C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe
+      FinalizeBuildStatus:
+        Deleting file "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild".
+        Touching "Debug\\CompilerIdCXX.tlog\\CompilerIdCXX.lastbuildstate".
+      Done Building Project "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\3.26.2\\CompilerIdCXX\\CompilerIdCXX.vcxproj" (default targets).
+      
+      Build succeeded.
+          0 Warning(s)
+          0 Error(s)
+      
+      Time Elapsed 00:00:01.56
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.vcxproj"
+      
+      The CXX compiler identification is MSVC, found in:
+        C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/3.26.2/CompilerIdCXX/CompilerIdCXX.exe
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:16 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-nscbal"
+      binary: "C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-nscbal"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-nscbal
+        
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_52b4a.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        Build started 2023-04-05 10:34:25 AM.
+        Project "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-nscbal\\cmTC_52b4a.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_52b4a.dir\\Debug\\".
+          Creating directory "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-nscbal\\Debug\\".
+          Creating directory "cmTC_52b4a.dir\\Debug\\cmTC_52b4a.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_52b4a.dir\\Debug\\cmTC_52b4a.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        VcpkgTripletSelection:
+          Using triplet "x64-windows" from "C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\"
+          Using normalized configuration "Release"
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /I"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\include" /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_52b4a.dir\\Debug\\\\" /Fd"cmTC_52b4a.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.26\\Modules\\CMakeCCompilerABI.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31937 for x64
+          CMakeCCompilerABI.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /I"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\include" /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_52b4a.dir\\Debug\\\\" /Fd"cmTC_52b4a.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.26\\Modules\\CMakeCCompilerABI.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-nscbal\\Debug\\cmTC_52b4a.exe" /INCREMENTAL /ILK:"cmTC_52b4a.dir\\Debug\\cmTC_52b4a.ilk" /NOLOGO /LIBPATH:"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\lib" /LIBPATH:"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\lib\\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib "C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\lib\\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-nscbal/Debug/cmTC_52b4a.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-nscbal/Debug/cmTC_52b4a.lib" /MACHINE:X64  /machine:x64 cmTC_52b4a.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_52b4a.vcxproj -> C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-nscbal\\Debug\\cmTC_52b4a.exe
+        AppLocalFromInstalled:
+          pwsh.exe -ExecutionPolicy Bypass -noprofile -File "C:\\Users\\zhang\\source\\repos\\vcpkg\\scripts\\buildsystems\\msbuild\\applocal.ps1" "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-nscbal\\Debug\\cmTC_52b4a.exe" "C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\bin" "cmTC_52b4a.dir\\Debug\\cmTC_52b4a.tlog\\cmTC_52b4a.write.1u.tlog" "cmTC_52b4a.dir\\Debug\\vcpkg.applocal.log"
+        FinalizeBuildStatus:
+          Deleting file "cmTC_52b4a.dir\\Debug\\cmTC_52b4a.tlog\\unsuccessfulbuild".
+          Touching "cmTC_52b4a.dir\\Debug\\cmTC_52b4a.tlog\\cmTC_52b4a.lastbuildstate".
+        Done Building Project "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-nscbal\\cmTC_52b4a.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:01.52
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:16 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-q60jfa"
+      binary: "C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-q60jfa"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-q60jfa
+        
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_c0f9a.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        Build started 2023-04-05 10:34:27 AM.
+        Project "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-q60jfa\\cmTC_c0f9a.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_c0f9a.dir\\Debug\\".
+          Creating directory "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-q60jfa\\Debug\\".
+          Creating directory "cmTC_c0f9a.dir\\Debug\\cmTC_c0f9a.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_c0f9a.dir\\Debug\\cmTC_c0f9a.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        VcpkgTripletSelection:
+          Using triplet "x64-windows" from "C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\"
+          Using normalized configuration "Release"
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /I"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\include" /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_c0f9a.dir\\Debug\\\\" /Fd"cmTC_c0f9a.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.26\\Modules\\CMakeCXXCompilerABI.cpp"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31937 for x64
+          CMakeCXXCompilerABI.cpp
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /I"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\include" /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_c0f9a.dir\\Debug\\\\" /Fd"cmTC_c0f9a.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.26\\Modules\\CMakeCXXCompilerABI.cpp"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-q60jfa\\Debug\\cmTC_c0f9a.exe" /INCREMENTAL /ILK:"cmTC_c0f9a.dir\\Debug\\cmTC_c0f9a.ilk" /NOLOGO /LIBPATH:"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\lib" /LIBPATH:"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\lib\\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib "C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\lib\\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-q60jfa/Debug/cmTC_c0f9a.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-q60jfa/Debug/cmTC_c0f9a.lib" /MACHINE:X64  /machine:x64 cmTC_c0f9a.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_c0f9a.vcxproj -> C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-q60jfa\\Debug\\cmTC_c0f9a.exe
+        AppLocalFromInstalled:
+          pwsh.exe -ExecutionPolicy Bypass -noprofile -File "C:\\Users\\zhang\\source\\repos\\vcpkg\\scripts\\buildsystems\\msbuild\\applocal.ps1" "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-q60jfa\\Debug\\cmTC_c0f9a.exe" "C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\bin" "cmTC_c0f9a.dir\\Debug\\cmTC_c0f9a.tlog\\cmTC_c0f9a.write.1u.tlog" "cmTC_c0f9a.dir\\Debug\\vcpkg.applocal.log"
+        FinalizeBuildStatus:
+          Deleting file "cmTC_c0f9a.dir\\Debug\\cmTC_c0f9a.tlog\\unsuccessfulbuild".
+          Touching "cmTC_c0f9a.dir\\Debug\\cmTC_c0f9a.tlog\\cmTC_c0f9a.lastbuildstate".
+        Done Building Project "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-q60jfa\\cmTC_c0f9a.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:01.57
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CheckCSourceCompiles.cmake:76 (cmake_check_source_compiles)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/FindThreads.cmake:97 (CHECK_C_SOURCE_COMPILES)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/FindThreads.cmake:163 (_threads_check_libc)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/FindBoost.cmake:2128 (find_package)"
+      - "PTODBCResults/CMakeLists.txt:16 (find_package)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-6cz6fk"
+      binary: "C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-6cz6fk"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-6cz6fk
+        
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_c7c07.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        Build started 2023-04-05 10:34:29 AM.
+        Project "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-6cz6fk\\cmTC_c7c07.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_c7c07.dir\\Debug\\".
+          Creating directory "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-6cz6fk\\Debug\\".
+          Creating directory "cmTC_c7c07.dir\\Debug\\cmTC_c7c07.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_c7c07.dir\\Debug\\cmTC_c7c07.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        VcpkgTripletSelection:
+          Using triplet "x64-windows" from "C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\"
+          Using normalized configuration "Release"
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /I"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\include" /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_c7c07.dir\\Debug\\\\" /Fd"cmTC_c7c07.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-6cz6fk\\src.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31937 for x64
+          src.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /I"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\include" /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_c7c07.dir\\Debug\\\\" /Fd"cmTC_c7c07.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-6cz6fk\\src.c"
+        C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-6cz6fk\\src.c(1,10): fatal  error C1083: Cannot open include file: 'pthread.h': No such file or directory [C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-6cz6fk\\cmTC_c7c07.vcxproj]
+        Done Building Project "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-6cz6fk\\cmTC_c7c07.vcxproj" (default targets) -- FAILED.
+        
+        Build FAILED.
+        
+        "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-6cz6fk\\cmTC_c7c07.vcxproj" (default target) (1) ->
+        (ClCompile target) -> 
+          C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-6cz6fk\\src.c(1,10): fatal  error C1083: Cannot open include file: 'pthread.h': No such file or directory [C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-6cz6fk\\cmTC_c7c07.vcxproj]
+        
+            0 Warning(s)
+            1 Error(s)
+        
+        Time Elapsed 00:00:00.42
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CheckLibraryExists.cmake:71 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/FindThreads.cmake:112 (CHECK_LIBRARY_EXISTS)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/FindThreads.cmake:175 (_threads_check_lib)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/FindBoost.cmake:2128 (find_package)"
+      - "PTODBCResults/CMakeLists.txt:16 (find_package)"
+    checks:
+      - "Looking for pthread_create in pthreads"
+    directories:
+      source: "C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-wdauoj"
+      binary: "C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-wdauoj"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_HAVE_PTHREADS_CREATE"
+      cached: true
+      stdout: |
+        Change Dir: C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-wdauoj
+        
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_87858.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        Build started 2023-04-05 10:34:30 AM.
+        Project "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-wdauoj\\cmTC_87858.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_87858.dir\\Debug\\".
+          Creating directory "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-wdauoj\\Debug\\".
+          Creating directory "cmTC_87858.dir\\Debug\\cmTC_87858.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_87858.dir\\Debug\\cmTC_87858.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        VcpkgTripletSelection:
+          Using triplet "x64-windows" from "C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\"
+          Using normalized configuration "Release"
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /I"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\include" /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_87858.dir\\Debug\\\\" /Fd"cmTC_87858.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-wdauoj\\CheckFunctionExists.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31937 for x64
+          CheckFunctionExists.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /I"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\include" /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_87858.dir\\Debug\\\\" /Fd"cmTC_87858.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-wdauoj\\CheckFunctionExists.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-wdauoj\\Debug\\cmTC_87858.exe" /INCREMENTAL /ILK:"cmTC_87858.dir\\Debug\\cmTC_87858.ilk" /NOLOGO /LIBPATH:"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\lib" /LIBPATH:"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\lib\\manual-link" pthreads.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib "C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\lib\\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-wdauoj/Debug/cmTC_87858.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-wdauoj/Debug/cmTC_87858.lib" /MACHINE:X64  /machine:x64 cmTC_87858.dir\\Debug\\CheckFunctionExists.obj
+        LINK : fatal error LNK1104: cannot open file 'pthreads.lib' [C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-wdauoj\\cmTC_87858.vcxproj]
+        Done Building Project "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-wdauoj\\cmTC_87858.vcxproj" (default targets) -- FAILED.
+        
+        Build FAILED.
+        
+        "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-wdauoj\\cmTC_87858.vcxproj" (default target) (1) ->
+        (Link target) -> 
+          LINK : fatal error LNK1104: cannot open file 'pthreads.lib' [C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-wdauoj\\cmTC_87858.vcxproj]
+        
+            0 Warning(s)
+            1 Error(s)
+        
+        Time Elapsed 00:00:00.61
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CheckLibraryExists.cmake:71 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/FindThreads.cmake:112 (CHECK_LIBRARY_EXISTS)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/FindThreads.cmake:176 (_threads_check_lib)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/FindBoost.cmake:2128 (find_package)"
+      - "PTODBCResults/CMakeLists.txt:16 (find_package)"
+    checks:
+      - "Looking for pthread_create in pthread"
+    directories:
+      source: "C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-4lfwyt"
+      binary: "C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-4lfwyt"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_HAVE_PTHREAD_CREATE"
+      cached: true
+      stdout: |
+        Change Dir: C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-4lfwyt
+        
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_f56ed.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        Build started 2023-04-05 10:34:30 AM.
+        Project "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-4lfwyt\\cmTC_f56ed.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_f56ed.dir\\Debug\\".
+          Creating directory "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-4lfwyt\\Debug\\".
+          Creating directory "cmTC_f56ed.dir\\Debug\\cmTC_f56ed.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_f56ed.dir\\Debug\\cmTC_f56ed.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        VcpkgTripletSelection:
+          Using triplet "x64-windows" from "C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\"
+          Using normalized configuration "Release"
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /I"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\include" /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_f56ed.dir\\Debug\\\\" /Fd"cmTC_f56ed.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-4lfwyt\\CheckFunctionExists.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31937 for x64
+          CheckFunctionExists.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /I"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\include" /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_f56ed.dir\\Debug\\\\" /Fd"cmTC_f56ed.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-4lfwyt\\CheckFunctionExists.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-4lfwyt\\Debug\\cmTC_f56ed.exe" /INCREMENTAL /ILK:"cmTC_f56ed.dir\\Debug\\cmTC_f56ed.ilk" /NOLOGO /LIBPATH:"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\lib" /LIBPATH:"C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\lib\\manual-link" pthread.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib "C:\\Users\\zhang\\source\\repos\\vcpkg\\installed\\x64-windows\\lib\\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-4lfwyt/Debug/cmTC_f56ed.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/zhang/source/repos/amazon-timestream-odbc-driver/performance/CMakeFiles/CMakeScratch/TryCompile-4lfwyt/Debug/cmTC_f56ed.lib" /MACHINE:X64  /machine:x64 cmTC_f56ed.dir\\Debug\\CheckFunctionExists.obj
+        LINK : fatal error LNK1104: cannot open file 'pthread.lib' [C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-4lfwyt\\cmTC_f56ed.vcxproj]
+        Done Building Project "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-4lfwyt\\cmTC_f56ed.vcxproj" (default targets) -- FAILED.
+        
+        Build FAILED.
+        
+        "C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-4lfwyt\\cmTC_f56ed.vcxproj" (default target) (1) ->
+        (Link target) -> 
+          LINK : fatal error LNK1104: cannot open file 'pthread.lib' [C:\\Users\\zhang\\source\\repos\\amazon-timestream-odbc-driver\\performance\\CMakeFiles\\CMakeScratch\\TryCompile-4lfwyt\\cmTC_f56ed.vcxproj]
+        
+            0 Warning(s)
+            1 Error(s)
+        
+        Time Elapsed 00:00:00.55
+        
+      exitCode: 1
+...
