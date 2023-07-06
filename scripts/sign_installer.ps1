@@ -128,10 +128,10 @@ function Invoke-SignInstaller {
         [bool]$AsMockResponse=$false
     )
 
-    $unsignedInstallerPath=$(Join-Path $BuildDir "timestream-odbc-installer-$Architecture.exe")
-    $signedInstallerPath=$(Join-Path $BuildDir "timestream-odbc-installer-$Architecture-signed.exe")
-    $unsignedEnginePath=$(Join-Path $BuildDir "timestream-odbc-installer-$Architecture-engine.exe")
-    $signedEnginePath=$(Join-Path $BuildDir "timestream-odbc-installer-$Architecture-engine-signed.exe")
+    $unsignedInstallerPath=$(Join-Path $BuildDir "timestream-odbc-installer-$Architecture-$OdbcVersion.exe")
+    $signedInstallerPath=$(Join-Path $BuildDir "timestream-odbc-installer-$Architecture-$OdbcVersion-signed.exe")
+    $unsignedEnginePath=$(Join-Path $BuildDir "timestream-odbc-installer-$Architecture-$OdbcVersion-engine.exe")
+    $signedEnginePath=$(Join-Path $BuildDir "timestream-odbc-installer-$Architecture-$OdbcVersion-engine-signed.exe")
 
     # Extract unsigned engine
     Write-Host "Extracting unsigned engine."
@@ -165,7 +165,7 @@ function Invoke-SignInstaller {
     # Remove unsigned installer and remove "-signed" in signed installer name
     Write-Host "Removing unsigned executable."
     Remove-Item -Path $unsignedInstallerPath
-    Rename-Item -Path $signedInstallerPath -NewName "timestream-odbc-installer-$Architecture.exe"
+    Rename-Item -Path $signedInstallerPath -NewName "timestream-odbc-installer-$Architecture-$OdbcVersion.exe"
 
     return $true
 }

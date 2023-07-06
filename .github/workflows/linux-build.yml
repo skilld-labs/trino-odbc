@@ -75,8 +75,8 @@ jobs:
     - name: upload-package
       uses: actions/upload-artifact@v3
       with:
-        name: AmazonTimestreamODBC_${{env.ODBC_DRIVER_VERSION}}_RELEASE_x86_64
-        path: cmake-build64/AmazonTimestreamODBC_${{env.ODBC_DRIVER_VERSION}}_RELEASE_x86_64.deb
+        name: AmazonTimestreamODBC_${{env.ODBC_DRIVER_VERSION}}_RELEASE_amd64
+        path: cmake-build64/AmazonTimestreamODBC_${{env.ODBC_DRIVER_VERSION}}_RELEASE_amd64.deb
 
     - name: register-odbc-driver
       run: |
@@ -183,8 +183,8 @@ jobs:
     - name: upload-package
       uses: actions/upload-artifact@v3
       with:
-        name: AmazonTimestreamODBC_${{env.ODBC_DRIVER_VERSION}}_DEBUG_x86_64
-        path: cmake-build64/AmazonTimestreamODBC_${{env.ODBC_DRIVER_VERSION}}_DEBUG_x86_64.deb
+        name: AmazonTimestreamODBC_${{env.ODBC_DRIVER_VERSION}}_DEBUG_amd64
+        path: cmake-build64/AmazonTimestreamODBC_${{env.ODBC_DRIVER_VERSION}}_DEBUG_amd64.deb
 
     - name: register-odbc-driver
       run: |

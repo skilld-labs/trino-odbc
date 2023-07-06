@@ -20,7 +20,7 @@ You need to do the following:
 
 ### Timestream ODBC Driver Download
 Download the Timestream ODBC driver [here](https://github.com/aws/amazon-timestream-odbc-driver/releases). Choose the proper installer
-(e.g., `timestream-odbc-installer-x64.exe`). 
+(e.g., `timestream-odbc-installer-amd64-2.0.0.exe`). 
 
 ### Timestream ODBC Driver Installation
 - [Windows Installation Guide](windows-installation-guide.md)
