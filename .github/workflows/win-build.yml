@@ -40,8 +40,32 @@ env:
   # OKTA_IDP_ARN: ${{secrets.OKTA_IDP_ARN}}  
 
 jobs:
+  trufflehog-git-secrets-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: TruffleHog OSS
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
+          extra_args: --debug --only-verified
+      - name: git secrets
+        run: |
+          git clone https://github.com/awslabs/git-secrets.git
+          cd git-secrets
+          sudo make install
+          cd ..
+          git secrets --register-aws
+          git secrets --scan-history
+
   build-windows32:
     runs-on: windows-2022
+    needs: trufflehog-git-secrets-scan
     steps:
     - uses: actions/checkout@v2
 
@@ -182,6 +206,7 @@ jobs:
 
   build-windows64:
     runs-on: windows-2022
+    needs: trufflehog-git-secrets-scan
     steps:
     - uses: actions/checkout@v2
 
@@ -322,6 +347,7 @@ jobs:
 
   build-windows64_coverage:
     runs-on: windows-2022
+    needs: trufflehog-git-secrets-scan
     steps:
     - uses: actions/checkout@v2
 

@@ -73,7 +73,7 @@ struct ApiRobustnessTestSuiteFixture : public timestream::odbc::OdbcTestSuite {
       BOOST_FAIL(GetOdbcErrorMessage(SQL_HANDLE_STMT, stmt));
 
     std::vector< SQLWCHAR > request = MakeSqlBuffer(
-        "select * from data_queries_test_db.TestComplexTypes order by time");
+        "select * from data_queries_test_db.TestComplexTypes order by time, measure_value::double");
 
     ret = SQLExecDirect(stmt, request.data(), SQL_NTS);
     if (!SQL_SUCCEEDED(ret))

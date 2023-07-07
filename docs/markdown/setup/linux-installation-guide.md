@@ -78,10 +78,20 @@ There is no automatical way to uninstall it. It has to be done manually.
     ```
     sudo zypper remove amazontimestreamodbc_2.0.0_release_x86_64
     ```
+    or
+
+    ```
+    sudo yum remove amazontimestreamodbc_2.0.0_release_x86_64
+    ```
 
     #### Command for RPM based 32 bit
     ```
     sudo zypper remove amazontimestreamodbc_2.0.0_release_i386
+    ```
+    or
+
+    ```
+    sudo yum remove amazontimestreamodbc_2.0.0_release_i386
     ```
 
     #### Command for Debian 64 bit
