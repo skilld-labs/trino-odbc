@@ -180,7 +180,7 @@ Note: When the username / password are already specified in the DSN, there is no
 
 | Error code | Message | Explanation |
 |------------|---------|-------|
-| 01S02 | Re-writing < connection string option > (have you specified it several times? | When user passes < connection string option > more than once in the connection string, this error will happen. Please do not pass in the same connection option more than once in the connection string. When making a connection with a DSN and a connection string, if a connection option is already specified in the DSN, it is not recommended to specify it again in the connection string. 
+| 01S02 | Re-writing < connection string option > (have you specified it several times?) | When user passes < connection string option > more than once in the connection string, this error will happen. Please do not pass in the same connection option more than once in the connection string. When making a connection with a DSN and a connection string, if a connection option is already specified in the DSN, it is not recommended to specify it again in the connection string. 
 
 ### Window Dialog
 
