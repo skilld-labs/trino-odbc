@@ -685,11 +685,22 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
   clientCfg.connectTimeoutMs = cfg.GetConnectionTimeout();
   clientCfg.requestTimeoutMs = cfg.GetReqTimeout();
   clientCfg.maxConnections = cfg.GetMaxConnections();
+
+#if defined(_WIN32)
+  std::string platform("Windows");
+#elif defined(__APPLE__)
+  std::string platform("macOS");
+#else
+  std::string platform("Linux");
+#endif
+  // pass driver info to Timestream as user agent
+  clientCfg.userAgent = "ts-odbc." + utility::GetFormatedDriverVersion() + " on " + platform;
   LOG_DEBUG_MSG("region is "
                 << cfg.GetRegion() << ", connection timeout is "
                 << clientCfg.connectTimeoutMs << ", request timeout is "
                 << clientCfg.requestTimeoutMs << ", max connection is "
-                << clientCfg.maxConnections);
+                << clientCfg.maxConnections << ", user agent is "
+                << clientCfg.userAgent);
 
   SetClientProxy(clientCfg);
 
