@@ -19,7 +19,7 @@ You need to do the following:
 2. Create an IAM user with Timestream access and use the IAM credentials with the driver. For more information, see [Create an IAM user with Timestream access](https://docs.aws.amazon.com/timestream/latest/developerguide/accessing.html#getting-started.prereqs.iam-user).
 
 ### Timestream ODBC Driver Download
-Download the Timestream ODBC driver [here](https://github.com/aws/amazon-timestream-odbc-driver/releases). Choose the proper installer
+Download the Timestream ODBC driver [here](https://github.com/awslabs/amazon-timestream-odbc-driver/releases). Choose the proper installer
 (e.g., `timestream-odbc-installer-amd64-2.0.0.exe`). 
 
 ### Timestream ODBC Driver Installation
