@@ -17,6 +17,7 @@
 #ifndef _IGNITE_ODBC_MULTI_MEASURE_METADATA_CREATER
 #define _IGNITE_ODBC_MULTI_MEASURE_METADATA_CREATER
 
+/*@*/
 #include <aws/core/Aws.h>
 #include <aws/timestream-write/model/Dimension.h>
 #include <aws/timestream-write/model/Record.h>

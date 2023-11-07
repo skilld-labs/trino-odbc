@@ -16,6 +16,7 @@
 
 #include "timestream_writer.h"
 
+/*@*/
 #include <aws/timestream-write/model/Record.h>
 #include <aws/timestream-write/model/WriteRecordsRequest.h>
 #include <aws/timestream-write/model/MeasureValueType.h>

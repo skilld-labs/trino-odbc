@@ -18,6 +18,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/*@*//*aws marker*/
+/*$*//*interest marker*/
+
 #include <ignite/common/common.h>
 
 #include "timestream/odbc.h"
@@ -448,9 +451,10 @@ SQLRETURN SQL_API SQLColAttributes(SQLHSTMT stmt, SQLUSMALLINT colNum,
                                       strAttrBufLen, strAttrResLen, numAttrBuf);
 }
 
-//
+// ===================================================================================
 // ==== Not implemented ====
-//
+// ===================================================================================
+
 SQLRETURN SQL_API SQLSetStmtOption(SQLHSTMT stmt, SQLUSMALLINT option,
                                    SQLULEN value) {
   IGNITE_UNUSED(stmt);

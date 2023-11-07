@@ -25,6 +25,7 @@
 #include "timestream/odbc/query/query.h"
 #include "timestream/odbc/connection.h"
 
+/*@*/
 #include <aws/timestream-query/model/QueryRequest.h>
 #include <aws/timestream-query/model/QueryResult.h>
 #include <aws/timestream-query/model/ColumnInfo.h>

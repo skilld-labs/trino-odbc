@@ -16,6 +16,7 @@
 
 #include <mock/mock_stsclient.h>
 #include <mock/mock_timestream_service.h>
+/*@*/
 #include <aws/sts/model/AssumeRoleWithSAMLRequest.h>
 
 namespace timestream {

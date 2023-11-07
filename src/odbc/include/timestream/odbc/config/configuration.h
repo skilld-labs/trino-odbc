@@ -50,7 +50,7 @@
 #define DEFAULT_ENDPOINT ""
 #define DEFAULT_REGION "us-east-1"
 
-#define DEFAULT_AUTH_TYPE AuthType::Type::AWS_PROFILE
+#define DEFAULT_AUTH_TYPE AuthType::Type::PASSWORD
 #define DEFAULT_IDP_HOST ""
 #define DEFAULT_IDP_USER_NAME ""
 #define DEFAULT_IDP_PASSWORD ""

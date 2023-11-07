@@ -23,6 +23,7 @@
 #include <time.h>
 #include "timestream/odbc/timestream_column.h"
 #include "timestream/odbc/utility.h"
+/*@*/
 #include <aws/timestream-query/model/ColumnInfo.h>
 #include <aws/timestream-query/model/TimeSeriesDataPoint.h>
 

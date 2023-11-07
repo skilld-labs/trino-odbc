@@ -18,6 +18,7 @@
 #include "timestream/odbc/authentication/okta.h"
 #include "timestream/odbc/utility.h"
 
+/*@*/
 #include <aws/core/Aws.h>
 #include <aws/core/auth/AWSCredentials.h>
 #include <aws/core/http/HttpClient.h>

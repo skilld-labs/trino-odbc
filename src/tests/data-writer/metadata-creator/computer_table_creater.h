@@ -18,6 +18,7 @@
 #define _IGNITE_ODBC_COMPUTER_TABLE_CREATER
 
 #include "measure_metadata_creater.h"
+/*@*/
 #include <aws/timestream-write/model/MeasureValueType.h>
 
 using Aws::TimestreamWrite::Model::MeasureValueType;

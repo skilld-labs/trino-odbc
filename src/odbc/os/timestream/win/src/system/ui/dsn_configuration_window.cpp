@@ -407,72 +407,72 @@ void DsnConfigurationWindow::OnAuthTypeChanged() const {
   AuthType::Type authType =
       static_cast< AuthType::Type >(authTypeComboBox->GetCBSelection());
   // If authType is not none/unknown, authTypeEqSaml is true.
-  bool authTypeEqSaml =
-      authType == AuthType::Type::OKTA || authType == AuthType::Type::AAD;
-  bool authTypeAwsProfile = authType == AuthType::Type::AWS_PROFILE;
-  bool authTypeIAM = authType == AuthType::Type::IAM;
-  bool authTypeAAD = authType == AuthType::Type::AAD;
-  bool authTypeOkta = authType == AuthType::Type::OKTA;
+  // bool authTypeEqSaml =
+  //     authType == AuthType::Type::OKTA || authType == AuthType::Type::AAD;
+  bool authTypePassword = authType == AuthType::Type::PASSWORD;
+  // bool authTypeOauth2 = authType == AuthType::Type::OAUTH2;
+  // bool authTypeKerberos = authType == AuthType::Type::KERBEROS;
+  // bool authTypeCertificate = authType == AuthType::Type::CERTIFICATE;
 
   // enable/disable AWS Profile fields
-  profileNameEdit->SetEnabled(authTypeAwsProfile);
+  profileNameEdit->SetEnabled(authTypePassword);
 
   // hide/show AWS Profile fields
-  ShowWindow(profileNameEdit->GetHandle(), authTypeAwsProfile);
-  ShowWindow(profileNameLabel->GetHandle(), authTypeAwsProfile);
+  ShowWindow(profileNameEdit->GetHandle(), authTypePassword);
+  ShowWindow(profileNameLabel->GetHandle(), authTypePassword);
 
   // enable/disable IAM Credentials fields
-  accessKeyIdEdit->SetEnabled(authTypeIAM);
-  secretAccessKeyEdit->SetEnabled(authTypeIAM);
-  sessionTokenEdit->SetEnabled(authTypeIAM);
+  accessKeyIdEdit->SetEnabled(authTypeOauth2);
+  secretAccessKeyEdit->SetEnabled(authTypeOauth2);
+  sessionTokenEdit->SetEnabled(authTypeOauth2);
 
   // hide/show IAM Credentials fields
-  ShowWindow(accessKeyIdLabel->GetHandle(), authTypeIAM);
-  ShowWindow(accessKeyIdEdit->GetHandle(), authTypeIAM);
-  ShowWindow(secretAccessKeyLabel->GetHandle(), authTypeIAM);
-  ShowWindow(secretAccessKeyEdit->GetHandle(), authTypeIAM);
-  ShowWindow(sessionTokenLabel->GetHandle(), authTypeIAM);
-  ShowWindow(sessionTokenEdit->GetHandle(), authTypeIAM);
+  ShowWindow(accessKeyIdLabel->GetHandle(), authTypeOauth2);
+  ShowWindow(accessKeyIdEdit->GetHandle(), authTypeOauth2);
+  ShowWindow(secretAccessKeyLabel->GetHandle(), authTypeOauth2);
+  ShowWindow(secretAccessKeyEdit->GetHandle(), authTypeOauth2);
+  ShowWindow(sessionTokenLabel->GetHandle(), authTypeOauth2);
+  ShowWindow(sessionTokenEdit->GetHandle(), authTypeOauth2);
 
   // enable/disable generic advance authenication fields
   // (fields that apply to both Okta and AAD)
-  roleArnEdit->SetEnabled(authTypeEqSaml);
-  idPUserNameEdit->SetEnabled(authTypeEqSaml);
-  idPPasswordEdit->SetEnabled(authTypeEqSaml);
-  idPArnEdit->SetEnabled(authTypeEqSaml);
+  // roleArnEdit->SetEnabled(authTypeEqSaml);
+  // idPUserNameEdit->SetEnabled(authTypeEqSaml);
+  // idPPasswordEdit->SetEnabled(authTypeEqSaml);
+  // idPArnEdit->SetEnabled(authTypeEqSaml);
 
-  // hide/show generic advance authenication fields
-  ShowWindow(idPUserNameEdit->GetHandle(), authTypeEqSaml);
-  ShowWindow(idPUserNameLabel->GetHandle(), authTypeEqSaml);
-  ShowWindow(idPPasswordEdit->GetHandle(), authTypeEqSaml);
-  ShowWindow(idPPasswordLabel->GetHandle(), authTypeEqSaml);
-  ShowWindow(idPArnEdit->GetHandle(), authTypeEqSaml);
-  ShowWindow(idPArnLabel->GetHandle(), authTypeEqSaml);
-  ShowWindow(roleArnEdit->GetHandle(), authTypeEqSaml);
-  ShowWindow(roleArnLabel->GetHandle(), authTypeEqSaml);
+  // // hide/show generic advance authenication fields
+  // ShowWindow(idPUserNameEdit->GetHandle(), authTypeEqSaml);
+  // ShowWindow(idPUserNameLabel->GetHandle(), authTypeEqSaml);
+  // ShowWindow(idPPasswordEdit->GetHandle(), authTypeEqSaml);
+  // ShowWindow(idPPasswordLabel->GetHandle(), authTypeEqSaml);
+  // ShowWindow(idPArnEdit->GetHandle(), authTypeEqSaml);
+  // ShowWindow(idPArnLabel->GetHandle(), authTypeEqSaml);
+  // ShowWindow(roleArnEdit->GetHandle(), authTypeEqSaml);
+  // ShowWindow(roleArnLabel->GetHandle(), authTypeEqSaml);
 
   // enable/disable Okta-related fields
-  idPHostEdit->SetEnabled(authTypeOkta);
-  oktaAppIdEdit->SetEnabled(authTypeOkta);
+  idPHostEdit->SetEnabled(authTypeCertificate);
+  oktaAppIdEdit->SetEnabled(authTypeCertificate);
 
   // hide/show Okta-related fields
-  ShowWindow(idPHostLabel->GetHandle(), authTypeOkta);
-  ShowWindow(idPHostEdit->GetHandle(), authTypeOkta);
-  ShowWindow(oktaAppIdEdit->GetHandle(), authTypeOkta);
-  ShowWindow(oktaAppIdLabel->GetHandle(), authTypeOkta);
+  ShowWindow(idPHostLabel->GetHandle(), authTypeCertificate);
+  ShowWindow(idPHostEdit->GetHandle(), authTypeCertificate);
+  ShowWindow(oktaAppIdEdit->GetHandle(), authTypeCertificate);
+  ShowWindow(oktaAppIdLabel->GetHandle(), authTypeCertificate);
 
   // enable/disable AAD-related fields
-  aadAppIdEdit->SetEnabled(authTypeAAD);
-  aadClientSecretEdit->SetEnabled(authTypeAAD);
-  aadTenantEdit->SetEnabled(authTypeAAD);
+  aadAppIdEdit->SetEnabled(authTypeKerberos);
+  aadClientSecretEdit->SetEnabled(authTypeKerberos);
+  aadTenantEdit->SetEnabled(authTypeKerberos);
 
   // hide/show AAD-related fields
-  ShowWindow(aadAppIdEdit->GetHandle(), authTypeAAD);
-  ShowWindow(aadAppIdLabel->GetHandle(), authTypeAAD);
-  ShowWindow(aadClientSecretEdit->GetHandle(), authTypeAAD);
-  ShowWindow(aadClientSecretLabel->GetHandle(), authTypeAAD);
-  ShowWindow(aadTenantEdit->GetHandle(), authTypeAAD);
-  ShowWindow(aadTenantLabel->GetHandle(), authTypeAAD);
+  ShowWindow(aadAppIdEdit->GetHandle(), authTypeKerberos);
+  ShowWindow(aadAppIdLabel->GetHandle(), authTypeKerberos);
+  ShowWindow(aadClientSecretEdit->GetHandle(), authTypeKerberos);
+  ShowWindow(aadClientSecretLabel->GetHandle(), authTypeKerberos);
+  ShowWindow(aadTenantEdit->GetHandle(), authTypeKerberos);
+  ShowWindow(aadTenantLabel->GetHandle(), authTypeKerberos);
 }
 
 void DsnConfigurationWindow::OnLogLevelChanged() const {

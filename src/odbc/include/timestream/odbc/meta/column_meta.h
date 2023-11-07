@@ -32,6 +32,7 @@
 #include "timestream/odbc/utility.h"
 #include "timestream/odbc/app/application_data_buffer.h"
 
+/*@*/
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/timestream-query/model/ColumnInfo.h>
 #include <aws/timestream-query/model/ScalarType.h>

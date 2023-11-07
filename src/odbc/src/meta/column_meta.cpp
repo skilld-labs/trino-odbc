@@ -26,6 +26,7 @@
 #include "timestream/odbc/system/odbc_constants.h"
 #include "timestream/odbc/type_traits.h"
 
+/*@*/
 #include <aws/timestream-query/model/Type.h>
 
 namespace timestream {

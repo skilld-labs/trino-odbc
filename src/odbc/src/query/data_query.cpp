@@ -24,6 +24,7 @@
 #include "timestream/odbc/log.h"
 #include "ignite/odbc/odbc_error.h"
 
+/*@*/
 #include <aws/timestream-query/model/Type.h>
 #include <aws/timestream-query/model/CancelQueryRequest.h>
 

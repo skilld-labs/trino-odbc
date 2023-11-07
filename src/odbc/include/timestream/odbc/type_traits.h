@@ -31,6 +31,7 @@
 
 #include <boost/optional.hpp>
 #include <ignite/common/common.h>
+/*@*/
 #include <aws/timestream-query/model/ScalarType.h>
 
 using Aws::TimestreamQuery::Model::ScalarType;

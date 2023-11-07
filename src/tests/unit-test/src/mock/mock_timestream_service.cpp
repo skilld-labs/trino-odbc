@@ -14,6 +14,7 @@
  *
  */
 
+/*@*/
 #include <aws/core/Aws.h>
 #include <aws/timestream-query/model/QueryResult.h>
 #include <aws/timestream-query/TimestreamQueryErrors.h>

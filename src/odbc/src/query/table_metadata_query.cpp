@@ -20,6 +20,7 @@
 
 #include "timestream/odbc/query/table_metadata_query.h"
 
+/*@*/
 #include <aws/timestream-query/model/ScalarType.h>
 
 #include <vector>

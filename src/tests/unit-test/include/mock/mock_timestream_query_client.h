@@ -17,6 +17,7 @@
 #ifndef _MOCK_TIMESTREAM_QUERY_CLIENT
 #define _MOCK_TIMESTREAM_QUERY_CLIENT
 
+/*@*/
 #include <aws/core/Aws.h>
 #include <aws/core/auth/AWSCredentials.h>
 #include <aws/timestream-query/TimestreamQueryClient.h>

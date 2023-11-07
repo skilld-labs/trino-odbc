@@ -15,6 +15,7 @@
  */
 
 #include <mock/mock_httpclient.h>
+/*@*/
 #include <aws/core/http/standard/StandardHttpResponse.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 

@@ -30,6 +30,7 @@
 #include "timestream/odbc/timestream_column.h"
 #include "timestream/odbc/meta/column_meta.h"
 
+/*@*/
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/timestream-query/model/Row.h>
 

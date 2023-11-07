@@ -19,6 +19,7 @@
 #include <timestream/odbc/log.h>
 #include <timestream/odbc/log_level.h>
 
+/*@*/
 #include <aws/core/utils/logging/LogLevel.h>
 
 #include <boost/optional.hpp>

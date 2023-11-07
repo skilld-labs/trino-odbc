@@ -17,6 +17,7 @@
 #ifndef _IGNITE_ODBC_MOCK_HTTPCLIENT
 #define _IGNITE_ODBC_MOCK_HTTPCLIENT
 
+/*@*/
 #include <aws/core/Aws.h>
 #include "aws/core/http/HttpClient.h"
 

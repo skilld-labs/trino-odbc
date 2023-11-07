@@ -34,6 +34,7 @@
 #include "timestream/odbc/authentication/saml.h"
 #include "timestream/odbc/descriptor.h"
 
+/*@*/
 #include <aws/core/Aws.h>
 #include <aws/core/auth/AWSCredentials.h>
 #include <aws/timestream-query/TimestreamQueryClient.h>

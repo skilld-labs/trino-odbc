@@ -40,6 +40,7 @@
 #include "timestream/odbc/authentication/aad.h"
 #include "timestream/odbc/authentication/okta.h"
 
+/*@*/
 #include <aws/timestream-query/model/QueryRequest.h>
 #include <aws/timestream-query/model/QueryResult.h>
 #include <aws/core/utils/logging/LogLevel.h>
@@ -57,6 +58,7 @@ std::mutex Connection::mutex_;
 bool Connection::awsSDKReady_ = false;
 std::atomic< int > Connection::refCount_(0);
 
+/*$*/
 Connection::Connection(Environment* env)
     : env_(env), info_(config_), metadataID_(false) {
   LOG_DEBUG_MSG("Connection is called");

@@ -17,6 +17,7 @@
 #ifndef _IGNITE_ODBC_MOCK_STSCLIENT
 #define _IGNITE_ODBC_MOCK_STSCLIENT
 
+/*@*/
 #include "aws/sts/STSClient.h"
 
 using namespace Aws::STS;

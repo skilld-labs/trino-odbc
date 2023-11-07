@@ -17,6 +17,7 @@
 #ifndef _TIMESTREAM_ODBC_AUTHENTICATION_OKTA
 #define _TIMESTREAM_ODBC_AUTHENTICATION_OKTA
 
+/*@*/
 #include <aws/core/client/ClientConfiguration.h>
 
 #include "timestream/odbc/authentication/saml.h"

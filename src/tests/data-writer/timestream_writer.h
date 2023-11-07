@@ -17,6 +17,7 @@
 #ifndef _IGNITE_ODBC_TIMESTREAM_WRITER
 #define _IGNITE_ODBC_TIMESTREAM_WRITER
 
+/*@*/
 #include <aws/core/Aws.h>
 #include <aws/core/auth/AWSCredentials.h>
 #include <aws/timestream-write/TimestreamWriteClient.h>

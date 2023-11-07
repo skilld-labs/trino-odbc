@@ -16,6 +16,7 @@
 
 #include <iostream>
 
+/*@*/
 #include <aws/timestream-write/model/Record.h>
 #include <aws/timestream-write/model/MeasureValueType.h>
 

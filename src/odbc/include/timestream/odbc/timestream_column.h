@@ -24,6 +24,7 @@
 #include <stdint.h>
 #include <timestream/odbc/app/application_data_buffer.h>
 #include "timestream/odbc/meta/column_meta.h"
+/*@*/
 #include <aws/timestream-query/model/Row.h>
 
 using Aws::TimestreamQuery::Model::Datum;

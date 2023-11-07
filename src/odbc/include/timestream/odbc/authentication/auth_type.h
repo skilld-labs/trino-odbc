@@ -24,7 +24,8 @@ namespace timestream {
 namespace odbc {
 /** Auth Type enum. */
 struct IGNITE_IMPORT_EXPORT AuthType {
-  enum class Type { AWS_PROFILE, IAM, AAD, OKTA };
+  // enum class Type { AWS_PROFILE, IAM, AAD, OKTA };
+  enum class Type { PASSWORD, OAUTH2, KERBEROS, CERTIFICATE, JWT, HEADER };
 
   /**
    * Convert Auth Type from string.
@@ -33,7 +34,7 @@ struct IGNITE_IMPORT_EXPORT AuthType {
    * @param dflt Default value to return on error.
    * @return Corresponding enum value.
    */
-  static Type FromString(const std::string& val, Type dflt = Type::AWS_PROFILE);
+  static Type FromString(const std::string& val, Type dflt = Type::PASSWORD);
 
   /**
    * Convert Auth Type to string.
