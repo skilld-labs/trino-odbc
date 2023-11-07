@@ -215,7 +215,7 @@ void ReadDsnConfiguration(const char* dsn, Configuration& config,
 
   if (authType.IsSet() && !config.IsAuthTypeSet()) {
     AuthType::Type type =
-        AuthType::FromString(authType.GetValue(), AuthType::Type::AWS_PROFILE);
+        AuthType::FromString(authType.GetValue(), AuthType::Type::PASSWORD);
     config.SetAuthType(type);
   }
 

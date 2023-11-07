@@ -32,6 +32,7 @@
 #include "ignite/odbc/odbc_error.h"
 #include "timestream/odbc/log_level.h"
 
+/*$*/
 #define DEFAULT_DSN "Timestream DSN"
 #define DEFAULT_DRIVER "Amazon Timestream ODBC Driver"
 #define DEFAULT_UID ""

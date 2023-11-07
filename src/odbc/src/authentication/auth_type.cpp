@@ -19,61 +19,80 @@
 #include <timestream/odbc/utils.h>
 #include <timestream/odbc/utility.h>
 
+/*$*/
 namespace timestream {
 namespace odbc {
 AuthType::Type AuthType::FromString(const std::string& val, Type dflt) {
   std::string lowerVal = utility::Trim(timestream::odbc::common::ToLower(val));
 
-  if (lowerVal == "aws_profile")
-    return AuthType::Type::AWS_PROFILE;
+  if (lowerVal == "password")
+    return AuthType::Type::PASSWORD;
 
-  if (lowerVal == "iam")
-    return AuthType::Type::IAM;
+  if (lowerVal == "oauth2")
+    return AuthType::Type::OAUTH2;
 
-  if (lowerVal == "aad")
-    return AuthType::Type::AAD;
+  if (lowerVal == "kerberos")
+    return AuthType::Type::KERBEROS;
 
-  if (lowerVal == "okta")
-    return AuthType::Type::OKTA;
+  if (lowerVal == "certificate")
+    return AuthType::Type::CERTIFICATE;
+
+  if (lowerVal == "jwt")
+    return AuthType::Type::JWT;
+
+  if (lowerVal == "header")
+    return AuthType::Type::HEADER;
 
   return dflt;
 }
 
 std::string AuthType::ToString(Type val) {
   switch (val) {
-    case AuthType::Type::AWS_PROFILE:
-      return "aws_profile";
+    case AuthType::Type::PASSWORD:
+      return "password";
 
-    case AuthType::Type::IAM:
-      return "iam";
+    case AuthType::Type::OAUTH2:
+      return "oauth2";
 
-    case AuthType::Type::AAD:
-      return "aad";
+    case AuthType::Type::KERBEROS:
+      return "kerberos";
 
-    case AuthType::Type::OKTA:
-      return "okta";
+    case AuthType::Type::CERTIFICATE:
+      return "certificate";
+
+    case AuthType::Type::JWT:
+      return "jwt";
+
+    case AuthType::Type::HEADER:
+      return "header";
 
     default:
-      return "aws_profile";
+      return "password";
   }
 }
 
 std::wstring AuthType::ToCBString(Type val) {
   switch (val) {
-    case AuthType::Type::AWS_PROFILE:
-      return L"AWS Profile";
+    case AuthType::Type::PASSWORD:
+      return L"Password";
 
-    case AuthType::Type::IAM:
-      return L"AWS IAM Credentials";
+    case AuthType::Type::OAUTH2:
+      return L"Oauth2";
 
-    case AuthType::Type::AAD:
-      return L"Identitiy Provider: Azure AD";
+    case AuthType::Type::KERBEROS:
+      return L"Kerberos";
 
-    case AuthType::Type::OKTA:
-      return L"Identitiy Provider: Okta";
+    case AuthType::Type::CERTIFICATE:
+      return L"Certificate";
+
+    case AuthType::Type::JWT:
+      return L"JWT";
+
+    case AuthType::Type::HEADER:
+      return L"Header";
 
     default:
-      return L"AWS Profile";
+      return L"Password";
   }
 }
 }  // namespace odbc

@@ -23,7 +23,6 @@
 namespace timestream {
 namespace odbc {
 
-/*$*/
 bool TimestreamSAMLCredentialsProvider::FetchCredentialsWithSAMLAssertion(
     Aws::STS::Model::AssumeRoleWithSAMLRequest& samlRequest,
     Aws::Auth::AWSCredentials& awsCredentials, std::string& errInfo) {
@@ -56,7 +55,6 @@ bool TimestreamSAMLCredentialsProvider::GetAWSCredentials(
     Aws::Auth::AWSCredentials& credentials, std::string& errInfo) {
   LOG_DEBUG_MSG("GetAWSCredentials is called");
 
-  /*$*/
   std::string samlAsseration = GetSAMLAssertion(errInfo);
   bool retval = false;
   if (samlAsseration.empty()) {
