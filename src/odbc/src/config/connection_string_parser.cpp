@@ -47,6 +47,7 @@ const std::string ConnectionStringParser::Key::maxRetryCountClient =
     "maxretrycountclient";
 const std::string ConnectionStringParser::Key::maxConnections =
     "maxconnections";
+/*$*/
 const std::string ConnectionStringParser::Key::endpoint = "endpointoverride";
 const std::string ConnectionStringParser::Key::region = "region";
 const std::string ConnectionStringParser::Key::authType = "auth";
@@ -377,12 +378,13 @@ void ConnectionStringParser::HandleAttributePair(
   } else if (lKey == Key::authType) {
     AuthType::Type authType = AuthType::FromString(value);
 
+/*$*/
     std::string val = utility::Trim(timestream::odbc::common::ToLower(value));
-    if (val != "aws_profile" && authType == AuthType::Type::AWS_PROFILE) {
+    if (val != "password" && authType == AuthType::Type::PASSWORD) {
       if (diag) {
         diag->AddStatusRecord(SqlState::S01S02_OPTION_VALUE_CHANGED,
                               "Specified AUTH is not supported. "
-                              "Default value used ('AWS_PROFILE').");
+                              "Default value used ('PASSWORD').");
       }
       return;
     }

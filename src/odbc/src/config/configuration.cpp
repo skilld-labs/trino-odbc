@@ -134,6 +134,7 @@ void Configuration::SetDriver(const std::string& driverName) {
   this->driver.SetValue(driverName);
 }
 
+/*$*/
 const std::string& Configuration::GetDSNUserName() const {
   LOG_DEBUG_MSG("GetDSNUserName is called");
   if (!GetUid().empty())
@@ -512,7 +513,7 @@ void Configuration::ToMap(ArgumentMap& res) const {
 void Configuration::Validate() const {
   LOG_DEBUG_MSG("Validate is called");
   // Validate minimum required properties.
-
+/*$*/
   if ((GetAuthType() == timestream::odbc::AuthType::Type::OKTA)
       && (GetIdPHost().empty() || GetDSNUserName().empty()
           || GetDSNPassword().empty() || GetIdPArn().empty()
@@ -538,6 +539,7 @@ void Configuration::Validate() const {
         "AADAppId, RoleArn, IdpArn, AADTenant and AADClientSecret");
   }
 
+/*$*/
   if ((GetAuthType() == timestream::odbc::AuthType::Type::IAM)
       && (GetDSNUserName().empty() || GetDSNPassword().empty())) {
     throw ignite::odbc::OdbcError(

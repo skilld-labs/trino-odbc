@@ -93,6 +93,7 @@ class IGNITE_IMPORT_EXPORT ConnectionStringParser {
     /** Connection attribute keyword for idPArn attribute. */
     static const std::string idPArn;
 
+/*$*/
     /** Connection attribute keyword for oktaAppId attribute. */
     static const std::string oktaAppId;
 

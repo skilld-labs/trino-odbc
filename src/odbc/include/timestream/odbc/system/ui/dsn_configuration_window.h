@@ -36,6 +36,7 @@ class DsnConfigurationWindow : public CustomWindow {
   /**
    * Children windows ids.
    */
+  /*$*/
   struct ChildId {
     enum Type {
       NAME_EDIT = 100,
@@ -66,7 +67,7 @@ class DsnConfigurationWindow : public CustomWindow {
       IDP_ARN_LABEL,
       IDP_HOST_EDIT,
       IDP_HOST_LABEL,
-      OKTA_APP_ID_EDIT,
+      OKTA_APP_ID_EDIT, /*$*/
       OKTA_APP_ID_LABEL,
       AAD_APP_ID_EDIT,
       AAD_APP_ID_LABEL,
@@ -386,6 +387,7 @@ class DsnConfigurationWindow : public CustomWindow {
   /** IdP Host label. */
   std::unique_ptr< Window > idPHostLabel;
 
+/*$*/
   /** Okta Application Id edit. */
   std::unique_ptr< Window > oktaAppIdEdit;
 

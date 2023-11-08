@@ -1039,6 +1039,7 @@ void DsnConfigurationWindow::RetrieveBasicAuthParameters(
   // username and password intentionally not logged for security reasons
 }
 
+/*$*/
 void DsnConfigurationWindow::RetrieveAdvanceAuthParameters(
     config::Configuration& cfg) const {
   std::wstring authTypeWStr;

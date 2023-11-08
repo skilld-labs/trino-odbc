@@ -51,6 +51,7 @@
 #define DEFAULT_ENDPOINT ""
 #define DEFAULT_REGION "us-east-1"
 
+/*$*/
 #define DEFAULT_AUTH_TYPE AuthType::Type::PASSWORD
 #define DEFAULT_IDP_HOST ""
 #define DEFAULT_IDP_USER_NAME ""
@@ -136,6 +137,7 @@ class IGNITE_IMPORT_EXPORT Configuration {
     /** Default value for idPArn attribute. */
     static const std::string idPArn;
 
+/*$*/
     /** Default value for oktaAppId attribute. */
     static const std::string oktaAppId;
 
@@ -583,6 +585,7 @@ class IGNITE_IMPORT_EXPORT Configuration {
    */
   bool IsIdPArnSet() const;
 
+/*$*/
   /**
    * Get oktaAppId.
    *
@@ -845,6 +848,7 @@ class IGNITE_IMPORT_EXPORT Configuration {
   /** IdP ARN. */
   SettableValue< std::string > idPArn = DefaultValue::idPArn;
 
+/*$*/
   /** Okta Application ID. */
   SettableValue< std::string > oktaAppId = DefaultValue::oktaAppId;
 

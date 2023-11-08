@@ -19,7 +19,6 @@
 #include <timestream/odbc/utils.h>
 #include <timestream/odbc/utility.h>
 
-/*$*/
 namespace timestream {
 namespace odbc {
 AuthType::Type AuthType::FromString(const std::string& val, Type dflt) {

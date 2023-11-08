@@ -212,7 +212,7 @@ void ReadDsnConfiguration(const char* dsn, Configuration& config,
 
   SettableValue< std::string > authType =
       ReadDsnString(dsn, ConnectionStringParser::Key::authType);
-
+/*$*/
   if (authType.IsSet() && !config.IsAuthTypeSet()) {
     AuthType::Type type =
         AuthType::FromString(authType.GetValue(), AuthType::Type::PASSWORD);
