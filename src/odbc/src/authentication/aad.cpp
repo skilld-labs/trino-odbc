@@ -14,9 +14,9 @@
  *
  */
 
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/authentication/aad.h"
-#include "timestream/odbc/diagnostic/diagnosable_adapter.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/authentication/aad.h"
+#include "trino/odbc/diagnostic/diagnosable_adapter.h"
 
 /*@*/
 #include <aws/core/client/ClientConfiguration.h>
@@ -27,7 +27,7 @@
 #include <aws/core/http/standard/StandardHttpResponse.h>
 #include <aws/core/utils/Array.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 
 // Base64URL encoding table
@@ -41,7 +41,7 @@ const Aws::Utils::Base64::Base64 BASE64_URL =
 // The ASCII format for colon
 const std::string COLON = "%3A";
 
-std::string TimestreamAADCredentialsProvider::GetAccessToken(
+std::string TrinoAADCredentialsProvider::GetAccessToken(
     std::string& errInfo) {
   LOG_DEBUG_MSG("GetAccessToken is called");
 
@@ -110,7 +110,7 @@ std::string TimestreamAADCredentialsProvider::GetAccessToken(
   return accessToken;
 }
 
-std::string TimestreamAADCredentialsProvider::GetSAMLAssertion(
+std::string TrinoAADCredentialsProvider::GetSAMLAssertion(
     std::string& errInfo) {
   LOG_DEBUG_MSG("GetSAMLAssertion is called");
 
@@ -163,4 +163,4 @@ std::string TimestreamAADCredentialsProvider::GetSAMLAssertion(
 }
 
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

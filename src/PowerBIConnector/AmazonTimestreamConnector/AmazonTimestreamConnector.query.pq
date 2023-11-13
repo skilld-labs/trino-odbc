@@ -14,14 +14,14 @@
  *
  */
 
-section AmazonTimestreamConnectorUnitTests;
+section AmazonTrinoConnectorUnitTests;
 
-shared AmazonTimestreamConnector.UnitTest =
+shared AmazonTrinoConnector.UnitTest =
 [
     Region = "us-west-2",
     ProfileName = "default", // Enter profile here
     Token = "", // Enter session token here
-    Source = AmazonTimestreamConnector.Contents(Region, Token, ProfileName),
+    Source = AmazonTrinoConnector.Contents(Region, Token, ProfileName),
     PowerBI_DB = Source{[Name="PowerBI",Kind="Database"]}[Data],
     DevOpsOriginal = PowerBI_DB{[Name="DevOps", Kind="Table"]}[Data],
     

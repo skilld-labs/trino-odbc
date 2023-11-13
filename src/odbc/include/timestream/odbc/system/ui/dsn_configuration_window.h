@@ -18,14 +18,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_SYSTEM_UI_DSN_CONFIGURATION_WINDOW
-#define _TIMESTREAM_ODBC_SYSTEM_UI_DSN_CONFIGURATION_WINDOW
+#ifndef _TRINO_ODBC_SYSTEM_UI_DSN_CONFIGURATION_WINDOW
+#define _TRINO_ODBC_SYSTEM_UI_DSN_CONFIGURATION_WINDOW
 
-#include "timestream/odbc/config/configuration.h"
-#include "timestream/odbc/config/connection_info.h"
-#include "timestream/odbc/system/ui/custom_window.h"
+#include "trino/odbc/config/configuration.h"
+#include "trino/odbc/config/connection_info.h"
+#include "trino/odbc/system/ui/custom_window.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace system {
 namespace ui {
@@ -135,12 +135,12 @@ class DsnConfigurationWindow : public CustomWindow {
   void Create();
 
   /**
-   * @copedoc timestream::odbc::system::ui::CustomWindow::OnCreate
+   * @copedoc trino::odbc::system::ui::CustomWindow::OnCreate
    */
   virtual void OnCreate();
 
   /**
-   * @copedoc timestream::odbc::system::ui::CustomWindow::OnMessage
+   * @copedoc trino::odbc::system::ui::CustomWindow::OnMessage
    */
   virtual bool OnMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -487,6 +487,6 @@ class DsnConfigurationWindow : public CustomWindow {
 }  // namespace ui
 }  // namespace system
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_SYSTEM_UI_DSN_CONFIGURATION_WINDOW
+#endif  //_TRINO_ODBC_SYSTEM_UI_DSN_CONFIGURATION_WINDOW

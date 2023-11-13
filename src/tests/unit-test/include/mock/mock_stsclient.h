@@ -22,7 +22,7 @@
 
 using namespace Aws::STS;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /**
  * Mock Connection so function level test could be done against Connection.
@@ -50,6 +50,6 @@ class MockSTSClient : public STSClient {
       const Model::AssumeRoleWithSAMLRequest &request) const;
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
 #endif  //_IGNITE_ODBC_MOCK_STSCLIENT

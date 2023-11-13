@@ -19,26 +19,26 @@
  */
 
 #ifdef _WIN32
-#include "timestream/odbc/system/ui/dsn_configuration_window.h"
+#include "trino/odbc/system/ui/dsn_configuration_window.h"
 #endif
 
-#include <timestream/odbc/utils.h>
-#include <timestream/odbc/config/configuration.h>
-#include <timestream/odbc/config/connection_string_parser.h>
-#include <timestream/odbc/authentication/auth_type.h>
-#include <timestream/odbc/log.h>
-#include <timestream/odbc/log_level.h>
+#include <trino/odbc/utils.h>
+#include <trino/odbc/config/configuration.h>
+#include <trino/odbc/config/connection_string_parser.h>
+#include <trino/odbc/authentication/auth_type.h>
+#include <trino/odbc/log.h>
+#include <trino/odbc/log_level.h>
 #include <ignite/odbc/odbc_error.h>
 
 #include <boost/test/unit_test.hpp>
 #include <iostream>
 #include <set>
 
-#include "timestream/odbc/diagnostic/diagnostic_record_storage.h"
+#include "trino/odbc/diagnostic/diagnostic_record_storage.h"
 
-using namespace timestream::odbc;
-using namespace timestream::odbc::config;
-using timestream::odbc::common::EncodeURIComponent;
+using namespace trino::odbc;
+using namespace trino::odbc::config;
+using trino::odbc::common::EncodeURIComponent;
 using namespace boost::unit_test;
 
 namespace {
@@ -223,8 +223,8 @@ void CheckConnectionConfig(const Configuration& cfg) {
               << ';';
   const std::string& expectedStr = constructor.str();
 
-  BOOST_CHECK_EQUAL(timestream::odbc::common::ToLower(cfg.ToConnectString()),
-                    timestream::odbc::common::ToLower(expectedStr));
+  BOOST_CHECK_EQUAL(trino::odbc::common::ToLower(cfg.ToConnectString()),
+                    trino::odbc::common::ToLower(expectedStr));
 }
 
 void CheckDsnConfig(const Configuration& cfg) {
@@ -498,7 +498,7 @@ BOOST_AUTO_TEST_CASE(TestConnectStringInvalidAuthType) {
 }
 
 BOOST_AUTO_TEST_CASE(TestConnectStringValidAuthType) {
-  CheckValidAuthType("auth=aws_profile;", AuthType::Type::AWS_PROFILE);
+  CheckValidAuthType("auth=password;", AuthType::Type::PASSWORD);
   CheckValidAuthType("auth=iam;", AuthType::Type::IAM);
   CheckValidAuthType("auth=aad;", AuthType::Type::AAD);
   CheckValidAuthType("auth=okta;", AuthType::Type::OKTA);
@@ -583,7 +583,7 @@ BOOST_AUTO_TEST_CASE(TestDsnStringWhitespaces) {
 
 #ifdef _WIN32
 BOOST_AUTO_TEST_CASE(TestParseDriverVersion) {
-  using timestream::odbc::system::ui::DsnConfigurationWindow;
+  using trino::odbc::system::ui::DsnConfigurationWindow;
 
   BOOST_CHECK_EQUAL(
       DsnConfigurationWindow::GetParsedDriverVersion("02.00.0000"), L"V.2.0.0");

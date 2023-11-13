@@ -14,16 +14,16 @@
  *
  */
 
-#ifndef _TIMESTREAM_ODBC_AUTHENTICATION_AAD
-#define _TIMESTREAM_ODBC_AUTHENTICATION_AAD
+#ifndef _TRINO_ODBC_AUTHENTICATION_AAD
+#define _TRINO_ODBC_AUTHENTICATION_AAD
 
-#include "timestream/odbc/authentication/saml.h"
+#include "trino/odbc/authentication/saml.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 
-class IGNITE_IMPORT_EXPORT TimestreamAADCredentialsProvider
-    : public TimestreamSAMLCredentialsProvider {
+class IGNITE_IMPORT_EXPORT TrinoAADCredentialsProvider
+    : public TrinoSAMLCredentialsProvider {
  public:
   /**
    * Constructor.
@@ -32,11 +32,11 @@ class IGNITE_IMPORT_EXPORT TimestreamAADCredentialsProvider
    * @param httpClient Shared pointer to httpClient
    * @param stsClient Shared pointer to STSClient
    */
-  TimestreamAADCredentialsProvider(
+  TrinoAADCredentialsProvider(
       const config::Configuration& config,
       std::shared_ptr< Aws::Http::HttpClient > httpClient,
       std::shared_ptr< Aws::STS::STSClient > stsClient)
-      : TimestreamSAMLCredentialsProvider(config, httpClient, stsClient) {
+      : TrinoSAMLCredentialsProvider(config, httpClient, stsClient) {
     // No-op.
   }
 
@@ -57,6 +57,6 @@ class IGNITE_IMPORT_EXPORT TimestreamAADCredentialsProvider
 };
 
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_AUTHENTICATION_AAD
+#endif  //_TRINO_ODBC_AUTHENTICATION_AAD

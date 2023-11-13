@@ -18,14 +18,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <timestream/odbc/utils.h>
-#include <timestream/odbc/ignite_error.h>
+#include <trino/odbc/utils.h>
+#include <trino/odbc/ignite_error.h>
 
 #include <utility>
 
-using namespace timestream::odbc::common;
+using namespace trino::odbc::common;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 void IgniteError::ThrowIfNeeded(const IgniteError& err) {
   if (err.code != IGNITE_SUCCESS)
@@ -81,4 +81,4 @@ const char* IgniteError::what() const IGNITE_NO_THROW {
   return GetText();
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

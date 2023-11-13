@@ -18,24 +18,24 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_STATEMENT
-#define _TIMESTREAM_ODBC_STATEMENT
+#ifndef _TRINO_ODBC_STATEMENT
+#define _TRINO_ODBC_STATEMENT
 
 #include <stdint.h>
 
 #include <map>
 #include <memory>
 
-#include "timestream/odbc/app/application_data_buffer.h"
-#include "timestream/odbc/common_types.h"
-#include "timestream/odbc/diagnostic/diagnosable_adapter.h"
-#include "timestream/odbc/meta/column_meta.h"
-#include "timestream/odbc/query/query.h"
-#include "timestream/odbc/descriptor.h"
+#include "trino/odbc/app/application_data_buffer.h"
+#include "trino/odbc/common_types.h"
+#include "trino/odbc/diagnostic/diagnosable_adapter.h"
+#include "trino/odbc/meta/column_meta.h"
+#include "trino/odbc/query/query.h"
+#include "trino/odbc/descriptor.h"
 
-using timestream::odbc::query::Query;
+using trino::odbc::query::Query;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 struct StatementAttributes;
 class Connection;
@@ -727,6 +727,6 @@ class IGNITE_IMPORT_EXPORT Statement : public diagnostic::DiagnosableAdapter {
   Descriptor* ird;
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_STATEMENT
+#endif  //_TRINO_ODBC_STATEMENT

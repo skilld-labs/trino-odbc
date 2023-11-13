@@ -18,10 +18,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/query/type_info_query.h"
+#include "trino/odbc/query/type_info_query.h"
 
-#include "timestream/odbc/system/odbc_constants.h"
-#include "timestream/odbc/type_traits.h"
+#include "trino/odbc/system/odbc_constants.h"
+#include "trino/odbc/type_traits.h"
 
 namespace {
 struct ResultColumn {
@@ -109,13 +109,13 @@ struct ResultColumn {
 };
 }  // namespace
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace query {
 TypeInfoQuery::TypeInfoQuery(diagnostic::DiagnosableAdapter& diag,
                              int16_t sqlType)
-    : timestream::odbc::query::Query(
-        diag, timestream::odbc::query::QueryType::TYPE_INFO),
+    : trino::odbc::query::Query(
+        diag, trino::odbc::query::QueryType::TYPE_INFO),
       columnsMeta(),
       executed(false),
       fetched(false),
@@ -123,7 +123,7 @@ TypeInfoQuery::TypeInfoQuery(diagnostic::DiagnosableAdapter& diag,
       cursor(types.end()) {
   LOG_DEBUG_MSG("TypeInfoQuery constructor is called");
 
-  using namespace timestream::odbc::type_traits;
+  using namespace trino::odbc::type_traits;
 
   using meta::ColumnMeta;
   using meta::Nullability;
@@ -399,7 +399,7 @@ int64_t TypeInfoQuery::RowNumber() const {
   if (!executed || cursor == types.end()) {
     diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING,
                          "Cursor does not point to any data.",
-                         timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                         trino::odbc::LogLevel::Type::WARNING_LEVEL);
 
     LOG_DEBUG_MSG("Row number returned is 0.");
 
@@ -417,4 +417,4 @@ SqlResult::Type TypeInfoQuery::NextResultSet() {
 }
 }  // namespace query
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

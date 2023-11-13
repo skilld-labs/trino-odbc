@@ -19,11 +19,11 @@
 #define _IGNITE_ODBC_ODBC_ERROR
 
 #include <ignite/common/include/common/expected.h>
-#include <timestream/odbc/common_types.h>
+#include <trino/odbc/common_types.h>
 
 #include <string>
 
-using timestream::odbc::SqlState;
+using trino::odbc::SqlState;
 
 namespace ignite {
 namespace odbc {

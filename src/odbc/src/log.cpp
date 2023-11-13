@@ -30,19 +30,19 @@
 
 #include <cstdlib>
 
-#include "timestream/odbc/config/configuration.h"
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/log_level.h"
+#include "trino/odbc/config/configuration.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/log_level.h"
 
 using ignite::odbc::common::concurrent::CsLockGuard;
-using timestream::odbc::Logger;
-using timestream::odbc::config::Configuration;
+using trino::odbc::Logger;
+using trino::odbc::config::Configuration;
 
 // logger_ pointer will  initialized in first call to GetLoggerInstance
 std::shared_ptr< Logger > Logger::logger_;
 CriticalSection Logger::mutexForCreation;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 LogStream::LogStream(Logger* parent)
     : std::basic_ostream< char >(0), strbuf(), logger(parent) {
@@ -95,7 +95,7 @@ std::string Logger::CreateFileName() const {
   struct tm* locTime = localtime(&curTime);
   strftime(tStr, 1000, "%Y%m%d", locTime);
   std::string dateTime(tStr, std::find(tStr, tStr + 1000, '\0'));
-  std::string fileName("timestream_odbc_" + dateTime + ".log");
+  std::string fileName("trino_odbc_" + dateTime + ".log");
   return fileName;
 }
 
@@ -118,7 +118,7 @@ void Logger::SetLogPath(const std::string& path) {
   logPath = path;
   if (IsEnabled() && logLevel != LogLevel::Type::OFF) {
     LOG_INFO_MSG("Reset log path: Log path is changed to " + logPath
-                 + ". Log file is in format timestream_odbc_YYYYMMDD.log");
+                 + ". Log file is in format trino_odbc_YYYYMMDD.log");
 
     {
       // close file stream and erase log file name to allow new log file path
@@ -191,4 +191,4 @@ std::string& Logger::GetLogPath() {
   return logPath;
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

@@ -17,12 +17,12 @@
 #include <string>
 
 #include <odbc_unit_test_suite.h>
-#include <timestream/odbc/authentication/auth_type.h>
-#include <timestream/odbc/config/connection_string_parser.h>
+#include <trino/odbc/authentication/auth_type.h>
+#include <trino/odbc/config/connection_string_parser.h>
 
-using namespace timestream::odbc;
-using namespace timestream::odbc::config;
-using timestream::odbc::OdbcUnitTestSuite;
+using namespace trino::odbc;
+using namespace trino::odbc::config;
+using trino::odbc::OdbcUnitTestSuite;
 using namespace boost::unit_test;
 
 /**
@@ -39,21 +39,21 @@ struct ConnectionStringParserUnitTestSuiteFixture : OdbcUnitTestSuite {
   }
 };
 
-const AuthType::Type testAuthType = AuthType::FromString("Aws_Profile");
+const AuthType::Type testAuthType = AuthType::FromString("PASSWORD");
 const std::string profileName = "test-profile";
 
 BOOST_FIXTURE_TEST_SUITE(ConnectionStringParserTestSuite,
                          ConnectionStringParserUnitTestSuiteFixture)
 
 BOOST_AUTO_TEST_CASE(TestParsingCredentials) {
-  timestream::odbc::config::Configuration cfg;
+  trino::odbc::config::Configuration cfg;
 
   ConnectionStringParser parser(cfg);
 
   diagnostic::DiagnosticRecordStorage diag;
 
   std::string connectionString =
-            "driver={Amazon Timestream ODBC Driver};"
+            "driver={Amazon Trino ODBC Driver};"
             "auth=" + AuthType::ToString(testAuthType) + ";"
             "profileName=" + profileName + ";";
 
@@ -64,14 +64,14 @@ BOOST_AUTO_TEST_CASE(TestParsingCredentials) {
 }
 
 BOOST_AUTO_TEST_CASE(TestParsingNoProvider) {
-  timestream::odbc::config::Configuration cfg;
+  trino::odbc::config::Configuration cfg;
 
   ConnectionStringParser parser(cfg);
 
   diagnostic::DiagnosticRecordStorage diag;
 
   std::string connectionString =
-      "driver={Amazon Timestream ODBC Driver};"
+      "driver={Amazon Trino ODBC Driver};"
       "profileName="
       + profileName + ";";
 
@@ -82,14 +82,14 @@ BOOST_AUTO_TEST_CASE(TestParsingNoProvider) {
 }
 
 BOOST_AUTO_TEST_CASE(TestParsingEmptyCredentials) {
-  timestream::odbc::config::Configuration cfg;
+  trino::odbc::config::Configuration cfg;
 
   ConnectionStringParser parser(cfg);
 
   diagnostic::DiagnosticRecordStorage diag;
 
   std::string connectionString =
-            "driver={Amazon Timestream ODBC Driver};"
+            "driver={Amazon Trino ODBC Driver};"
             "auth=" + AuthType::ToString(testAuthType) + ";"
             "profileName=" + profileName + ";";
 
@@ -100,14 +100,14 @@ BOOST_AUTO_TEST_CASE(TestParsingEmptyCredentials) {
 }
 
 BOOST_AUTO_TEST_CASE(TestParsingRequestTimeout) {
-  timestream::odbc::config::Configuration cfg;
+  trino::odbc::config::Configuration cfg;
 
   ConnectionStringParser parser(cfg);
 
   diagnostic::DiagnosticRecordStorage diag;
 
   std::string connectionString =
-      "driver={Amazon Timestream ODBC Driver};"
+      "driver={Amazon Trino ODBC Driver};"
       "RequestTimeout=0;";
 
   BOOST_CHECK_NO_THROW(parser.ParseConnectionString(connectionString, &diag));
@@ -118,7 +118,7 @@ BOOST_AUTO_TEST_CASE(TestParsingRequestTimeout) {
                     "default value. [key='RequestTimeout', value='0']");
 
   connectionString =
-      "driver={Amazon Timestream ODBC Driver};"
+      "driver={Amazon Trino ODBC Driver};"
       "RequestTimeout=-1000;";
 
   BOOST_CHECK_NO_THROW(parser.ParseConnectionString(connectionString, &diag));
@@ -131,14 +131,14 @@ BOOST_AUTO_TEST_CASE(TestParsingRequestTimeout) {
 }
 
 BOOST_AUTO_TEST_CASE(TestParsingConnectionTimeout) {
-  timestream::odbc::config::Configuration cfg;
+  trino::odbc::config::Configuration cfg;
 
   ConnectionStringParser parser(cfg);
 
   diagnostic::DiagnosticRecordStorage diag;
 
   std::string connectionString =
-      "driver={Amazon Timestream ODBC Driver};"
+      "driver={Amazon Trino ODBC Driver};"
       "ConnectionTimeout=0;";
 
   BOOST_CHECK_NO_THROW(parser.ParseConnectionString(connectionString, &diag));
@@ -149,7 +149,7 @@ BOOST_AUTO_TEST_CASE(TestParsingConnectionTimeout) {
                     "default value. [key='ConnectionTimeout', value='0']");
 
   connectionString =
-      "driver={Amazon Timestream ODBC Driver};"
+      "driver={Amazon Trino ODBC Driver};"
       "ConnectionTimeout=-1000;";
 
   BOOST_CHECK_NO_THROW(parser.ParseConnectionString(connectionString, &diag));
@@ -162,14 +162,14 @@ BOOST_AUTO_TEST_CASE(TestParsingConnectionTimeout) {
 }
 
 BOOST_AUTO_TEST_CASE(TestParsingMaxRetryCountClient) {
-  timestream::odbc::config::Configuration cfg;
+  trino::odbc::config::Configuration cfg;
 
   ConnectionStringParser parser(cfg);
 
   diagnostic::DiagnosticRecordStorage diag;
 
   std::string connectionString =
-      "driver={Amazon Timestream ODBC Driver};"
+      "driver={Amazon Trino ODBC Driver};"
       "MaxRetryCountClient=-1000;";
 
   BOOST_CHECK_NO_THROW(parser.ParseConnectionString(connectionString, &diag));
@@ -182,14 +182,14 @@ BOOST_AUTO_TEST_CASE(TestParsingMaxRetryCountClient) {
 }
 
 BOOST_AUTO_TEST_CASE(TestParsingMaxConnections) {
-  timestream::odbc::config::Configuration cfg;
+  trino::odbc::config::Configuration cfg;
 
   ConnectionStringParser parser(cfg);
 
   diagnostic::DiagnosticRecordStorage diag;
 
   std::string connectionString =
-      "driver={Amazon Timestream ODBC Driver};"
+      "driver={Amazon Trino ODBC Driver};"
       "MaxConnections=0;";
 
   BOOST_CHECK_NO_THROW(parser.ParseConnectionString(connectionString, &diag));
@@ -200,7 +200,7 @@ BOOST_AUTO_TEST_CASE(TestParsingMaxConnections) {
                     "default value. [key='MaxConnections', value='0']");
 
   connectionString =
-      "driver={Amazon Timestream ODBC Driver};"
+      "driver={Amazon Trino ODBC Driver};"
       "MaxConnections=-1000;";
 
   BOOST_CHECK_NO_THROW(parser.ParseConnectionString(connectionString, &diag));

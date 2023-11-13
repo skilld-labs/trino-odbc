@@ -31,14 +31,14 @@
         
         <Directory Id='TARGETDIR' Name='SourceDir'>
             <Component Id='Driver' Guid='@WIX_COMPONENT_ID_ODBC_LIBRARY@' Win64='@WIX_COMPONENT_IS_WIN64@'>
-                <File Id='TimestreamOdbcDll' Name='timestream.odbc.dll' DiskId='1' Source='@WIX_ODBC_LIBRARY_PATH@' KeyPath='yes'/>
+                <File Id='TrinoOdbcDll' Name='trino.odbc.dll' DiskId='1' Source='@WIX_ODBC_LIBRARY_PATH@' KeyPath='yes'/>
 
-                <RegistryValue Root='HKLM' Key='Software\ODBC\ODBCINST.INI\ODBC Drivers' Name='Amazon Timestream ODBC Driver' Type='string' Value='Installed'/>
+                <RegistryValue Root='HKLM' Key='Software\ODBC\ODBCINST.INI\ODBC Drivers' Name='Amazon Trino ODBC Driver' Type='string' Value='Installed'/>
 
-                <RegistryKey Id='OdbcDriverRegInfo' Root='HKLM' Key='Software\ODBC\ODBCINST.INI\Amazon Timestream ODBC Driver' ForceCreateOnInstall='yes' ForceDeleteOnUninstall='yes'>
+                <RegistryKey Id='OdbcDriverRegInfo' Root='HKLM' Key='Software\ODBC\ODBCINST.INI\Amazon Trino ODBC Driver' ForceCreateOnInstall='yes' ForceDeleteOnUninstall='yes'>
                     <RegistryValue Type='string' Name='DriverODBCVer' Value='03.00'/>
-                    <RegistryValue Type='string' Name='Driver' Value='[#TimestreamOdbcDll]'/>
-                    <RegistryValue Type='string' Name='Setup' Value='[#TimestreamOdbcDll]'/>
+                    <RegistryValue Type='string' Name='Driver' Value='[#TrinoOdbcDll]'/>
+                    <RegistryValue Type='string' Name='Setup' Value='[#TrinoOdbcDll]'/>
                     <RegistryValue Type='integer' Name='UsageCount' Value='1'/>
                 </RegistryKey>
             </Component>
@@ -46,7 +46,7 @@
                 <File Id='sdk_core' Name='aws-cpp-sdk-core.dll' DiskId='1' Source='@WIX_ODBC_SDK_CORE_PATH@' KeyPath='yes'/>
             </Component>
 	    <Component Id='sdk_ts_query' Guid='@WIX_COMPONENT_ID_SDK_TS_QUERY@' Win64='@WIX_COMPONENT_IS_WIN64@'>
-                <File Id='sdk_ts_query' Name='aws-cpp-sdk-timestream-query.dll' DiskId='1' Source='@WIX_ODBC_SDK_TS_QUERY_PATH@' KeyPath='yes'/>
+                <File Id='sdk_ts_query' Name='aws-cpp-sdk-trino-query.dll' DiskId='1' Source='@WIX_ODBC_SDK_TS_QUERY_PATH@' KeyPath='yes'/>
             </Component>
 	    <Component Id='sdk_sts' Guid='@WIX_COMPONENT_ID_SDK_STS@' Win64='@WIX_COMPONENT_IS_WIN64@'>
                 <File Id='sdk_sts' Name='aws-cpp-sdk-sts.dll' DiskId='1' Source='@WIX_ODBC_SDK_STS_PATH@' KeyPath='yes'/>

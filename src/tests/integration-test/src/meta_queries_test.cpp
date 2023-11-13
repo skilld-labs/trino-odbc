@@ -31,16 +31,16 @@
 #include <string>
 #include <vector>
 
-#include "timestream/odbc/type_traits.h"
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/type_traits.h"
+#include "trino/odbc/utility.h"
 #include "odbc_test_suite.h"
 #include "test_utils.h"
 
-using namespace timestream;
-using namespace timestream_test;
-using namespace timestream::odbc;
-using namespace timestream::odbc::type_traits;
-using namespace timestream::odbc::utility;
+using namespace trino;
+using namespace trino_test;
+using namespace trino::odbc;
+using namespace trino::odbc::type_traits;
+using namespace trino::odbc::utility;
 
 using namespace boost::unit_test;
 
@@ -403,7 +403,7 @@ struct MetaQueriesTestSuiteFixture : public odbc::OdbcTestSuite {
     BOOST_CHECK_EQUAL(columnCount, 5);
 
     CheckColumnMetaWithSQLDescribeCol(stmt, 1, "device_id", SQL_VARCHAR,
-                                      TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                      TRINO_SQL_MAX_LENGTH, -1,
                                       SQL_NULLABLE_UNKNOWN);
     CheckColumnMetaWithSQLDescribeCol(stmt, 2, "time", SQL_TYPE_TIMESTAMP, 19,
                                       -1, SQL_NULLABLE_UNKNOWN);
@@ -493,7 +493,7 @@ struct MetaQueriesTestSuiteFixture : public odbc::OdbcTestSuite {
     BOOST_CHECK_EQUAL(columnCount, 5);
 
     CheckColumnMetaWithSQLColAttribute(stmt, 1, "device_id", SQL_VARCHAR,
-                                       TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                       TRINO_SQL_MAX_LENGTH, -1,
                                        SQL_NULLABLE_UNKNOWN);
     CheckColumnMetaWithSQLColAttribute(stmt, 2, "time", SQL_TYPE_TIMESTAMP, 19,
                                        -1, SQL_NULLABLE_UNKNOWN);
@@ -561,7 +561,7 @@ BOOST_AUTO_TEST_CASE(TestSQLDescribeColGetTypeInfo) {
   BOOST_REQUIRE_EQUAL(columnCount, 19);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 1, "TYPE_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 2, "DATA_TYPE", SQL_INTEGER, 10, 0,
@@ -571,15 +571,15 @@ BOOST_AUTO_TEST_CASE(TestSQLDescribeColGetTypeInfo) {
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 4, "LITERAL_PREFIX", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 5, "LITERAL_SUFFIX", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 6, "CREATE_PARAMS", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 7, "NULLABLE", SQL_INTEGER, 10, 0,
@@ -601,7 +601,7 @@ BOOST_AUTO_TEST_CASE(TestSQLDescribeColGetTypeInfo) {
                                     10, 0, SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 13, "LOCAL_TYPE_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 14, "MINIMUM_SCALE", SQL_INTEGER, 10,
@@ -935,9 +935,9 @@ BOOST_AUTO_TEST_CASE(TestColAttributeDescDisplaySize) {
   const SQLCHAR req1[] =
       "select device_id from meta_queries_test_db.TestColumnsMetadata1";
 
-  // SQL_VARCHAR should have display size TIMESTREAM_SQL_MAX_LENGTH
+  // SQL_VARCHAR should have display size TRINO_SQL_MAX_LENGTH
   callSQLColAttribute(stmt, req1, SQL_DESC_DISPLAY_SIZE,
-                      TIMESTREAM_SQL_MAX_LENGTH);
+                      TRINO_SQL_MAX_LENGTH);
 
   const SQLCHAR req2[] =
       "select cast(video_startup_time as int) from "
@@ -968,7 +968,7 @@ BOOST_AUTO_TEST_CASE(TestColAttributeDescDisplaySize) {
   const SQLCHAR req6[] =
       "select flag from meta_queries_test_db.TestColumnsMetadata1";
 
-  // SQL_BIT should have display size 20 for Timestream
+  // SQL_BIT should have display size 20 for Trino
   callSQLColAttribute(stmt, req6, SQL_DESC_DISPLAY_SIZE, 1);
 }
 
@@ -996,8 +996,8 @@ BOOST_AUTO_TEST_CASE(TestColAttributeDescLength) {
   const SQLCHAR req1[] =
       "select device_id from meta_queries_test_db.TestColumnsMetadata1";
 
-  // SQL_VARCHAR should have length TIMESTREAM_SQL_MAX_LENGTH
-  callSQLColAttribute(stmt, req1, SQL_DESC_LENGTH, TIMESTREAM_SQL_MAX_LENGTH);
+  // SQL_VARCHAR should have length TRINO_SQL_MAX_LENGTH
+  callSQLColAttribute(stmt, req1, SQL_DESC_LENGTH, TRINO_SQL_MAX_LENGTH);
 
   const SQLCHAR req2[] =
       "select cast(video_startup_time as int) from "
@@ -1157,9 +1157,9 @@ BOOST_AUTO_TEST_CASE(TestColAttributeDescOctetLength) {
   const SQLCHAR req1[] =
       "select device_id from meta_queries_test_db.TestColumnsMetadata1";
 
-  // SQL_VARCHAR should have octet length TIMESTREAM_SQL_MAX_LENGTH
+  // SQL_VARCHAR should have octet length TRINO_SQL_MAX_LENGTH
   callSQLColAttribute(stmt, req1, SQL_DESC_OCTET_LENGTH,
-                      TIMESTREAM_SQL_MAX_LENGTH);
+                      TRINO_SQL_MAX_LENGTH);
 
   const SQLCHAR req2[] =
       "select flag from meta_queries_test_db.TestColumnsMetadata1";
@@ -1193,9 +1193,9 @@ BOOST_AUTO_TEST_CASE(TestColAttributeDescPrecision) {
   const SQLCHAR req1[] =
       "select device_id from meta_queries_test_db.TestColumnsMetadata1";
 
-  // SQL_VARCHAR should have precision TIMESTREAM_SQL_MAX_LENGTH
+  // SQL_VARCHAR should have precision TRINO_SQL_MAX_LENGTH
   callSQLColAttribute(stmt, req1, SQL_DESC_PRECISION,
-                      TIMESTREAM_SQL_MAX_LENGTH);
+                      TRINO_SQL_MAX_LENGTH);
 
   const SQLCHAR req2[] =
       "select flag from meta_queries_test_db.TestColumnsMetadata1";
@@ -1471,26 +1471,26 @@ BOOST_AUTO_TEST_CASE(TestSQLDescribeColSQLColumns) {
   BOOST_REQUIRE_EQUAL(columnCount, 18);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 1, "TABLE_CAT", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 2, "TABLE_SCHEM", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 3, "TABLE_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 4, "COLUMN_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 5, "DATA_TYPE", SQL_INTEGER, 10, 0,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 6, "TYPE_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 7, "COLUMN_SIZE", SQL_INTEGER, 10, 0,
@@ -1509,11 +1509,11 @@ BOOST_AUTO_TEST_CASE(TestSQLDescribeColSQLColumns) {
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 12, "REMARKS", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 13, "COLUMN_DEF", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 14, "SQL_DATA_TYPE", SQL_INTEGER, 10,
@@ -1529,7 +1529,7 @@ BOOST_AUTO_TEST_CASE(TestSQLDescribeColSQLColumns) {
                                     10, 0, SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 18, "IS_NULLABLE", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 }
 
@@ -2172,13 +2172,13 @@ BOOST_AUTO_TEST_CASE(TestGetColumnsWithUnsupportedDatabase) {
     BOOST_REQUIRE_EQUAL(
         "01000: Empty result set is returned as catalog is set to \""
             + SqlWcharToString(database.data())
-            + "\" and Timestream does not have catalogs",
+            + "\" and Trino does not have catalogs",
         GetOdbcErrorMessage(SQL_HANDLE_STMT, stmt));
   } else {
     BOOST_REQUIRE_EQUAL(
         "01000: Empty result set is returned as schema is set to \""
             + SqlWcharToString(database.data())
-            + "\" and Timestream does not have schemas",
+            + "\" and Trino does not have schemas",
         GetOdbcErrorMessage(SQL_HANDLE_STMT, stmt));
   }
 }
@@ -2235,7 +2235,7 @@ BOOST_DATA_TEST_CASE_F(MetaQueriesTestSuiteFixture,
                        useIdentifier) {
   ConnectToTS();
 
-  // Timestream only has unicode support for column name,
+  // Trino only has unicode support for column name,
   // and database/table name does not have unicode support.
   std::string dbNameStr = "meta_queries_test_db";
   std::vector< SQLWCHAR > table = MakeSqlBuffer("TestColumnsMetadata1");
@@ -2861,11 +2861,11 @@ BOOST_AUTO_TEST_CASE(TestGetDatabasesWithSQLTables) {
       BOOST_FAIL(GetOdbcErrorMessage(SQL_HANDLE_STMT, stmt));
 
     CheckColumnMetaWithSQLDescribeCol(stmt, 1, "TABLE_CAT", SQL_VARCHAR,
-                                      TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                      TRINO_SQL_MAX_LENGTH, -1,
                                       SQL_NULLABLE);
 
     CheckColumnMetaWithSQLDescribeCol(stmt, 2, "TABLE_SCHEM", SQL_VARCHAR,
-                                      TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                      TRINO_SQL_MAX_LENGTH, -1,
                                       SQL_NO_NULLS);
   } else {
     columnIndex = 1;
@@ -2878,24 +2878,24 @@ BOOST_AUTO_TEST_CASE(TestGetDatabasesWithSQLTables) {
       BOOST_FAIL(GetOdbcErrorMessage(SQL_HANDLE_STMT, stmt));
 
     CheckColumnMetaWithSQLDescribeCol(stmt, 1, "TABLE_CAT", SQL_VARCHAR,
-                                      TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                      TRINO_SQL_MAX_LENGTH, -1,
                                       SQL_NO_NULLS);
 
     CheckColumnMetaWithSQLDescribeCol(stmt, 2, "TABLE_SCHEM", SQL_VARCHAR,
-                                      TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                      TRINO_SQL_MAX_LENGTH, -1,
                                       SQL_NULLABLE);
   }
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 3, "TABLE_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 4, "TABLE_TYPE", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 5, "REMARKS", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   SQLSMALLINT columnCount = 0;
@@ -3012,7 +3012,7 @@ BOOST_AUTO_TEST_CASE(TestGetDataWithTablesReturnsNone) {
 
   if (DATABASE_AS_SCHEMA) {
     // test that no data is returned for a list of catalog
-    // Note that Timestream does not have catalogs
+    // Note that Trino does not have catalogs
     std::vector< SQLWCHAR > catalog = MakeSqlBuffer(SQL_ALL_CATALOGS);
     ret = SQLTables(stmt, catalog.data(), SQL_NTS, empty.data(), SQL_NTS,
                     empty.data(), SQL_NTS, empty.data(), SQL_NTS);
@@ -3022,7 +3022,7 @@ BOOST_AUTO_TEST_CASE(TestGetDataWithTablesReturnsNone) {
 
     BOOST_REQUIRE_EQUAL(
         "01000: Empty result set is returned for a list of catalogs "
-        "because Timestream does not have catalogs",
+        "because Trino does not have catalogs",
         GetOdbcErrorMessage(SQL_HANDLE_STMT, stmt));
 
     ret = SQLFetch(stmt);
@@ -3030,7 +3030,7 @@ BOOST_AUTO_TEST_CASE(TestGetDataWithTablesReturnsNone) {
     BOOST_REQUIRE_EQUAL(ret, SQL_NO_DATA);
   } else {
     // test that no data is returned for a list of schemas
-    // Note that Timestream does not have schemas
+    // Note that Trino does not have schemas
     std::vector< SQLWCHAR > schema = MakeSqlBuffer(SQL_ALL_SCHEMAS);
     ret = SQLTables(stmt, empty.data(), SQL_NTS, schema.data(), SQL_NTS,
                     empty.data(), SQL_NTS, empty.data(), SQL_NTS);
@@ -3040,7 +3040,7 @@ BOOST_AUTO_TEST_CASE(TestGetDataWithTablesReturnsNone) {
 
     BOOST_REQUIRE_EQUAL(
         "01000: Empty result set is returned for a list of schemas "
-        "because Timestream does not have schemas",
+        "because Trino does not have schemas",
         GetOdbcErrorMessage(SQL_HANDLE_STMT, stmt));
 
     ret = SQLFetch(stmt);
@@ -3192,9 +3192,9 @@ BOOST_AUTO_TEST_CASE(TestSQLColumnWithSQLBindCols) {
   BOOST_CHECK_EQUAL(false, WasNull(type_name_len));
   BOOST_CHECK_EQUAL("VARCHAR", type_name);  // TYPE_NAME
   BOOST_CHECK_EQUAL(false, WasNull(column_size_len));
-  BOOST_CHECK_EQUAL(TIMESTREAM_SQL_MAX_LENGTH, column_size);  // COLUMN_SIZE
+  BOOST_CHECK_EQUAL(TRINO_SQL_MAX_LENGTH, column_size);  // COLUMN_SIZE
   BOOST_CHECK_EQUAL(false, WasNull(buffer_length_len));
-  BOOST_CHECK_EQUAL(TIMESTREAM_SQL_MAX_LENGTH, buffer_length);  // BUFFER_LENGTH
+  BOOST_CHECK_EQUAL(TRINO_SQL_MAX_LENGTH, buffer_length);  // BUFFER_LENGTH
   BOOST_CHECK_EQUAL(true, WasNull(decimal_digits_len));
   BOOST_CHECK_EQUAL(0, decimal_digits);  // DECIMAL_DIGITS
   BOOST_CHECK_EQUAL(false, WasNull(num_prec_radix_len));
@@ -3210,7 +3210,7 @@ BOOST_AUTO_TEST_CASE(TestSQLColumnWithSQLBindCols) {
   BOOST_CHECK_EQUAL(true, WasNull(sql_datetime_sub_len));
   BOOST_CHECK_EQUAL(0, sql_datetime_sub);  // SQL_DATETIME_SUB
   BOOST_CHECK_EQUAL(false, WasNull(char_octet_length_len));
-  BOOST_CHECK_EQUAL(TIMESTREAM_SQL_MAX_LENGTH,
+  BOOST_CHECK_EQUAL(TRINO_SQL_MAX_LENGTH,
                     char_octet_length);  // CHAR_OCTET_LENGTH
   BOOST_CHECK_EQUAL(false, WasNull(ordinal_position_len));
   BOOST_CHECK_EQUAL(1, ordinal_position);  // ORDINAL_POSITION
@@ -3312,23 +3312,23 @@ BOOST_AUTO_TEST_CASE(TestSQLDescribeColSQLTablesODBCVer3) {
   BOOST_CHECK_EQUAL(columnCount, 5);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 1, "TABLE_CAT", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 2, "TABLE_SCHEM", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 3, "TABLE_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 4, "TABLE_TYPE", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 5, "REMARKS", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 }
 
@@ -3354,23 +3354,23 @@ BOOST_AUTO_TEST_CASE(TestSQLDescribeColSQLTablesODBCVer2) {
   BOOST_CHECK_EQUAL(columnCount, 5);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 1, "TABLE_QUALIFIER", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 2, "TABLE_OWNER", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 3, "TABLE_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 4, "TABLE_TYPE", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 5, "REMARKS", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 }
 
@@ -3400,35 +3400,35 @@ BOOST_AUTO_TEST_CASE(TestSQLForeignKeys) {
   BOOST_REQUIRE_EQUAL(columnCount, 14);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 1, "PKTABLE_CAT", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 2, "PKTABLE_SCHEM", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 3, "PKTABLE_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 4, "PKCOLUMN_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 5, "FKTABLE_CAT", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 6, "FKTABLE_SCHEM", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 7, "FKTABLE_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 8, "FKCOLUMN_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 9, "KEY_SEQ", SQL_INTEGER, 10, 0,
@@ -3441,11 +3441,11 @@ BOOST_AUTO_TEST_CASE(TestSQLForeignKeys) {
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 12, "FK_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 13, "PK_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 14, "DEFERRABILITY", SQL_INTEGER, 10,
@@ -3478,26 +3478,26 @@ BOOST_AUTO_TEST_CASE(TestSQLPrimaryKeys) {
   BOOST_REQUIRE_EQUAL(columnCount, 6);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 1, "TABLE_CAT", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 2, "TABLE_SCHEM", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 3, "TABLE_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 4, "COLUMN_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 5, "KEY_SEQ", SQL_INTEGER, 10, 0,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 6, "PK_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   // Check SQL_NO_DATA is returned for SQLPrimaryKeys
@@ -3540,14 +3540,14 @@ BOOST_AUTO_TEST_CASE(TestSQLSpecialColumns) {
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 2, "COLUMN_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 3, "DATA_TYPE", SQL_INTEGER, 10, 0,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 4, "TYPE_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 5, "COLUMN_SIZE", SQL_INTEGER, 10, 0,
@@ -3597,26 +3597,26 @@ BOOST_AUTO_TEST_CASE(TestSQLStatisticsODBCVer3) {
   BOOST_REQUIRE_EQUAL(columnCount, 13);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 1, "TABLE_CAT", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 2, "TABLE_SCHEM", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 3, "TABLE_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 4, "NON_UNIQUE", SQL_INTEGER, 10, 0,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 5, "INDEX_QUALIFIER", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 6, "INDEX_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 7, "TYPE", SQL_INTEGER, 10, 0,
@@ -3626,11 +3626,11 @@ BOOST_AUTO_TEST_CASE(TestSQLStatisticsODBCVer3) {
                                     10, 0, SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 9, "COLUMN_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 10, "ASC_OR_DESC", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 11, "CARDINALITY", SQL_INTEGER, 10, 0,
@@ -3640,7 +3640,7 @@ BOOST_AUTO_TEST_CASE(TestSQLStatisticsODBCVer3) {
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 13, "FILTER_CONDITION", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   // Check SQL_NO_DATA is returned for SQLStatistics
@@ -3680,18 +3680,18 @@ BOOST_AUTO_TEST_CASE(TestSQLStatisticsODBCVer2) {
 
   // Only check items that are different in ODBC Ver 2.0
   CheckColumnMetaWithSQLDescribeCol(stmt, 1, "TABLE_QUALIFIER", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 2, "TABLE_OWNER", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 8, "SEQ_IN_INDEX", SQL_INTEGER, 10, 0,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 10, "COLLATION", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   // Check SQL_NO_DATA is returned for SQLStatistics
@@ -3731,19 +3731,19 @@ BOOST_AUTO_TEST_CASE(TestSQLProcedureColumns) {
   BOOST_REQUIRE_EQUAL(columnCount, 19);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 1, "PROCEDURE_CAT", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 2, "PROCEDURE_SCHEM", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 3, "PROCEDURE_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 4, "COLUMN_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 5, "COLUMN_TYPE", SQL_INTEGER, 10, 0,
@@ -3753,7 +3753,7 @@ BOOST_AUTO_TEST_CASE(TestSQLProcedureColumns) {
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 7, "TYPE_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 8, "COLUMN_SIZE", SQL_INTEGER, 10, 0,
@@ -3772,11 +3772,11 @@ BOOST_AUTO_TEST_CASE(TestSQLProcedureColumns) {
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 13, "REMARKS", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 14, "COLUMN_DEF", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 15, "SQL_DATA_TYPE", SQL_INTEGER, 10,
@@ -3792,7 +3792,7 @@ BOOST_AUTO_TEST_CASE(TestSQLProcedureColumns) {
                                     10, 0, SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 19, "IS_NULLABLE", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   // Check SQL_NO_DATA is returned for TestSQLProcedureColumns
@@ -3830,31 +3830,31 @@ BOOST_AUTO_TEST_CASE(TestSQLProcedures) {
   BOOST_REQUIRE_EQUAL(columnCount, 8);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 1, "PROCEDURE_CAT", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 2, "PROCEDURE_SCHEM", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 3, "PROCEDURE_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 4, "NUM_INPUT_PARAMS", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 5, "NUM_OUTPUT_PARAMS", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 6, "NUM_RESULT_SETS", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 7, "REMARKS", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 8, "PROCEDURE_TYPE", SQL_INTEGER, 10,
@@ -3898,35 +3898,35 @@ BOOST_AUTO_TEST_CASE(TestSQLColumnPrivileges) {
   BOOST_REQUIRE_EQUAL(columnCount, 8);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 1, "TABLE_CAT", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 2, "TABLE_SCHEM", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 3, "TABLE_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 4, "COLUMN_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 5, "GRANTOR", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 6, "GRANTEE", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 7, "PRIVILEGE", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 8, "IS_GRANTABLE", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   // Check SQL_NO_DATA is returned for SQLColumnPrivileges
@@ -3963,31 +3963,31 @@ BOOST_AUTO_TEST_CASE(TestSQLTablePrivileges) {
   BOOST_REQUIRE_EQUAL(columnCount, 7);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 1, "TABLE_CAT", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 2, "TABLE_SCHEM", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 3, "TABLE_NAME", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 4, "GRANTOR", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 5, "GRANTEE", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 6, "PRIVILEGE", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NO_NULLS);
 
   CheckColumnMetaWithSQLDescribeCol(stmt, 7, "IS_GRANTABLE", SQL_VARCHAR,
-                                    TIMESTREAM_SQL_MAX_LENGTH, -1,
+                                    TRINO_SQL_MAX_LENGTH, -1,
                                     SQL_NULLABLE);
 
   // Check SQL_NO_DATA is returned for SQLTablePrivileges
@@ -4252,9 +4252,9 @@ BOOST_AUTO_TEST_CASE(TestColAttributesODBC2ColumnDisplaySize) {
   const SQLCHAR req1[] =
       "select device_id from meta_queries_test_db.TestColumnsMetadata1";
 
-  // SQL_VARCHAR should have display size TIMESTREAM_SQL_MAX_LENGTH
+  // SQL_VARCHAR should have display size TRINO_SQL_MAX_LENGTH
   callSQLColAttributes(stmt, req1, SQL_COLUMN_DISPLAY_SIZE,
-                       TIMESTREAM_SQL_MAX_LENGTH);
+                       TRINO_SQL_MAX_LENGTH);
 }
 
 BOOST_AUTO_TEST_CASE(TestColAttributesODBC2ColumnLabel) {
@@ -4272,9 +4272,9 @@ BOOST_AUTO_TEST_CASE(TestColAttributesODBC2ColumnLength) {
   const SQLCHAR req1[] =
       "select device_id from meta_queries_test_db.TestColumnsMetadata1";
 
-  // SQL_VARCHAR should have length TIMESTREAM_SQL_MAX_LENGTH
+  // SQL_VARCHAR should have length TRINO_SQL_MAX_LENGTH
   callSQLColAttributes(stmt, req1, SQL_COLUMN_LENGTH,
-                       TIMESTREAM_SQL_MAX_LENGTH);
+                       TRINO_SQL_MAX_LENGTH);
 }
 
 BOOST_AUTO_TEST_CASE(TestColAttributesODBC2ColumnFixedPrecScale) {
@@ -4326,9 +4326,9 @@ BOOST_AUTO_TEST_CASE(TestColAttributesODBC2ColumnPrecision) {
   const SQLCHAR req1[] =
       "select device_id from meta_queries_test_db.TestColumnsMetadata1";
 
-  // SQL_VARCHAR should have precision TIMESTREAM_SQL_MAX_LENGTH
+  // SQL_VARCHAR should have precision TRINO_SQL_MAX_LENGTH
   callSQLColAttributes(stmt, req1, SQL_COLUMN_PRECISION,
-                       TIMESTREAM_SQL_MAX_LENGTH);
+                       TRINO_SQL_MAX_LENGTH);
 }
 
 BOOST_AUTO_TEST_CASE(TestColAttributesODBC2ColumnQualifierName) {

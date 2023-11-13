@@ -18,27 +18,27 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_QUERY_DATA_QUERY
-#define _TIMESTREAM_ODBC_QUERY_DATA_QUERY
+#ifndef _TRINO_ODBC_QUERY_DATA_QUERY
+#define _TRINO_ODBC_QUERY_DATA_QUERY
 
-#include "timestream/odbc/timestream_cursor.h"
-#include "timestream/odbc/query/query.h"
-#include "timestream/odbc/connection.h"
+#include "trino/odbc/trino_cursor.h"
+#include "trino/odbc/query/query.h"
+#include "trino/odbc/connection.h"
 
 /*@*/
-#include <aws/timestream-query/model/QueryRequest.h>
-#include <aws/timestream-query/model/QueryResult.h>
-#include <aws/timestream-query/model/ColumnInfo.h>
+#include <aws/trino-query/model/QueryRequest.h>
+#include <aws/trino-query/model/QueryResult.h>
+#include <aws/trino-query/model/ColumnInfo.h>
 
 #include <queue>
 #include <mutex>
 #include <condition_variable>
 
-using Aws::TimestreamQuery::Model::ColumnInfo;
-using Aws::TimestreamQuery::Model::QueryRequest;
-using Aws::TimestreamQuery::Model::QueryResult;
+using Aws::TrinoQuery::Model::ColumnInfo;
+using Aws::TrinoQuery::Model::QueryRequest;
+using Aws::TrinoQuery::Model::QueryResult;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /** Connection forward-declaration. */
 class Connection;
@@ -61,7 +61,7 @@ class IGNITE_IMPORT_EXPORT DataQueryContext {
   std::condition_variable cv_;
 
   /** queue to save query execution outcome objects. */
-  std::queue< Aws::TimestreamQuery::Model::QueryOutcome > queue_;
+  std::queue< Aws::TrinoQuery::Model::QueryOutcome > queue_;
 
   /** Flag to indicate if the main thread is exiting or not. */
   bool isClosing_;
@@ -70,7 +70,7 @@ class IGNITE_IMPORT_EXPORT DataQueryContext {
 /**
  * Query.
  */
-class IGNITE_IMPORT_EXPORT DataQuery : public timestream::odbc::query::Query {
+class IGNITE_IMPORT_EXPORT DataQuery : public trino::odbc::query::Query {
  public:
   /**
    * Constructor.
@@ -213,9 +213,9 @@ class IGNITE_IMPORT_EXPORT DataQuery : public timestream::odbc::query::Query {
   SqlResult::Type FetchOnePage(bool isFirst);
 
   /**
-   * Set result set meta by reading AWS Timestream column metadata vector.
+   * Set result set meta by reading AWS Trino column metadata vector.
    *
-   * @param tsVector Aws::TimestreamQuery::Model::ColumnInfo vector.
+   * @param tsVector Aws::TrinoQuery::Model::ColumnInfo vector.
    */
   void ReadColumnMetadataVector(const Aws::Vector< ColumnInfo >& tsVector);
 
@@ -280,10 +280,10 @@ class IGNITE_IMPORT_EXPORT DataQuery : public timestream::odbc::query::Query {
   std::shared_ptr< QueryResult > result_;
 
   /** Cursor. */
-  std::unique_ptr< TimestreamCursor > cursor_;
+  std::unique_ptr< TrinoCursor > cursor_;
 
-  /** Timestream query client. */
-  std::shared_ptr< Aws::TimestreamQuery::TimestreamQueryClient > queryClient_;
+  /** Trino query client. */
+  std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > queryClient_;
 
   /** Context for asynchornous result fetching. */
   DataQueryContext context_;
@@ -299,6 +299,6 @@ class IGNITE_IMPORT_EXPORT DataQuery : public timestream::odbc::query::Query {
 };
 }  // namespace query
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_QUERY_DATA_QUERY
+#endif  //_TRINO_ODBC_QUERY_DATA_QUERY

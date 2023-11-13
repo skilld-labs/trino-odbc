@@ -18,21 +18,21 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/dsn_config.h"
-#include "timestream/odbc/config/connection_string_parser.h"
-#include <timestream/odbc/authentication/auth_type.h>
-#include <timestream/odbc/log_level.h>
-#include <timestream/odbc/log.h>
-#include "timestream/odbc/system/odbc_constants.h"
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/dsn_config.h"
+#include "trino/odbc/config/connection_string_parser.h"
+#include <trino/odbc/authentication/auth_type.h>
+#include <trino/odbc/log_level.h>
+#include <trino/odbc/log.h>
+#include "trino/odbc/system/odbc_constants.h"
+#include "trino/odbc/utility.h"
 
-using namespace timestream::odbc::config;
-using namespace timestream::odbc::utility;
+using namespace trino::odbc::config;
+using namespace trino::odbc::utility;
 
 #define BUFFER_SIZE (1024 * 1024)
 #define CONFIG_FILE u8"ODBC.INI"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 void GetLastSetupError(IgniteError& error) {
   DWORD code;
@@ -113,7 +113,7 @@ SettableValue< int32_t > ReadDsnInt(const char* dsn, const std::string& key,
   SettableValue< int32_t > res(dflt);
 
   if (str.IsSet())
-    res.SetValue(timestream::odbc::common::LexicalCast< int, std::string >(
+    res.SetValue(trino::odbc::common::LexicalCast< int, std::string >(
         str.GetValue()));
 
   LOG_DEBUG_MSG("res is " << res.GetValue());
@@ -150,11 +150,11 @@ void ReadDsnConfiguration(const char* dsn, Configuration& config,
   if (pwd.IsSet() && !config.IsPwdSet())
     config.SetPwd(pwd.GetValue());
 
-  SettableValue< std::string > accessKeyId =
-      ReadDsnString(dsn, ConnectionStringParser::Key::accessKeyId);
+  // SettableValue< std::string > accessKeyId =
+      // ReadDsnString(dsn, ConnectionStringParser::Key::accessKeyId);
 
-  if (accessKeyId.IsSet() && !config.IsAccessKeyIdSet())
-    config.SetAccessKeyId(accessKeyId.GetValue());
+  // if (accessKeyId.IsSet() && !config.IsAccessKeyIdSet())
+  //   config.SetAccessKeyId(accessKeyId.GetValue());
 
   SettableValue< std::string > secretKey =
       ReadDsnString(dsn, ConnectionStringParser::Key::secretKey);
@@ -313,8 +313,8 @@ bool DeleteDsnConfiguration(const std::string dsn, IgniteError& error) {
 bool RegisterDsn(const Configuration& config, const LPCSTR driver,
                  IgniteError& error) {
   LOG_DEBUG_MSG("RegisterDsn is called");
-  using namespace timestream::odbc::config;
-  using timestream::odbc::common::LexicalCast;
+  using namespace trino::odbc::config;
+  using trino::odbc::common::LexicalCast;
 
   typedef Configuration::ArgumentMap ArgMap;
 
@@ -356,4 +356,4 @@ bool UnregisterDsn(const std::string& dsn, IgniteError& error) {
   return true;
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

@@ -16,7 +16,7 @@
 
 #include <mock/mock_statement.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 MockStatement::MockStatement(Connection& parent) : Statement(parent) {
   // No-op.
@@ -26,4 +26,4 @@ MockStatement::~MockStatement() {
   // No-op.
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

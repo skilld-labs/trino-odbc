@@ -18,14 +18,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_ENVIRONMENT
-#define _TIMESTREAM_ODBC_ENVIRONMENT
+#ifndef _TRINO_ODBC_ENVIRONMENT
+#define _TRINO_ODBC_ENVIRONMENT
 
 #include <set>
 
-#include "timestream/odbc/diagnostic/diagnosable_adapter.h"
+#include "trino/odbc/diagnostic/diagnosable_adapter.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 class Connection;
 
@@ -123,6 +123,6 @@ class IGNITE_IMPORT_EXPORT Environment : public diagnostic::DiagnosableAdapter {
   int32_t odbcNts;
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_ENVIRONMENT
+#endif  //_TRINO_ODBC_ENVIRONMENT

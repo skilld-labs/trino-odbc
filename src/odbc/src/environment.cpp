@@ -18,14 +18,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/environment.h"
+#include "trino/odbc/environment.h"
 
 #include <cstdlib>
 
-#include "timestream/odbc/connection.h"
-#include "timestream/odbc/system/odbc_constants.h"
+#include "trino/odbc/connection.h"
+#include "trino/odbc/system/odbc_constants.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 Environment::Environment()
     : connections(), odbcVersion(SQL_OV_ODBC3), odbcNts(SQL_TRUE) {
@@ -88,7 +88,7 @@ SqlResult::Type Environment::InternalSetAttribute(int32_t attr, void* value,
            << ") will be used.";
 
         AddStatusRecord(SqlState::S01S02_OPTION_VALUE_CHANGED, ss.str().data(),
-                        timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                        trino::odbc::LogLevel::Type::WARNING_LEVEL);
 
         return SqlResult::AI_SUCCESS_WITH_INFO;
       }
@@ -102,7 +102,7 @@ SqlResult::Type Environment::InternalSetAttribute(int32_t attr, void* value,
       if (nts != odbcNts) {
         AddStatusRecord(SqlState::S01S02_OPTION_VALUE_CHANGED,
                         "Only null-termination of strings is supported.",
-                        timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                        trino::odbc::LogLevel::Type::WARNING_LEVEL);
 
         return SqlResult::AI_SUCCESS_WITH_INFO;
       }
@@ -155,4 +155,4 @@ SqlResult::Type Environment::InternalGetAttribute(
   return SqlResult::AI_ERROR;
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

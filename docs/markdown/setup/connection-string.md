@@ -1,4 +1,4 @@
-# Connection String Properties on New Timestream ODBC Driver
+# Connection String Properties on New Trino ODBC Driver
 
 ## Topics
 - [Driver Connection Options](#driver-connection-options)
@@ -11,7 +11,7 @@
 - [Logging Options](#logging-options)
 - [Environment Variables At Connection](#environment-variables-at-connection)
     - [AWS SDK Log Level](#aws-sdk-log-level)
-- [Connecting to an Amazon Timestream Database](#connecting-to-an-amazon-timestream-database)
+- [Connecting to an Amazon Trino Database](#connecting-to-an-amazon-trino-database)
     - [Connecting With IAM Credentials](#connecting-with-iam-credentials)
     - [Connecting With Profile](#connecting-with-profile)
     - [Connecting With OKTA](#connecting-with-okta)
@@ -21,12 +21,12 @@
 - [Window Dialog](#window-dialog)
 
 # Connection String Syntax and Options
-`DRIVER={Amazon Timestream ODBC Driver};<option>=<value>;`
+`DRIVER={Amazon Trino ODBC Driver};<option>=<value>;`
 
 ### Driver Connection Options
 | Option | Description | Default |
 |--------|-------------|---------------|
-| `Driver` | Required: the driver for this ODBC driver. | Amazon Timestream 
+| `Driver` | Required: the driver for this ODBC driver. | Amazon Trino 
 | `DSN` | Data Source Name used for configuring the connection. | `NONE`
 | `Auth` | Authentication mode. One of `AWS_PROFILE`, `IAM`, `AAD`, `OKTA`. <br /> AWS_PROFILE - use default credential chain <br /> IAM -  AWS IAM credentials  <br /> AAD - Identitiy provider: Azure AD <br /> OKTA - Identitiy provider: Okta | `AWS_PROFILE` 
 
@@ -34,8 +34,8 @@
 
 | Option | Description | Default |
 |--------|-------------|---------------|
-| `EndpointOverride` | The endpoint override for the Timestream service. It overrides the region. It is an advanced option. <br /> Example value: <br /> query-cell2.timestream.us-east-1.amazonaws.com | `NONE`
-| `Region` | The signing region for the Timestream service endpoint. | `us-east-1` 
+| `EndpointOverride` | The endpoint override for the Trino service. It overrides the region. It is an advanced option. <br /> Example value: <br /> query-cell2.trino.us-east-1.amazonaws.com | `NONE`
+| `Region` | The signing region for the Trino service endpoint. | `us-east-1` 
 
 ### Credentials Provider Options
 
@@ -58,13 +58,13 @@
 | `IdPHost` | The hostname of the specified IdP. | `NONE`
 | `UID` or `IdPUserName` | The user name for the specified IdP account. If both `UID` and `IdPUserName` are provided in the connection string, the non-empty value with `UID` will be used. | `NONE`
 | `PWD` or `IdPPassword` | The password for the specified IdP account. If both `PWD` and `IdPPassword` are provided in the connection string, the non-empty value with `PWD` will be used. | `NONE`
-| `OktaApplicationID` | The unique Okta-provided ID associated with the Timestream application. A place to find the AppId is in the entityID field provided in the application metadata. An example entityID=`"http://www.okta.com//<IdPAppID>"`| `NONE`
+| `OktaApplicationID` | The unique Okta-provided ID associated with the Trino application. A place to find the AppId is in the entityID field provided in the application metadata. An example entityID=`"http://www.okta.com//<IdPAppID>"`| `NONE`
 | `RoleARN` | The Amazon Resource Name (ARN) of the role that the caller is assuming. | `NONE`
 | `IdPARN` | The Amazon Resource Name (ARN) of the SAML provider in IAM that describes the IdP. | `NONE`
 
 ### SAML-Based Authentication Options for Azure Active Directory
 
-For how to find the connection values, go to the [SAML 2.0 Azure AD set up guide](/docs/markdown/setup/aad-saml-setup.md#timestream-odbc-dsn-configuration).
+For how to find the connection values, go to the [SAML 2.0 Azure AD set up guide](/docs/markdown/setup/aad-saml-setup.md#trino-odbc-dsn-configuration).
 
 | Option | Description | Default |
 |--------|-------------|---------------|
@@ -83,7 +83,7 @@ For how to find the connection values, go to the [SAML 2.0 Azure AD set up guide
 | `RequestTimeout` | The time in milliseconds the AWS SDK will wait for a query request before timing out. Non-positive value disables request timeout. | `3000`
 | `ConnectionTimeout` | The time in milliseconds the AWS SDK will wait for data to be transferred over an open connection before timing out. Value must be non-negative. A value of 0 disables connection timeout.| `1000`
 | `MaxRetryCountClient` | The maximum number of retry attempts for retryable errors with 5XX error codes in the SDK. The value must be non-negative.| `0`
-| `MaxConnections` | The maximum number of allowed concurrently opened HTTP connections to the Timestream service. The value must be positive.| `25`
+| `MaxConnections` | The maximum number of allowed concurrently opened HTTP connections to the Trino service. The value must be positive.| `25`
 
 ### Logging Options
 
@@ -98,16 +98,16 @@ For setting up connection proxy properties, see [connection proxy guide.](connec
 #### AWS SDK Log Level
 AWS SDK Log Level can be set by envrionment variable `TS_AWS_LOG_LEVEL` to one of valid log level values: "FATAL", "ERROR", "WARN", "INFO", "DEBUG", "TRACE", and "OFF". If environment variable `TS_AWS_LOG_LEVEL` is not set, default log level `Warn` is used.
 
-Note that AWS SDK log level is separate from the Timestream ODBC driver log level, and setting one does not affect the other.
+Note that AWS SDK log level is separate from the Trino ODBC driver log level, and setting one does not affect the other.
 
 ## Examples
 
-### Connecting to an Amazon Timestream Database
+### Connecting to an Amazon Trino Database
 
 #### Connecting With IAM Credentials
 
 ```
-Driver={Amazon Timestream ODBC Driver};Auth=IAM;AccessKeyId=myAccessKeyId;secretKey=mySecretKey;SessionToken=mySessionToken;Region=us-east-2;
+Driver={Amazon Trino ODBC Driver};Auth=IAM;AccessKeyId=myAccessKeyId;secretKey=mySecretKey;SessionToken=mySessionToken;Region=us-east-2;
 ```
 
 #### Notes
@@ -120,7 +120,7 @@ Driver={Amazon Timestream ODBC Driver};Auth=IAM;AccessKeyId=myAccessKeyId;secret
 #### Connecting With Profile
 
 ```
-Driver={Amazon Timestream ODBC Driver};ProfileName=myProfileName;region=us-west-2;
+Driver={Amazon Trino ODBC Driver};ProfileName=myProfileName;region=us-west-2;
 ```
 
 #### Notes
@@ -131,7 +131,7 @@ Driver={Amazon Timestream ODBC Driver};ProfileName=myProfileName;region=us-west-
 #### Connecting with Okta
 
 ```
-driver={Amazon Timestream ODBC Driver};auth=okta;region=us-west-2;idPHost=myHostAtOkta;idPUsername=myUserName;idPPassword=myPassword;OktaApplicationID=myOktaAppId;roleARN=myRoleArn;idPARN=myIdpArn;
+driver={Amazon Trino ODBC Driver};auth=okta;region=us-west-2;idPHost=myHostAtOkta;idPUsername=myUserName;idPPassword=myPassword;OktaApplicationID=myOktaAppId;roleARN=myRoleArn;idPARN=myIdpArn;
 ```
 
 #### Notes
@@ -147,7 +147,7 @@ driver={Amazon Timestream ODBC Driver};auth=okta;region=us-west-2;idPHost=myHost
 #### Connecting with AAD
 
 ```
-driver={Amazon Timestream ODBC Driver};auth=aad;region=us-west-2;idPUsername=myUserName;idPPassword=myPassword;aadApplicationID=myAadAppId;aadClientSecret=myAadClientSecret;aadTenant=myAadTenant;roleARN=myRoleArn;idPARN=myIdpArn;
+driver={Amazon Trino ODBC Driver};auth=aad;region=us-west-2;idPUsername=myUserName;idPPassword=myPassword;aadApplicationID=myAadAppId;aadClientSecret=myAadClientSecret;aadTenant=myAadTenant;roleARN=myRoleArn;idPARN=myIdpArn;
 ```
 
 #### Notes
@@ -164,13 +164,13 @@ driver={Amazon Timestream ODBC Driver};auth=aad;region=us-west-2;idPUsername=myU
 #### Connecting With Specified Endpoint with Log Level Warning
 
 ```
-Driver={Amazon Timestream ODBC Driver};Auth=IAM;AccessKeyId=myAccessKeyId;secretKey=mySecretKey;EndpointOverride=ingest.timestream.us-west-2.amazonaws.com;Region=us-east-2;LogLevel=2;
+Driver={Amazon Trino ODBC Driver};Auth=IAM;AccessKeyId=myAccessKeyId;secretKey=mySecretKey;EndpointOverride=ingest.trino.us-west-2.amazonaws.com;Region=us-east-2;LogLevel=2;
 ```
 
 #### Notes
 
 1. Authentication type (Auth) is AWS IAM credentials.
-2. Endpoint is `ingest.timestream.us-west-2.amazonaws.com`.
+2. Endpoint is `ingest.trino.us-west-2.amazonaws.com`.
 3. Region is `us-east-2`. 
 4. Log lever is set to 2 which is `Warning`.
 

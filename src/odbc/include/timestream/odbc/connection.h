@@ -18,29 +18,29 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_CONNECTION
-#define _TIMESTREAM_ODBC_CONNECTION
+#ifndef _TRINO_ODBC_CONNECTION
+#define _TRINO_ODBC_CONNECTION
 
 #include <stdint.h>
 
 #include <vector>
 
-#include "timestream/odbc/config/configuration.h"
-#include "timestream/odbc/config/connection_info.h"
-#include "timestream/odbc/diagnostic/diagnosable_adapter.h"
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/ignite_error.h"
+#include "trino/odbc/config/configuration.h"
+#include "trino/odbc/config/connection_info.h"
+#include "trino/odbc/diagnostic/diagnosable_adapter.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/ignite_error.h"
 #include "ignite/odbc/odbc_error.h"
-#include "timestream/odbc/authentication/saml.h"
-#include "timestream/odbc/descriptor.h"
+#include "trino/odbc/authentication/saml.h"
+#include "trino/odbc/descriptor.h"
 
 /*@*/
 #include <aws/core/Aws.h>
 #include <aws/core/auth/AWSCredentials.h>
-#include <aws/timestream-query/TimestreamQueryClient.h>
+#include <aws/trino-query/TrinoQueryClient.h>
 #include "aws/sts/STSClient.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 class Environment;
 class Statement;
@@ -144,11 +144,11 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   void Deregister();
 
   /**
-   * Get the Timestream query client.
+   * Get the Trino query client.
    *
-   * @return Shared Pointer to Timestream query client.
+   * @return Shared Pointer to Trino query client.
    */
-  std::shared_ptr< Aws::TimestreamQuery::TimestreamQueryClient >
+  std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
   GetQueryClient() const;
 
   /**
@@ -230,11 +230,11 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   }
 
   /**
-   * Get TimestreamSAMLCredentialsProvider.
+   * Get TrinoSAMLCredentialsProvider.
    *
    * @return samlCredProvider_ value.
    */
-  std::shared_ptr< TimestreamSAMLCredentialsProvider >
+  std::shared_ptr< TrinoSAMLCredentialsProvider >
   GetSAMLCredentialsProvider() {
     return samlCredProvider_;
   }
@@ -322,13 +322,13 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   Connection(Environment* env);
 
   /**
-   * Create TimestreamQueryClient object.
+   * Create TrinoQueryClient object.
    *
    * @param credentials AWS IAM credentials.
    * @param clientCfg AWS client configuration.
-   * @return a shared_ptr to created TimestreamQueryClient object.
+   * @return a shared_ptr to created TrinoQueryClient object.
    */
-  virtual std::shared_ptr< Aws::TimestreamQuery::TimestreamQueryClient >
+  virtual std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
   CreateTSQueryClient(const Aws::Auth::AWSCredentials& credentials,
                       const Aws::Client::ClientConfiguration& clientCfg);
 
@@ -609,11 +609,11 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   /** Connection info. */
   config::ConnectionInfo info_;
 
-  /** Timestream query client. */
-  std::shared_ptr< Aws::TimestreamQuery::TimestreamQueryClient > queryClient_;
+  /** Trino query client. */
+  std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > queryClient_;
 
   /** SAML credentials provider */
-  std::shared_ptr< TimestreamSAMLCredentialsProvider > samlCredProvider_;
+  std::shared_ptr< TrinoSAMLCredentialsProvider > samlCredProvider_;
 
   /** Aws SDK options. */
   Aws::SDKOptions options_;
@@ -640,6 +640,6 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   StatementAttributes stmtAttr_;
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_CONNECTION
+#endif  //_TRINO_ODBC_CONNECTION

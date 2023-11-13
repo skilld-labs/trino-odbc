@@ -19,15 +19,15 @@
 
 /*@*/
 #include <aws/core/Aws.h>
-#include <aws/timestream-write/model/Dimension.h>
-#include <aws/timestream-write/model/Record.h>
-#include <aws/timestream-write/model/MeasureValue.h>
+#include <aws/trino-write/model/Dimension.h>
+#include <aws/trino-write/model/Record.h>
+#include <aws/trino-write/model/MeasureValue.h>
 
-using Aws::TimestreamWrite::Model::Dimension;
-using Aws::TimestreamWrite::Model::MeasureValue;
-using Aws::TimestreamWrite::Model::Record;
+using Aws::TrinoWrite::Model::Dimension;
+using Aws::TrinoWrite::Model::MeasureValue;
+using Aws::TrinoWrite::Model::Record;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 
 class MeasureMetadataCreater {
@@ -51,6 +51,6 @@ class MeasureMetadataCreater {
   virtual MeasureValueAssignFunPtr GetMeasureValueAssignFunPtr() = 0;
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
 #endif  //_IGNITE_ODBC_MULTI_MEASURE_METADATA_CREATER

@@ -19,11 +19,11 @@
 
 #include "measure_metadata_creater.h"
 /*@*/
-#include <aws/timestream-write/model/MeasureValueType.h>
+#include <aws/trino-write/model/MeasureValueType.h>
 
-using Aws::TimestreamWrite::Model::MeasureValueType;
+using Aws::TrinoWrite::Model::MeasureValueType;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 
 class ComputerTableCreater : public MeasureMetadataCreater {
@@ -117,6 +117,6 @@ class ComputerTableCreater : public MeasureMetadataCreater {
   }
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
 #endif  //_IGNITE_ODBC_COMPUTER_TABLE_CREATER

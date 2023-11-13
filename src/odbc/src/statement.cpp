@@ -18,30 +18,30 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/statement.h"
+#include "trino/odbc/statement.h"
 
 #include <boost/optional.hpp>
 #include <limits>
 
-#include "timestream/odbc/connection.h"
-#include "timestream/odbc/log.h"
+#include "trino/odbc/connection.h"
+#include "trino/odbc/log.h"
 #include "ignite/odbc/odbc_error.h"
-#include "timestream/odbc/query/column_metadata_query.h"
-#include "timestream/odbc/query/column_privileges_query.h"
-#include "timestream/odbc/query/data_query.h"
-#include "timestream/odbc/query/foreign_keys_query.h"
-#include "timestream/odbc/query/primary_keys_query.h"
-#include "timestream/odbc/query/procedure_columns_query.h"
-#include "timestream/odbc/query/procedures_query.h"
-#include "timestream/odbc/query/statistics_query.h"
-#include "timestream/odbc/query/special_columns_query.h"
-#include "timestream/odbc/query/table_metadata_query.h"
-#include "timestream/odbc/query/table_privileges_query.h"
-#include "timestream/odbc/query/type_info_query.h"
-#include "timestream/odbc/system/odbc_constants.h"
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/query/column_metadata_query.h"
+#include "trino/odbc/query/column_privileges_query.h"
+#include "trino/odbc/query/data_query.h"
+#include "trino/odbc/query/foreign_keys_query.h"
+#include "trino/odbc/query/primary_keys_query.h"
+#include "trino/odbc/query/procedure_columns_query.h"
+#include "trino/odbc/query/procedures_query.h"
+#include "trino/odbc/query/statistics_query.h"
+#include "trino/odbc/query/special_columns_query.h"
+#include "trino/odbc/query/table_metadata_query.h"
+#include "trino/odbc/query/table_privileges_query.h"
+#include "trino/odbc/query/type_info_query.h"
+#include "trino/odbc/system/odbc_constants.h"
+#include "trino/odbc/utility.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 Statement::Statement(Connection& parent)
     : connection(parent),
@@ -1123,7 +1123,7 @@ SqlResult::Type Statement::InternalGetColumnAttribute(
   if (colIdx > meta->size() || colIdx < 1) {
     AddStatusRecord(SqlState::SHY000_GENERAL_ERROR,
                     "Column index is out of range.",
-                    timestream::odbc::LogLevel::Type::ERROR_LEVEL, 0, colIdx);
+                    trino::odbc::LogLevel::Type::ERROR_LEVEL, 0, colIdx);
 
     return SqlResult::AI_ERROR;
   }
@@ -1252,7 +1252,7 @@ SqlResult::Type Statement::InternalGetCursorName(SQLWCHAR* nameBuf,
   bool isTruncated;
   // nameBufLen is the number of characters in nameBuf, not include the ending
   // '\0'
-  size_t resultLen = timestream::odbc::utility::CopyUtf8StringToSqlWcharString(
+  size_t resultLen = trino::odbc::utility::CopyUtf8StringToSqlWcharString(
       cursorName.c_str(), nameBuf, (nameBufLen + 1) * sizeof(SQLWCHAR),
       isTruncated);
   *nameResLen = resultLen / sizeof(SQLWCHAR);
@@ -1285,7 +1285,7 @@ SqlResult::Type Statement::InternalSetCursorName(SQLWCHAR* name,
   }
 
   std::string cursorName =
-      timestream::odbc::utility::SqlWcharToString(name, nameLen);
+      trino::odbc::utility::SqlWcharToString(name, nameLen);
   std::string pattern("SQL_CUR");
   if (cursorName.length() >= pattern.length()
       && Aws::Utils::StringUtils::ToUpper(
@@ -1310,4 +1310,4 @@ SqlResult::Type Statement::InternalSetCursorName(SQLWCHAR* name,
   return connection.AddCursorName(this, cursorName);
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

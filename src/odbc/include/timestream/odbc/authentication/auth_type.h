@@ -14,17 +14,17 @@
  *
  */
 
-#ifndef _TIMESTREAM_ODBC_AUTHENTICATION_AUTH_TYPE
-#define _TIMESTREAM_ODBC_AUTHENTICATION_AUTH_TYPE
+#ifndef _TRINO_ODBC_AUTHENTICATION_AUTH_TYPE
+#define _TRINO_ODBC_AUTHENTICATION_AUTH_TYPE
 
 #include <string>
 #include <ignite/common/common.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /** Auth Type enum. */
 struct IGNITE_IMPORT_EXPORT AuthType {
-  // enum class Type { AWS_PROFILE, IAM, AAD, OKTA };
+  // enum class Type {IAM, AAD, OKTA };
   enum class Type { PASSWORD, OAUTH2, KERBEROS, CERTIFICATE, JWT, HEADER };
 
   /**
@@ -53,5 +53,5 @@ struct IGNITE_IMPORT_EXPORT AuthType {
   static std::wstring ToCBString(Type val);
 };
 }  // namespace odbc
-}  // namespace timestream
-#endif  //_TIMESTREAM_ODBC_AUTHENTICATION_AUTH_TYPE
+}  // namespace trino
+#endif  //_TRINO_ODBC_AUTHENTICATION_AUTH_TYPE

@@ -18,24 +18,24 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc.h"
+#include "trino/odbc.h"
 
 #include <algorithm>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 
-#include "timestream/odbc/config/configuration.h"
-#include "timestream/odbc/config/connection_string_parser.h"
-#include "timestream/odbc/connection.h"
-#include "timestream/odbc/dsn_config.h"
-#include "timestream/odbc/environment.h"
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/statement.h"
-#include "timestream/odbc/system/odbc_constants.h"
-#include "timestream/odbc/system/system_dsn.h"
-#include "timestream/odbc/type_traits.h"
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/config/configuration.h"
+#include "trino/odbc/config/connection_string_parser.h"
+#include "trino/odbc/connection.h"
+#include "trino/odbc/dsn_config.h"
+#include "trino/odbc/environment.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/statement.h"
+#include "trino/odbc/system/odbc_constants.h"
+#include "trino/odbc/system/system_dsn.h"
+#include "trino/odbc/type_traits.h"
+#include "trino/odbc/utility.h"
 
 using ignite::odbc::diagnostic::Diagnosable;
 /**
@@ -45,7 +45,7 @@ using ignite::odbc::diagnostic::Diagnosable;
  * @return @c true on success and @c false otherwise.
  */
 bool HandleParentWindow(SQLHWND windowHandle,
-                        timestream::odbc::config::Configuration& config) {
+                        trino::odbc::config::Configuration& config) {
 #ifdef _WIN32
   if (windowHandle) {
     LOG_INFO_MSG("Parent window is passed. Creating configuration window.");
@@ -58,10 +58,10 @@ bool HandleParentWindow(SQLHWND windowHandle,
   return true;
 }
 
-using namespace timestream::odbc::utility;
-using timestream::odbc::Statement;
+using namespace trino::odbc::utility;
+using trino::odbc::Statement;
 
-namespace timestream {
+namespace trino {
 SQLRETURN SQLGetInfo(SQLHDBC conn, SQLUSMALLINT infoType, SQLPOINTER infoValue,
                      SQLSMALLINT infoValueMax, SQLSMALLINT* length) {
   using odbc::Connection;
@@ -1354,12 +1354,12 @@ SQLRETURN SQLProcedures(SQLHSTMT stmt, SQLWCHAR* catalogName,
 SQLRETURN SQLError(SQLHENV env, SQLHDBC conn, SQLHSTMT stmt, SQLWCHAR* state,
                    SQLINTEGER* error, SQLWCHAR* msgBuf, SQLSMALLINT msgBufLen,
                    SQLSMALLINT* msgResLen) {
-  using namespace timestream::odbc::utility;
-  using namespace timestream::odbc;
-  using namespace timestream::odbc::diagnostic;
-  using namespace timestream::odbc::type_traits;
+  using namespace trino::odbc::utility;
+  using namespace trino::odbc;
+  using namespace trino::odbc::diagnostic;
+  using namespace trino::odbc::type_traits;
 
-  using timestream::odbc::app::ApplicationDataBuffer;
+  using trino::odbc::app::ApplicationDataBuffer;
 
   LOG_DEBUG_MSG("SQLError is called with env "
                 << env << ", conn " << conn << ", stmt " << stmt << ", state "
@@ -1649,4 +1649,4 @@ SQLRETURN SQLColAttributes(SQLHSTMT stmt, SQLUSMALLINT colNum,
   }
   return ret;
 }
-}  // namespace timestream
+}  // namespace trino

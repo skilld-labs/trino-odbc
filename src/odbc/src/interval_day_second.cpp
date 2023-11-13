@@ -14,9 +14,9 @@
  *
  */
 
-#include "timestream/odbc/interval_day_second.h"
+#include "trino/odbc/interval_day_second.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 IntervalDaySecond::IntervalDaySecond(const IntervalDaySecond& another)
     : day_(another.day_),
@@ -79,4 +79,4 @@ bool operator>=(const IntervalDaySecond& val1, const IntervalDaySecond& val2) {
   return !(val1 < val2);
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

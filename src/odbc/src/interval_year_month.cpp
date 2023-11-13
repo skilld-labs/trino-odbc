@@ -14,9 +14,9 @@
  *
  */
 
-#include "timestream/odbc/interval_year_month.h"
+#include "trino/odbc/interval_year_month.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 IntervalYearMonth::IntervalYearMonth(const IntervalYearMonth& another)
     : year_(another.year_), month_(another.month_) {
@@ -61,4 +61,4 @@ bool operator>=(const IntervalYearMonth& val1, const IntervalYearMonth& val2) {
   return !(val1 < val2);
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

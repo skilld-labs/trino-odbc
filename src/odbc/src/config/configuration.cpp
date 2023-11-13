@@ -18,21 +18,21 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/config/configuration.h"
+#include "trino/odbc/config/configuration.h"
 
 #include <iterator>
 #include <sstream>
 #include <string>
 
-#include "timestream/odbc/utils.h"
-#include "timestream/odbc/config/connection_string_parser.h"
-#include "timestream/odbc/authentication/auth_type.h"
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/utils.h"
+#include "trino/odbc/config/connection_string_parser.h"
+#include "trino/odbc/authentication/auth_type.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/utility.h"
 
-using timestream::odbc::common::EncodeURIComponent;
+using trino::odbc::common::EncodeURIComponent;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace config {
 // Connection (Basic Authentication) Settings
@@ -40,8 +40,7 @@ const std::string Configuration::DefaultValue::dsn = DEFAULT_DSN;
 const std::string Configuration::DefaultValue::driver = DEFAULT_DRIVER;
 const std::string Configuration::DefaultValue::uid = DEFAULT_UID;
 const std::string Configuration::DefaultValue::pwd = DEFAULT_PWD;
-const std::string Configuration::DefaultValue::accessKeyId =
-    DEFAULT_ACCESS_KEY_ID;
+// const std::string Configuration::DefaultValue::accessKeyId = DEFAULT_ACCESS_KEY_ID;
 const std::string Configuration::DefaultValue::secretKey = DEFAULT_SECRET_KEY;
 const std::string Configuration::DefaultValue::sessionToken =
     DEFAULT_SESSION_TOKEN;
@@ -431,17 +430,17 @@ bool Configuration::IsLogPathSet() const {
   return logPath.IsSet();
 }
 
-const std::string& Configuration::GetAccessKeyId() const {
-  return accessKeyId.GetValue();
-}
+// const std::string& Configuration::GetAccessKeyId() const {
+//   return accessKeyId.GetValue();
+// }
 
-void Configuration::SetAccessKeyId(const std::string& accessKeyIdValue) {
-  this->accessKeyId.SetValue(accessKeyIdValue);
-}
+// void Configuration::SetAccessKeyId(const std::string& accessKeyIdValue) {
+//   this->accessKeyId.SetValue(accessKeyIdValue);
+// }
 
-bool Configuration::IsAccessKeyIdSet() const {
-  return accessKeyId.IsSet();
-}
+// bool Configuration::IsAccessKeyIdSet() const {
+//   return accessKeyId.IsSet();
+// }
 
 const std::string& Configuration::GetSecretKey() const {
   return secretKey.GetValue();
@@ -483,7 +482,7 @@ void Configuration::ToMap(ArgumentMap& res) const {
   AddToMap(res, ConnectionStringParser::Key::driver, driver);
   AddToMap(res, ConnectionStringParser::Key::uid, uid);
   AddToMap(res, ConnectionStringParser::Key::pwd, pwd);
-  AddToMap(res, ConnectionStringParser::Key::accessKeyId, accessKeyId);
+  // AddToMap(res, ConnectionStringParser::Key::accessKeyId, accessKeyId);
   AddToMap(res, ConnectionStringParser::Key::secretKey, secretKey);
   AddToMap(res, ConnectionStringParser::Key::sessionToken, sessionToken);
   AddToMap(res, ConnectionStringParser::Key::profileName, profileName);
@@ -514,7 +513,7 @@ void Configuration::Validate() const {
   LOG_DEBUG_MSG("Validate is called");
   // Validate minimum required properties.
 /*$*/
-  if ((GetAuthType() == timestream::odbc::AuthType::Type::OKTA)
+  if ((GetAuthType() == trino::odbc::AuthType::Type::OKTA)
       && (GetIdPHost().empty() || GetDSNUserName().empty()
           || GetDSNPassword().empty() || GetIdPArn().empty()
           || GetRoleArn().empty() || GetOktaAppId().empty())) {
@@ -526,7 +525,7 @@ void Configuration::Validate() const {
         "and IdpArn");
   }
 
-  if ((GetAuthType() == timestream::odbc::AuthType::Type::AAD)
+  if ((GetAuthType() == trino::odbc::AuthType::Type::AAD)
       && (GetDSNUserName().empty() || GetDSNPassword().empty()
           || GetIdPArn().empty() || GetRoleArn().empty()
           || GetAADAppId().empty() || GetAADTenant().empty()
@@ -540,7 +539,7 @@ void Configuration::Validate() const {
   }
 
 /*$*/
-  if ((GetAuthType() == timestream::odbc::AuthType::Type::IAM)
+  if ((GetAuthType() == trino::odbc::AuthType::Type::IAM)
       && (GetDSNUserName().empty() || GetDSNPassword().empty())) {
     throw ignite::odbc::OdbcError(
         SqlState::S01S00_INVALID_CONNECTION_STRING_ATTRIBUTE,
@@ -556,7 +555,7 @@ void Configuration::AddToMap(ArgumentMap& map, const std::string& key,
                              const SettableValue< uint16_t >& value) {
   if (value.IsSet())
     map[key] =
-        timestream::odbc::common::LexicalCast< std::string >(value.GetValue());
+        trino::odbc::common::LexicalCast< std::string >(value.GetValue());
 }
 
 template <>
@@ -564,7 +563,7 @@ void Configuration::AddToMap(ArgumentMap& map, const std::string& key,
                              const SettableValue< int32_t >& value) {
   if (value.IsSet())
     map[key] =
-        timestream::odbc::common::LexicalCast< std::string >(value.GetValue());
+        trino::odbc::common::LexicalCast< std::string >(value.GetValue());
 }
 
 template <>
@@ -596,4 +595,4 @@ void Configuration::AddToMap(ArgumentMap& map, const std::string& key,
 }
 }  // namespace config
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

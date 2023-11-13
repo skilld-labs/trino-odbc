@@ -19,7 +19,7 @@
     <SuppressCellErrors>False</SuppressCellErrors>
     <MaxRows>1000</MaxRows>
     <ExtensionProject>Yes</ExtensionProject>
-    <Name>AmazonAmazonTimestreamAADConnector</Name>
+    <Name>AmazonAmazonTrinoAADConnector</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>false</DebugSymbols>
@@ -37,7 +37,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AmazonTimestreamAADConnector.pq">
+    <Compile Include="AmazonTrinoAADConnector.pq">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="resources.resx">
@@ -49,31 +49,31 @@
     <Compile Include="OdbcConstants.pqm">
       <SubType>Content</SubType>
     </Compile>
-    <Content Include="AmazonTimestreamAADConnector.query.pq">
+    <Content Include="AmazonTrinoAADConnector.query.pq">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="AmazonTimestream16.png">
+    <Content Include="AmazonTrino16.png">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="AmazonTimestream20.png">
+    <Content Include="AmazonTrino20.png">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="AmazonTimestream24.png">
+    <Content Include="AmazonTrino24.png">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="AmazonTimestream32.png">
+    <Content Include="AmazonTrino32.png">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="AmazonTimestream40.png">
+    <Content Include="AmazonTrino40.png">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="AmazonTimestream48.png">
+    <Content Include="AmazonTrino48.png">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="AmazonTimestream64.png">
+    <Content Include="AmazonTrino64.png">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="AmazonTimestream80.png">
+    <Content Include="AmazonTrino80.png">
       <SubType>Content</SubType>
     </Content>
   </ItemGroup>

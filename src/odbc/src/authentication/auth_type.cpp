@@ -14,15 +14,15 @@
  *
  */
 
-#include "timestream/odbc/authentication/auth_type.h"
+#include "trino/odbc/authentication/auth_type.h"
 
-#include <timestream/odbc/utils.h>
-#include <timestream/odbc/utility.h>
+#include <trino/odbc/utils.h>
+#include <trino/odbc/utility.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 AuthType::Type AuthType::FromString(const std::string& val, Type dflt) {
-  std::string lowerVal = utility::Trim(timestream::odbc::common::ToLower(val));
+  std::string lowerVal = utility::Trim(trino::odbc::common::ToLower(val));
 
   if (lowerVal == "password")
     return AuthType::Type::PASSWORD;
@@ -95,4 +95,4 @@ std::wstring AuthType::ToCBString(Type val) {
   }
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

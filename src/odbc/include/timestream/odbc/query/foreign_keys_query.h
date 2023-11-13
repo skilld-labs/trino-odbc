@@ -18,12 +18,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_QUERY_FOREIGN_KEYS_QUERY
-#define _TIMESTREAM_ODBC_QUERY_FOREIGN_KEYS_QUERY
+#ifndef _TRINO_ODBC_QUERY_FOREIGN_KEYS_QUERY
+#define _TRINO_ODBC_QUERY_FOREIGN_KEYS_QUERY
 
-#include "timestream/odbc/query/query.h"
+#include "trino/odbc/query/query.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace query {
 /**
@@ -117,5 +117,5 @@ class ForeignKeysQuery : public Query {
 };
 }  // namespace query
 }  // namespace odbc
-}  // namespace timestream
-#endif  //_TIMESTREAM_ODBC_QUERY_FOREIGN_KEYS_QUERY
+}  // namespace trino
+#endif  //_TRINO_ODBC_QUERY_FOREIGN_KEYS_QUERY

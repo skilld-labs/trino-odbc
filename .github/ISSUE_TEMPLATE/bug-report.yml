@@ -63,16 +63,16 @@ body:
   - type: textarea
     id: odbc-log
     attributes:
-      label: Timestream ODBC Driver Log
+      label: Trino ODBC Driver Log
       description: |
-        Timestream ODBC driver log could be helpful for root cause analysis. 
+        Trino ODBC driver log could be helpful for root cause analysis. 
     validations:
       required: false
 
   - type: input
     id: odbc-version
     attributes:
-      label: Timestream ODBC Driver version
+      label: Trino ODBC Driver version
     validations:
       required: true
 

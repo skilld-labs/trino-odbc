@@ -18,18 +18,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/query/column_metadata_query.h"
+#include "trino/odbc/query/column_metadata_query.h"
 
 #include <vector>
 
-#include "timestream/odbc/connection.h"
-#include "timestream/odbc/ignite_error.h"
-#include "timestream/odbc/system/odbc_constants.h"
-#include "timestream/odbc/log.h"
+#include "trino/odbc/connection.h"
+#include "trino/odbc/ignite_error.h"
+#include "trino/odbc/system/odbc_constants.h"
+#include "trino/odbc/log.h"
 #include "ignite/odbc/odbc_error.h"
-#include "timestream/odbc/type_traits.h"
+#include "trino/odbc/type_traits.h"
 
-using timestream::odbc::IgniteError;
+using trino::odbc::IgniteError;
 
 namespace {
 struct ResultColumn {
@@ -92,7 +92,7 @@ struct ResultColumn {
   };
 };
 }  // namespace
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace query {
 ColumnMetadataQuery::ColumnMetadataQuery(
@@ -101,7 +101,7 @@ ColumnMetadataQuery::ColumnMetadataQuery(
     const boost::optional< std::string >& schema,
     const boost::optional< std::string >& table,
     const boost::optional< std::string >& column)
-    : Query(diag, timestream::odbc::query::QueryType::COLUMN_METADATA),
+    : Query(diag, trino::odbc::query::QueryType::COLUMN_METADATA),
       connection(connection),
       catalog(catalog),
       schema(schema),
@@ -112,7 +112,7 @@ ColumnMetadataQuery::ColumnMetadataQuery(
       meta(),
       columnsMeta() {
   LOG_DEBUG_MSG("ColumnMetadataQuery is called");
-  using namespace timestream::odbc::type_traits;
+  using namespace trino::odbc::type_traits;
 
   using meta::ColumnMeta;
   using meta::Nullability;
@@ -176,21 +176,21 @@ SqlResult::Type ColumnMetadataQuery::Execute() {
       && *catalog != SQL_ALL_CATALOGS) {
     // catalog has been provided with a non-empty value that isn't
     // SQL_ALL_CATALOGS. Return empty result set by default since
-    // Timestream does not have catalogs.
+    // Trino does not have catalogs.
     diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING,
                          "Empty result set is returned as catalog is set to \""
                              + *catalog
-                             + "\" and Timestream does not have catalogs");
+                             + "\" and Trino does not have catalogs");
     return SqlResult::AI_SUCCESS_WITH_INFO;
   } else if (!DATABASE_AS_SCHEMA && schema && !schema->empty()
              && *schema != SQL_ALL_SCHEMAS) {
     // schema has been provided with a non-empty value that isn't
     // SQL_ALL_SCHEMAS. Return empty result set by default since
-    // Timestream does not have schemas.
+    // Trino does not have schemas.
     diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING,
                          "Empty result set is returned as schema is set to \""
                              + *schema
-                             + "\" and Timestream does not have schemas");
+                             + "\" and Trino does not have schemas");
     return SqlResult::AI_SUCCESS_WITH_INFO;
   }
 
@@ -455,7 +455,7 @@ int64_t ColumnMetadataQuery::RowNumber() const {
   if (!executed || cursor == meta.end()) {
     diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING,
                          "Cursor does not point to any data.",
-                         timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                         trino::odbc::LogLevel::Type::WARNING_LEVEL);
 
     LOG_DEBUG_MSG("Row number returned is 0.");
 
@@ -492,21 +492,21 @@ SqlResult::Type ColumnMetadataQuery::GetColumnsWithDatabaseSearchPattern(
 
     app::ColumnBindingMap columnBindings;
     SqlLen buflen = STRING_BUFFER_SIZE;
-    // According to Timestream, database name could only contain
+    // According to Trino, database name could only contain
     // letters, digits, dashes, periods or underscores. It could
     // not be a unicode string.
     char databaseName[STRING_BUFFER_SIZE]{};
     ApplicationDataBuffer buf1(
-        timestream::odbc::type_traits::OdbcNativeType::Type::AI_CHAR,
+        trino::odbc::type_traits::OdbcNativeType::Type::AI_CHAR,
         databaseName, buflen, nullptr);
     columnBindings[databaseType] = buf1;
 
-    // According to Timestream, table name could only contain
+    // According to Trino, table name could only contain
     // letters, digits, dashes, periods or underscores. It could
     // not be a unicode string.
     char tableName[STRING_BUFFER_SIZE]{};
     ApplicationDataBuffer buf2(
-        timestream::odbc::type_traits::OdbcNativeType::Type::AI_CHAR,
+        trino::odbc::type_traits::OdbcNativeType::Type::AI_CHAR,
         &tableName, buflen, nullptr);
     columnBindings[TableMetadataQuery::ResultColumn::TABLE_NAME] = buf2;
 
@@ -570,19 +570,19 @@ SqlResult::Type ColumnMetadataQuery::MakeRequestGetColumnsMetaPerTable(
   // column name could be a unicode string
   SQLWCHAR columnName[STRING_BUFFER_SIZE];
   ApplicationDataBuffer buf1(
-      timestream::odbc::type_traits::OdbcNativeType::Type::AI_WCHAR, columnName,
+      trino::odbc::type_traits::OdbcNativeType::Type::AI_WCHAR, columnName,
       buflen, nullptr);
   columnBindings[1] = buf1;
 
   char dataType[64];
   ApplicationDataBuffer buf2(
-      timestream::odbc::type_traits::OdbcNativeType::Type::AI_CHAR, &dataType,
+      trino::odbc::type_traits::OdbcNativeType::Type::AI_CHAR, &dataType,
       buflen, nullptr);
   columnBindings[2] = buf2;
 
   char remarks[64];
   ApplicationDataBuffer buf3(
-      timestream::odbc::type_traits::OdbcNativeType::Type::AI_CHAR, &remarks,
+      trino::odbc::type_traits::OdbcNativeType::Type::AI_CHAR, &remarks,
       buflen, nullptr);
   columnBindings[3] = buf3;
 
@@ -613,4 +613,4 @@ SqlResult::Type ColumnMetadataQuery::MakeRequestGetColumnsMetaPerTable(
 }
 }  // namespace query
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

@@ -25,9 +25,9 @@ SCRIPT_DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 PROJECT_DIR="$SCRIPT_DIR/.."
 ODBC_LIB_PATH="$PROJECT_DIR/build/odbc/lib"
 if [[ "$OSTYPE" == "linux"* ]]; then
-  ODBC_LIB_FILENAME="$ODBC_LIB_PATH/libtimestream-odbc.so"
+  ODBC_LIB_FILENAME="$ODBC_LIB_PATH/libtrino-odbc.so"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  ODBC_LIB_FILENAME="$ODBC_LIB_PATH/libtimestream-odbc.dylib"
+  ODBC_LIB_FILENAME="$ODBC_LIB_PATH/libtrino-odbc.dylib"
 fi
 
 
@@ -37,17 +37,17 @@ then
   exit 1
 fi
 
-echo "[Amazon Timestream ODBC Driver]"            > "$ODBC_LIB_PATH/timestream-odbc-install.ini"
-echo "Description=Amazon Timestream ODBC Driver" >> "$ODBC_LIB_PATH/timestream-odbc-install.ini"
-echo "Driver=$ODBC_LIB_FILENAME" >> "$ODBC_LIB_PATH/timestream-odbc-install.ini"
-echo "Setup=$ODBC_LIB_FILENAME"  >> "$ODBC_LIB_PATH/timestream-odbc-install.ini"
-echo "DriverODBCVer=03.00"       >> "$ODBC_LIB_PATH/timestream-odbc-install.ini"
-echo "FileUsage=0"               >> "$ODBC_LIB_PATH/timestream-odbc-install.ini"
+echo "[Amazon Trino ODBC Driver]"            > "$ODBC_LIB_PATH/trino-odbc-install.ini"
+echo "Description=Amazon Trino ODBC Driver" >> "$ODBC_LIB_PATH/trino-odbc-install.ini"
+echo "Driver=$ODBC_LIB_FILENAME" >> "$ODBC_LIB_PATH/trino-odbc-install.ini"
+echo "Setup=$ODBC_LIB_FILENAME"  >> "$ODBC_LIB_PATH/trino-odbc-install.ini"
+echo "DriverODBCVer=03.00"       >> "$ODBC_LIB_PATH/trino-odbc-install.ini"
+echo "FileUsage=0"               >> "$ODBC_LIB_PATH/trino-odbc-install.ini"
 
 if [[ "$OSTYPE" == "linux"* ]]; then
-  odbcinst -i -d -f "$ODBC_LIB_PATH/timestream-odbc-install.ini"
+  odbcinst -i -d -f "$ODBC_LIB_PATH/trino-odbc-install.ini"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  export ODBCINSTINI="$ODBC_LIB_PATH/timestream-odbc-install.ini"
+  export ODBCINSTINI="$ODBC_LIB_PATH/trino-odbc-install.ini"
   echo "Exported ODBCINSTINI=$ODBCINSTINI"
   export DYLD_LIBRARY_PATH=$ODBC_LIB_PATH:$DYLD_LIBRARY_PATH
   echo "Exported DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH"

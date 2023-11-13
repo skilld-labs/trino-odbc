@@ -18,15 +18,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <timestream/odbc/utils.h>
-#include <timestream/odbc/utility.h>
+#include <trino/odbc/utils.h>
+#include <trino/odbc/utility.h>
 
 #include <boost/test/unit_test.hpp>
 #include <chrono>
 #include <stdio.h>
 
-using namespace timestream::odbc;
-using namespace timestream::odbc::utility;
+using namespace trino::odbc;
+using namespace trino::odbc::utility;
 using namespace boost::unit_test;
 
 BOOST_AUTO_TEST_SUITE(UtilityTestSuite)

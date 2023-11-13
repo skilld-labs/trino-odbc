@@ -119,7 +119,7 @@ auto RecordBindingFetching = [](SQLHSTMT& hstmt,
     // Get column count
     SQLNumResultCols(hstmt, &total_columns);
 
-    // Performance tests use WCHAR exclusively since the Amazon Timestream ODBC
+    // Performance tests use WCHAR exclusively since the Amazon Trino ODBC
     // driver is a unicode driver and CHAR is an uncommon real-life use case
     if (is_wchar) {
       std::vector< WCol > cols(total_columns);
@@ -1041,10 +1041,10 @@ int main(int argc, char** argv) {
   // Enable malloc logging for detecting memory leaks.
   system("export MallocStackLogging=1");
 #endif
-  std::string accessKeyId;
+  // std::string accessKeyId;
   std::string secretKey;
   std::string region = "us-west-2";
-  std::string defaultConnStr = "DSN=timestream-iam;";
+  std::string defaultConnStr = "DSN=trino-iam;";
   std::string specialConnStr;
 
   // Handle passed in arguments
@@ -1052,9 +1052,9 @@ int main(int argc, char** argv) {
     for (int i = 1; i < argc; i++) {
       if (strcmp(argv[i], "--large-test") == 0) {
         enableLargeTest = true;
-      } else if (strcmp(argv[i], "--access-key-id") == 0 && i + 1 < argc) {
-        accessKeyId = std::string(argv[i + 1]);
-        i++;
+      // } else if (strcmp(argv[i], "--access-key-id") == 0 && i + 1 < argc) {
+      //   accessKeyId = std::string(argv[i + 1]);
+      //   i++;
       } else if (strcmp(argv[i], "--secret-key") == 0 && i + 1 < argc) {
         secretKey = std::string(argv[i + 1]);
         i++;
@@ -1079,16 +1079,17 @@ int main(int argc, char** argv) {
     }
   }
 
-  if (!accessKeyId.empty() && !secretKey.empty()) {
-    specialConnStr = std::string("Driver=Amazon Timestream ODBC Driver;")
-                     + "Region=" + region + ";LogLevel=0;Auth=IAM;AccessKeyId="
-                     + accessKeyId + ";" + "SecretKey=" + secretKey + ";";
-    connectionString =
-        std::vector< SQLWCHAR >(specialConnStr.begin(), specialConnStr.end());
-  } else {
-    connectionString =
-        std::vector< SQLWCHAR >(defaultConnStr.begin(), defaultConnStr.end());
-  }
+/*$*/
+  // if (!accessKeyId.empty() && !secretKey.empty()) {
+  //   specialConnStr = std::string("Driver=Amazon Trino ODBC Driver;")
+  //                    + "Region=" + region + ";LogLevel=0;Auth=IAM;AccessKeyId="
+  //                    + accessKeyId + ";" + "SecretKey=" + secretKey + ";";
+  //   connectionString =
+  //       std::vector< SQLWCHAR >(specialConnStr.begin(), specialConnStr.end());
+  // } else {
+  //   connectionString =
+  //       std::vector< SQLWCHAR >(defaultConnStr.begin(), defaultConnStr.end());
+  // }
 
   prepareOutFile();
 

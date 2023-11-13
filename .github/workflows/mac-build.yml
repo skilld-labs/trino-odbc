@@ -13,9 +13,9 @@ env:
   ODBC_LIB_PATH: "${{github.workspace}}/build/odbc/lib"
   ODBC_BIN_PATH: "${{github.workspace}}/build/odbc/bin"
   ODBC_BUILD_PATH: "${{github.workspace}}/build/odbc/build"
-  TIMESTREAM_LOG_PATH: "${{github.workspace}}/build/odbc/logs"
-  TIMESTREAM_LOG_LEVEL: "4"
-  ODBCINSTINI: "${{github.workspace}}/build/odbc/lib/timestream-odbc-install.ini"
+  TRINO_LOG_PATH: "${{github.workspace}}/build/odbc/logs"
+  TRINO_LOG_LEVEL: "4"
+  ODBCINSTINI: "${{github.workspace}}/build/odbc/lib/trino-odbc-install.ini"
   ODBCINI: "${{github.workspace}}/odbc.ini"
   BIG_TABLE_PAGINATION_TEST_ENABLE: "TRUE"
 
@@ -76,8 +76,8 @@ jobs:
     - name: upload-package
       uses: actions/upload-artifact@v3
       with:
-        name: AmazonTimestreamODBC-${{env.ODBC_DRIVER_VERSION}}.pkg
-        path: ./cmake-build64/AmazonTimestreamODBC-${{env.ODBC_DRIVER_VERSION}}.pkg
+        name: AmazonTrinoODBC-${{env.ODBC_DRIVER_VERSION}}.pkg
+        path: ./cmake-build64/AmazonTrinoODBC-${{env.ODBC_DRIVER_VERSION}}.pkg
 
     - name: register-odbc-driver
       run: |
@@ -95,9 +95,9 @@ jobs:
     - name: run-unit-tests
       id: rununittests
       run: |
-        mkdir -p "${{env.TIMESTREAM_LOG_PATH}}"
+        mkdir -p "${{env.TRINO_LOG_PATH}}"
         export DYLD_LIBRARY_PATH=${{env.ODBC_LIB_PATH}}:$DYLD_LIBRARY_PATH     
-        ./build/odbc/bin/timestream-odbc-unit-tests --catch_system_errors=false
+        ./build/odbc/bin/trino-odbc-unit-tests --catch_system_errors=false
 
     - name: upload-unit-test-report
       if: always()
@@ -114,13 +114,13 @@ jobs:
         name: odbc-unit-test-results
         path: |
           ./odbc_unit_test_result.xml
-          ./build/odbc/logs/timestream_odbc_*.log
+          ./build/odbc/logs/trino_odbc_*.log
 
     - name: run-integration-tests
       id: runintegrationtests
       run: |
         export DYLD_LIBRARY_PATH=${{env.ODBC_LIB_PATH}}:$DYLD_LIBRARY_PATH     
-        ./build/odbc/bin/timestream-odbc-integration-tests --catch_system_errors=false
+        ./build/odbc/bin/trino-odbc-integration-tests --catch_system_errors=false
 
     - name: upload-integration-test-report
       if: always()
@@ -137,4 +137,4 @@ jobs:
         name: odbc-integration-test-results
         path: |
           ./odbc_test_result.xml
-          ./build/odbc/logs/timestream_odbc_*.log
+          ./build/odbc/logs/trino_odbc_*.log

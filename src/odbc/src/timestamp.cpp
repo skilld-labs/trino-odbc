@@ -18,9 +18,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/timestamp.h"
+#include "trino/odbc/timestamp.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 Timestamp::Timestamp() : seconds(0), fractionNs(0) {
   // No-op.
@@ -94,4 +94,4 @@ bool operator>=(const Timestamp& val1, const Timestamp& val2) {
              && val1.fractionNs >= val2.fractionNs);
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

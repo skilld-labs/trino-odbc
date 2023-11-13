@@ -18,9 +18,9 @@
 #include <mock/mock_httpclient.h>
 #include <mock/mock_statement.h>
 #include <mock/mock_stsclient.h>
-#include <mock/mock_timestream_query_client.h>
+#include <mock/mock_trino_query_client.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 
 MockConnection::MockConnection(Environment* env) : Connection(env) {
@@ -44,19 +44,19 @@ SqlResult::Type MockConnection::InternalCreateStatement(
   return SqlResult::AI_SUCCESS;
 }
 
-std::shared_ptr< Aws::TimestreamQuery::TimestreamQueryClient >
+std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
 MockConnection::CreateTSQueryClient(
     const Aws::Auth::AWSCredentials& credentials,
     const Aws::Client::ClientConfiguration& clientCfg) {
   return std::static_pointer_cast<
-      Aws::TimestreamQuery::TimestreamQueryClient >(
-      std::make_shared< timestream::odbc::MockTimestreamQueryClient >(
+      Aws::TrinoQuery::TrinoQueryClient >(
+      std::make_shared< trino::odbc::MockTrinoQueryClient >(
           credentials, clientCfg));
 }
 
 std::shared_ptr< Aws::Http::HttpClient > MockConnection::GetHttpClient() {
   return std::static_pointer_cast< Aws::Http::HttpClient >(
-      std::make_shared< timestream::odbc::MockHttpClient >());
+      std::make_shared< trino::odbc::MockHttpClient >());
 }
 
 std::shared_ptr< Aws::STS::STSClient > MockConnection::GetStsClient() {
@@ -72,4 +72,4 @@ MockStatement* MockConnection::CreateStatement() {
   return statement;
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

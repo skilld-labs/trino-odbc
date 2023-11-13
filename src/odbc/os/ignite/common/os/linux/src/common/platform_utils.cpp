@@ -19,7 +19,7 @@
 #include <dlfcn.h>
 #include <ftw.h>
 #include <glob.h>
-#include <timestream/odbc/utils.h>
+#include <trino/odbc/utils.h>
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <unistd.h>

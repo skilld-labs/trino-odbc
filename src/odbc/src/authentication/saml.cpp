@@ -14,16 +14,16 @@
  *
  */
 
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/authentication/saml.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/authentication/saml.h"
 
 /*@*/
 #include <aws/sts/model/Credentials.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 
-bool TimestreamSAMLCredentialsProvider::FetchCredentialsWithSAMLAssertion(
+bool TrinoSAMLCredentialsProvider::FetchCredentialsWithSAMLAssertion(
     Aws::STS::Model::AssumeRoleWithSAMLRequest& samlRequest,
     Aws::Auth::AWSCredentials& awsCredentials, std::string& errInfo) {
   LOG_DEBUG_MSG("FetchCredentialsWithSAMLAssertion is called");
@@ -51,7 +51,7 @@ bool TimestreamSAMLCredentialsProvider::FetchCredentialsWithSAMLAssertion(
   return retval;
 }
 
-bool TimestreamSAMLCredentialsProvider::GetAWSCredentials(
+bool TrinoSAMLCredentialsProvider::GetAWSCredentials(
     Aws::Auth::AWSCredentials& credentials, std::string& errInfo) {
   LOG_DEBUG_MSG("GetAWSCredentials is called");
 
@@ -73,4 +73,4 @@ bool TimestreamSAMLCredentialsProvider::GetAWSCredentials(
 }
 
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

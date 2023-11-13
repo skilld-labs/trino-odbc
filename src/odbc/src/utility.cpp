@@ -18,16 +18,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/utility.h"
 
 #include <codecvt>
 #include <regex>
 #include <iomanip>
 
-#include "timestream/odbc/system/odbc_constants.h"
-#include "timestream/odbc/log.h"
+#include "trino/odbc/system/odbc_constants.h"
+#include "trino/odbc/log.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace utility {
 using namespace ignite::odbc::common;
@@ -458,4 +458,4 @@ std::string GetFormatedDriverVersion() {
 }
 }  // namespace utility
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

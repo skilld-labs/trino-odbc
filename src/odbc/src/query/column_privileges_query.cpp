@@ -18,18 +18,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/query/column_privileges_query.h"
+#include "trino/odbc/query/column_privileges_query.h"
 
-#include "timestream/odbc/connection.h"
-#include "timestream/odbc/type_traits.h"
+#include "trino/odbc/connection.h"
+#include "trino/odbc/type_traits.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace query {
 ColumnPrivilegesQuery::ColumnPrivilegesQuery(
     diagnostic::DiagnosableAdapter& diag)
     : Query(diag, QueryType::COLUMN_PRIVILEGES), columnsMeta() {
-  using namespace timestream::odbc::type_traits;
+  using namespace trino::odbc::type_traits;
 
   using meta::ColumnMeta;
   using meta::Nullability;
@@ -115,4 +115,4 @@ SqlResult::Type ColumnPrivilegesQuery::NextResultSet() {
 }
 }  // namespace query
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

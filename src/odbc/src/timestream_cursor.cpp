@@ -18,11 +18,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/timestream_cursor.h"
+#include "trino/odbc/trino_cursor.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
-TimestreamCursor::TimestreamCursor(
+TrinoCursor::TrinoCursor(
     const Aws::Vector< Row > rowVec,
     const meta::ColumnMetaVector& columnMetadataVec)
     : rowVec_(rowVec),
@@ -32,12 +32,12 @@ TimestreamCursor::TimestreamCursor(
   // No-op.
 }
 
-TimestreamCursor::~TimestreamCursor() {
+TrinoCursor::~TrinoCursor() {
   // No-op.
 }
 
 // After Increment, the "curPos_"th iterator is being handled
-bool TimestreamCursor::Increment() {
+bool TrinoCursor::Increment() {
   LOG_DEBUG_MSG("Increment is called");
 
   if (curPos_ > 0) {
@@ -47,11 +47,11 @@ bool TimestreamCursor::Increment() {
   return curPos_ <= rowVec_.size();
 }
 
-bool TimestreamCursor::HasData() const {
+bool TrinoCursor::HasData() const {
   return curPos_ <= rowVec_.size();
 }
 
-app::ConversionResult::Type TimestreamCursor::ReadColumnToBuffer(
+app::ConversionResult::Type TrinoCursor::ReadColumnToBuffer(
     uint32_t columnIdx, app::ApplicationDataBuffer& dataBuf) {
   LOG_DEBUG_MSG("ReadColumnToBuffer is called");
   if (!EnsureColumnDiscovered(columnIdx)) {
@@ -59,12 +59,12 @@ app::ConversionResult::Type TimestreamCursor::ReadColumnToBuffer(
     return app::ConversionResult::Type::AI_FAILURE;
   }
 
-  TimestreamColumn& column = GetColumn(columnIdx);
+  TrinoColumn& column = GetColumn(columnIdx);
   const Datum& datum = iterator_->GetData()[columnIdx-1];
   return column.ReadToBuffer(datum, dataBuf);
 }
 
-bool TimestreamCursor::EnsureColumnDiscovered(uint32_t columnIdx) {
+bool TrinoCursor::EnsureColumnDiscovered(uint32_t columnIdx) {
   LOG_DEBUG_MSG("EnsureColumnDiscovered is called for column " << columnIdx);
   if (columnIdx > columnMetadataVec_.size() || columnIdx < 1) {
     LOG_ERROR_MSG("columnIdx out of range for index " << columnIdx);
@@ -80,7 +80,7 @@ bool TimestreamCursor::EnsureColumnDiscovered(uint32_t columnIdx) {
 
   uint32_t index = columns_.size();
   while (index < columnIdx) {
-    TimestreamColumn newColumn(index, columnMetadataVec_[index]);
+    TrinoColumn newColumn(index, columnMetadataVec_[index]);
 
     columns_.push_back(newColumn);
     index++;
@@ -89,4 +89,4 @@ bool TimestreamCursor::EnsureColumnDiscovered(uint32_t columnIdx) {
   return true;
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

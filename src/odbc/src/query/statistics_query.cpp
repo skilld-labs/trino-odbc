@@ -18,21 +18,21 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/query/statistics_query.h"
+#include "trino/odbc/query/statistics_query.h"
 
-#include "timestream/odbc/connection.h"
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/type_traits.h"
+#include "trino/odbc/connection.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/type_traits.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace query {
 StatisticsQuery::StatisticsQuery(diagnostic::DiagnosableAdapter& diag,
                                  int32_t odbcVer)
-    : Query(diag, timestream::odbc::query::QueryType::STATISTICS),
+    : Query(diag, trino::odbc::query::QueryType::STATISTICS),
       columnsMeta() {
   LOG_DEBUG_MSG("StatisticsQuery is called");
-  using namespace timestream::odbc::type_traits;
+  using namespace trino::odbc::type_traits;
 
   using meta::ColumnMeta;
   using meta::Nullability;
@@ -138,4 +138,4 @@ SqlResult::Type StatisticsQuery::NextResultSet() {
 }
 }  // namespace query
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

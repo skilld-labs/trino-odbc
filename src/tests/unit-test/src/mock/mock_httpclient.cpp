@@ -23,7 +23,7 @@
 
 using namespace Aws::Http::Standard;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 
 std::shared_ptr< HttpResponse > MockHttpClient::MakeRequest(
@@ -177,4 +177,4 @@ void MockHttpClient::HandleSAMLAssertion(
   }
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

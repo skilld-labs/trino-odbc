@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/app/application_data_buffer.h"
+#include "trino/odbc/app/application_data_buffer.h"
 
 #include <algorithm>
 #include <codecvt>
@@ -27,11 +27,11 @@
 #include <vector>
 
 #include <sqltypes.h>
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/system/odbc_constants.h"
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/system/odbc_constants.h"
+#include "trino/odbc/utility.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace app {
 using namespace type_traits;
@@ -593,7 +593,7 @@ ConversionResult::Type ApplicationDataBuffer::PutDate(const Date& value) {
 
   tm tmTime;
 
-  timestream::odbc::common::DateToCTm(value, tmTime);
+  trino::odbc::common::DateToCTm(value, tmTime);
   LOG_DEBUG_MSG("tmTime.tm_year "
                 << tmTime.tm_year << ", tmTime.tm_mon " << tmTime.tm_mon
                 << ", tmTime.tm_mday " << tmTime.tm_mday << ", tmTime.tm_hour "
@@ -722,7 +722,7 @@ ConversionResult::Type ApplicationDataBuffer::PutTimestamp(
   tm tmTime;
   memset(&tmTime, 0, sizeof(tm));
 
-  timestream::odbc::common::TimestampToCTm(value, tmTime);
+  trino::odbc::common::TimestampToCTm(value, tmTime);
   LOG_DEBUG_MSG("tmTime.tm_year "
                 << tmTime.tm_year << ", tmTime.tm_mon " << tmTime.tm_mon
                 << ", tmTime.tm_mday " << tmTime.tm_mday << ", tmTime.tm_hour "
@@ -857,7 +857,7 @@ ConversionResult::Type ApplicationDataBuffer::PutTime(const Time& value) {
   tm tmTime;
 
   memset(&tmTime, 0, sizeof(tm));
-  timestream::odbc::common::TimeToCTm(value, tmTime);
+  trino::odbc::common::TimeToCTm(value, tmTime);
   LOG_DEBUG_MSG("tmTime.tm_year "
                 << tmTime.tm_year << ", tmTime.tm_mon " << tmTime.tm_mon
                 << ", tmTime.tm_mday " << tmTime.tm_mday << ", tmTime.tm_hour "
@@ -1469,7 +1469,7 @@ Date ApplicationDataBuffer::GetDate() const {
       break;
   }
 
-  Date retval = timestream::odbc::common::CTmToDate(tmTime);
+  Date retval = trino::odbc::common::CTmToDate(tmTime);
   LOG_DEBUG_MSG("tmTime.tm_year "
                 << tmTime.tm_year << ", tmTime.tm_mon " << tmTime.tm_mon
                 << ", tmTime.tm_mday " << tmTime.tm_mday << ", tmTime.tm_hour "
@@ -1580,7 +1580,7 @@ Timestamp ApplicationDataBuffer::GetTimestamp() const {
       break;
   }
 
-  return timestream::odbc::common::CTmToTimestamp(tmTime, nanos);
+  return trino::odbc::common::CTmToTimestamp(tmTime, nanos);
 }
 
 Time ApplicationDataBuffer::GetTime() const {
@@ -1654,7 +1654,7 @@ Time ApplicationDataBuffer::GetTime() const {
       break;
   }
 
-  Time retval = timestream::odbc::common::CTmToTime(tmTime);
+  Time retval = trino::odbc::common::CTmToTime(tmTime);
   LOG_DEBUG_MSG("tmTime.tm_year "
                 << tmTime.tm_year << ", tmTime.tm_mon " << tmTime.tm_mon
                 << ", tmTime.tm_mday " << tmTime.tm_mday << ", tmTime.tm_hour "
@@ -2138,4 +2138,4 @@ void ApplicationDataBuffer::SetIntervalBufferValue(
 
 }  // namespace app
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

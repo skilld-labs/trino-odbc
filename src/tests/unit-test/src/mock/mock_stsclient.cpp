@@ -15,11 +15,11 @@
  */
 
 #include <mock/mock_stsclient.h>
-#include <mock/mock_timestream_service.h>
+#include <mock/mock_trino_service.h>
 /*@*/
 #include <aws/sts/model/AssumeRoleWithSAMLRequest.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 
 Model::AssumeRoleWithSAMLOutcome MockSTSClient::AssumeRoleWithSAML(
@@ -45,7 +45,7 @@ Model::AssumeRoleWithSAMLOutcome MockSTSClient::AssumeRoleWithSAML(
     Model::AssumeRoleWithSAMLResult result;
     Model::Credentials credentials;
     const std::map< Aws::String, Aws::String >& credMap =
-        MockTimestreamService::GetInstance()->GetCredentialMap();
+        MockTrinoService::GetInstance()->GetCredentialMap();
     if (!credMap.empty()) {
       credentials.SetAccessKeyId(credMap.begin()->first);
       credentials.SetSecretAccessKey(credMap.begin()->second);
@@ -60,4 +60,4 @@ Model::AssumeRoleWithSAMLOutcome MockSTSClient::AssumeRoleWithSAML(
 }
 
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

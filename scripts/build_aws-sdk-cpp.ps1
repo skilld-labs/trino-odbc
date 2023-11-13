@@ -32,7 +32,7 @@ cmake $SRC_DIR `
     -A $WIN_ARCH `
     -D CMAKE_INSTALL_PREFIX=$INSTALL_DIR `
     -D CMAKE_BUILD_TYPE=$CONFIGURATION `
-    -D BUILD_ONLY="core;sts;timestream-query;timestream-write" `
+    -D BUILD_ONLY="core;sts;trino-query;trino-write" `
     -D ENABLE_UNITY_BUILD="ON" `
     -D CUSTOM_MEMORY_MANAGEMENT="OFF" `
     -D ENABLE_RTTI="OFF" `

@@ -18,8 +18,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_LOG
-#define _TIMESTREAM_ODBC_LOG
+#ifndef _TRINO_ODBC_LOG
+#define _TRINO_ODBC_LOG
 
 #include <fstream>
 #include <memory>
@@ -29,39 +29,39 @@
 
 #include "ignite/common/common.h"
 #include "ignite/common/include/common/concurrent.h"
-#include "timestream/odbc/log_level.h"
+#include "trino/odbc/log_level.h"
 
 using ignite::odbc::common::concurrent::CriticalSection;
 
-#define DEFAULT_LOG_PATH timestream::odbc::Logger::GetDefaultLogPath()
+#define DEFAULT_LOG_PATH trino::odbc::Logger::GetDefaultLogPath()
 
 #define WRITE_LOG_MSG(param, logLevel) \
   WRITE_MSG_TO_STREAM(param, logLevel, (std::ostream*)nullptr)
 
 #define WRITE_MSG_TO_STREAM(param, logLevel, logStream)                       \
   {                                                                           \
-    std::shared_ptr< timestream::odbc::Logger > p =                           \
-        timestream::odbc::Logger::GetLoggerInstance();                        \
+    std::shared_ptr< trino::odbc::Logger > p =                           \
+        trino::odbc::Logger::GetLoggerInstance();                        \
     if (p->GetLogLevel() >= logLevel && (p->IsEnabled() || p->EnableLog())) { \
       std::ostream* prevStream = p.get()->GetLogStream();                     \
       if (logStream != nullptr) {                                             \
         /* Override the stream temporarily */                                 \
         p.get()->SetLogStream(logStream);                                     \
       }                                                                       \
-      std::unique_ptr< timestream::odbc::LogStream > lstream(                 \
-          new timestream::odbc::LogStream(p.get()));                          \
+      std::unique_ptr< trino::odbc::LogStream > lstream(                 \
+          new trino::odbc::LogStream(p.get()));                          \
       std::string msg_prefix;                                                 \
       switch (logLevel) {                                                     \
-        case timestream::odbc::LogLevel::Type::DEBUG_LEVEL:                   \
+        case trino::odbc::LogLevel::Type::DEBUG_LEVEL:                   \
           msg_prefix = "DEBUG MSG: ";                                         \
           break;                                                              \
-        case timestream::odbc::LogLevel::Type::INFO_LEVEL:                    \
+        case trino::odbc::LogLevel::Type::INFO_LEVEL:                    \
           msg_prefix = "INFO MSG: ";                                          \
           break;                                                              \
-        case timestream::odbc::LogLevel::Type::WARNING_LEVEL:                 \
+        case trino::odbc::LogLevel::Type::WARNING_LEVEL:                 \
           msg_prefix = "WARNING MSG: ";                                       \
           break;                                                              \
-        case timestream::odbc::LogLevel::Type::ERROR_LEVEL:                   \
+        case trino::odbc::LogLevel::Type::ERROR_LEVEL:                   \
           msg_prefix = "ERROR MSG: ";                                         \
           break;                                                              \
         default:                                                              \
@@ -74,7 +74,7 @@ using ignite::odbc::common::concurrent::CriticalSection;
       /* Write the formatted message to the stream */                         \
       *lstream << "TID: " << std::this_thread::get_id() << " " << tStr        \
                << msg_prefix << " "                                           \
-               << timestream::odbc::Logger::GetBaseFileName(__FILE__) << ":"  \
+               << trino::odbc::Logger::GetBaseFileName(__FILE__) << ":"  \
                << __LINE__ << " " << __FUNCTION__ << ": " << param;           \
       /* This will trigger the write to stream */                             \
       lstream = nullptr;                                                      \
@@ -87,37 +87,37 @@ using ignite::odbc::common::concurrent::CriticalSection;
 
 // Debug messages are messages that are useful for debugging
 #define LOG_DEBUG_MSG(param) \
-  WRITE_LOG_MSG(param, timestream::odbc::LogLevel::Type::DEBUG_LEVEL)
+  WRITE_LOG_MSG(param, trino::odbc::LogLevel::Type::DEBUG_LEVEL)
 
 #define LOG_DEBUG_MSG_TO_STREAM(param, logStream)                           \
-  WRITE_MSG_TO_STREAM(param, timestream::odbc::LogLevel::Type::DEBUG_LEVEL, \
+  WRITE_MSG_TO_STREAM(param, trino::odbc::LogLevel::Type::DEBUG_LEVEL, \
                       logStream)
 
 // Info messages are messages that document the application flow
 #define LOG_INFO_MSG(param) \
-  WRITE_LOG_MSG(param, timestream::odbc::LogLevel::Type::INFO_LEVEL)
+  WRITE_LOG_MSG(param, trino::odbc::LogLevel::Type::INFO_LEVEL)
 
 #define LOG_INFO_MSG_TO_STREAM(param, logStream)                           \
-  WRITE_MSG_TO_STREAM(param, timestream::odbc::LogLevel::Type::INFO_LEVEL, \
+  WRITE_MSG_TO_STREAM(param, trino::odbc::LogLevel::Type::INFO_LEVEL, \
                       logStream)
 
 // Warning messages display warnings
 #define LOG_WARNING_MSG(param) \
-  WRITE_LOG_MSG(param, timestream::odbc::LogLevel::Type::WARNING_LEVEL)
+  WRITE_LOG_MSG(param, trino::odbc::LogLevel::Type::WARNING_LEVEL)
 
 #define LOG_WARNING_MSG_TO_STREAM(param, logStream)                           \
-  WRITE_MSG_TO_STREAM(param, timestream::odbc::LogLevel::Type::WARNING_LEVEL, \
+  WRITE_MSG_TO_STREAM(param, trino::odbc::LogLevel::Type::WARNING_LEVEL, \
                       logStream)
 
 // Error messages display errors
 #define LOG_ERROR_MSG(param) \
-  WRITE_LOG_MSG(param, timestream::odbc::LogLevel::Type::ERROR_LEVEL)
+  WRITE_LOG_MSG(param, trino::odbc::LogLevel::Type::ERROR_LEVEL)
 
 #define LOG_ERROR_MSG_TO_STREAM(param, logStream)                           \
-  WRITE_MSG_TO_STREAM(param, timestream::odbc::LogLevel::Type::ERROR_LEVEL, \
+  WRITE_MSG_TO_STREAM(param, trino::odbc::LogLevel::Type::ERROR_LEVEL, \
                       logStream)
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /* Forward declaration */
 class Logger;
@@ -278,7 +278,7 @@ class Logger {
 
   /**
    * Creates the log file name based on date
-   * Log file format: timestream_odbc_YYYYMMDD.log
+   * Log file format: trino_odbc_YYYYMMDD.log
    */
   std::string CreateFileName() const;
 
@@ -313,6 +313,6 @@ class Logger {
 };
 
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_LOG
+#endif  //_TRINO_ODBC_LOG

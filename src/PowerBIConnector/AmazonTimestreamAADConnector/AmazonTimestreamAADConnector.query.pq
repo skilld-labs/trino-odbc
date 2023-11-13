@@ -14,9 +14,9 @@
  *
  */
 
-section AmazonTimestreamAADConnectorUnitTests;
+section AmazonTrinoAADConnectorUnitTests;
 
-shared AmazonTimestreamAADConnector.UnitTest =
+shared AmazonTrinoAADConnector.UnitTest =
 [
     Region = "us-east-2",
     ProfileName = "default",
@@ -26,7 +26,7 @@ shared AmazonTimestreamAADConnector.UnitTest =
     RoleARN = "",
     IdpArn = "",
 
-    Source = AmazonTimestreamAADConnector.Contents(Region, AADApplicationID, AADTenant, AADClientSecret, RoleARN, IdpArn, ProfileName),
+    Source = AmazonTrinoAADConnector.Contents(Region, AADApplicationID, AADTenant, AADClientSecret, RoleARN, IdpArn, ProfileName),
     PowerBI_DB = Source{[Name="PowerBI",Kind="Database"]}[Data],
     DevOpsOriginal = PowerBI_DB{[Name="DevOps", Kind="Table"]}[Data],
     

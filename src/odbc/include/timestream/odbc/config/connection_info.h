@@ -18,12 +18,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_CONFIG_CONNECTION_INFO
-#define _TIMESTREAM_ODBC_CONFIG_CONNECTION_INFO
+#ifndef _TRINO_ODBC_CONFIG_CONNECTION_INFO
+#define _TRINO_ODBC_CONFIG_CONNECTION_INFO
 
 #include <ignite/common/common.h>
-#include <timestream/odbc/common_types.h>
-#include <timestream/odbc/config/configuration.h>
+#include <trino/odbc/common_types.h>
+#include <trino/odbc/config/configuration.h>
 #include <stdint.h>
 
 #include <map>
@@ -35,7 +35,7 @@
 #endif
 #endif
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace config {
 /**
@@ -110,6 +110,6 @@ class ConnectionInfo {
 };
 }  // namespace config
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_CONFIG_CONNECTION_INFO
+#endif  //_TRINO_ODBC_CONFIG_CONNECTION_INFO

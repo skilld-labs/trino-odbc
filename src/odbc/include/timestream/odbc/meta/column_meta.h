@@ -18,8 +18,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_META_COLUMN_META
-#define _TIMESTREAM_ODBC_META_COLUMN_META
+#ifndef _TRINO_ODBC_META_COLUMN_META
+#define _TRINO_ODBC_META_COLUMN_META
 
 #include <stdint.h>
 
@@ -27,20 +27,20 @@
 #include <boost/optional/optional_io.hpp>
 #include <string>
 
-#include "timestream/odbc/common_types.h"
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/utility.h"
-#include "timestream/odbc/app/application_data_buffer.h"
+#include "trino/odbc/common_types.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/utility.h"
+#include "trino/odbc/app/application_data_buffer.h"
 
 /*@*/
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/timestream-query/model/ColumnInfo.h>
-#include <aws/timestream-query/model/ScalarType.h>
+#include <aws/trino-query/model/ColumnInfo.h>
+#include <aws/trino-query/model/ScalarType.h>
 
-using Aws::TimestreamQuery::Model::ColumnInfo;
-using Aws::TimestreamQuery::Model::ScalarType;
+using Aws::TrinoQuery::Model::ColumnInfo;
+using Aws::TrinoQuery::Model::ScalarType;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace meta {
 /**
@@ -64,7 +64,7 @@ struct Nullability {
   static SqlLen ToSql(boost::optional< int32_t > nullability);
 };
 
-using namespace timestream::odbc;
+using namespace trino::odbc;
 
 /**
  * Column metadata.
@@ -223,7 +223,7 @@ class IGNITE_IMPORT_EXPORT ColumnMeta {
    * @param columnBindings the map containing the data to be read.
    * @param position the ordinal position of the column.
    */
-  void Read(timestream::odbc::app::ColumnBindingMap& columnBindings,
+  void Read(trino::odbc::app::ColumnBindingMap& columnBindings,
             int32_t position);
 
   /**
@@ -236,7 +236,7 @@ class IGNITE_IMPORT_EXPORT ColumnMeta {
    * Get Aws ColumnInfo.
    * @return Aws ColumnInfo.
    */
-  const boost::optional< Aws::TimestreamQuery::Model::ColumnInfo >&
+  const boost::optional< Aws::TrinoQuery::Model::ColumnInfo >&
   GetColumnInfo() const {
     return columnInfo;
   }
@@ -381,12 +381,12 @@ class IGNITE_IMPORT_EXPORT ColumnMeta {
    * Get the scalar type based on string data type.
    *
    * @param dataType data type in string.
-   * @return Aws TimestreamQuery ScalarType
+   * @return Aws TrinoQuery ScalarType
    */
   ScalarType GetScalarDataType(const std::string& dataType);
 
   /** Aws columnInfo. */
-  boost::optional< Aws::TimestreamQuery::Model::ColumnInfo > columnInfo;
+  boost::optional< Aws::TrinoQuery::Model::ColumnInfo > columnInfo;
 
   /** Catalog name. */
   boost::optional< std::string > catalogName;
@@ -407,7 +407,7 @@ class IGNITE_IMPORT_EXPORT ColumnMeta {
   boost::optional< std::string > columnDef;
 
   /** Column is auto incremented */
-  // Timestream columns are not auto increment
+  // Trino columns are not auto increment
   std::string isAutoIncrement;
 
   /** Data type. */
@@ -433,5 +433,5 @@ class IGNITE_IMPORT_EXPORT ColumnMeta {
 typedef std::vector< ColumnMeta > ColumnMetaVector;
 }  // namespace meta
 }  // namespace odbc
-}  // namespace timestream
-#endif  //_TIMESTREAM_ODBC_META_COLUMN_META
+}  // namespace trino
+#endif  //_TRINO_ODBC_META_COLUMN_META

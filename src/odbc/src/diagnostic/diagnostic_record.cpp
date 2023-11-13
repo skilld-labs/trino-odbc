@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/diagnostic/diagnostic_record.h"
+#include "trino/odbc/diagnostic/diagnostic_record.h"
 
 #include <set>
 #include <string>
@@ -175,7 +175,7 @@ const std::string STATE_HYT01 = "HYT01";
 const std::string STATE_IM001 = "IM001";
 }  // namespace
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace diagnostic {
 DiagnosticRecord::DiagnosticRecord()
@@ -452,4 +452,4 @@ void DiagnosticRecord::MarkRetrieved() {
 }
 }  // namespace diagnostic
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

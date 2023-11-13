@@ -18,17 +18,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_META_TABLE_META
-#define _TIMESTREAM_ODBC_META_TABLE_META
+#ifndef _TRINO_ODBC_META_TABLE_META
+#define _TRINO_ODBC_META_TABLE_META
 
 #include <string>
 
 #include <boost/optional.hpp>
 #include <boost/optional/optional_io.hpp>
 
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/utility.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace meta {
 /**
@@ -159,6 +159,6 @@ class TableMeta {
 typedef std::vector< TableMeta > TableMetaVector;
 }  // namespace meta
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_META_TABLE_META
+#endif  //_TRINO_ODBC_META_TABLE_META

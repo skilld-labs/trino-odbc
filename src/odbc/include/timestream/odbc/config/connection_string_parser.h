@@ -18,15 +18,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_CONFIG_CONNECTION_STRING_PARSER
-#define _TIMESTREAM_ODBC_CONFIG_CONNECTION_STRING_PARSER
+#ifndef _TRINO_ODBC_CONFIG_CONNECTION_STRING_PARSER
+#define _TRINO_ODBC_CONFIG_CONNECTION_STRING_PARSER
 
 #include <string>
 
-#include "timestream/odbc/config/configuration.h"
-#include "timestream/odbc/diagnostic/diagnostic_record_storage.h"
+#include "trino/odbc/config/configuration.h"
+#include "trino/odbc/diagnostic/diagnostic_record_storage.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace config {
 /**
@@ -49,7 +49,7 @@ class IGNITE_IMPORT_EXPORT ConnectionStringParser {
     static const std::string pwd;
 
     /** Connection attribute keyword for accessKeyId attribute. */
-    static const std::string accessKeyId;
+    // static const std::string accessKeyId;
 
     /** Connection attribute keyword for secretKey attribute. */
     static const std::string secretKey;
@@ -204,6 +204,6 @@ class IGNITE_IMPORT_EXPORT ConnectionStringParser {
 }  // namespace config
 
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_CONFIG_CONNECTION_STRING_PARSER
+#endif  //_TRINO_ODBC_CONFIG_CONNECTION_STRING_PARSER

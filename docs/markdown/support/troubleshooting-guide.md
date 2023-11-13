@@ -2,7 +2,7 @@
 
 ## Topics
 - [Logs](#logs)
-- [PowerBI Desktop cannot load the Timestream ODBC driver library](#powerbi-desktop-cannot-load-the-timestream-odbc-driver-library)
+- [PowerBI Desktop cannot load the Trino ODBC driver library](#powerbi-desktop-cannot-load-the-trino-odbc-driver-library)
 - [Cannot connect on Linux using user DSN](#cannot-connect-on-linux-using-user-dsn)
 - [Root cause of "INVALID_ENDPOINT: Failed to discover endpoint"](#root-cause-of-invalid_endpoint-failed-to-discover-endpoint)
 - [Driver has issue with C++ Redistributable package on Windows](#driver-has-issue-with-c-redistributable-package-on-windows)
@@ -17,7 +17,7 @@ On Mac/Linux/Unix, the default log path is also the user's home directory(`$HOME
 
 On Windows, you may change the default path in the DSN configuration window.
 In any platform, you may pass your log path / log level in the connection string.
-The log path indicates the path to store the log file. The log file name has `timestream_odbc_YYYYMMDD.log` format, 
+The log path indicates the path to store the log file. The log file name has `trino_odbc_YYYYMMDD.log` format, 
 where `YYYYMMDD` (e.g., 20220225 <= Feb 25th, 2022)
 is the timestamp at the first log message.
 The keyword for log path is `logOutput` and the keyword for log level is `logLevel`. 
@@ -45,7 +45,7 @@ To set these properties, use the connection string with the following format
 `<property-name>=<property-value>`. The user should **not** have a slash at the end of the log path. 
 
 For example: (Note: The capitalization does not matter.)
-- In Windows, append `logOutput="C:\Users\Name\Desktop\Timestream ODBC Driver";logLevel=4;` 
+- In Windows, append `logOutput="C:\Users\Name\Desktop\Trino ODBC Driver";logLevel=4;` 
 to your connection string to use log level DEBUG.
     * You can also set the log path and log level from the configuration window in the Microsoft ODBC Administrator. 
     * Click on the drop menu for setting the log level
@@ -58,15 +58,15 @@ to your connection string to use log level DEBUG.
 
 ### AWS Log File Location
 
-Timestream ODBC driver is using AWS SDK C++ to connect to AWS Timestream. AWS SDK has its own log files. When there is a problem, you may need to access AWS SDK logs. The AWS SDK log file name has `aws_sdk_year-month-day-hour.log` format. The AWS SDK log location is your executable directory, that is where you run your application. 
+Trino ODBC driver is using AWS SDK C++ to connect to AWS Trino. AWS SDK has its own log files. When there is a problem, you may need to access AWS SDK logs. The AWS SDK log file name has `aws_sdk_year-month-day-hour.log` format. The AWS SDK log location is your executable directory, that is where you run your application. 
 
 Tips for AWS log file location
 - ODBC Data Sources(64-bit) on Windows, it is `%windir%\system32\`.
 - Excel on macOS, it is `/Users/<username>/Library/Containers/com.microsoft.Excel/Data`.
 
-## PowerBI Desktop cannot load the Timestream ODBC driver library
+## PowerBI Desktop cannot load the Trino ODBC driver library
 
-If you downloaded Power BI Desktop from the Microsoft Store, you may be unable to use the Amazon Timestream ODBC driver due to a loading issue. To address this, download Power BI Desktop from the [Download Center](https://www.microsoft.com/download/details.aspx?id=58494) instead of the Microsoft Store.
+If you downloaded Power BI Desktop from the Microsoft Store, you may be unable to use the Amazon Trino ODBC driver due to a loading issue. To address this, download Power BI Desktop from the [Download Center](https://www.microsoft.com/download/details.aspx?id=58494) instead of the Microsoft Store.
 
 ## Cannot connect on Linux using user DSN
 
@@ -86,7 +86,7 @@ The error message `INVALID_ENDPOINT: Failed to discover endpoint` can occur for 
 
 - Network connectivity issues. If there is a network issue that is preventing the client from connecting to the endpoint, this error message can appear.
 
-- AWS Timestream service issue. If there is a problem with the AWS Timestream service that the client is trying to access, this error message can appear.
+- AWS Trino service issue. If there is a problem with the AWS Trino service that the client is trying to access, this error message can appear.
 
 When this error message is seen, you can check the aws sdk log `aws_sdk_year_month_date-hour.log` (e.g., `aws_sdk_2023-02-01-23.log`)  in your executable directory and search the pattern `Failed to discover endpoints` to identify the real root cause. For example, the following log line shows the `Failed to discover endpoints` is caused by `The request signature we calculated does not match the signature you provided`, which means the credentials are invalid.
 
@@ -99,4 +99,4 @@ Error message: The request signature we calculated does not match the signature 
 ```
 
 ## Driver has issue with C++ Redistributable package on Windows
-The Timestream ODBC driver has only been tested with `14.34.31938.0` version of Microsoft Visual C++ Redistributable (MSVC) package, and untested versions may not work with the driver. If you encounter undocumented problems with the driver, please first uninstall the current version of MSVC package on your machine, and then reinstall the driver using the driver installer. The driver installer will install the version of MSVC package that works with the driver onto the user's computer. For details, please see [Windows installation guide](../setup/windows-installation-guide.md).
+The Trino ODBC driver has only been tested with `14.34.31938.0` version of Microsoft Visual C++ Redistributable (MSVC) package, and untested versions may not work with the driver. If you encounter undocumented problems with the driver, please first uninstall the current version of MSVC package on your machine, and then reinstall the driver using the driver installer. The driver installer will install the version of MSVC package that works with the driver onto the user's computer. For details, please see [Windows installation guide](../setup/windows-installation-guide.md).

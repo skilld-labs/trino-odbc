@@ -24,7 +24,7 @@
 
 #include <sql.h>
 #include <sqltypes.h>
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/utility.h"
 #include <sqlext.h>
 
 #include <boost/test/unit_test.hpp>
@@ -35,11 +35,11 @@
 #include "odbc_test_suite.h"
 #include "test_utils.h"
 
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/config/configuration.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/config/configuration.h"
 
-using namespace timestream;
-using namespace timestream_test;
+using namespace trino;
+using namespace trino_test;
 
 using namespace boost::unit_test;
 
@@ -68,7 +68,7 @@ using namespace boost::unit_test;
 /**
  * Test setup fixture.
  */
-struct DescriptorTestSuiteFixture : public timestream::odbc::OdbcTestSuite {
+struct DescriptorTestSuiteFixture : public trino::odbc::OdbcTestSuite {
   /**
    * Constructor.
    */

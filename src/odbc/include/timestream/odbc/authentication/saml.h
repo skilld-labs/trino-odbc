@@ -14,10 +14,10 @@
  *
  */
 
-#ifndef _TIMESTREAM_ODBC_AUTHENTICATION_SAML
-#define _TIMESTREAM_ODBC_AUTHENTICATION_SAML
+#ifndef _TRINO_ODBC_AUTHENTICATION_SAML
+#define _TRINO_ODBC_AUTHENTICATION_SAML
 
-#include "timestream/odbc/config/configuration.h"
+#include "trino/odbc/config/configuration.h"
 
 /*@*/
 #include <aws/core/Aws.h>
@@ -25,10 +25,10 @@
 #include <aws/sts/model/AssumeRoleWithSAMLRequest.h>
 #include <aws/sts/STSClient.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 
-class IGNITE_IMPORT_EXPORT TimestreamSAMLCredentialsProvider {
+class IGNITE_IMPORT_EXPORT TrinoSAMLCredentialsProvider {
  public:
   /**
    * Constructor.
@@ -37,7 +37,7 @@ class IGNITE_IMPORT_EXPORT TimestreamSAMLCredentialsProvider {
    * @param httpClient Shared pointer to httpClient
    * @param stsClient Shared pointer to STSClient
    */
-  TimestreamSAMLCredentialsProvider(
+  TrinoSAMLCredentialsProvider(
       const config::Configuration& config,
       std::shared_ptr< Aws::Http::HttpClient > httpClient,
       std::shared_ptr< Aws::STS::STSClient > stsClient)
@@ -88,6 +88,6 @@ class IGNITE_IMPORT_EXPORT TimestreamSAMLCredentialsProvider {
 };
 
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_AUTHENTICATION_SAML
+#endif  //_TRINO_ODBC_AUTHENTICATION_SAML

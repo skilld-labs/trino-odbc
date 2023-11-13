@@ -23,7 +23,7 @@
 
 using namespace Aws::Http;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /**
  * Mock HttpClient so we could control the HttpResponse
@@ -87,6 +87,6 @@ class MockHttpClient : public HttpClient {
                            std::shared_ptr< HttpResponse >& response) const;
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
 #endif  //_IGNITE_ODBC_MOCK_HTTPCLIENT

@@ -18,13 +18,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_QUERY_PROCEDURES_QUERY
-#define _TIMESTREAM_ODBC_QUERY_PROCEDURES_QUERY
+#ifndef _TRINO_ODBC_QUERY_PROCEDURES_QUERY
+#define _TRINO_ODBC_QUERY_PROCEDURES_QUERY
 
-#include "timestream/odbc/connection.h"
-#include "timestream/odbc/query/query.h"
+#include "trino/odbc/connection.h"
+#include "trino/odbc/query/query.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace query {
 /**
@@ -118,6 +118,6 @@ class ProceduresQuery : public Query {
 };
 }  // namespace query
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_QUERY_PROCEDURES_QUERY
+#endif  //_TRINO_ODBC_QUERY_PROCEDURES_QUERY

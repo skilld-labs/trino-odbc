@@ -24,7 +24,7 @@
 
 #include <sql.h>
 #include <sqltypes.h>
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/utility.h"
 #include <sqlext.h>
 
 #include <boost/test/unit_test.hpp>
@@ -35,20 +35,20 @@
 #include "odbc_test_suite.h"
 #include "test_utils.h"
 
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/config/configuration.h"
-#include "timestream/odbc/config/connection_string_parser.h"
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/config/configuration.h"
+#include "trino/odbc/config/connection_string_parser.h"
+#include "trino/odbc/utility.h"
 
-using namespace timestream;
-using namespace timestream_test;
+using namespace trino;
+using namespace trino_test;
 
 using namespace boost::unit_test;
 
 /**
  * Test setup fixture.
  */
-struct ApiRobustnessTestSuiteFixture : public timestream::odbc::OdbcTestSuite {
+struct ApiRobustnessTestSuiteFixture : public trino::odbc::OdbcTestSuite {
   /**
    * Constructor.
    */
@@ -1018,11 +1018,11 @@ BOOST_AUTO_TEST_CASE(TestRowArraySizeGreaterThanOne) {
   BOOST_CHECK_EQUAL(SQL_SUCCESS, ret);
 
   // verify results
-  BOOST_CHECK_EQUAL("00000001", timestream::odbc::utility::SqlWcharToString(
+  BOOST_CHECK_EQUAL("00000001", trino::odbc::utility::SqlWcharToString(
                                     id[0], id_len[0], true));
-  BOOST_CHECK_EQUAL("00000002", timestream::odbc::utility::SqlWcharToString(
+  BOOST_CHECK_EQUAL("00000002", trino::odbc::utility::SqlWcharToString(
                                     id[1], id_len[1], true));
-  BOOST_CHECK_EQUAL("00000003", timestream::odbc::utility::SqlWcharToString(
+  BOOST_CHECK_EQUAL("00000003", trino::odbc::utility::SqlWcharToString(
                                     id[2], id_len[2], true));
 
   BOOST_CHECK_EQUAL(0.1, fieldDouble[0]);

@@ -18,13 +18,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_COMMON_UTILS
-#define _TIMESTREAM_ODBC_COMMON_UTILS
+#ifndef _TRINO_ODBC_COMMON_UTILS
+#define _TRINO_ODBC_COMMON_UTILS
 
 #include <ignite/common/include/date.h>
 #include <ignite/common/common.h>
 #include <ignite/common/include/common/platform_utils.h>
-#include <timestream/odbc/timestamp.h>
+#include <trino/odbc/timestamp.h>
 #include <stdint.h>
 
 #include <algorithm>
@@ -33,7 +33,7 @@
 #include <sstream>
 #include <string>
 
-#include "timestream/odbc/time.h"
+#include "trino/odbc/time.h"
 
 #ifdef IGNITE_FRIEND
 #define IGNITE_FRIEND_EXPORT IGNITE_EXPORT
@@ -41,10 +41,10 @@
 #define IGNITE_FRIEND_EXPORT
 #endif
 
-using timestream::odbc::Time;
-using timestream::odbc::Timestamp;
+using trino::odbc::Time;
+using trino::odbc::Timestamp;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace common {
 /**
@@ -633,6 +633,6 @@ class DeinitGuard {
 IGNITE_IMPORT_EXPORT std::string GetDynamicLibraryName(const char* name);
 }  // namespace common
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_COMMON_UTILS
+#endif  //_TRINO_ODBC_COMMON_UTILS

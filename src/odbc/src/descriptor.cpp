@@ -13,9 +13,9 @@
  * permissions and limitations under the License.
  *
  */
-#include "timestream/odbc/descriptor.h"
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/statement.h"
+#include "trino/odbc/descriptor.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/statement.h"
 
 #define ALLOWED_DESC_TYPE1(type, fieldId, allowed_type)                    \
   if (type != allowed_type) {                                              \
@@ -41,7 +41,7 @@
   type* val = reinterpret_cast< type* >(buffer); \
   *val = value;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 Descriptor::Descriptor()
     : type_(DescType::UNKNOWN), conn_(nullptr), stmt_(nullptr) {
@@ -803,4 +803,4 @@ std::string Descriptor::IntervalCodeToString(int code) {
   }
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

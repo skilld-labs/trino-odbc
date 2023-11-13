@@ -17,7 +17,7 @@
 
 #include <Windows.h>
 #include <ignite/common/include/common/platform_utils.h>
-#include <timestream/odbc/utility.h>
+#include <trino/odbc/utility.h>
 #include <time.h>
 
 #include <vector>
@@ -53,7 +53,7 @@ std::string GetEnv(const std::string& name) {
 
 std::string GetEnv(const std::string& name, const std::string& dflt) {
   wchar_t res[_MAX_ENV];
-  std::wstring wname = timestream::odbc::utility::FromUtf8(name);
+  std::wstring wname = trino::odbc::utility::FromUtf8(name);
   // Choosing
   DWORD envRes =
       GetEnvironmentVariableW(wname.c_str(), res, sizeof(res) / sizeof(res[0]));
@@ -61,7 +61,7 @@ std::string GetEnv(const std::string& name, const std::string& dflt) {
   if (envRes == 0 || envRes > sizeof(res))
     return dflt;
 
-  return timestream::odbc::utility::ToUtf8(
+  return trino::odbc::utility::ToUtf8(
       std::wstring(res, static_cast< size_t >(envRes)));
 }
 
@@ -82,7 +82,7 @@ bool IsValidDirectory(const std::string& path) {
   if (path.empty())
     return false;
 
-  std::wstring path0 = timestream::odbc::utility::FromUtf8(path);
+  std::wstring path0 = trino::odbc::utility::FromUtf8(path);
   DWORD attrs = GetFileAttributesW(path0.c_str());
 
   return attrs != INVALID_FILE_ATTRIBUTES
@@ -90,7 +90,7 @@ bool IsValidDirectory(const std::string& path) {
 }
 
 bool DeletePath(const std::string& path) {
-  std::wstring path0 = timestream::odbc::utility::FromUtf8(path);
+  std::wstring path0 = trino::odbc::utility::FromUtf8(path);
   path0.push_back('\0');
   path0.push_back('\0');
 

@@ -14,28 +14,28 @@
  *
  */
 
-#ifndef _IGNITE_ODBC_TIMESTREAM_WRITER
-#define _IGNITE_ODBC_TIMESTREAM_WRITER
+#ifndef _IGNITE_ODBC_TRINO_WRITER
+#define _IGNITE_ODBC_TRINO_WRITER
 
 /*@*/
 #include <aws/core/Aws.h>
 #include <aws/core/auth/AWSCredentials.h>
-#include <aws/timestream-write/TimestreamWriteClient.h>
+#include <aws/trino-write/TrinoWriteClient.h>
 
 #include "metadata-creator/measure_metadata_creater.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 
-class TimestreamWriter {
+class TrinoWriter {
  public:
-  TimestreamWriter(Aws::Auth::AWSCredentials& credentials,
+  TrinoWriter(Aws::Auth::AWSCredentials& credentials,
                    Aws::Client::ClientConfiguration& clientCfg) {
-    client_ = std::make_shared< Aws::TimestreamWrite::TimestreamWriteClient >(
+    client_ = std::make_shared< Aws::TrinoWrite::TrinoWriteClient >(
         credentials, clientCfg);
   }
 
-  ~TimestreamWriter() = default;
+  ~TrinoWriter() = default;
 
   bool WriteSingleValueRecords(const Aws::String& tableMeta,
                                const Aws::String& database,
@@ -49,9 +49,9 @@ class TimestreamWriter {
   std::shared_ptr< MeasureMetadataCreater > CreateMetadataCreater(
       Aws::String tableType);
 
-  std::shared_ptr< Aws::TimestreamWrite::TimestreamWriteClient > client_;
+  std::shared_ptr< Aws::TrinoWrite::TrinoWriteClient > client_;
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_IGNITE_ODBC_TIMESTREAM_WRITER
+#endif  //_IGNITE_ODBC_TRINO_WRITER

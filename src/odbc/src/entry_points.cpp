@@ -23,33 +23,33 @@
 
 #include <ignite/common/common.h>
 
-#include "timestream/odbc.h"
-#include "timestream/odbc/environment.h"
-#include "timestream/odbc/connection.h"
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/utility.h"
-#include "timestream/odbc/statement.h"
+#include "trino/odbc.h"
+#include "trino/odbc/environment.h"
+#include "trino/odbc/connection.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/utility.h"
+#include "trino/odbc/statement.h"
 
 #define ENV_UNSUPPORTED_FUNC(env, diagStr)                          \
-  using timestream::odbc::Environment;                              \
+  using trino::odbc::Environment;                              \
   Environment* environment = reinterpret_cast< Environment* >(env); \
   environment->AddStatusRecord(                                     \
       SqlState::SHYC00_OPTIONAL_FEATURE_NOT_IMPLEMENTED, diagStr);
 
 #define CONN_UNSUPPORTED_FUNC(conn, diagStr)                      \
-  using timestream::odbc::Connection;                             \
+  using trino::odbc::Connection;                             \
   Connection* connection = reinterpret_cast< Connection* >(conn); \
   connection->AddStatusRecord(                                    \
       SqlState::SHYC00_OPTIONAL_FEATURE_NOT_IMPLEMENTED, diagStr);
 
 #define STMT_UNSUPPORTED_FUNC(stmt, diagStr)                   \
-  using timestream::odbc::Statement;                           \
+  using trino::odbc::Statement;                           \
   Statement* statement = reinterpret_cast< Statement* >(stmt); \
   statement->AddStatusRecord(                                  \
       SqlState::SHYC00_OPTIONAL_FEATURE_NOT_IMPLEMENTED, diagStr);
 
 #define DESC_UNSUPPORTED_FUNC(desc, diagStr)                      \
-  using timestream::odbc::Descriptor;                             \
+  using trino::odbc::Descriptor;                             \
   Descriptor* descriptor = reinterpret_cast< Descriptor* >(desc); \
   descriptor->AddStatusRecord(                                    \
       SqlState::SHYC00_OPTIONAL_FEATURE_NOT_IMPLEMENTED, diagStr);
@@ -57,45 +57,45 @@
 SQLRETURN SQL_API SQLGetInfo(SQLHDBC conn, SQLUSMALLINT infoType,
                              SQLPOINTER infoValue, SQLSMALLINT infoValueMax,
                              SQLSMALLINT* length) {
-  return timestream::SQLGetInfo(conn, infoType, infoValue, infoValueMax,
+  return trino::SQLGetInfo(conn, infoType, infoValue, infoValueMax,
                                 length);
 }
 
 SQLRETURN SQL_API SQLAllocHandle(SQLSMALLINT type, SQLHANDLE parent,
                                  SQLHANDLE* result) {
-  return timestream::SQLAllocHandle(type, parent, result);
+  return trino::SQLAllocHandle(type, parent, result);
 }
 
 SQLRETURN SQL_API SQLAllocEnv(SQLHENV* env) {
-  return timestream::SQLAllocEnv(env);
+  return trino::SQLAllocEnv(env);
 }
 
 SQLRETURN SQL_API SQLAllocConnect(SQLHENV env, SQLHDBC* conn) {
-  return timestream::SQLAllocConnect(env, conn);
+  return trino::SQLAllocConnect(env, conn);
 }
 
 SQLRETURN SQL_API SQLAllocStmt(SQLHDBC conn, SQLHSTMT* stmt) {
-  return timestream::SQLAllocStmt(conn, stmt);
+  return trino::SQLAllocStmt(conn, stmt);
 }
 
 SQLRETURN SQL_API SQLFreeHandle(SQLSMALLINT type, SQLHANDLE handle) {
-  return timestream::SQLFreeHandle(type, handle);
+  return trino::SQLFreeHandle(type, handle);
 }
 
 SQLRETURN SQL_API SQLFreeEnv(SQLHENV env) {
-  return timestream::SQLFreeEnv(env);
+  return trino::SQLFreeEnv(env);
 }
 
 SQLRETURN SQL_API SQLFreeConnect(SQLHDBC conn) {
-  return timestream::SQLFreeConnect(conn);
+  return trino::SQLFreeConnect(conn);
 }
 
 SQLRETURN SQL_API SQLFreeStmt(SQLHSTMT stmt, SQLUSMALLINT option) {
-  return timestream::SQLFreeStmt(stmt, option);
+  return trino::SQLFreeStmt(stmt, option);
 }
 
 SQLRETURN SQL_API SQLCloseCursor(SQLHSTMT stmt) {
-  return timestream::SQLCloseCursor(stmt);
+  return trino::SQLCloseCursor(stmt);
 }
 
 SQLRETURN SQL_API SQLDriverConnect(SQLHDBC conn, SQLHWND windowHandle,
@@ -105,7 +105,7 @@ SQLRETURN SQL_API SQLDriverConnect(SQLHDBC conn, SQLHWND windowHandle,
                                    SQLSMALLINT outConnectionStringBufferLen,
                                    SQLSMALLINT* outConnectionStringLen,
                                    SQLUSMALLINT driverCompletion) {
-  return timestream::SQLDriverConnect(
+  return trino::SQLDriverConnect(
       conn, windowHandle, inConnectionString, inConnectionStringLen,
       outConnectionString, outConnectionStringBufferLen, outConnectionStringLen,
       driverCompletion);
@@ -115,58 +115,58 @@ SQLRETURN SQL_API SQLConnect(SQLHDBC conn, SQLWCHAR* serverName,
                              SQLSMALLINT serverNameLen, SQLWCHAR* userName,
                              SQLSMALLINT userNameLen, SQLWCHAR* auth,
                              SQLSMALLINT authLen) {
-  return timestream::SQLConnect(conn, serverName, serverNameLen, userName,
+  return trino::SQLConnect(conn, serverName, serverNameLen, userName,
                                 userNameLen, auth, authLen);
 }
 
 SQLRETURN SQL_API SQLDisconnect(SQLHDBC conn) {
-  return timestream::SQLDisconnect(conn);
+  return trino::SQLDisconnect(conn);
 }
 
 SQLRETURN SQL_API SQLPrepare(SQLHSTMT stmt, SQLWCHAR* query,
                              SQLINTEGER queryLen) {
-  return timestream::SQLPrepare(stmt, query, queryLen);
+  return trino::SQLPrepare(stmt, query, queryLen);
 }
 
 SQLRETURN SQL_API SQLExecute(SQLHSTMT stmt) {
-  return timestream::SQLExecute(stmt);
+  return trino::SQLExecute(stmt);
 }
 
 SQLRETURN SQL_API SQLExecDirect(SQLHSTMT stmt, SQLWCHAR* query,
                                 SQLINTEGER queryLen) {
-  return timestream::SQLExecDirect(stmt, query, queryLen);
+  return trino::SQLExecDirect(stmt, query, queryLen);
 }
 
 SQLRETURN SQL_API SQLCancel(SQLHSTMT stmt) {
-  return timestream::SQLCancel(stmt);
+  return trino::SQLCancel(stmt);
 }
 
 SQLRETURN SQL_API SQLBindCol(SQLHSTMT stmt, SQLUSMALLINT colNum,
                              SQLSMALLINT targetType, SQLPOINTER targetValue,
                              SQLLEN bufferLength,
                              SQLLEN* strLengthOrIndicator) {
-  return timestream::SQLBindCol(stmt, colNum, targetType, targetValue,
+  return trino::SQLBindCol(stmt, colNum, targetType, targetValue,
                                 bufferLength, strLengthOrIndicator);
 }
 
 SQLRETURN SQL_API SQLFetch(SQLHSTMT stmt) {
-  return timestream::SQLFetch(stmt);
+  return trino::SQLFetch(stmt);
 }
 
 SQLRETURN SQL_API SQLFetchScroll(SQLHSTMT stmt, SQLSMALLINT orientation,
                                  SQLLEN offset) {
-  return timestream::SQLFetchScroll(stmt, orientation, offset);
+  return trino::SQLFetchScroll(stmt, orientation, offset);
 }
 
 SQLRETURN SQL_API SQLExtendedFetch(SQLHSTMT stmt, SQLUSMALLINT orientation,
                                    SQLLEN offset, SQLULEN* rowCount,
                                    SQLUSMALLINT* rowStatusArray) {
-  return timestream::SQLExtendedFetch(stmt, orientation, offset, rowCount,
+  return trino::SQLExtendedFetch(stmt, orientation, offset, rowCount,
                                       rowStatusArray);
 }
 
 SQLRETURN SQL_API SQLNumResultCols(SQLHSTMT stmt, SQLSMALLINT* columnNum) {
-  return timestream::SQLNumResultCols(stmt, columnNum);
+  return trino::SQLNumResultCols(stmt, columnNum);
 }
 
 SQLRETURN SQL_API SQLTables(SQLHSTMT stmt, SQLWCHAR* catalogName,
@@ -174,7 +174,7 @@ SQLRETURN SQL_API SQLTables(SQLHSTMT stmt, SQLWCHAR* catalogName,
                             SQLSMALLINT schemaNameLen, SQLWCHAR* tableName,
                             SQLSMALLINT tableNameLen, SQLWCHAR* tableType,
                             SQLSMALLINT tableTypeLen) {
-  return timestream::SQLTables(stmt, catalogName, catalogNameLen, schemaName,
+  return trino::SQLTables(stmt, catalogName, catalogNameLen, schemaName,
                                schemaNameLen, tableName, tableNameLen,
                                tableType, tableTypeLen);
 }
@@ -185,7 +185,7 @@ SQLRETURN SQL_API SQLTablePrivileges(SQLHSTMT stmt, SQLWCHAR* catalogName,
                                      SQLSMALLINT schemaNameLen,
                                      SQLWCHAR* tableName,
                                      SQLSMALLINT tableNameLen) {
-  return timestream::SQLTablePrivileges(stmt, catalogName, catalogNameLen,
+  return trino::SQLTablePrivileges(stmt, catalogName, catalogNameLen,
                                         schemaName, schemaNameLen, tableName,
                                         tableNameLen);
 }
@@ -195,7 +195,7 @@ SQLRETURN SQL_API SQLColumns(SQLHSTMT stmt, SQLWCHAR* catalogName,
                              SQLSMALLINT schemaNameLen, SQLWCHAR* tableName,
                              SQLSMALLINT tableNameLen, SQLWCHAR* columnName,
                              SQLSMALLINT columnNameLen) {
-  return timestream::SQLColumns(stmt, catalogName, catalogNameLen, schemaName,
+  return trino::SQLColumns(stmt, catalogName, catalogNameLen, schemaName,
                                 schemaNameLen, tableName, tableNameLen,
                                 columnName, columnNameLen);
 }
@@ -204,20 +204,20 @@ SQLRETURN SQL_API SQLColumnPrivileges(
     SQLHSTMT stmt, SQLWCHAR* catalogName, SQLSMALLINT catalogNameLen,
     SQLWCHAR* schemaName, SQLSMALLINT schemaNameLen, SQLWCHAR* tableName,
     SQLSMALLINT tableNameLen, SQLWCHAR* columnName, SQLSMALLINT columnNameLen) {
-  return timestream::SQLColumnPrivileges(
+  return trino::SQLColumnPrivileges(
       stmt, catalogName, catalogNameLen, schemaName, schemaNameLen, tableName,
       tableNameLen, columnName, columnNameLen);
 }
 
 SQLRETURN SQL_API SQLMoreResults(SQLHSTMT stmt) {
-  return timestream::SQLMoreResults(stmt);
+  return trino::SQLMoreResults(stmt);
 }
 
 SQLRETURN SQL_API SQLNativeSql(SQLHDBC conn, SQLWCHAR* inQuery,
                                SQLINTEGER inQueryLen, SQLWCHAR* outQueryBuffer,
                                SQLINTEGER outQueryBufferLen,
                                SQLINTEGER* outQueryLen) {
-  return timestream::SQLNativeSql(conn, inQuery, inQueryLen, outQueryBuffer,
+  return trino::SQLNativeSql(conn, inQuery, inQueryLen, outQueryBuffer,
                                   outQueryBufferLen, outQueryLen);
 }
 
@@ -234,7 +234,7 @@ SQLRETURN SQL_API SQLColAttribute(SQLHSTMT stmt, SQLUSMALLINT columnNum,
                                   SQLPOINTER numericAttr)
 #endif
 {
-  return timestream::SQLColAttribute(stmt, columnNum, fieldId, strAttr,
+  return trino::SQLColAttribute(stmt, columnNum, fieldId, strAttr,
                                      bufferLen, strAttrLen,
                                      (SQLLEN*)numericAttr);
 }
@@ -246,13 +246,13 @@ SQLRETURN SQL_API SQLDescribeCol(SQLHSTMT stmt, SQLUSMALLINT columnNum,
                                  SQLSMALLINT* dataType, SQLULEN* columnSize,
                                  SQLSMALLINT* decimalDigits,
                                  SQLSMALLINT* nullable) {
-  return timestream::SQLDescribeCol(stmt, columnNum, columnNameBuf,
+  return trino::SQLDescribeCol(stmt, columnNum, columnNameBuf,
                                     columnNameBufLen, columnNameLen, dataType,
                                     columnSize, decimalDigits, nullable);
 }
 
 SQLRETURN SQL_API SQLRowCount(SQLHSTMT stmt, SQLLEN* rowCnt) {
-  return timestream::SQLRowCount(stmt, rowCnt);
+  return trino::SQLRowCount(stmt, rowCnt);
 }
 
 SQLRETURN SQL_API
@@ -263,7 +263,7 @@ SQLForeignKeys(SQLHSTMT stmt, SQLWCHAR* primaryCatalogName,
                SQLSMALLINT foreignCatalogNameLen, SQLWCHAR* foreignSchemaName,
                SQLSMALLINT foreignSchemaNameLen, SQLWCHAR* foreignTableName,
                SQLSMALLINT foreignTableNameLen) {
-  return timestream::SQLForeignKeys(
+  return trino::SQLForeignKeys(
       stmt, primaryCatalogName, primaryCatalogNameLen, primarySchemaName,
       primarySchemaNameLen, primaryTableName, primaryTableNameLen,
       foreignCatalogName, foreignCatalogNameLen, foreignSchemaName,
@@ -273,13 +273,13 @@ SQLForeignKeys(SQLHSTMT stmt, SQLWCHAR* primaryCatalogName,
 SQLRETURN SQL_API SQLGetStmtAttr(SQLHSTMT stmt, SQLINTEGER attr,
                                  SQLPOINTER valueBuf, SQLINTEGER valueBufLen,
                                  SQLINTEGER* valueResLen) {
-  return timestream::SQLGetStmtAttr(stmt, attr, valueBuf, valueBufLen,
+  return trino::SQLGetStmtAttr(stmt, attr, valueBuf, valueBufLen,
                                     valueResLen);
 }
 
 SQLRETURN SQL_API SQLSetStmtAttr(SQLHSTMT stmt, SQLINTEGER attr,
                                  SQLPOINTER value, SQLINTEGER valueLen) {
-  return timestream::SQLSetStmtAttr(stmt, attr, value, valueLen);
+  return trino::SQLSetStmtAttr(stmt, attr, value, valueLen);
 }
 
 SQLRETURN SQL_API SQLPrimaryKeys(SQLHSTMT stmt, SQLWCHAR* catalogName,
@@ -287,7 +287,7 @@ SQLRETURN SQL_API SQLPrimaryKeys(SQLHSTMT stmt, SQLWCHAR* catalogName,
                                  SQLWCHAR* schemaName,
                                  SQLSMALLINT schemaNameLen, SQLWCHAR* tableName,
                                  SQLSMALLINT tableNameLen) {
-  return timestream::SQLPrimaryKeys(stmt, catalogName, catalogNameLen,
+  return trino::SQLPrimaryKeys(stmt, catalogName, catalogNameLen,
                                     schemaName, schemaNameLen, tableName,
                                     tableNameLen);
 }
@@ -296,7 +296,7 @@ SQLRETURN SQL_API SQLGetDiagField(SQLSMALLINT handleType, SQLHANDLE handle,
                                   SQLSMALLINT recNum, SQLSMALLINT diagId,
                                   SQLPOINTER buffer, SQLSMALLINT bufferLen,
                                   SQLSMALLINT* resLen) {
-  return timestream::SQLGetDiagField(handleType, handle, recNum, diagId, buffer,
+  return trino::SQLGetDiagField(handleType, handle, recNum, diagId, buffer,
                                      bufferLen, resLen);
 }
 
@@ -304,32 +304,32 @@ SQLRETURN SQL_API SQLGetDiagRec(SQLSMALLINT handleType, SQLHANDLE handle,
                                 SQLSMALLINT recNum, SQLWCHAR* sqlState,
                                 SQLINTEGER* nativeError, SQLWCHAR* msgBuffer,
                                 SQLSMALLINT msgBufferLen, SQLSMALLINT* msgLen) {
-  return timestream::SQLGetDiagRec(handleType, handle, recNum, sqlState,
+  return trino::SQLGetDiagRec(handleType, handle, recNum, sqlState,
                                    nativeError, msgBuffer, msgBufferLen,
                                    msgLen);
 }
 
 SQLRETURN SQL_API SQLGetTypeInfo(SQLHSTMT stmt, SQLSMALLINT type) {
-  return timestream::SQLGetTypeInfo(stmt, type);
+  return trino::SQLGetTypeInfo(stmt, type);
 }
 
 SQLRETURN SQL_API SQLGetData(SQLHSTMT stmt, SQLUSMALLINT colNum,
                              SQLSMALLINT targetType, SQLPOINTER targetValue,
                              SQLLEN bufferLength,
                              SQLLEN* strLengthOrIndicator) {
-  return timestream::SQLGetData(stmt, colNum, targetType, targetValue,
+  return trino::SQLGetData(stmt, colNum, targetType, targetValue,
                                 bufferLength, strLengthOrIndicator);
 }
 
 SQLRETURN SQL_API SQLSetEnvAttr(SQLHENV env, SQLINTEGER attr, SQLPOINTER value,
                                 SQLINTEGER valueLen) {
-  return timestream::SQLSetEnvAttr(env, attr, value, valueLen);
+  return trino::SQLSetEnvAttr(env, attr, value, valueLen);
 }
 
 SQLRETURN SQL_API SQLGetEnvAttr(SQLHENV env, SQLINTEGER attr,
                                 SQLPOINTER valueBuf, SQLINTEGER valueBufLen,
                                 SQLINTEGER* valueResLen) {
-  return timestream::SQLGetEnvAttr(env, attr, valueBuf, valueBufLen,
+  return trino::SQLGetEnvAttr(env, attr, valueBuf, valueBufLen,
                                    valueResLen);
 }
 
@@ -338,7 +338,7 @@ SQLRETURN SQL_API SQLSpecialColumns(
     SQLSMALLINT catalogNameLen, SQLWCHAR* schemaName, SQLSMALLINT schemaNameLen,
     SQLWCHAR* tableName, SQLSMALLINT tableNameLen, SQLUSMALLINT scope,
     SQLUSMALLINT nullable) {
-  return timestream::SQLSpecialColumns(
+  return trino::SQLSpecialColumns(
       stmt, idType, catalogName, catalogNameLen, schemaName, schemaNameLen,
       tableName, tableNameLen, scope, nullable);
 }
@@ -348,7 +348,7 @@ SQLRETURN SQL_API SQLStatistics(SQLHSTMT stmt, SQLWCHAR* catalogName,
                                 SQLWCHAR* schemaName, SQLSMALLINT schemaNameLen,
                                 SQLWCHAR* tableName, SQLSMALLINT tableNameLen,
                                 SQLUSMALLINT unique, SQLUSMALLINT reserved) {
-  return timestream::SQLStatistics(stmt, catalogName, catalogNameLen,
+  return trino::SQLStatistics(stmt, catalogName, catalogNameLen,
                                    schemaName, schemaNameLen, tableName,
                                    tableNameLen, unique, reserved);
 }
@@ -357,7 +357,7 @@ SQLRETURN SQL_API SQLProcedureColumns(
     SQLHSTMT stmt, SQLWCHAR* catalogName, SQLSMALLINT catalogNameLen,
     SQLWCHAR* schemaName, SQLSMALLINT schemaNameLen, SQLWCHAR* procName,
     SQLSMALLINT procNameLen, SQLWCHAR* columnName, SQLSMALLINT columnNameLen) {
-  return timestream::SQLProcedureColumns(
+  return trino::SQLProcedureColumns(
       stmt, catalogName, catalogNameLen, schemaName, schemaNameLen, procName,
       procNameLen, columnName, columnNameLen);
 }
@@ -366,7 +366,7 @@ SQLRETURN SQL_API SQLProcedures(SQLHSTMT stmt, SQLWCHAR* catalogName,
                                 SQLSMALLINT catalogNameLen,
                                 SQLWCHAR* schemaName, SQLSMALLINT schemaNameLen,
                                 SQLWCHAR* tableName, SQLSMALLINT tableNameLen) {
-  return timestream::SQLProcedures(stmt, catalogName, catalogNameLen,
+  return trino::SQLProcedures(stmt, catalogName, catalogNameLen,
                                    schemaName, schemaNameLen, tableName,
                                    tableNameLen);
 }
@@ -374,48 +374,48 @@ SQLRETURN SQL_API SQLProcedures(SQLHSTMT stmt, SQLWCHAR* catalogName,
 SQLRETURN SQL_API SQLError(SQLHENV env, SQLHDBC conn, SQLHSTMT stmt,
                            SQLWCHAR* state, SQLINTEGER* error, SQLWCHAR* msgBuf,
                            SQLSMALLINT msgBufLen, SQLSMALLINT* msgResLen) {
-  return timestream::SQLError(env, conn, stmt, state, error, msgBuf, msgBufLen,
+  return trino::SQLError(env, conn, stmt, state, error, msgBuf, msgBufLen,
                               msgResLen);
 }
 
 SQLRETURN SQL_API SQLGetConnectAttr(SQLHDBC conn, SQLINTEGER attr,
                                     SQLPOINTER valueBuf, SQLINTEGER valueBufLen,
                                     SQLINTEGER* valueResLen) {
-  return timestream::SQLGetConnectAttr(conn, attr, valueBuf, valueBufLen,
+  return trino::SQLGetConnectAttr(conn, attr, valueBuf, valueBufLen,
                                        valueResLen);
 }
 
 SQLRETURN SQL_API SQLSetConnectAttr(SQLHDBC conn, SQLINTEGER attr,
                                     SQLPOINTER value, SQLINTEGER valueLen) {
-  return timestream::SQLSetConnectAttr(conn, attr, value, valueLen);
+  return trino::SQLSetConnectAttr(conn, attr, value, valueLen);
 }
 
 SQLRETURN SQL_API SQLGetCursorName(SQLHSTMT stmt, SQLWCHAR* nameBuf,
                                    SQLSMALLINT nameBufLen,
                                    SQLSMALLINT* nameResLen) {
-  return timestream::SQLGetCursorName(stmt, nameBuf, nameBufLen, nameResLen);
+  return trino::SQLGetCursorName(stmt, nameBuf, nameBufLen, nameResLen);
 }
 
 SQLRETURN SQL_API SQLSetCursorName(SQLHSTMT stmt, SQLWCHAR* name,
                                    SQLSMALLINT nameLen) {
-  return timestream::SQLSetCursorName(stmt, name, nameLen);
+  return trino::SQLSetCursorName(stmt, name, nameLen);
 }
 
 SQLRETURN SQL_API SQLSetDescField(SQLHDESC descr, SQLSMALLINT recNum,
                                   SQLSMALLINT fieldId, SQLPOINTER buffer,
                                   SQLINTEGER bufferLen) {
-  return timestream::SQLSetDescField(descr, recNum, fieldId, buffer, bufferLen);
+  return trino::SQLSetDescField(descr, recNum, fieldId, buffer, bufferLen);
 }
 
 SQLRETURN SQL_API SQLGetDescField(SQLHDESC descr, SQLSMALLINT recNum,
                                   SQLSMALLINT fieldId, SQLPOINTER buffer,
                                   SQLINTEGER bufferLen, SQLINTEGER* resLen) {
-  return timestream::SQLGetDescField(descr, recNum, fieldId, buffer, bufferLen,
+  return trino::SQLGetDescField(descr, recNum, fieldId, buffer, bufferLen,
                                      resLen);
 }
 
 SQLRETURN SQL_API SQLCopyDesc(SQLHDESC src, SQLHDESC dst) {
-  return timestream::SQLCopyDesc(src, dst);
+  return trino::SQLCopyDesc(src, dst);
 }
 
 #if defined(__APPLE__)
@@ -423,23 +423,23 @@ SQLRETURN SQL_API SQLCopyDesc(SQLHDESC src, SQLHDESC dst) {
 // implement this function
 SQLRETURN SQL_API SQLGetFunctions(SQLHDBC conn, SQLUSMALLINT funcId,
                                   SQLUSMALLINT* valueBuf) {
-  return timestream::SQLGetFunctions(conn, funcId, valueBuf);
+  return trino::SQLGetFunctions(conn, funcId, valueBuf);
 }
 #endif
 
 SQLRETURN SQL_API SQLSetConnectOption(SQLHDBC conn, SQLUSMALLINT option,
                                       SQLULEN value) {
-  return timestream::SQLSetConnectOption(conn, option, value);
+  return trino::SQLSetConnectOption(conn, option, value);
 }
 
 SQLRETURN SQL_API SQLGetConnectOption(SQLHDBC conn, SQLUSMALLINT option,
                                       SQLPOINTER value) {
-  return timestream::SQLGetConnectOption(conn, option, value);
+  return trino::SQLGetConnectOption(conn, option, value);
 }
 
 SQLRETURN SQL_API SQLGetStmtOption(SQLHSTMT stmt, SQLUSMALLINT option,
                                    SQLPOINTER value) {
-  return timestream::SQLGetStmtOption(stmt, option, value);
+  return trino::SQLGetStmtOption(stmt, option, value);
 }
 
 SQLRETURN SQL_API SQLColAttributes(SQLHSTMT stmt, SQLUSMALLINT colNum,
@@ -447,7 +447,7 @@ SQLRETURN SQL_API SQLColAttributes(SQLHSTMT stmt, SQLUSMALLINT colNum,
                                    SQLSMALLINT strAttrBufLen,
                                    SQLSMALLINT* strAttrResLen,
                                    SQLLEN* numAttrBuf) {
-  return timestream::SQLColAttributes(stmt, colNum, fieldId, strAttrBuf,
+  return trino::SQLColAttributes(stmt, colNum, fieldId, strAttrBuf,
                                       strAttrBufLen, strAttrResLen, numAttrBuf);
 }
 

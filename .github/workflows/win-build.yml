@@ -16,8 +16,8 @@ env:
   ODBC_DEBUG_PATH: "${{github.workspace}}/build/odbc/bin/Debug"
   ODBC_BUILD_PATH: "${{github.workspace}}/build/odbc/cmake"
   VCPKG_ROOT: "c:/vcpkg"
-  TIMESTREAM_LOG_PATH: "${{github.workspace}}/build/odbc/logs"
-  TIMESTREAM_LOG_LEVEL: "4"
+  TRINO_LOG_PATH: "${{github.workspace}}/build/odbc/logs"
+  TRINO_LOG_LEVEL: "4"
   BIG_TABLE_PAGINATION_TEST_ENABLE: "TRUE"
 
   # # AAD Test environment variables. Uncomment out to use GitHub secrets to enable AAD integration tests
@@ -105,18 +105,18 @@ jobs:
     - name: Build PowerBI connector
       run: |
         cd src/PowerBIConnector
-        .\AmazonTimestreamConnector.ps1
+        .\AmazonTrinoConnector.ps1
         cd ${{github.workspace}}
 
     - name: Upload ODBC connector build 
       uses: actions/upload-artifact@v3
       with:
-        name: AmazonTimestreamConnector.mez
-        path: ./src/PowerBIConnector/AmazonTimestreamConnector.mez
+        name: AmazonTrinoConnector.mez
+        path: ./src/PowerBIConnector/AmazonTrinoConnector.mez
 
     - name: register-driver
       run: |
-        .\src\odbc\install\install_amd64.cmd ${{env.ODBC_BIN_PATH}}\timestream.odbc.dll ${{env.ODBC_BIN_PATH}}\timestream.odbc.dll
+        .\src\odbc\install\install_amd64.cmd ${{env.ODBC_BIN_PATH}}\trino.odbc.dll ${{env.ODBC_BIN_PATH}}\trino.odbc.dll
 
     - name: configure-aws-credentials-for-tests
       if: success()
@@ -129,8 +129,8 @@ jobs:
     - name: run-unit-tests
       id: rununittests
       run: |
-        mkdir -p "${{env.TIMESTREAM_LOG_PATH}}"
-        ${{env.ODBC_BIN_PATH}}/timestream-odbc-unit-tests.exe
+        mkdir -p "${{env.TRINO_LOG_PATH}}"
+        ${{env.ODBC_BIN_PATH}}/trino-odbc-unit-tests.exe
 
     - name: upload-unit-test-report
       if: always()
@@ -147,12 +147,12 @@ jobs:
         name: odbc-unit-test-results
         path: |
           ./odbc_unit_test_result.xml
-          ./build/odbc/logs/timestream_odbc_*.log
+          ./build/odbc/logs/trino_odbc_*.log
 
     - name: run-integration-tests
       id: runintegrationtests
       run: |
-        ${{env.ODBC_BIN_PATH}}/timestream-odbc-integration-tests.exe
+        ${{env.ODBC_BIN_PATH}}/trino-odbc-integration-tests.exe
 
     - name: upload-integration-test-report
       if: always()
@@ -169,7 +169,7 @@ jobs:
         name: odbc-test-results
         path: |
           ./odbc_test_result.xml
-          ./build/odbc/logs/timestream_odbc_*.log
+          ./build/odbc/logs/trino_odbc_*.log
 
     - name: Read VERSION file
       if: ${{ env.SIGNING_ENABLED == 'true' }}
@@ -201,7 +201,7 @@ jobs:
     - name: Upload ODBC driver build 
       uses: actions/upload-artifact@v3
       with:
-        name: timestream-odbc-driver-32
+        name: trino-odbc-driver-32
         path: build/odbc/cmake/Release
 
   build-windows64:
@@ -246,18 +246,18 @@ jobs:
     - name: Build PowerBI connector
       run: |
         cd src/PowerBIConnector
-        .\AmazonTimestreamConnector.ps1
+        .\AmazonTrinoConnector.ps1
         cd ${{github.workspace}}
 
     - name: Upload ODBC connector build 
       uses: actions/upload-artifact@v3
       with:
-        name: AmazonTimestreamConnector.mez
-        path: ./src/PowerBIConnector/AmazonTimestreamConnector.mez
+        name: AmazonTrinoConnector.mez
+        path: ./src/PowerBIConnector/AmazonTrinoConnector.mez
 
     - name: register-driver
       run: |
-        .\src\odbc\install\install_amd64.cmd ${{env.ODBC_BIN_PATH}}\timestream.odbc.dll
+        .\src\odbc\install\install_amd64.cmd ${{env.ODBC_BIN_PATH}}\trino.odbc.dll
 
     - name: configure-aws-credentials-for-tests
       if: success()
@@ -270,8 +270,8 @@ jobs:
     - name: run-unit-tests
       id: rununittests
       run: |
-        mkdir -p "${{env.TIMESTREAM_LOG_PATH}}"
-        ${{env.ODBC_BIN_PATH}}/timestream-odbc-unit-tests.exe
+        mkdir -p "${{env.TRINO_LOG_PATH}}"
+        ${{env.ODBC_BIN_PATH}}/trino-odbc-unit-tests.exe
 
     - name: upload-unit-test-report
       if: always()
@@ -288,12 +288,12 @@ jobs:
         name: odbc-unit-test-results
         path: |
           ./odbc_unit_test_result.xml
-          ./build/odbc/logs/timestream_odbc_*.log
+          ./build/odbc/logs/trino_odbc_*.log
 
     - name: run-integration-tests
       id: runintegrationtests
       run: |
-        ${{env.ODBC_BIN_PATH}}/timestream-odbc-integration-tests.exe
+        ${{env.ODBC_BIN_PATH}}/trino-odbc-integration-tests.exe
 
     - name: upload-integration-test-report
       if: always()
@@ -310,7 +310,7 @@ jobs:
         name: odbc-test-results
         path: |
           ./odbc_test_result.xml
-          ./build/odbc/logs/timestream_odbc_*.log
+          ./build/odbc/logs/trino_odbc_*.log
 
     - name: Read VERSION file
       if: ${{ env.SIGNING_ENABLED == 'true' }}
@@ -342,7 +342,7 @@ jobs:
     - name: Upload ODBC driver build 
       uses: actions/upload-artifact@v3
       with:
-        name: timestream-odbc-driver-64
+        name: trino-odbc-driver-64
         path: build/odbc/cmake/Release
 
   build-windows64_coverage:
@@ -393,12 +393,12 @@ jobs:
     - name: Build PowerBI connector
       run: |
         cd src/PowerBIConnector
-        .\AmazonTimestreamConnector.ps1
+        .\AmazonTrinoConnector.ps1
         cd ${{github.workspace}}
 
     - name: register-driver
       run: |
-        .\src\odbc\install\install_amd64.cmd ${{env.ODBC_DEBUG_PATH}}\timestream.odbc.dll
+        .\src\odbc\install\install_amd64.cmd ${{env.ODBC_DEBUG_PATH}}\trino.odbc.dll
 
     - name: configure-aws-credentials-for-tests
       if: success()
@@ -411,9 +411,9 @@ jobs:
     - name: run-tests
       run: |
         # run code coverage against unit test first
-        opencppcoverage --sources src\odbc\src --sources src\odbc\include --export_type binary:unit.test.cov --excluded_modules boost_unit_test_framework --excluded_modules timestream-odbc-integration-tests --excluded_modules zlib --excluded_modules aws --excluded_modules boost --excluded_sources src\odbc\src\ignite --excluded_sources src\odbc\include\ignite -- ${{env.ODBC_DEBUG_PATH}}/timestream-odbc-unit-tests.exe
+        opencppcoverage --sources src\odbc\src --sources src\odbc\include --export_type binary:unit.test.cov --excluded_modules boost_unit_test_framework --excluded_modules trino-odbc-integration-tests --excluded_modules zlib --excluded_modules aws --excluded_modules boost --excluded_sources src\odbc\src\ignite --excluded_sources src\odbc\include\ignite -- ${{env.ODBC_DEBUG_PATH}}/trino-odbc-unit-tests.exe
         # run code coverage against integration test and merge the result with the unit test one
-        opencppcoverage --sources src\odbc\src --sources src\odbc\include --input_coverage unit.test.cov --export_type cobertura:coverage.cobertura.xml --excluded_modules boost_unit_test_framework --excluded_modules timestream-odbc-integration-tests --excluded_modules zlib --excluded_modules aws --excluded_modules boost --excluded_sources src\odbc\src\ignite --excluded_sources src\odbc\include\ignite -- ${{env.ODBC_DEBUG_PATH}}/timestream-odbc-integration-tests.exe
+        opencppcoverage --sources src\odbc\src --sources src\odbc\include --input_coverage unit.test.cov --export_type cobertura:coverage.cobertura.xml --excluded_modules boost_unit_test_framework --excluded_modules trino-odbc-integration-tests --excluded_modules zlib --excluded_modules aws --excluded_modules boost --excluded_sources src\odbc\src\ignite --excluded_sources src\odbc\include\ignite -- ${{env.ODBC_DEBUG_PATH}}/trino-odbc-integration-tests.exe
 
     - name: upload-coverage
       if: always()

@@ -17,19 +17,19 @@
 #include <string>
 
 #include <odbc_unit_test_suite.h>
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/log_level.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/log_level.h"
 #include <ignite/common/include/common/platform_utils.h>
-#include <timestream/odbc/authentication/auth_type.h>
-#include "timestream/odbc/statement.h"
-#include "timestream/odbc/utility.h"
+#include <trino/odbc/authentication/auth_type.h>
+#include "trino/odbc/statement.h"
+#include "trino/odbc/utility.h"
 
-using timestream::odbc::AuthType;
-using timestream::odbc::MockConnection;
-using timestream::odbc::MockTimestreamService;
-using timestream::odbc::OdbcUnitTestSuite;
-using timestream::odbc::Statement;
-using timestream::odbc::config::Configuration;
+using trino::odbc::AuthType;
+using trino::odbc::MockConnection;
+using trino::odbc::MockTrinoService;
+using trino::odbc::OdbcUnitTestSuite;
+using trino::odbc::Statement;
+using trino::odbc::config::Configuration;
 using namespace boost::unit_test;
 
 /**
@@ -47,10 +47,10 @@ struct DataQueryUnitTestSuiteFixture : OdbcUnitTestSuite {
 
   void getLogOptions(Configuration& config) const {
     using ignite::odbc::common::GetEnv;
-    using timestream::odbc::LogLevel;
+    using trino::odbc::LogLevel;
 
-    std::string logPath = GetEnv("TIMESTREAM_LOG_PATH", "");
-    std::string logLevelStr = GetEnv("TIMESTREAM_LOG_LEVEL", "2");
+    std::string logPath = GetEnv("TRINO_LOG_PATH", "");
+    std::string logLevelStr = GetEnv("TRINO_LOG_LEVEL", "2");
 
     LogLevel::Type logLevel = LogLevel::FromString(logLevelStr);
     config.SetLogLevel(logLevel);
@@ -116,7 +116,7 @@ BOOST_AUTO_TEST_CASE(TestDataQuery) {
   stmt->FetchRow();
   BOOST_CHECK(IsSuccessful());
 
-  BOOST_CHECK_EQUAL("cpu_usage", timestream::odbc::utility::SqlWcharToString(
+  BOOST_CHECK_EQUAL("cpu_usage", trino::odbc::utility::SqlWcharToString(
                                      measure, measure_len, true));
   BOOST_CHECK_EQUAL(timestamp.year, 2022);
   BOOST_CHECK_EQUAL(timestamp.month, 11);

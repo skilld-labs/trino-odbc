@@ -18,9 +18,9 @@
 #include "ignite/common/include/common/big_integer.h"
 
 #include "ignite/common/include/common/bits.h"
-#include "timestream/odbc/ignite_error.h"
+#include "trino/odbc/ignite_error.h"
 
-using timestream::odbc::IgniteError;
+using trino::odbc::IgniteError;
 
 namespace ignite {
 namespace odbc {

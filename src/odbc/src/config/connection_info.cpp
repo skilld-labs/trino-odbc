@@ -18,14 +18,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/config/connection_info.h"
+#include "trino/odbc/config/connection_info.h"
 
 #include <algorithm>
 #include <cstring>
 
-#include "timestream/odbc/system/odbc_constants.h"
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/system/odbc_constants.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/utility.h"
 
 // Temporary workaround.
 #ifndef SQL_ASYNC_NOTIFICATION
@@ -40,7 +40,7 @@
 #define SQL_ASYNC_NOTIFICATION_CAPABLE 0x00000001L
 #endif
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace config {
 
@@ -602,15 +602,15 @@ ConnectionInfo::ConnectionInfo(const Configuration& config)
   // Driver name.
 #ifdef SQL_DRIVER_NAME
 #if defined(WIN32)
-  strParams[SQL_DRIVER_NAME] = "timestream.odbc.dll";
+  strParams[SQL_DRIVER_NAME] = "trino.odbc.dll";
 #elif defined(__APPLE__)
-  strParams[SQL_DRIVER_NAME] = "libtimestream-odbc.dylib";
+  strParams[SQL_DRIVER_NAME] = "libtrino-odbc.dylib";
 #elif defined(__linux__)
-  strParams[SQL_DRIVER_NAME] = "libtimestream-odbc.so";
+  strParams[SQL_DRIVER_NAME] = "libtrino-odbc.so";
 #endif  // WIN32
 #endif  // SQL_DRIVER_NAME
 #ifdef SQL_DBMS_NAME
-  strParams[SQL_DBMS_NAME] = "Amazon Timestream";
+  strParams[SQL_DBMS_NAME] = "Amazon Trino";
 #endif  // SQL_DBMS_NAME
 
   // ODBC version.
@@ -864,7 +864,7 @@ ConnectionInfo::ConnectionInfo(const Configuration& config)
   // A character string with the actual data source-specific server name; useful
   // when a data source name is used during SQLConnect, SQLDriverConnect, and
   // SQLBrowseConnect.
-  strParams[SQL_SERVER_NAME] = "AWS Timestream";
+  strParams[SQL_SERVER_NAME] = "AWS Trino";
 #endif  // SQL_SERVER_NAME
 
 #ifdef SQL_USER_NAME
@@ -2874,4 +2874,4 @@ SqlResult::Type ConnectionInfo::SetInfo(InfoType type, std::string value) {
 
 }  // namespace config
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

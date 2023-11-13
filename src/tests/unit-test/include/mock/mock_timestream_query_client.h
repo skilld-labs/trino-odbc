@@ -14,32 +14,32 @@
  *
  */
 
-#ifndef _MOCK_TIMESTREAM_QUERY_CLIENT
-#define _MOCK_TIMESTREAM_QUERY_CLIENT
+#ifndef _MOCK_TRINO_QUERY_CLIENT
+#define _MOCK_TRINO_QUERY_CLIENT
 
 /*@*/
 #include <aws/core/Aws.h>
 #include <aws/core/auth/AWSCredentials.h>
-#include <aws/timestream-query/TimestreamQueryClient.h>
-#include <aws/timestream-query/model/QueryRequest.h>
+#include <aws/trino-query/TrinoQueryClient.h>
+#include <aws/trino-query/model/QueryRequest.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /**
- * Mock TimestreamQueryClient so its behavior could be controlled by us.
- * All interfaces should be kept same as TimestreamQueryClient.
+ * Mock TrinoQueryClient so its behavior could be controlled by us.
+ * All interfaces should be kept same as TrinoQueryClient.
  */
-class MockTimestreamQueryClient
-    : public Aws::TimestreamQuery::TimestreamQueryClient {
+class MockTrinoQueryClient
+    : public Aws::TrinoQuery::TrinoQueryClient {
  public:
   /**
    * Constructor.
    */
-  MockTimestreamQueryClient(
+  MockTrinoQueryClient(
       const Aws::Auth::AWSCredentials &credentials,
       const Aws::Client::ClientConfiguration &clientConfiguration =
           Aws::Client::ClientConfiguration())
-      : Aws::TimestreamQuery::TimestreamQueryClient(credentials,
+      : Aws::TrinoQuery::TrinoQueryClient(credentials,
                                                     clientConfiguration),
         credentials_(credentials),
         clientConfiguration_(clientConfiguration) {
@@ -48,7 +48,7 @@ class MockTimestreamQueryClient
   /**
    * Destructor.
    */
-  ~MockTimestreamQueryClient() {
+  ~MockTrinoQueryClient() {
   }
 
   /**
@@ -57,14 +57,14 @@ class MockTimestreamQueryClient
    * @param request Aws QueryResult .
    * @return Operation outcome.
    */
-  virtual Aws::TimestreamQuery::Model::QueryOutcome Query(
-      const Aws::TimestreamQuery::Model::QueryRequest &request) const;
+  virtual Aws::TrinoQuery::Model::QueryOutcome Query(
+      const Aws::TrinoQuery::Model::QueryRequest &request) const;
 
  private:
   Aws::Auth::AWSCredentials credentials_;
   Aws::Client::ClientConfiguration clientConfiguration_;
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
 #endif

@@ -16,7 +16,7 @@ cmake_minimum_required(VERSION 3.20)
 # Update version number in ODBC_DRIVER_VERSION.txt file.
 file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/ODBC_DRIVER_VERSION.txt" ODBC_DRIVER_VERSION)
 string(STRIP ${ODBC_DRIVER_VERSION} ODBC_DRIVER_VERSION)
-project(Timestream-ODBC VERSION ${ODBC_DRIVER_VERSION})
+project(Trino-ODBC VERSION ${ODBC_DRIVER_VERSION})
 
 # Mac
 if (UNIX AND APPLE)
@@ -42,9 +42,9 @@ if (WIN32)
 
     # copy AWS DLL to ${CMAKE_BUILD_DIR} as they are needed for Windows building and test running
     configure_file(${AWS_DLL_DIR}/aws-cpp-sdk-core.dll ${CMAKE_BUILD_DIR}/aws-cpp-sdk-core.dll COPYONLY)
-    configure_file(${AWS_DLL_DIR}/aws-cpp-sdk-timestream-query.dll ${CMAKE_BUILD_DIR}/aws-cpp-sdk-timestream-query.dll COPYONLY)
-    # Timestream-write dll is needed for data writer tool
-    configure_file(${AWS_DLL_DIR}/aws-cpp-sdk-timestream-write.dll ${CMAKE_BUILD_DIR}/aws-cpp-sdk-timestream-write.dll COPYONLY)
+    configure_file(${AWS_DLL_DIR}/aws-cpp-sdk-trino-query.dll ${CMAKE_BUILD_DIR}/aws-cpp-sdk-trino-query.dll COPYONLY)
+    # Trino-write dll is needed for data writer tool
+    configure_file(${AWS_DLL_DIR}/aws-cpp-sdk-trino-write.dll ${CMAKE_BUILD_DIR}/aws-cpp-sdk-trino-write.dll COPYONLY)
     configure_file(${AWS_DLL_DIR}/aws-cpp-sdk-sts.dll ${CMAKE_BUILD_DIR}/aws-cpp-sdk-sts.dll COPYONLY)
     configure_file(${AWS_DLL_DIR}/aws-c-auth.dll ${CMAKE_BUILD_DIR}/aws-c-auth.dll COPYONLY)
     configure_file(${AWS_DLL_DIR}/aws-c-cal.dll ${CMAKE_BUILD_DIR}/aws-c-cal.dll COPYONLY)
@@ -62,9 +62,9 @@ endif()
 
 # ensure AWS SDK libraries built by us could be found by find_package
 set(s2n_DIR "${AWS_CMAKE_DIR}/s2n/cmake")
-set(aws-cpp-sdk-timestream-query_DIR "${AWS_CMAKE_DIR}/cmake/aws-cpp-sdk-timestream-query")
-# Timestream-write directory value is needed for data writer tool
-set(aws-cpp-sdk-timestream-write_DIR "${AWS_CMAKE_DIR}/cmake/aws-cpp-sdk-timestream-write")
+set(aws-cpp-sdk-trino-query_DIR "${AWS_CMAKE_DIR}/cmake/aws-cpp-sdk-trino-query")
+# Trino-write directory value is needed for data writer tool
+set(aws-cpp-sdk-trino-write_DIR "${AWS_CMAKE_DIR}/cmake/aws-cpp-sdk-trino-write")
 set(aws-cpp-sdk-sts_DIR "${AWS_CMAKE_DIR}/cmake/aws-cpp-sdk-sts")
 set(aws-cpp-sdk-core_DIR "${AWS_CMAKE_DIR}/cmake/aws-cpp-sdk-core")
 set(aws-crt-cpp_DIR "${AWS_CMAKE_DIR}/aws-crt-cpp/cmake")

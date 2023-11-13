@@ -18,15 +18,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/config/connection_info.h"
+#include "trino/odbc/config/connection_info.h"
 
 #include <boost/test/unit_test.hpp>
 #include <iostream>
 
-#include "timestream/odbc/system/odbc_constants.h"
+#include "trino/odbc/system/odbc_constants.h"
 
-using namespace timestream::odbc;
-using namespace timestream::odbc::config;
+using namespace trino::odbc;
+using namespace trino::odbc::config;
 
 BOOST_AUTO_TEST_SUITE(ConnectionInfoTestSuite)
 

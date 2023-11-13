@@ -18,16 +18,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/query/special_columns_query.h"
+#include "trino/odbc/query/special_columns_query.h"
 
-#include "timestream/odbc/type_traits.h"
+#include "trino/odbc/type_traits.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace query {
 SpecialColumnsQuery::SpecialColumnsQuery(diagnostic::DiagnosableAdapter& diag)
     : Query(diag, QueryType::SPECIAL_COLUMNS), columnsMeta() {
-  using namespace timestream::odbc::type_traits;
+  using namespace trino::odbc::type_traits;
 
   using meta::ColumnMeta;
   using meta::Nullability;
@@ -112,4 +112,4 @@ SqlResult::Type SpecialColumnsQuery::NextResultSet() {
 }
 }  // namespace query
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

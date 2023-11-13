@@ -18,17 +18,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/query/primary_keys_query.h"
+#include "trino/odbc/query/primary_keys_query.h"
 
-#include "timestream/odbc/connection.h"
-#include "timestream/odbc/type_traits.h"
+#include "trino/odbc/connection.h"
+#include "trino/odbc/type_traits.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace query {
 PrimaryKeysQuery::PrimaryKeysQuery(diagnostic::DiagnosableAdapter& diag)
     : Query(diag, QueryType::PRIMARY_KEYS), columnsMeta() {
-  using namespace timestream::odbc::type_traits;
+  using namespace trino::odbc::type_traits;
 
   using meta::ColumnMeta;
   using meta::Nullability;
@@ -108,4 +108,4 @@ SqlResult::Type PrimaryKeysQuery::NextResultSet() {
 }
 }  // namespace query
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

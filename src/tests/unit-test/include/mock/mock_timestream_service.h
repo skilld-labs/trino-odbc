@@ -14,43 +14,43 @@
  *
  */
 
-#ifndef _MOCK_TIMESTREAM_SERVICE
-#define _MOCK_TIMESTREAM_SERVICE
+#ifndef _MOCK_TRINO_SERVICE
+#define _MOCK_TRINO_SERVICE
 
 /*@*/
 #include <aws/core/Aws.h>
 #include <aws/core/auth/AWSCredentials.h>
-#include <aws/timestream-query/TimestreamQueryClient.h>
-#include <aws/timestream-query/model/QueryRequest.h>
+#include <aws/trino-query/TrinoQueryClient.h>
+#include <aws/trino-query/model/QueryRequest.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /**
- * Mock Timestream service for unit test
+ * Mock Trino service for unit test
  */
-class MockTimestreamService {
+class MockTrinoService {
  public:
   /**
    * Create the singleton object.
    */
-  static void CreateMockTimestreamService();
+  static void CreateMockTrinoService();
 
   /**
    * Destory the singleton object.
    */
-  static void DestoryMockTimestreamService();
+  static void DestoryMockTrinoService();
 
   /**
    * Get the singleton object pointer.
    */
-  static MockTimestreamService* GetInstance() {
+  static MockTrinoService* GetInstance() {
     return instance_;
   }
 
   /**
    * Destructor.
    */
-  ~MockTimestreamService();
+  ~MockTrinoService();
 
   /**
    * Add credentials configured by user before testcase starts
@@ -89,27 +89,27 @@ class MockTimestreamService {
    *
    * @param request Query request
    */
-  Aws::TimestreamQuery::Model::QueryOutcome HandleQueryReq(
-      const Aws::TimestreamQuery::Model::QueryRequest& request);
+  Aws::TrinoQuery::Model::QueryOutcome HandleQueryReq(
+      const Aws::TrinoQuery::Model::QueryRequest& request);
 
  private:
   /**
    * Constructor.
    */
-  MockTimestreamService() {
+  MockTrinoService() {
   }
 
   void SetupResultForMockTable(
-      Aws::TimestreamQuery::Model::QueryResult& result);
+      Aws::TrinoQuery::Model::QueryResult& result);
 
   static std::mutex mutex_;
-  static MockTimestreamService* instance_;
+  static MockTrinoService* instance_;
   std::map< Aws::String, Aws::String >
       credMap_;  // credentials configured by user
   static int token;
   static int errorToken;
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
 #endif

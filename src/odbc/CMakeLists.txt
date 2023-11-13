@@ -18,7 +18,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-project(timestream-odbc)
+project(trino-odbc)
 
 set(TARGET ${PROJECT_NAME})
 set(CMAKE_VERBOSE_MAKEFILE ON)
@@ -29,7 +29,7 @@ include(CPackComponent)
 message(STATUS "CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
 
 find_package(ODBC REQUIRED)
-find_package(AWSSDK REQUIRED COMPONENTS core sts timestream-query)
+find_package(AWSSDK REQUIRED COMPONENTS core sts trino-query)
 find_package(Boost REQUIRED)
 if (UNIX)
     find_package(ZLIB REQUIRED)
@@ -88,20 +88,20 @@ set(SOURCES src/app/application_data_buffer.cpp
         src/statement.cpp
         src/time.cpp
         src/timestamp.cpp
-        src/timestream_column.cpp
-        src/timestream_cursor.cpp
+        src/trino_column.cpp
+        src/trino_cursor.cpp
         src/type_traits.cpp
         src/utility.cpp
         src/utils.cpp)
 
 if (WIN32)
-    set(OS_INCLUDE os/ignite/common/os/win/include os/timestream/win/include)
+    set(OS_INCLUDE os/ignite/common/os/win/include os/trino/win/include)
 
     list(APPEND SOURCES 
-            os/timestream/win/src/system_dsn.cpp
-            os/timestream/win/src/system/ui/custom_window.cpp
-            os/timestream/win/src/system/ui/dsn_configuration_window.cpp
-            os/timestream/win/src/system/ui/window.cpp
+            os/trino/win/src/system_dsn.cpp
+            os/trino/win/src/system/ui/custom_window.cpp
+            os/trino/win/src/system/ui/dsn_configuration_window.cpp
+            os/trino/win/src/system/ui/window.cpp
             module.def
             os/ignite/common/os/win/src/common/concurrent_os.cpp
             os/ignite/common/os/win/src/common/platform_utils.cpp
@@ -126,7 +126,7 @@ if (WIN32)
     add_library(${TARGET}-static STATIC ${SOURCES} version.rc)
 
     # ensure our self-build aws sdk library could be found
-    set_target_properties(aws-cpp-sdk-core aws-cpp-sdk-sts aws-cpp-sdk-timestream-query PROPERTIES
+    set_target_properties(aws-cpp-sdk-core aws-cpp-sdk-sts aws-cpp-sdk-trino-query PROPERTIES
       IMPORTED_IMPLIB ${CMAKE_SOURCE_DIR}/../build/aws-sdk/install/bin
     )
     set_target_properties(AWS::aws-crt-cpp AWS::aws-c-cal AWS::aws-c-auth AWS::aws-c-common AWS::aws-c-io AWS::aws-checksums AWS::aws-c-event-stream AWS::aws-c-s3  AWS::aws-c-http AWS::aws-c-mqtt AWS::aws-c-compression AWS::aws-c-sdkutils PROPERTIES
@@ -154,7 +154,7 @@ if (WIN32)
         target_link_libraries(${TARGET} legacy_stdio_definitions)
     endif()
                 
-    set_target_properties(${TARGET} PROPERTIES OUTPUT_NAME "timestream.odbc")
+    set_target_properties(${TARGET} PROPERTIES OUTPUT_NAME "trino.odbc")
 else()
     target_link_libraries(${TARGET})
 endif()
@@ -170,9 +170,9 @@ if (WIN32 AND ${WITH_ODBC_MSI})
         message(FATAL_ERROR "WIX light.exe not found! Have you installed WIX Toolset or forgotten to add it to Path?")
     endif()
 
-    set(WIX_ODBC_LIBRARY_PATH ".\\timestream.odbc.dll")
+    set(WIX_ODBC_LIBRARY_PATH ".\\trino.odbc.dll")
     set(WIX_ODBC_SDK_CORE_PATH ".\\aws-cpp-sdk-core.dll")
-    set(WIX_ODBC_SDK_TS_QUERY_PATH ".\\aws-cpp-sdk-timestream-query.dll")
+    set(WIX_ODBC_SDK_TS_QUERY_PATH ".\\aws-cpp-sdk-trino-query.dll")
     set(WIX_ODBC_SDK_STS_PATH ".\\aws-cpp-sdk-sts.dll")
     set(WIX_ODBC_AWS_C_AUTH ".\\aws-c-auth.dll")
     set(WIX_ODBC_AWS_C_CAL ".\\aws-c-cal.dll")
@@ -187,7 +187,7 @@ if (WIN32 AND ${WITH_ODBC_MSI})
     set(WIX_ODBC_AWS_C_S3 ".\\aws-c-s3.dll")
     set(WIX_ODBC_AWS_C_SDKUTILS ".\\aws-c-sdkutils.dll")
 
-    set(WIX_PROJECT_NAME "Amazon Timestream")
+    set(WIX_PROJECT_NAME "Amazon Trino")
     set(WIX_MANUFACTURER "Amazon Web Services")
     set(WIX_COPYRIGHT_COMMENT "Apache, Apache Ignite, the Apache feather and the Apache Ignite logo are trademarks of The Apache Software Foundation.")
 
@@ -195,7 +195,7 @@ if (WIN32 AND ${WITH_ODBC_MSI})
         set(WIX_BIT_SUFFIX "64-bit")
         set(WIX_PROGRAM_FILES_FOLDER_ID "Program Files (x86)")
         set(WIX_COMPONENT_IS_WIN64 "yes")
-        set(WIX_INSTALLER_BUNDLE_SRC "${CMAKE_CURRENT_LIST_DIR}/install/timestream-odbc-bundle.wxs.in.x64")
+        set(WIX_INSTALLER_BUNDLE_SRC "${CMAKE_CURRENT_LIST_DIR}/install/trino-odbc-bundle.wxs.in.x64")
 
         if(${CMAKE_SYSTEM_PROCESSOR} MATCHES "arm") 
             set(WIX_PRODUCT_ID "942F102A-BCF5-46BE-A568-8A0A544F6456")
@@ -249,7 +249,7 @@ if (WIN32 AND ${WITH_ODBC_MSI})
         set(WIX_BIT_SUFFIX "32-bit")
         set(WIX_PROGRAM_FILES_FOLDER_ID "Program Files")
         set(WIX_COMPONENT_IS_WIN64 "no")
-	set(WIX_INSTALLER_BUNDLE_SRC "${CMAKE_CURRENT_LIST_DIR}/install/timestream-odbc-bundle.wxs.in.x86")
+	set(WIX_INSTALLER_BUNDLE_SRC "${CMAKE_CURRENT_LIST_DIR}/install/trino-odbc-bundle.wxs.in.x86")
         
 
         set(WIX_PRODUCT_ID "9FAACB44-B1D9-4E9B-B22E-44FB20C083E2")
@@ -278,12 +278,12 @@ if (WIN32 AND ${WITH_ODBC_MSI})
 
     set(WIX_PRODUCT_NAME "${WIX_PROJECT_NAME} ODBC ${WIX_BIT_SUFFIX} Driver")
     set(WIX_VC_RUNTIME_NAME "VC_redist.${WIX_PACKAGE_PLATFORM}.exe")
-    set(WIX_INSTALLER_PREFIX ${CMAKE_BUILD_DIR}/timestream-odbc-${WIX_PACKAGE_PLATFORM})
-    set(WIX_INSTALLER_BUNDLE_PREFIX ${CMAKE_BUILD_DIR}/timestream-odbc-bundle-${WIX_PACKAGE_PLATFORM})
-    set(WIX_INSTALLER_EXE_PREFIX ${CMAKE_BUILD_DIR}/timestream-odbc-installer-${WIX_PACKAGE_PLATFORM}-${ODBC_DRIVER_VERSION})
+    set(WIX_INSTALLER_PREFIX ${CMAKE_BUILD_DIR}/trino-odbc-${WIX_PACKAGE_PLATFORM})
+    set(WIX_INSTALLER_BUNDLE_PREFIX ${CMAKE_BUILD_DIR}/trino-odbc-bundle-${WIX_PACKAGE_PLATFORM})
+    set(WIX_INSTALLER_EXE_PREFIX ${CMAKE_BUILD_DIR}/trino-odbc-installer-${WIX_PACKAGE_PLATFORM}-${ODBC_DRIVER_VERSION})
 
     configure_file(
-        "${CMAKE_CURRENT_LIST_DIR}/install/timestream-odbc.wxs.in"
+        "${CMAKE_CURRENT_LIST_DIR}/install/trino-odbc.wxs.in"
         "${WIX_INSTALLER_PREFIX}.wxs"
         @ONLY
     )
@@ -313,8 +313,8 @@ if (WIN32 AND ${WITH_ODBC_MSI})
 	COMMAND ${WIX_LIGHT} ${WIX_INSTALLER_BUNDLE_PREFIX}.wixobj -ext WixBalExtension -ext WixUtilExtension -out ${WIX_INSTALLER_EXE_PREFIX}.exe
     )
 elseif(APPLE)
-    set(CPACK_PACKAGE_FILE_NAME "AmazonTimestreamODBC-${ODBC_DRIVER_VERSION}")
-    set(CPACK_PACKAGE_NAME "Amazon Timestream ODBC Driver ${ODBC_DRIVER_VERSION}")
+    set(CPACK_PACKAGE_FILE_NAME "AmazonTrinoODBC-${ODBC_DRIVER_VERSION}")
+    set(CPACK_PACKAGE_NAME "Amazon Trino ODBC Driver ${ODBC_DRIVER_VERSION}")
     set(CPACK_PACKAGE_INSTALL_DIRECTORY "${CPACK_PACKAGE_NAME}")
     set(CPACK_GENERATOR "productbuild")
 
@@ -331,16 +331,16 @@ elseif(UNIX)
             set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE amd64)
         endif()
         set(CPACK_GENERATOR "DEB")
-        set(CPACK_DEBIAN_FILE_NAME "AmazonTimestreamODBC_${ODBC_DRIVER_VERSION}_${CMAKE_BUILD_TYPE}_${CPACK_DEBIAN_PACKAGE_ARCHITECTURE}.deb")
+        set(CPACK_DEBIAN_FILE_NAME "AmazonTrinoODBC_${ODBC_DRIVER_VERSION}_${CMAKE_BUILD_TYPE}_${CPACK_DEBIAN_PACKAGE_ARCHITECTURE}.deb")
 
         # Deb installers fail if there's a space in the directory or package name
-        set(CPACK_PACKAGE_INSTALL_DIRECTORY "AmazonTimestreamODBCDriver${BITNESS}-bit")
-	set(CPACK_PACKAGE_NAME "AmazonTimestreamODBC_${ODBC_DRIVER_VERSION}_${CMAKE_BUILD_TYPE}_${CPACK_DEBIAN_PACKAGE_ARCHITECTURE}")
+        set(CPACK_PACKAGE_INSTALL_DIRECTORY "AmazonTrinoODBCDriver${BITNESS}-bit")
+	set(CPACK_PACKAGE_NAME "AmazonTrinoODBC_${ODBC_DRIVER_VERSION}_${CMAKE_BUILD_TYPE}_${CPACK_DEBIAN_PACKAGE_ARCHITECTURE}")
 
         # TODO: Need to update both of these.
         set(CPACK_PACKAGE_CONTACT "user@sample.com")
         set(CPACK_DEBIAN_PACKAGE_MAINTAINER "User Name")
-        set(CPACK_PACKAGE_DESCRIPTION "AmazonTimestreamODBCDriver-${CMAKE_BUILD_TYPE}-${BITNESS}-bit")
+        set(CPACK_PACKAGE_DESCRIPTION "AmazonTrinoODBCDriver-${CMAKE_BUILD_TYPE}-${BITNESS}-bit")
 
         set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
     elseif(${INSTALLER_TYPE} STREQUAL "RPM")
@@ -351,8 +351,8 @@ elseif(UNIX)
         endif()
         set(CPACK_GENERATOR RPM)
 
-        set(CPACK_PACKAGE_INSTALL_DIRECTORY "Amazon Timestream ODBC Driver ${BITNESS}-bit")
-        set(CPACK_PACKAGE_NAME "AmazonTimestreamODBC_${ODBC_DRIVER_VERSION}_${CMAKE_BUILD_TYPE}_${CPACK_RPM_PACKAGE_ARCHITECTURE}")
+        set(CPACK_PACKAGE_INSTALL_DIRECTORY "Amazon Trino ODBC Driver ${BITNESS}-bit")
+        set(CPACK_PACKAGE_NAME "AmazonTrinoODBC_${ODBC_DRIVER_VERSION}_${CMAKE_BUILD_TYPE}_${CPACK_RPM_PACKAGE_ARCHITECTURE}")
         set(CPACK_RPM_FILE_NAME "${CPACK_PACKAGE_NAME}.rpm")
 
         set(CPACK_COMPONENTS_ALL_IN_ONE_PACKAGE 1)
@@ -378,39 +378,39 @@ if(UNIX)
     # Set up components for installer
     cpack_add_component(Docs
 	    DISPLAY_NAME "Documentation"
-	    DESCRIPTION "Documentation about Amazon Timestream ODBC Driver"
+	    DESCRIPTION "Documentation about Amazon Trino ODBC Driver"
     )
     cpack_add_component(Driver
 	    DISPLAY_NAME "Driver"
-	    DESCRIPTION "Library files for running the Amazon Timestream ODBC Driver"
+	    DESCRIPTION "Library files for running the Amazon Trino ODBC Driver"
         REQUIRED 
     )
 
     if(APPLE)
-        install(TARGETS ${TARGET} DESTINATION "timestream-odbc/lib" COMPONENT "Driver")
+        install(TARGETS ${TARGET} DESTINATION "trino-odbc/lib" COMPONENT "Driver")
     
         # Install documentation files
-        install(FILES "${PROJECT_ROOT}/LICENSE.txt" DESTINATION "timestream-odbc/doc" COMPONENT "Docs")
-        install(FILES "${PROJECT_ROOT}/docs/markdown/setup/connection-string.md" DESTINATION "timestream-odbc/doc" COMPONENT "Docs")
-        install(FILES "${PROJECT_ROOT}/docs/markdown/setup/macOS-dsn-configuration.md" DESTINATION "timestream-odbc/doc" COMPONENT "Docs")
-        install(FILES "${PROJECT_ROOT}/docs/markdown/setup/microsoft-excel.md" DESTINATION "timestream-odbc/doc" COMPONENT "Docs")
+        install(FILES "${PROJECT_ROOT}/LICENSE.txt" DESTINATION "trino-odbc/doc" COMPONENT "Docs")
+        install(FILES "${PROJECT_ROOT}/docs/markdown/setup/connection-string.md" DESTINATION "trino-odbc/doc" COMPONENT "Docs")
+        install(FILES "${PROJECT_ROOT}/docs/markdown/setup/macOS-dsn-configuration.md" DESTINATION "trino-odbc/doc" COMPONENT "Docs")
+        install(FILES "${PROJECT_ROOT}/docs/markdown/setup/microsoft-excel.md" DESTINATION "trino-odbc/doc" COMPONENT "Docs")
     else()
         if (${BITNESS} EQUAL 32)
 	    set(LIBROOT lib)
-	    add_custom_target(run ALL COMMAND sed -e "s@\#ODBC_LIB_PATH@ODBC_LIB_PATH=\/usr\/lib\/timestream-odbc32@" ${PROJECT_ROOT}/scripts/postinst_unix.sh > ${PROJECT_ROOT}/scripts/postinst_unix${BITNESS}.sh)
+	    add_custom_target(run ALL COMMAND sed -e "s@\#ODBC_LIB_PATH@ODBC_LIB_PATH=\/usr\/lib\/trino-odbc32@" ${PROJECT_ROOT}/scripts/postinst_unix.sh > ${PROJECT_ROOT}/scripts/postinst_unix${BITNESS}.sh)
 	else()
 	    set(LIBROOT lib64)
-	    add_custom_target(run ALL COMMAND sed -e "s@\#ODBC_LIB_PATH@ODBC_LIB_PATH=\/usr\/lib64\/timestream-odbc64@" ${PROJECT_ROOT}/scripts/postinst_unix.sh > ${PROJECT_ROOT}/scripts/postinst_unix${BITNESS}.sh)
+	    add_custom_target(run ALL COMMAND sed -e "s@\#ODBC_LIB_PATH@ODBC_LIB_PATH=\/usr\/lib64\/trino-odbc64@" ${PROJECT_ROOT}/scripts/postinst_unix.sh > ${PROJECT_ROOT}/scripts/postinst_unix${BITNESS}.sh)
 	endif()
 
         # Install library and shell script 
 
-        install(TARGETS ${TARGET} DESTINATION ${LIBROOT}/timestream-odbc${BITNESS} COMPONENT "Driver")
-	install(FILES "${PROJECT_ROOT}/scripts/postinst_unix${BITNESS}.sh" DESTINATION ${LIBROOT}/timestream-odbc${BITNESS} PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_EXECUTE GROUP_READ WORLD_READ WORLD_EXECUTE COMPONENT "Driver")
+        install(TARGETS ${TARGET} DESTINATION ${LIBROOT}/trino-odbc${BITNESS} COMPONENT "Driver")
+	install(FILES "${PROJECT_ROOT}/scripts/postinst_unix${BITNESS}.sh" DESTINATION ${LIBROOT}/trino-odbc${BITNESS} PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_EXECUTE GROUP_READ WORLD_READ WORLD_EXECUTE COMPONENT "Driver")
 
         # Install documentation files
-        install(FILES "${PROJECT_ROOT}/LICENSE.txt" DESTINATION "${LIBROOT}/timestream-odbc${BITNESS}" COMPONENT "Docs")
-        install(FILES "${PROJECT_ROOT}/docs/markdown/setup/linux-dsn-configuration.md" DESTINATION "${LIBROOT}/timestream-odbc${BITNESS}" COMPONENT "Docs")
+        install(FILES "${PROJECT_ROOT}/LICENSE.txt" DESTINATION "${LIBROOT}/trino-odbc${BITNESS}" COMPONENT "Docs")
+        install(FILES "${PROJECT_ROOT}/docs/markdown/setup/linux-dsn-configuration.md" DESTINATION "${LIBROOT}/trino-odbc${BITNESS}" COMPONENT "Docs")
     endif()
 endif()
 

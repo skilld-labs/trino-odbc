@@ -18,22 +18,22 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/query/data_query.h"
+#include "trino/odbc/query/data_query.h"
 
-#include "timestream/odbc/connection.h"
-#include "timestream/odbc/log.h"
+#include "trino/odbc/connection.h"
+#include "trino/odbc/log.h"
 #include "ignite/odbc/odbc_error.h"
 
 /*@*/
-#include <aws/timestream-query/model/Type.h>
-#include <aws/timestream-query/model/CancelQueryRequest.h>
+#include <aws/trino-query/model/Type.h>
+#include <aws/trino-query/model/CancelQueryRequest.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace query {
 DataQuery::DataQuery(diagnostic::DiagnosableAdapter& diag,
                      Connection& connection, const std::string& sql)
-    : Query(diag, timestream::odbc::query::QueryType::DATA),
+    : Query(diag, trino::odbc::query::QueryType::DATA),
       connection_(connection),
       sql_(sql),
       resultMetaAvailable_(false),
@@ -78,7 +78,7 @@ SqlResult::Type DataQuery::Cancel() {
     }
 
     // Try to cancel current query
-    Aws::TimestreamQuery::Model::CancelQueryRequest cancel_request;
+    Aws::TrinoQuery::Model::CancelQueryRequest cancel_request;
     cancel_request.SetQueryId(result_->GetQueryId());
 
     auto outcome = connection_.GetQueryClient()->CancelQuery(cancel_request);
@@ -128,10 +128,10 @@ const meta::ColumnMetaVector* DataQuery::GetMeta() {
  * @return void.
  */
 void AsyncFetchOnePage(
-    const std::shared_ptr< Aws::TimestreamQuery::TimestreamQueryClient > client,
+    const std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > client,
     const QueryRequest& request, DataQueryContext& context_) {
   LOG_DEBUG_MSG("AsyncFetchOnePage is called");
-  Aws::TimestreamQuery::Model::QueryOutcome result;
+  Aws::TrinoQuery::Model::QueryOutcome result;
   result = client->Query(request);
 
   std::unique_lock< std::mutex > locker(context_.mutex_);
@@ -153,7 +153,7 @@ SqlResult::Type DataQuery::SwitchCursor() {
   LOG_DEBUG_MSG("SwitchCursor is called");
   std::unique_lock< std::mutex > locker(context_.mutex_);
   context_.cv_.wait(locker, [&]() { return !context_.queue_.empty(); });
-  Aws::TimestreamQuery::Model::QueryOutcome outcome = context_.queue_.front();
+  Aws::TrinoQuery::Model::QueryOutcome outcome = context_.queue_.front();
   context_.queue_.pop();
   locker.unlock();
 
@@ -177,7 +177,7 @@ SqlResult::Type DataQuery::SwitchCursor() {
   }
 
   // switch to rows in next page
-  cursor_.reset(new TimestreamCursor(rows, resultMeta_));
+  cursor_.reset(new TrinoCursor(rows, resultMeta_));
   cursor_->Increment();  // The cursor_ needs to be incremented before using it
                          // for the first time
 
@@ -215,7 +215,7 @@ SqlResult::Type DataQuery::FetchNextRow(app::ColumnBindingMap& columnBindings) {
   if (!cursor_) {
     diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING,
                          "Cursor does not point to any data.",
-                         timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                         trino::odbc::LogLevel::Type::WARNING_LEVEL);
     return SqlResult::AI_NO_DATA;
   }
 
@@ -225,7 +225,7 @@ SqlResult::Type DataQuery::FetchNextRow(app::ColumnBindingMap& columnBindings) {
       if (result != SqlResult::AI_SUCCESS) {
         diag.AddStatusRecord(SqlState::S24000_INVALID_CURSOR_STATE,
                              "Invalid cursor state.",
-                             timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                             trino::odbc::LogLevel::Type::WARNING_LEVEL);
         return result;
       }
     } else {
@@ -264,7 +264,7 @@ SqlResult::Type DataQuery::GetColumn(uint16_t columnIdx,
   if (!cursor_) {
     diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING,
                          "Cursor does not point to any data.",
-                         timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                         trino::odbc::LogLevel::Type::WARNING_LEVEL);
 
     return SqlResult::AI_NO_DATA;
   }
@@ -330,7 +330,7 @@ int64_t DataQuery::RowNumber() const {
   if (!cursor_ || !cursor_->HasData()) {
     diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING,
                          "Cursor does not point to any data.",
-                         timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                         trino::odbc::LogLevel::Type::WARNING_LEVEL);
 
     LOG_DEBUG_MSG("Row number returned is 0.");
 
@@ -357,7 +357,7 @@ SqlResult::Type DataQuery::MakeRequestExecute() {
   }
 
   do {
-    Aws::TimestreamQuery::Model::QueryOutcome outcome =
+    Aws::TrinoQuery::Model::QueryOutcome outcome =
         connection_.GetQueryClient()->Query(request_);
 
     if (!outcome.IsSuccess()) {
@@ -387,7 +387,7 @@ SqlResult::Type DataQuery::MakeRequestExecute() {
     }
   } while (true);
 
-  cursor_.reset(new TimestreamCursor(result_->GetRows(), resultMeta_));
+  cursor_.reset(new TrinoCursor(result_->GetRows(), resultMeta_));
 
   if (!result_->GetNextToken().empty()) {
     LOG_DEBUG_MSG(
@@ -424,7 +424,7 @@ SqlResult::Type DataQuery::MakeRequestFetch() {
     retval = SqlResult::AI_NO_DATA;
   } else {
     LOG_DEBUG_MSG("Result has " << result_->GetRows().size() << " rows");
-    cursor_.reset(new TimestreamCursor(result_->GetRows(), resultMeta_));
+    cursor_.reset(new TrinoCursor(result_->GetRows(), resultMeta_));
   }
 
   LOG_DEBUG_MSG("retval is " << retval);
@@ -438,7 +438,7 @@ SqlResult::Type DataQuery::MakeRequestResultsetMeta() {
   QueryRequest request;
   request.SetQueryString(sql_);
 
-  Aws::TimestreamQuery::Model::QueryOutcome outcome =
+  Aws::TrinoQuery::Model::QueryOutcome outcome =
       connection_.GetQueryClient()->Query(request);
 
   if (!outcome.IsSuccess()) {
@@ -464,7 +464,7 @@ void DataQuery::ReadColumnMetadataVector(
     const Aws::Vector< ColumnInfo >& tsVector) {
   LOG_DEBUG_MSG("ReadColumnMetadataVector is called");
 
-  using timestream::odbc::meta::ColumnMeta;
+  using trino::odbc::meta::ColumnMeta;
   resultMeta_.clear();
 
   if (tsVector.empty()) {
@@ -498,7 +498,7 @@ SqlResult::Type DataQuery::ProcessConversionResult(
       diag.AddStatusRecord(
           SqlState::S01004_DATA_TRUNCATED,
           "Buffer is too small for the column data. Truncated from the right.",
-          timestream::odbc::LogLevel::Type::WARNING_LEVEL, rowIdx, columnIdx);
+          trino::odbc::LogLevel::Type::WARNING_LEVEL, rowIdx, columnIdx);
 
       return SqlResult::AI_SUCCESS_WITH_INFO;
     }
@@ -507,7 +507,7 @@ SqlResult::Type DataQuery::ProcessConversionResult(
       diag.AddStatusRecord(
           SqlState::S01S07_FRACTIONAL_TRUNCATION,
           "Buffer is too small for the column data. Fraction truncated.",
-          timestream::odbc::LogLevel::Type::WARNING_LEVEL, rowIdx, columnIdx);
+          trino::odbc::LogLevel::Type::WARNING_LEVEL, rowIdx, columnIdx);
 
       return SqlResult::AI_SUCCESS_WITH_INFO;
     }
@@ -516,7 +516,7 @@ SqlResult::Type DataQuery::ProcessConversionResult(
       diag.AddStatusRecord(
           SqlState::S22002_INDICATOR_NEEDED,
           "Indicator is needed but not suplied for the column buffer.",
-          timestream::odbc::LogLevel::Type::WARNING_LEVEL, rowIdx, columnIdx);
+          trino::odbc::LogLevel::Type::WARNING_LEVEL, rowIdx, columnIdx);
 
       return SqlResult::AI_SUCCESS_WITH_INFO;
     }
@@ -524,7 +524,7 @@ SqlResult::Type DataQuery::ProcessConversionResult(
     case app::ConversionResult::Type::AI_UNSUPPORTED_CONVERSION: {
       diag.AddStatusRecord(SqlState::SHYC00_OPTIONAL_FEATURE_NOT_IMPLEMENTED,
                            "Data conversion is not supported.",
-                           timestream::odbc::LogLevel::Type::WARNING_LEVEL,
+                           trino::odbc::LogLevel::Type::WARNING_LEVEL,
                            rowIdx, columnIdx);
 
       return SqlResult::AI_SUCCESS_WITH_INFO;
@@ -535,7 +535,7 @@ SqlResult::Type DataQuery::ProcessConversionResult(
     default: {
       diag.AddStatusRecord(
           SqlState::S01S01_ERROR_IN_ROW, "Can not retrieve row column.",
-          timestream::odbc::LogLevel::Type::WARNING_LEVEL, rowIdx, columnIdx);
+          trino::odbc::LogLevel::Type::WARNING_LEVEL, rowIdx, columnIdx);
       break;
     }
   }
@@ -575,4 +575,4 @@ void DataQuery::SetResultsetMeta(const meta::ColumnMetaVector& value) {
 }
 }  // namespace query
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

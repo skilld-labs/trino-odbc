@@ -16,16 +16,16 @@
 
 /**
  * @file
- * Declares timestream::odbc::IntervalDaySecond class.
+ * Declares trino::odbc::IntervalDaySecond class.
  */
 
-#ifndef _TIMESTREAM_ODBC_INTERVAL_DAY_SECOND
-#define _TIMESTREAM_ODBC_INTERVAL_DAY_SECOND
+#ifndef _TRINO_ODBC_INTERVAL_DAY_SECOND
+#define _TRINO_ODBC_INTERVAL_DAY_SECOND
 
 #include <ignite/common/common.h>
 #include <stdint.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /**
  * IntervalDaySecond type.
@@ -188,5 +188,5 @@ class IGNITE_IMPORT_EXPORT IntervalDaySecond {
   int32_t fractionNs_;
 };
 }  // namespace odbc
-}  // namespace timestream
-#endif  //_TIMESTREAM_ODBC_INTERVAL_DAY_SECOND
+}  // namespace trino
+#endif  //_TRINO_ODBC_INTERVAL_DAY_SECOND

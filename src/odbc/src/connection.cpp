@@ -18,40 +18,40 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/connection.h"
+#include "trino/odbc/connection.h"
 
-#include <timestream/odbc/ignite_error.h>
+#include <trino/odbc/ignite_error.h>
 
 #include <algorithm>
 #include <cstddef>
 #include <cstring>
 #include <sstream>
 
-#include "timestream/odbc/utils.h"
-#include "timestream/odbc/config/configuration.h"
-#include "timestream/odbc/config/connection_string_parser.h"
-#include "timestream/odbc/dsn_config.h"
-#include "timestream/odbc/environment.h"
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/statement.h"
-#include "timestream/odbc/system/system_dsn.h"
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/utils.h"
+#include "trino/odbc/config/configuration.h"
+#include "trino/odbc/config/connection_string_parser.h"
+#include "trino/odbc/dsn_config.h"
+#include "trino/odbc/environment.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/statement.h"
+#include "trino/odbc/system/system_dsn.h"
+#include "trino/odbc/utility.h"
 
-#include "timestream/odbc/authentication/aad.h"
-#include "timestream/odbc/authentication/okta.h"
+#include "trino/odbc/authentication/aad.h"
+#include "trino/odbc/authentication/okta.h"
 
 /*@*/
-#include <aws/timestream-query/model/QueryRequest.h>
-#include <aws/timestream-query/model/QueryResult.h>
+#include <aws/trino-query/model/QueryRequest.h>
+#include <aws/trino-query/model/QueryResult.h>
 #include <aws/core/utils/logging/LogLevel.h>
 #include <aws/core/auth/AWSCredentialsProvider.h>
 #include <aws/core/client/DefaultRetryStrategy.h>
 
-using namespace timestream::odbc;
+using namespace trino::odbc;
 using namespace ignite::odbc::common;
-using timestream::odbc::IgniteError;
+using trino::odbc::IgniteError;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 
 std::mutex Connection::mutex_;
@@ -128,7 +128,7 @@ SqlResult::Type Connection::InternalGetInfo(
     ss << "SQLGetInfo input " << type << " is not implemented.";
 
     AddStatusRecord(SqlState::SHYC00_OPTIONAL_FEATURE_NOT_IMPLEMENTED, ss.str(),
-                    timestream::odbc::LogLevel::Type::INFO_LEVEL);
+                    trino::odbc::LogLevel::Type::INFO_LEVEL);
   }
 
   return res;
@@ -157,7 +157,7 @@ SqlResult::Type Connection::InternalEstablish(const std::string& connectStr,
     if (!DisplayConnectionWindow(parentWindow, config_)) {
       AddStatusRecord(odbc::SqlState::SHY008_OPERATION_CANCELED,
                       "Connection canceled by user",
-                      timestream::odbc::LogLevel::Type::INFO_LEVEL);
+                      trino::odbc::LogLevel::Type::INFO_LEVEL);
 
       return SqlResult::AI_ERROR;
     }
@@ -178,7 +178,7 @@ SqlResult::Type Connection::InternalEstablish(
 
   if (queryClient_) {
     AddStatusRecord(SqlState::S08002_ALREADY_CONNECTED, "Already connected.",
-                    timestream::odbc::LogLevel::Type::INFO_LEVEL);
+                    trino::odbc::LogLevel::Type::INFO_LEVEL);
 
     return SqlResult::AI_ERROR;
   }
@@ -194,7 +194,7 @@ SqlResult::Type Connection::InternalEstablish(
   bool connected = TryRestoreConnection(cfg, err);
 
   if (!connected) {
-    std::string errMessage = "Failed to establish connection to Timestream.\n";
+    std::string errMessage = "Failed to establish connection to Trino.\n";
     errMessage.append(err.GetText());
     AddStatusRecord(SqlState::S08001_CANNOT_CONNECT, errMessage);
 
@@ -216,7 +216,7 @@ void Connection::Deregister() {
   env_->DeregisterConnection(this);
 }
 
-std::shared_ptr< Aws::TimestreamQuery::TimestreamQueryClient >
+std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
 Connection::GetQueryClient() const {
   return queryClient_;
 }
@@ -225,7 +225,7 @@ SqlResult::Type Connection::InternalRelease() {
   LOG_DEBUG_MSG("InternalRelease is called");
   if (!queryClient_) {
     AddStatusRecord(SqlState::S08003_NOT_CONNECTED, "Connection is not open.",
-                    timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                    trino::odbc::LogLevel::Type::WARNING_LEVEL);
 
     Close();
 
@@ -398,7 +398,7 @@ SqlResult::Type Connection::InternalGetAttribute(int attr, void* buf,
     default: {
       AddStatusRecord(SqlState::SHYC00_OPTIONAL_FEATURE_NOT_IMPLEMENTED,
                       "Specified attribute is not supported.",
-                      timestream::odbc::LogLevel::Type::INFO_LEVEL);
+                      trino::odbc::LogLevel::Type::INFO_LEVEL);
 
       return SqlResult::AI_ERROR;
     }
@@ -431,7 +431,7 @@ SqlResult::Type Connection::InternalSetAttribute(int attr, void* value,
       if (mode != SQL_AUTOCOMMIT_ON && mode != SQL_AUTOCOMMIT_OFF) {
         AddStatusRecord(SqlState::SHYC00_OPTIONAL_FEATURE_NOT_IMPLEMENTED,
                         "Specified attribute is not supported.",
-                        timestream::odbc::LogLevel::Type::INFO_LEVEL);
+                        trino::odbc::LogLevel::Type::INFO_LEVEL);
 
         return SqlResult::AI_ERROR;
       }
@@ -639,14 +639,14 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
   //   std::shared_ptr< Aws::Http::HttpClient > httpClient = GetHttpClient();
   //   std::shared_ptr< Aws::STS::STSClient > stsClient = GetStsClient();
   //   samlCredProvider_ =
-  //       std::make_shared< timestream::odbc::TimestreamOktaCredentialsProvider >(
+  //       std::make_shared< trino::odbc::TrinoOktaCredentialsProvider >(
   //           cfg, httpClient, stsClient);
   //   samlCredProvider_->GetAWSCredentials(credentials, errInfo);
   // } else if (authType == AuthType::Type::AAD) {
   //   std::shared_ptr< Aws::Http::HttpClient > httpClient = GetHttpClient();
   //   std::shared_ptr< Aws::STS::STSClient > stsClient = GetStsClient();
   //   samlCredProvider_ =
-  //       std::make_shared< timestream::odbc::TimestreamAADCredentialsProvider >(
+  //       std::make_shared< trino::odbc::TrinoAADCredentialsProvider >(
   //           cfg, httpClient, stsClient);
   //   samlCredProvider_->GetAWSCredentials(credentials, errInfo);
   // } else 
@@ -696,7 +696,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
 #else
   std::string platform("Linux");
 #endif
-  // pass driver info to Timestream as user agent
+  // pass driver info to Trino as user agent
   clientCfg.userAgent = "ts-odbc." + utility::GetFormatedDriverVersion() + " on " + platform;
   LOG_DEBUG_MSG("region is "
                 << cfg.GetRegion() << ", connection timeout is "
@@ -723,10 +723,10 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
     LOG_DEBUG_MSG("endpoint is set to " << endpoint);
   }
   // try a simple query with query client
-  Aws::TimestreamQuery::Model::QueryRequest queryRequest;
+  Aws::TrinoQuery::Model::QueryRequest queryRequest;
   queryRequest.SetQueryString("SELECT 1");
 
-  Aws::TimestreamQuery::Model::QueryOutcome outcome =
+  Aws::TrinoQuery::Model::QueryOutcome outcome =
       queryClient_->Query(queryRequest);
   if (!outcome.IsSuccess()) {
     auto error = outcome.GetError();
@@ -748,11 +748,11 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
   return true;
 }
 
-std::shared_ptr< Aws::TimestreamQuery::TimestreamQueryClient >
+std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
 Connection::CreateTSQueryClient(
     const Aws::Auth::AWSCredentials& credentials,
     const Aws::Client::ClientConfiguration& clientCfg) {
-  return std::make_shared< Aws::TimestreamQuery::TimestreamQueryClient >(
+  return std::make_shared< Aws::TrinoQuery::TrinoQueryClient >(
       credentials, clientCfg);
 }
 
@@ -1428,7 +1428,7 @@ SqlResult::Type Connection::InternalSetStmtAttribute(SQLUSMALLINT option,
     case SQL_ASYNC_ENABLE: {
       AddStatusRecord(SqlState::S01000_GENERAL_WARNING,
                       "Specified attribute is ignored.",
-                      timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                      trino::odbc::LogLevel::Type::WARNING_LEVEL);
 
       return SqlResult::AI_SUCCESS_WITH_INFO;
     }
@@ -1479,7 +1479,7 @@ SqlResult::Type Connection::InternalSetConnectOption(SQLUSMALLINT option,
     case SQL_LOGIN_TIMEOUT: {
       AddStatusRecord(SqlState::S01000_GENERAL_WARNING,
                       "Specified attribute is ignored.",
-                      timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                      trino::odbc::LogLevel::Type::WARNING_LEVEL);
       return SqlResult::AI_SUCCESS_WITH_INFO;
     }
 
@@ -1512,7 +1512,7 @@ SqlResult::Type Connection::InternalGetConnectOption(SQLUSMALLINT option,
     case SQL_LOGIN_TIMEOUT: {
       AddStatusRecord(SqlState::S01000_GENERAL_WARNING,
                       "Specified attribute is ignored.",
-                      timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                      trino::odbc::LogLevel::Type::WARNING_LEVEL);
 
       return SqlResult::AI_SUCCESS_WITH_INFO;
     }
@@ -1523,4 +1523,4 @@ SqlResult::Type Connection::InternalGetConnectOption(SQLUSMALLINT option,
   }
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

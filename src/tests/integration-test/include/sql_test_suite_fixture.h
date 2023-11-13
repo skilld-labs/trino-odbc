@@ -28,11 +28,11 @@
 #include <boost/test/unit_test.hpp>
 #include <string>
 
-#include "timestream/odbc/common/decimal.h"
-#include "timestream/timestream.h"
-#include "timestream/ignition.h"
+#include "trino/odbc/common/decimal.h"
+#include "trino/trino.h"
+#include "trino/ignition.h"
 
-namespace timestream {
+namespace trino {
 /**
  * Test setup fixture.
  */
@@ -159,8 +159,8 @@ void SqlTestSuiteFixture::CheckSingleResult< bool >(const char* request,
                                                     const bool& expected);
 
 template <>
-void SqlTestSuiteFixture::CheckSingleResult< timestream::Guid >(
-    const char* request, const timestream::Guid& expected);
+void SqlTestSuiteFixture::CheckSingleResult< trino::Guid >(
+    const char* request, const trino::Guid& expected);
 
 template <>
 void SqlTestSuiteFixture::CheckSingleResult< std::string >(const char* request);
@@ -197,8 +197,8 @@ void SqlTestSuiteFixture::CheckSingleResult< std::vector< int8_t > >(
     const char* request, const std::vector< int8_t >& expected);
 
 template <>
-void SqlTestSuiteFixture::CheckSingleResult< timestream::common::Decimal >(
-    const char* request, const timestream::common::Decimal& expected);
+void SqlTestSuiteFixture::CheckSingleResult< trino::common::Decimal >(
+    const char* request, const trino::common::Decimal& expected);
 
 template <>
 void SqlTestSuiteFixture::CheckSingleResult< Date >(const char* request,
@@ -211,6 +211,6 @@ void SqlTestSuiteFixture::CheckSingleResult< Timestamp >(
 template <>
 void SqlTestSuiteFixture::CheckSingleResult< Time >(const char* request,
                                                     const Time& expected);
-}  // namespace timestream
+}  // namespace trino
 
 #endif  //_IGNITE_ODBC_TEST_SQL_TEST_SUIT_FIXTURE

@@ -18,43 +18,43 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_IGNITE_CURSOR
-#define _TIMESTREAM_ODBC_IGNITE_CURSOR
+#ifndef _TRINO_ODBC_IGNITE_CURSOR
+#define _TRINO_ODBC_IGNITE_CURSOR
 
 #include <stdint.h>
 
 #include <map>
 #include <memory>
 
-#include "timestream/odbc/common_types.h"
-#include "timestream/odbc/timestream_column.h"
-#include "timestream/odbc/meta/column_meta.h"
+#include "trino/odbc/common_types.h"
+#include "trino/odbc/trino_column.h"
+#include "trino/odbc/meta/column_meta.h"
 
 /*@*/
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/timestream-query/model/Row.h>
+#include <aws/trino-query/model/Row.h>
 
-using Aws::TimestreamQuery::Model::Row;
+using Aws::TrinoQuery::Model::Row;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /**
  * Query result cursor.
  */
-class TimestreamCursor {
+class TrinoCursor {
  public:
   /**
    * Constructor.
    * @param rowVec Aws Row vector.
    * @param columnMetadataVec Column metadata vector.
    */
-  TimestreamCursor(const Aws::Vector< Row > rowVec,
+  TrinoCursor(const Aws::Vector< Row > rowVec,
                    const meta::ColumnMetaVector& columnMetadataVec);
 
   /**
    * Destructor.
    */
-  ~TimestreamCursor();
+  ~TrinoCursor();
 
   /**
    * Move cursor to the next result row.
@@ -90,7 +90,7 @@ class TimestreamCursor {
       uint32_t columnIdx, app::ApplicationDataBuffer& dataBuf);
 
  private:
-  IGNITE_NO_COPY_ASSIGNMENT(TimestreamCursor);
+  IGNITE_NO_COPY_ASSIGNMENT(TrinoCursor);
 
   /**
    * Get columns by its index.
@@ -104,7 +104,7 @@ class TimestreamCursor {
    * @param columnIdx Column index.
    * @return Reference to specified column.
    */
-  TimestreamColumn& GetColumn(uint32_t columnIdx) {
+  TrinoColumn& GetColumn(uint32_t columnIdx) {
     return columns_[columnIdx - 1];
   }
 
@@ -127,12 +127,12 @@ class TimestreamCursor {
   const meta::ColumnMetaVector& columnMetadataVec_;
 
   /** Columns. */
-  std::vector< TimestreamColumn > columns_;
+  std::vector< TrinoColumn > columns_;
 
   /* current iterator position, start from 1 when used */
   int curPos_;
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_IGNITE_CURSOR
+#endif  //_TRINO_ODBC_IGNITE_CURSOR

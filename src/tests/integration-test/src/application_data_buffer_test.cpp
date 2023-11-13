@@ -19,9 +19,9 @@
  */
 
 #include <ignite/common/include/common/decimal.h>
-#include <timestream/odbc/app/application_data_buffer.h>
-#include <timestream/odbc/system/odbc_constants.h>
-#include <timestream/odbc/utility.h>
+#include <trino/odbc/app/application_data_buffer.h>
+#include <trino/odbc/system/odbc_constants.h>
+#include <trino/odbc/utility.h>
 
 #include <boost/test/unit_test.hpp>
 
@@ -29,10 +29,10 @@
 
 using namespace boost::unit_test;
 using namespace ignite::odbc;
-using namespace timestream;
-using namespace timestream::odbc;
-using namespace timestream::odbc::app;
-using namespace timestream::odbc::type_traits;
+using namespace trino;
+using namespace trino::odbc;
+using namespace trino::odbc::app;
+using namespace trino::odbc::type_traits;
 
 BOOST_AUTO_TEST_SUITE(ApplicationDataBufferTestSuite)
 
@@ -474,7 +474,7 @@ BOOST_AUTO_TEST_CASE(TestPutDateToString) {
   ApplicationDataBuffer appBuf(OdbcNativeType::AI_CHAR, &strBuf, sizeof(strBuf),
                                &reslen);
 
-  Date date = timestream::odbc::common::MakeDateGmt(1999, 2, 22);
+  Date date = trino::odbc::common::MakeDateGmt(1999, 2, 22);
 
   appBuf.PutDate(date);
 
@@ -488,7 +488,7 @@ BOOST_AUTO_TEST_CASE(TestPutDateToStringEdgeCase) {
   ApplicationDataBuffer appBuf(OdbcNativeType::AI_CHAR, &strBuf, sizeof(strBuf),
                                &reslen);
 
-  Date date = timestream::odbc::common::MakeDateGmt(1999, 2, 22);
+  Date date = trino::odbc::common::MakeDateGmt(1999, 2, 22);
 
   appBuf.PutDate(date);
 
@@ -502,7 +502,7 @@ BOOST_AUTO_TEST_CASE(TestPutDateToWString) {
   ApplicationDataBuffer appBuf(OdbcNativeType::AI_WCHAR, &strBuf,
                                sizeof(strBuf), &reslen);
 
-  Date date = timestream::odbc::common::MakeDateGmt(1999, 2, 22);
+  Date date = trino::odbc::common::MakeDateGmt(1999, 2, 22);
 
   appBuf.PutDate(date);
 
@@ -517,7 +517,7 @@ BOOST_AUTO_TEST_CASE(TestPutDateToWStringEdgeCase) {
   ApplicationDataBuffer appBuf(OdbcNativeType::AI_WCHAR, &strBuf,
                                sizeof(strBuf), &reslen);
 
-  Date date = timestream::odbc::common::MakeDateGmt(1999, 2, 22);
+  Date date = trino::odbc::common::MakeDateGmt(1999, 2, 22);
 
   appBuf.PutDate(date);
 
@@ -532,7 +532,7 @@ BOOST_AUTO_TEST_CASE(TestPutDateToDate) {
   ApplicationDataBuffer appBuf(OdbcNativeType::AI_TDATE, &buf, sizeof(buf),
                                &reslen);
 
-  Date date = timestream::odbc::common::MakeDateGmt(1984, 5, 27);
+  Date date = trino::odbc::common::MakeDateGmt(1984, 5, 27);
 
   appBuf.PutDate(date);
 
@@ -549,7 +549,7 @@ BOOST_AUTO_TEST_CASE(TestPutDateToTimestamp) {
   ApplicationDataBuffer appBuf(OdbcNativeType::AI_TTIMESTAMP, &buf, sizeof(buf),
                                &reslen);
 
-  Date date = timestream::odbc::common::MakeDateGmt(1984, 5, 27);
+  Date date = trino::odbc::common::MakeDateGmt(1984, 5, 27);
 
   appBuf.PutDate(date);
 
@@ -569,7 +569,7 @@ BOOST_AUTO_TEST_CASE(TestPutTimeToString) {
   ApplicationDataBuffer appBuf(OdbcNativeType::AI_CHAR, &strBuf, sizeof(strBuf),
                                &reslen);
 
-  Time time = timestream::odbc::common::MakeTimeGmt(7, 15, 0, 123456789);
+  Time time = trino::odbc::common::MakeTimeGmt(7, 15, 0, 123456789);
 
   appBuf.PutTime(time);
 
@@ -584,7 +584,7 @@ BOOST_AUTO_TEST_CASE(TestPutTimeToStringEdgeCase) {
   ApplicationDataBuffer appBuf(OdbcNativeType::AI_CHAR, &strBuf, sizeof(strBuf),
                                &reslen);
 
-  Time time = timestream::odbc::common::MakeTimeGmt(7, 15, 0, 123456789);
+  Time time = trino::odbc::common::MakeTimeGmt(7, 15, 0, 123456789);
 
   appBuf.PutTime(time);
 
@@ -598,7 +598,7 @@ BOOST_AUTO_TEST_CASE(TestPutTimeToWString) {
   ApplicationDataBuffer appBuf(OdbcNativeType::AI_WCHAR, &strBuf,
                                sizeof(strBuf), &reslen);
 
-  Time time = timestream::odbc::common::MakeTimeGmt(7, 15, 0, 123456789);
+  Time time = trino::odbc::common::MakeTimeGmt(7, 15, 0, 123456789);
 
   appBuf.PutTime(time);
 
@@ -613,7 +613,7 @@ BOOST_AUTO_TEST_CASE(TestPutTimeToWStringEdgeCase) {
   ApplicationDataBuffer appBuf(OdbcNativeType::AI_WCHAR, &strBuf,
                                sizeof(strBuf), &reslen);
 
-  Time time = timestream::odbc::common::MakeTimeGmt(7, 15, 0, 123456789);
+  Time time = trino::odbc::common::MakeTimeGmt(7, 15, 0, 123456789);
 
   appBuf.PutTime(time);
 
@@ -628,7 +628,7 @@ BOOST_AUTO_TEST_CASE(TestPutTimeToTime) {
   ApplicationDataBuffer appBuf(OdbcNativeType::AI_TTIME, &buf, sizeof(buf),
                                &reslen);
 
-  Time time = timestream::odbc::common::MakeTimeGmt(23, 51, 1, 123456789);
+  Time time = trino::odbc::common::MakeTimeGmt(23, 51, 1, 123456789);
 
   appBuf.PutTime(time);
 
@@ -644,7 +644,7 @@ BOOST_AUTO_TEST_CASE(TestPutTimeToTimestamp) {
   ApplicationDataBuffer appBuf(OdbcNativeType::AI_TTIMESTAMP, &buf, sizeof(buf),
                                &reslen);
 
-  Time time = timestream::odbc::common::MakeTimeGmt(23, 51, 1, 123456789);
+  Time time = trino::odbc::common::MakeTimeGmt(23, 51, 1, 123456789);
 
   appBuf.PutTime(time);
 
@@ -661,7 +661,7 @@ BOOST_AUTO_TEST_CASE(TestPutTimestampToString) {
   ApplicationDataBuffer appBuf(OdbcNativeType::AI_CHAR, &strBuf, sizeof(strBuf),
                                &reslen);
 
-  Timestamp date = timestream::odbc::common::MakeTimestampGmt(
+  Timestamp date = trino::odbc::common::MakeTimestampGmt(
       2018, 11, 1, 17, 45, 59, 123456789);
 
   appBuf.PutTimestamp(date);
@@ -677,7 +677,7 @@ BOOST_AUTO_TEST_CASE(TestPutTimestampToStringEdgeCase) {
   ApplicationDataBuffer appBuf(OdbcNativeType::AI_CHAR, &strBuf, sizeof(strBuf),
                                &reslen);
 
-  Timestamp date = timestream::odbc::common::MakeTimestampGmt(
+  Timestamp date = trino::odbc::common::MakeTimestampGmt(
       2018, 11, 1, 17, 45, 59, 123456789);
 
   appBuf.PutTimestamp(date);
@@ -693,7 +693,7 @@ BOOST_AUTO_TEST_CASE(TestPutTimestampToWString) {
   ApplicationDataBuffer appBuf(OdbcNativeType::AI_WCHAR, &strBuf,
                                sizeof(strBuf), &reslen);
 
-  Timestamp date = timestream::odbc::common::MakeTimestampGmt(
+  Timestamp date = trino::odbc::common::MakeTimestampGmt(
       2018, 11, 1, 17, 45, 59, 123456789);
 
   appBuf.PutTimestamp(date);
@@ -709,7 +709,7 @@ BOOST_AUTO_TEST_CASE(TestPutTimestampToWStringEdgeCase) {
   ApplicationDataBuffer appBuf(OdbcNativeType::AI_WCHAR, &strBuf,
                                sizeof(strBuf), &reslen);
 
-  Timestamp date = timestream::odbc::common::MakeTimestampGmt(
+  Timestamp date = trino::odbc::common::MakeTimestampGmt(
       2018, 11, 1, 17, 45, 59, 123456789);
 
   appBuf.PutTimestamp(date);
@@ -725,7 +725,7 @@ BOOST_AUTO_TEST_CASE(TestPutTimestampToDate) {
   ApplicationDataBuffer appBuf(OdbcNativeType::AI_TDATE, &buf, sizeof(buf),
                                &reslen);
 
-  Timestamp ts = timestream::odbc::common::MakeTimestampGmt(2004, 8, 14, 6, 34,
+  Timestamp ts = trino::odbc::common::MakeTimestampGmt(2004, 8, 14, 6, 34,
                                                             51, 573948623);
 
   appBuf.PutTimestamp(ts);
@@ -742,7 +742,7 @@ BOOST_AUTO_TEST_CASE(TestPutTimestampToTime) {
   ApplicationDataBuffer appBuf(OdbcNativeType::AI_TTIME, &buf, sizeof(buf),
                                &reslen);
 
-  Timestamp ts = timestream::odbc::common::MakeTimestampGmt(2004, 8, 14, 6, 34,
+  Timestamp ts = trino::odbc::common::MakeTimestampGmt(2004, 8, 14, 6, 34,
                                                             51, 573948623);
 
   appBuf.PutTimestamp(ts);
@@ -759,7 +759,7 @@ BOOST_AUTO_TEST_CASE(TestPutTimestampToTimestamp) {
   ApplicationDataBuffer appBuf(OdbcNativeType::AI_TTIMESTAMP, &buf, sizeof(buf),
                                &reslen);
 
-  Timestamp ts = timestream::odbc::common::MakeTimestampGmt(2004, 8, 14, 6, 34,
+  Timestamp ts = trino::odbc::common::MakeTimestampGmt(2004, 8, 14, 6, 34,
                                                             51, 573948623);
 
   appBuf.PutTimestamp(ts);
@@ -1560,7 +1560,7 @@ BOOST_AUTO_TEST_CASE(TestGetDateFromString) {
 
   tm tmDate;
 
-  bool success = timestream::odbc::common::DateToCTm(date, tmDate);
+  bool success = trino::odbc::common::DateToCTm(date, tmDate);
 
   BOOST_REQUIRE(success);
 
@@ -1583,7 +1583,7 @@ BOOST_AUTO_TEST_CASE(TestGetDateFromWString) {
 
   tm tmDate;
 
-  bool success = timestream::odbc::common::DateToCTm(date, tmDate);
+  bool success = trino::odbc::common::DateToCTm(date, tmDate);
 
   BOOST_REQUIRE(success);
 
@@ -1606,7 +1606,7 @@ BOOST_AUTO_TEST_CASE(TestGetTimeFromString) {
 
   tm tmTime;
 
-  bool success = timestream::odbc::common::TimeToCTm(time, tmTime);
+  bool success = trino::odbc::common::TimeToCTm(time, tmTime);
 
   BOOST_REQUIRE(success);
 
@@ -1629,7 +1629,7 @@ BOOST_AUTO_TEST_CASE(TestGetTimeFromWString) {
 
   tm tmTime;
 
-  bool success = timestream::odbc::common::TimeToCTm(time, tmTime);
+  bool success = trino::odbc::common::TimeToCTm(time, tmTime);
 
   BOOST_REQUIRE(success);
 
@@ -1652,7 +1652,7 @@ BOOST_AUTO_TEST_CASE(TestGetTimestampFromString) {
 
   tm tmDate;
 
-  bool success = timestream::odbc::common::TimestampToCTm(date, tmDate);
+  bool success = trino::odbc::common::TimestampToCTm(date, tmDate);
 
   BOOST_REQUIRE(success);
 
@@ -1675,7 +1675,7 @@ BOOST_AUTO_TEST_CASE(TestGetTimestampFromWString) {
 
   tm tmDate;
 
-  bool success = timestream::odbc::common::TimestampToCTm(date, tmDate);
+  bool success = trino::odbc::common::TimestampToCTm(date, tmDate);
 
   BOOST_REQUIRE(success);
 
@@ -1703,7 +1703,7 @@ BOOST_AUTO_TEST_CASE(TestGetDateFromDate) {
 
   tm tmDate;
 
-  bool success = timestream::odbc::common::DateToCTm(date, tmDate);
+  bool success = trino::odbc::common::DateToCTm(date, tmDate);
 
   BOOST_REQUIRE(success);
 
@@ -1731,7 +1731,7 @@ BOOST_AUTO_TEST_CASE(TestGetTimestampFromDate) {
 
   tm tmDate;
 
-  bool success = timestream::odbc::common::TimestampToCTm(ts, tmDate);
+  bool success = trino::odbc::common::TimestampToCTm(ts, tmDate);
 
   BOOST_REQUIRE(success);
 
@@ -1759,7 +1759,7 @@ BOOST_AUTO_TEST_CASE(TestGetTimestampFromTime) {
 
   tm tmTime;
 
-  bool success = timestream::odbc::common::TimeToCTm(time, tmTime);
+  bool success = trino::odbc::common::TimeToCTm(time, tmTime);
 
   BOOST_REQUIRE(success);
 
@@ -1791,7 +1791,7 @@ BOOST_AUTO_TEST_CASE(TestGetTimestampFromTimestamp) {
 
   tm tmDate;
 
-  bool success = timestream::odbc::common::TimestampToCTm(ts, tmDate);
+  bool success = trino::odbc::common::TimestampToCTm(ts, tmDate);
 
   BOOST_REQUIRE(success);
 
@@ -1824,7 +1824,7 @@ BOOST_AUTO_TEST_CASE(TestGetDateFromTimestamp) {
 
   tm tmDate;
 
-  bool success = timestream::odbc::common::DateToCTm(date, tmDate);
+  bool success = trino::odbc::common::DateToCTm(date, tmDate);
 
   BOOST_REQUIRE(success);
 
@@ -1856,7 +1856,7 @@ BOOST_AUTO_TEST_CASE(TestGetTimeFromTimestamp) {
 
   tm tmTime;
 
-  bool success = timestream::odbc::common::TimeToCTm(time, tmTime);
+  bool success = trino::odbc::common::TimeToCTm(time, tmTime);
 
   BOOST_REQUIRE(success);
 

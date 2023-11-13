@@ -1,13 +1,13 @@
-# Microsoft Power BI Desktop - Using Direct Query Mode with the Amazon Timestream Custom Connector
+# Microsoft Power BI Desktop - Using Direct Query Mode with the Amazon Trino Custom Connector
 
 The custom connector only supports `AWS Profile` and `AWS IAM Credentials` authentication. Azure Active Directory and Okta authentication are not supported at this time.
 
 Direct Query mode does not load data, but does live queries on the data. This means that data does not need to be refreshed and reloaded in order to show data updates. [Custom Connector - Import Mode vs Direct Query Mode](https://social.technet.microsoft.com/wiki/contents/articles/53078.power-bi-import-mode-vs-directquery-mode.aspx)
 
 ## Prerequisites
-Before you get started, make sure you've properly installed the Amazon Timestream ODBC driver. 
+Before you get started, make sure you've properly installed the Amazon Trino ODBC driver. 
 
-Copy the `AmazonTimestreamConnector.mez` file to the `C:\Users\<User>\Documents\Power BI Desktop\Custom Connectors\` folder (or to `<User>\OneDrive\Documents\Power BI Desktop\Custom Connectors` if using OneDrive). This will let Power BI access custom connector.
+Copy the `AmazonTrinoConnector.mez` file to the `C:\Users\<User>\Documents\Power BI Desktop\Custom Connectors\` folder (or to `<User>\OneDrive\Documents\Power BI Desktop\Custom Connectors` if using OneDrive). This will let Power BI access custom connector.
 
 From Power BI Desktop, change the settings to allow Power BI to use custom connectors.
 * Open Power BI Desktop.
@@ -17,17 +17,17 @@ From Power BI Desktop, change the settings to allow Power BI to use custom conne
 
 * Restart Power BI Desktop.
 
-**Note:** The Amazon Timestream custom connector only supports `AWS Profile` and `AWS IAM Credentials` authentication. Azure Active Directory and Okta authentication are not supported at this time.
+**Note:** The Amazon Trino custom connector only supports `AWS Profile` and `AWS IAM Credentials` authentication. Azure Active Directory and Okta authentication are not supported at this time.
 
-## Connecting using the Amazon Timestream custom connector
+## Connecting using the Amazon Trino custom connector
 
-1. Select `Amazon Timestream` from `Get Data` and click `Connect`. You may get a warning for using third-party service. Click on `Continue`.
+1. Select `Amazon Trino` from `Get Data` and click `Connect`. You may get a warning for using third-party service. Click on `Continue`.
 
     ![](../../images/powerbi-connector/get_data_custom_connector.png)
 
 2. Enter the region. To connect using `AWS Profile` authentication, optionally enter the `Profile Name`. To connect using `AWS IAM Credentials` authentication, optionally enter the `AWS IAM Session Token` for multi-factor authentication. Click `OK`.
 
-    ![](../../images/powerbi-connector/timestream_connector_direct_query.png)
+    ![](../../images/powerbi-connector/trino_connector_direct_query.png)
 
 3. If this is the first time connecting to this data source, select the authentication type and input your credentials when prompted. The authentication types available are:
 

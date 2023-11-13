@@ -14,13 +14,13 @@
  *
  */
 
-#ifndef _TIMESTREAM_ODBC_LOG_LEVEL
-#define _TIMESTREAM_ODBC_LOG_LEVEL
+#ifndef _TRINO_ODBC_LOG_LEVEL
+#define _TRINO_ODBC_LOG_LEVEL
 
 #include <string>
 #include <ignite/common/common.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /** Log Level enum. */
 struct IGNITE_IMPORT_EXPORT LogLevel {
@@ -59,6 +59,6 @@ struct IGNITE_IMPORT_EXPORT LogLevel {
   static std::wstring ToCBString(Type val);
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_LOG_LEVEL
+#endif  //_TRINO_ODBC_LOG_LEVEL

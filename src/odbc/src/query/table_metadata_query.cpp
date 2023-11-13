@@ -18,23 +18,23 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/query/table_metadata_query.h"
+#include "trino/odbc/query/table_metadata_query.h"
 
 /*@*/
-#include <aws/timestream-query/model/ScalarType.h>
+#include <aws/trino-query/model/ScalarType.h>
 
 #include <vector>
 
-#include "timestream/odbc/connection.h"
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/type_traits.h"
+#include "trino/odbc/connection.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/type_traits.h"
 
-using Aws::TimestreamQuery::Model::ScalarType;
+using Aws::TrinoQuery::Model::ScalarType;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace query {
-using timestream::odbc::type_traits::OdbcNativeType;
+using trino::odbc::type_traits::OdbcNativeType;
 
 TableMetadataQuery::TableMetadataQuery(
     diagnostic::DiagnosableAdapter& diag, Connection& connection,
@@ -42,7 +42,7 @@ TableMetadataQuery::TableMetadataQuery(
     const boost::optional< std::string >& schema,
     const boost::optional< std::string >& table,
     const boost::optional< std::string >& tableType)
-    : Query(diag, timestream::odbc::query::QueryType::TABLE_METADATA),
+    : Query(diag, trino::odbc::query::QueryType::TABLE_METADATA),
       connection(connection),
       catalog(catalog),
       schema(schema),
@@ -142,7 +142,7 @@ TableMetadataQuery::TableMetadataQuery(
      * If TableType equals SQL_ALL_TABLE_TYPES and CatalogName, SchemaName, and
      * TableName are empty strings, the result set contains a list of valid
      * table types for the data source. (All columns except the TABLE_TYPE
-     * column contain NULLs.) "TABLE_TYPE" is set to "TABLE" for Timestream.
+     * column contain NULLs.) "TABLE_TYPE" is set to "TABLE" for Trino.
      */
     columnsMeta.push_back(ColumnMeta(sch, tbl, catalog_meta_name,
                                      ScalarType::VARCHAR,
@@ -320,7 +320,7 @@ int64_t TableMetadataQuery::RowNumber() const {
   if (!executed || cursor == meta.end()) {
     diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING,
                          "Cursor does not point to any data.",
-                         timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                         trino::odbc::LogLevel::Type::WARNING_LEVEL);
 
     LOG_DEBUG_MSG("Row number returned is 0.");
 
@@ -371,12 +371,12 @@ SqlResult::Type TableMetadataQuery::MakeRequestGetTablesMeta() {
     }
 
     if (!validTableType) {
-      // table type(s) provided is not valid for Timestream.
+      // table type(s) provided is not valid for Trino.
       std::string warnMsg =
           "Empty result set is returned as tableType is set to \"" + *tableType
-          + "\" and Timestream only supports \"TABLE\" table type";
+          + "\" and Trino only supports \"TABLE\" table type";
       diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING, warnMsg,
-                           timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                           trino::odbc::LogLevel::Type::WARNING_LEVEL);
 
       return SqlResult::AI_SUCCESS_WITH_INFO;
     }
@@ -416,31 +416,31 @@ SqlResult::Type TableMetadataQuery::getTables() {
       } else if (catalog && !catalog->empty() && *catalog != SQL_ALL_CATALOGS) {
         // catalog has been provided with a non-empty value that isn't
         // SQL_ALL_CATALOGS. Return empty result set by default since
-        // Timestream does not have catalogs.
+        // Trino does not have catalogs.
         std::string warnMsg =
             "Empty result set is returned as catalog is set to \"" + *catalog
-            + "\" and Timestream does not have catalogs";
+            + "\" and Trino does not have catalogs";
 
         diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING, warnMsg,
-                             timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                             trino::odbc::LogLevel::Type::WARNING_LEVEL);
 
         retval = SqlResult::AI_SUCCESS_WITH_INFO;
       } else if (all_catalogs) {
         std::string warnMsg =
             "Empty result set is returned for a list of catalogs "
-            "because Timestream does not have catalogs";
+            "because Trino does not have catalogs";
         diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING, warnMsg,
-                             timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                             trino::odbc::LogLevel::Type::WARNING_LEVEL);
 
         retval = SqlResult::AI_SUCCESS_WITH_INFO;
       } else if ((schema && schema->empty()) || (table && table->empty())) {
         // empty schema or empty table should match nothing
         std::string warnMsg = "Schema and table name should not be empty";
         diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING, warnMsg,
-                             timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                             trino::odbc::LogLevel::Type::WARNING_LEVEL);
         retval = SqlResult::AI_SUCCESS_WITH_INFO;
       } else {
-        // Timestream does not support catalogs, so catalog name field would be
+        // Trino does not support catalogs, so catalog name field would be
         // empty string. If catalog variable is "%" (SQL_ALL_CATALOGS), it is
         // ignored for two reasons:
         // 1. The percent sign (%) search pattern represents any sequence of
@@ -477,31 +477,31 @@ SqlResult::Type TableMetadataQuery::getTables() {
       } else if (schema && !schema->empty() && *schema != SQL_ALL_SCHEMAS) {
         // catalog has been provided with a non-empty value that isn't
         // SQL_ALL_SCHEMAS. Return empty result set by default since
-        // Timestream does not have schemas.
+        // Trino does not have schemas.
         std::string warnMsg =
             "Empty result set is returned as schema is set to \"" + *schema
-            + "\" and Timestream does not have schemas";
+            + "\" and Trino does not have schemas";
 
         diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING, warnMsg,
-                             timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                             trino::odbc::LogLevel::Type::WARNING_LEVEL);
 
         retval = SqlResult::AI_SUCCESS_WITH_INFO;
       } else if (all_schemas) {
         std::string warnMsg =
             "Empty result set is returned for a list of schemas "
-            "because Timestream does not have schemas";
+            "because Trino does not have schemas";
         diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING, warnMsg,
-                             timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                             trino::odbc::LogLevel::Type::WARNING_LEVEL);
 
         retval = SqlResult::AI_SUCCESS_WITH_INFO;
       } else if ((catalog && catalog->empty()) || (table && table->empty())) {
         // empty catalog or empty table should match nothing
         std::string warnMsg = "Catalog and table name should not be empty";
         diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING, warnMsg,
-                             timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                             trino::odbc::LogLevel::Type::WARNING_LEVEL);
         retval = SqlResult::AI_SUCCESS_WITH_INFO;
       } else {
-        // Timestream does not support schemas, so schema name field would be
+        // Trino does not support schemas, so schema name field would be
         // empty string. If schema variable is "%" (SQL_ALL_SCHEMAS), it is
         // ignored for two reasons:
         // 1. The percent sign (%) search pattern represents any sequence of
@@ -533,7 +533,7 @@ SqlResult::Type TableMetadataQuery::getMatchedDatabases(
     std::string warnMsg =
         "No database is found with pattern \'" + databasePattern + "\'";
     diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING, warnMsg,
-                         timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                         trino::odbc::LogLevel::Type::WARNING_LEVEL);
     return SqlResult::AI_SUCCESS_WITH_INFO;
   } else if (result != SqlResult::AI_SUCCESS) {
     LOG_ERROR_MSG("Failed to execute sql:" << sql);
@@ -542,7 +542,7 @@ SqlResult::Type TableMetadataQuery::getMatchedDatabases(
 
   app::ColumnBindingMap columnBindings;
   SqlLen buflen = STRING_BUFFER_SIZE;
-  // According to Timestream, table name could only contain
+  // According to Trino, table name could only contain
   // letters, digits, dashes, periods or underscores. It could
   // not be a unicode string.
   char databaseName[STRING_BUFFER_SIZE]{};
@@ -573,7 +573,7 @@ SqlResult::Type TableMetadataQuery::getMatchedTables(
     std::string warnMsg = "No table is found with pattern \'" + tablePattern
                           + "\' from database (" + databaseName + ")";
     diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING, warnMsg,
-                         timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                         trino::odbc::LogLevel::Type::WARNING_LEVEL);
     return SqlResult::AI_SUCCESS_WITH_INFO;
     // DataQuery::Execute() does not return SUCCESS_WITH_INFO
   } else if (result != SqlResult::AI_SUCCESS) {
@@ -583,7 +583,7 @@ SqlResult::Type TableMetadataQuery::getMatchedTables(
 
   app::ColumnBindingMap columnBindings;
   SqlLen buflen = STRING_BUFFER_SIZE;
-  // According to Timestream, table name could only contain
+  // According to Trino, table name could only contain
   // letters, digits, dashes, periods or underscores. It could
   // not be a unicode string.
   char tableName[STRING_BUFFER_SIZE]{};
@@ -669,7 +669,7 @@ SqlResult::Type TableMetadataQuery::getTablesWithIdentifier(
   if (!match) {
     std::string warnMsg = "No matched database for " + databaseIdentifier;
     diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING, warnMsg,
-                         timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                         trino::odbc::LogLevel::Type::WARNING_LEVEL);
     return SqlResult::AI_SUCCESS_WITH_INFO;
   }
 
@@ -720,7 +720,7 @@ SqlResult::Type TableMetadataQuery::getTablesWithIdentifier(
         "Empty result set is returned as we could not find tables with "
         + databaseName + "." + table.get();
     diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING, warnMsg,
-                         timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                         trino::odbc::LogLevel::Type::WARNING_LEVEL);
     return SqlResult::AI_SUCCESS_WITH_INFO;
   }
 
@@ -789,7 +789,7 @@ SqlResult::Type TableMetadataQuery::getTablesWithSearchPattern(
         "pattern "
         + databasePattern.get_value_or("%");
     diag.AddStatusRecord(SqlState::S01000_GENERAL_WARNING, warnMsg,
-                         timestream::odbc::LogLevel::Type::WARNING_LEVEL);
+                         trino::odbc::LogLevel::Type::WARNING_LEVEL);
     return SqlResult::AI_SUCCESS_WITH_INFO;
   }
 
@@ -806,4 +806,4 @@ std::string TableMetadataQuery::dequote(const std::string& s) {
 }
 }  // namespace query
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

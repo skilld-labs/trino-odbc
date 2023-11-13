@@ -26,15 +26,15 @@
 #include <string>
 #include <vector>
 
-#include "timestream/odbc/config/connection_info.h"
-#include "timestream/odbc/system/odbc_constants.h"
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/config/connection_info.h"
+#include "trino/odbc/system/odbc_constants.h"
+#include "trino/odbc/utility.h"
 #include "odbc_test_suite.h"
 #include "test_utils.h"
 
-using namespace timestream;
-using namespace timestream_test;
-using namespace timestream::odbc;
+using namespace trino;
+using namespace trino_test;
+using namespace trino::odbc;
 using namespace boost::unit_test;
 
 /**
@@ -99,7 +99,7 @@ struct SqlGetInfoTestSuiteFixture : odbc::OdbcTestSuite {
   }
 
   /**
-   * Connect to the Timestream server with the database name
+   * Connect to the Trino server with the database name
    *
    * @param databaseName Database Name
    */
@@ -116,13 +116,13 @@ BOOST_AUTO_TEST_CASE(TestValues) {
   connectToTSServer();
 
 #if defined(WIN32)
-  CheckStrInfo(SQL_DRIVER_NAME, "timestream.odbc.dll");
+  CheckStrInfo(SQL_DRIVER_NAME, "trino.odbc.dll");
 #elif defined(__APPLE__)
-  CheckStrInfo(SQL_DRIVER_NAME, "libtimestream-odbc.dylib");
+  CheckStrInfo(SQL_DRIVER_NAME, "libtrino-odbc.dylib");
 #elif defined(__linux__)
-  CheckStrInfo(SQL_DRIVER_NAME, "libtimestream-odbc.so");
+  CheckStrInfo(SQL_DRIVER_NAME, "libtrino-odbc.so");
 #endif
-  CheckStrInfo(SQL_DBMS_NAME, "Amazon Timestream");
+  CheckStrInfo(SQL_DBMS_NAME, "Amazon Trino");
   CheckStrInfo(SQL_DRIVER_ODBC_VER, "03.00");
   CheckStrInfo(SQL_DRIVER_VER, utility::GetFormatedDriverVersion());
   CheckStrInfo(SQL_ACCESSIBLE_TABLES, "N");
@@ -152,7 +152,7 @@ BOOST_AUTO_TEST_CASE(TestValues) {
   // removing the DSN setting
   CheckStrInfo(SQL_DATA_SOURCE_NAME, "");
 #else
-  CheckStrInfo(SQL_DATA_SOURCE_NAME, "Timestream DSN");
+  CheckStrInfo(SQL_DATA_SOURCE_NAME, "Trino DSN");
 #endif
   CheckStrInfo(SQL_DATA_SOURCE_READ_ONLY, "Y");
   CheckStrInfo(SQL_DATABASE_NAME, "");
@@ -169,7 +169,7 @@ BOOST_AUTO_TEST_CASE(TestValues) {
   CheckStrInfo(SQL_PROCEDURES, "N");
   CheckStrInfo(SQL_ROW_UPDATES, "N");
   CheckStrInfo(SQL_SEARCH_PATTERN_ESCAPE, "");
-  CheckStrInfo(SQL_SERVER_NAME, "AWS Timestream");
+  CheckStrInfo(SQL_SERVER_NAME, "AWS Trino");
   std::string expectedUserName =
       ignite::odbc::common::GetEnv("AWS_ACCESS_KEY_ID");
   CheckStrInfo(SQL_USER_NAME, expectedUserName);

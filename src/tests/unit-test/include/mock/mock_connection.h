@@ -17,10 +17,10 @@
 #ifndef _IGNITE_ODBC_MOCK_CONNECTION
 #define _IGNITE_ODBC_MOCK_CONNECTION
 
-#include "timestream/odbc/connection.h"
+#include "trino/odbc/connection.h"
 #include "mock/mock_statement.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /**
  * Mock Connection so function level test could be done against Connection.
@@ -50,14 +50,14 @@ class MockConnection : public Connection {
   virtual SqlResult::Type InternalCreateStatement(MockStatement*& statement);
 
   /**
-   * Create MockTimestreamQueryClient object.
+   * Create MockTrinoQueryClient object.
    *
    * @param credentials Aws IAM credentials.
    * @param clientCfg Aws client configuration.
    * @param cfg connection configuration.
-   * @return a shared_ptr to created MockTimestreamQueryClient object.
+   * @return a shared_ptr to created MockTrinoQueryClient object.
    */
-  virtual std::shared_ptr< Aws::TimestreamQuery::TimestreamQueryClient >
+  virtual std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
   CreateTSQueryClient(const Aws::Auth::AWSCredentials& credentials,
                       const Aws::Client::ClientConfiguration& clientCfg);
 
@@ -76,6 +76,6 @@ class MockConnection : public Connection {
   virtual std::shared_ptr< Aws::STS::STSClient > GetStsClient();
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
 #endif  //_IGNITE_ODBC_MOCK_CONNECTION

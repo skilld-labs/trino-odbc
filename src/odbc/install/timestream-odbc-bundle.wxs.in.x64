@@ -21,7 +21,7 @@
 
   <Bundle Name='@WIX_PRODUCT_NAME@' Version='@CMAKE_PROJECT_VERSION@'
           Manufacturer='@WIX_MANUFACTURER@' UpgradeCode='@WIX_BUNDLE_UPGRADE_CODE@'>
-    <util:RegistrySearchRef Id='SearchForTimestreamDll' />
+    <util:RegistrySearchRef Id='SearchForTrinoDll' />
     <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense">
       <bal:WixStandardBootstrapperApplication
             LicenseFile="../../../../LICENSE.rtf"
@@ -30,7 +30,7 @@
             />
     </BootstrapperApplicationRef>
 
-    <Variable Name="InstallFolder" Type="string" Value="[ProgramFilesFolder]Amazon Timestream\ODBC Driver" />
+    <Variable Name="InstallFolder" Type="string" Value="[ProgramFilesFolder]Amazon Trino\ODBC Driver" />
 
     <util:RegistrySearchRef Id='SearchForVCRuntime' />
     
@@ -55,16 +55,16 @@
       Key="SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\x64"
       Win64="yes" />
     <util:RegistrySearch
-      Id="SearchForTimestreamDll"
+      Id="SearchForTrinoDll"
       Condition="NOT WixBundleInstalled"
-      Variable="TimestreamDllInstalled"
+      Variable="TrinoDllInstalled"
       Result="exists"
       Root="HKLM"
-      Key="SOFTWARE\ODBC\ODBCINST.INI\Amazon Timestream ODBC Driver"
+      Key="SOFTWARE\ODBC\ODBCINST.INI\Amazon Trino ODBC Driver"
       Win64="yes" />
     <bal:Condition 
-      Message="Please manually uninstall existing Timestream ODBC driver before installing the current driver.">
-      NOT TimestreamDllInstalled
+      Message="Please manually uninstall existing Trino ODBC driver before installing the current driver.">
+      NOT TrinoDllInstalled
     </bal:Condition>
   </Fragment>
 </Wix>

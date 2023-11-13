@@ -18,8 +18,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_UTILITY
-#define _TIMESTREAM_ODBC_UTILITY
+#ifndef _TRINO_ODBC_UTILITY
+#define _TRINO_ODBC_UTILITY
 
 #ifdef min
 #undef min
@@ -29,7 +29,7 @@
 #include <boost/optional/optional_io.hpp>
 
 #include <ignite/common/include/common/decimal.h>
-#include <timestream/odbc/utils.h>
+#include <trino/odbc/utils.h>
 #include <stdint.h>
 
 #include <boost/optional.hpp>
@@ -39,11 +39,11 @@
 #include <sqltypes.h>
 #include <sql.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace utility {
 /** Using common version of the util. */
-using timestream::odbc::common::IntoLower;
+using trino::odbc::common::IntoLower;
 using namespace ignite::odbc::common;
 
 template < typename T >
@@ -271,16 +271,16 @@ IGNITE_IMPORT_EXPORT bool CheckEnvVarSetToTrue(const std::string& envVar);
 IGNITE_IMPORT_EXPORT std::string GetFormatedDriverVersion();
 }  // namespace utility
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
 namespace std {
 /**
  * Convert wstring to utf-8 encoding.
  */
 inline std::ostream& operator<<(std::ostream& out, const std::wstring& value) {
-  out << timestream::odbc::utility::ToUtf8(value);
+  out << trino::odbc::utility::ToUtf8(value);
   return out;
 }
 }  // namespace std
 
-#endif  //_TIMESTREAM_ODBC_UTILITY
+#endif  //_TRINO_ODBC_UTILITY

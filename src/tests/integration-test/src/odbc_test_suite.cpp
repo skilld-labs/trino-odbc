@@ -23,22 +23,22 @@
 #endif
 
 #include <ignite/common/include/common/fixed_size_array.h>
-#include "timestream/odbc/log.h"
+#include "trino/odbc/log.h"
 #include <sql.h>
 #include <sqlext.h>
 #include <fstream>
 
 #include <boost/test/unit_test.hpp>
 
-#include <timestream/odbc/utility.h>
-#include <timestream/odbc/dsn_config.h>
-#include <timestream/odbc/config/configuration.h>
+#include <trino/odbc/utility.h>
+#include <trino/odbc/dsn_config.h>
+#include <trino/odbc/config/configuration.h>
 #include "odbc_test_suite.h"
 #include "test_utils.h"
 
-using namespace timestream_test;
+using namespace trino_test;
 using namespace boost::unit_test;
-using namespace timestream::odbc::config;
+using namespace trino::odbc::config;
 
 /**
  * Test setup config for test results
@@ -57,7 +57,7 @@ struct OdbcConfig {
 
 BOOST_GLOBAL_FIXTURE(OdbcConfig);
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 void OdbcTestSuite::Prepare(int32_t odbcVer) {
   // Allocate an environment handle
@@ -340,7 +340,7 @@ std::string OdbcTestSuite::ExpectConnectionReject(
 }
 
 /**
- * Connect to Timestream
+ * Connect to Trino
  */
 void OdbcTestSuite::ConnectToTS(int32_t odbcVer) {
   std::string dsnConnectionString;
@@ -530,7 +530,7 @@ void OdbcTestSuite::CheckSQLDiagnosticError(
                                 message, ODBC_BUFFER_SIZE, &messageLen);
 
   const std::string sqlState =
-      timestream::odbc::utility::SqlWcharToString(state);
+      trino::odbc::utility::SqlWcharToString(state);
   BOOST_REQUIRE_EQUAL(ret, SQL_SUCCESS);
   BOOST_REQUIRE_EQUAL(sqlState, expectedSqlStateStr);
   BOOST_REQUIRE(messageLen > 0);
@@ -583,12 +583,12 @@ void OdbcTestSuite::CreateGenericDsnConnectionString(
     const std::string& TSUsername, const std::string& TSPassword,
     const std::string& miscOptions) const {
   std::string sessionToken = GetEnv("AWS_SESSION_TOKEN", "");
-  std::string logPath = GetEnv("TIMESTREAM_LOG_PATH", "");
-  std::string logLevel = GetEnv("TIMESTREAM_LOG_LEVEL", "2");
+  std::string logPath = GetEnv("TRINO_LOG_PATH", "");
+  std::string logLevel = GetEnv("TRINO_LOG_LEVEL", "2");
   std::string region = GetEnv("AWS_REGION", "us-west-2");
 
   connectionString =
-            "driver={Amazon Timestream ODBC Driver};"
+            "driver={Amazon Trino ODBC Driver};"
             "dsn={" + Configuration::DefaultValue::dsn + "};"
             "auth=" + AuthType::ToString(testAuthType) + ";"
             "uid=" + uid + ";"
@@ -602,7 +602,7 @@ void OdbcTestSuite::CreateGenericDsnConnectionString(
   }
 
   if (includeTSCred) {
-    // Append the Timestream credentials
+    // Append the Trino credentials
     std::string tsAuthentication = "";
 
     switch (testAuthType) {
@@ -626,12 +626,12 @@ void OdbcTestSuite::CreateAADDsnConnectionString(
     std::string& connectionString, const char* uid, const char* pwd,
     const char* appId, const char* tenantId, const char* clientSecret,
     const char* roleArn, const char* idpArn) const {
-  std::string logPath = GetEnv("TIMESTREAM_LOG_PATH", "");
-  std::string logLevel = GetEnv("TIMESTREAM_LOG_LEVEL", "2");
+  std::string logPath = GetEnv("TRINO_LOG_PATH", "");
+  std::string logLevel = GetEnv("TRINO_LOG_LEVEL", "2");
   std::string region = GetEnv("AWS_REGION", "us-west-2");
 
   connectionString =
-      "driver={Amazon Timestream ODBC Driver};"
+      "driver={Amazon Trino ODBC Driver};"
       "dsn={" + Configuration::DefaultValue::dsn + "};"
       "auth=" + AuthType::ToString(AuthType::Type::AAD) + ";"
       "region=" + region + ";"
@@ -654,12 +654,12 @@ void OdbcTestSuite::CreateOktaDsnConnectionString(
     std::string& connectionString, const char* host, const char* uid,
     const char* pwd, const char* appId, const char* roleArn,
     const char* idpArn) const {
-  std::string logPath = GetEnv("TIMESTREAM_LOG_PATH", "");
-  std::string logLevel = GetEnv("TIMESTREAM_LOG_LEVEL", "2");
+  std::string logPath = GetEnv("TRINO_LOG_PATH", "");
+  std::string logLevel = GetEnv("TRINO_LOG_LEVEL", "2");
   std::string region = GetEnv("AWS_REGION", "us-west-2");
 
   connectionString =
-      "driver={Amazon Timestream ODBC Driver};"
+      "driver={Amazon Trino ODBC Driver};"
       "dsn={" + Configuration::DefaultValue::dsn + "};"
       "auth=" + AuthType::ToString(AuthType::Type::OKTA) + ";"
       "region=" + region + ";"
@@ -684,8 +684,8 @@ void OdbcTestSuite::CreateDsnConnectionStringForAWS(
   std::string secretKey = GetEnv("AWS_SECRET_ACCESS_KEY");
   std::string sessionToken = GetEnv("AWS_SESSION_TOKEN", "");
   std::string region = GetEnv("AWS_REGION", "us-west-2");
-  std::string logPath = GetEnv("TIMESTREAM_LOG_PATH", "");
-  std::string logLevel = GetEnv("TIMESTREAM_LOG_LEVEL", "2");
+  std::string logPath = GetEnv("TRINO_LOG_PATH", "");
+  std::string logLevel = GetEnv("TRINO_LOG_LEVEL", "2");
 
   if (!keyId.empty()) {
     accessKeyId = keyId;
@@ -698,7 +698,7 @@ void OdbcTestSuite::CreateDsnConnectionStringForAWS(
   // api_robustness_test to pass.
 
   connectionString =
-            "DRIVER={Amazon Timestream ODBC Driver};"
+            "DRIVER={Amazon Trino ODBC Driver};"
             "dsn={" + Configuration::DefaultValue::dsn + "};"
             "auth=" + AuthType::ToString(AuthType::Type::IAM) + ";"
             "accessKeyId=" + accessKeyId + ";"
@@ -721,11 +721,11 @@ void OdbcTestSuite::CreateDsnConnectionStringForAWS(
     std::string& connectionString, AuthType::Type testAuthType,
     const std::string& profileName, const std::string& miscOptions) const {
   std::string region = GetEnv("AWS_REGION", "us-west-2");
-  std::string logPath = GetEnv("TIMESTREAM_LOG_PATH", "");
-  std::string logLevel = GetEnv("TIMESTREAM_LOG_LEVEL", "2");
+  std::string logPath = GetEnv("TRINO_LOG_PATH", "");
+  std::string logLevel = GetEnv("TRINO_LOG_LEVEL", "2");
 
   connectionString =
-            "driver={Amazon Timestream ODBC Driver};"
+            "driver={Amazon Trino ODBC Driver};"
             "dsn={" + Configuration::DefaultValue::dsn + "};"
             "auth=" + AuthType::ToString(testAuthType) + ";"
             "profileName=" + profileName + ";"
@@ -737,4 +737,4 @@ void OdbcTestSuite::CreateDsnConnectionStringForAWS(
     connectionString.append(miscOptions);
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

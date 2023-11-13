@@ -16,16 +16,16 @@
 
 /**
  * @file
- * Declares timestream::odbc::IntervalYearMonth class.
+ * Declares trino::odbc::IntervalYearMonth class.
  */
 
-#ifndef _TIMESTREAM_ODBC_INTERVAL_YEAR_MONTH
-#define _TIMESTREAM_ODBC_INTERVAL_YEAR_MONTH
+#ifndef _TRINO_ODBC_INTERVAL_YEAR_MONTH
+#define _TRINO_ODBC_INTERVAL_YEAR_MONTH
 
 #include <ignite/common/common.h>
 #include <stdint.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /**
  * IntervalYearMonth type.
@@ -141,6 +141,6 @@ class IGNITE_IMPORT_EXPORT IntervalYearMonth {
   int32_t month_;
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_INTERVAL_YEAR_MONTH
+#endif  //_TRINO_ODBC_INTERVAL_YEAR_MONTH

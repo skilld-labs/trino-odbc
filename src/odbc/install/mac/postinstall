@@ -13,8 +13,8 @@
 # express or implied. See the License for the specific language governing
 # permissions and limitations under the License.
 
-PKG_INSTALL_DIR=/Applications/timestream-odbc
-FINAL_INSTALL_DIR=/Library/ODBC/timestream-odbc
+PKG_INSTALL_DIR=/Applications/trino-odbc
+FINAL_INSTALL_DIR=/Library/ODBC/trino-odbc
 
 # Remove install directory if it already exists
 if [ -d "${FINAL_INSTALL_DIR}" ]; then
@@ -30,19 +30,19 @@ mv ${PKG_INSTALL_DIR}/doc ${FINAL_INSTALL_DIR}/doc
 
 ODBCINST_INI=/Library/ODBC/odbcinst.ini
 odbc_drivers=`grep "\[ODBC Drivers\]" /Library/ODBC/odbcinst.ini`
-INSTALLED=`grep "Amazon Timestream ODBC Driver" /Library/ODBC/odbcinst.ini`
+INSTALLED=`grep "Amazon Trino ODBC Driver" /Library/ODBC/odbcinst.ini`
 if [ -z "${INSTALLED}" ]
 then
     if [ -z "${odbc_drivers}" ]
     then 
         echo -e "[ODBC Drivers]" >> $ODBCINST_INI
-        echo "Amazon Timestream ODBC Driver = Installed" >> $ODBCINST_INI
+        echo "Amazon Trino ODBC Driver = Installed" >> $ODBCINST_INI
     else
-        sed -i -e "s/\[ODBC Drivers\]/\[ODBC Drivers\]\nAmazon Timestream ODBC Driver = Installed/g" $ODBCINST_INI
+        sed -i -e "s/\[ODBC Drivers\]/\[ODBC Drivers\]\nAmazon Trino ODBC Driver = Installed/g" $ODBCINST_INI
     fi
-    echo -e "\n[Amazon Timestream ODBC Driver]" >> $ODBCINST_INI
-    echo "Driver = ${FINAL_INSTALL_DIR}/lib/libtimestream-odbc.dylib" >> $ODBCINST_INI
-    echo "Setup = ${FINAL_INSTALL_DIR}/lib/libtimestream-odbc.dylib" >> $ODBCINST_INI
+    echo -e "\n[Amazon Trino ODBC Driver]" >> $ODBCINST_INI
+    echo "Driver = ${FINAL_INSTALL_DIR}/lib/libtrino-odbc.dylib" >> $ODBCINST_INI
+    echo "Setup = ${FINAL_INSTALL_DIR}/lib/libtrino-odbc.dylib" >> $ODBCINST_INI
 else 
-    echo "Amazon Timestream ODBC Driver might have been installed, please check $ODBCINST_INI!"
+    echo "Amazon Trino ODBC Driver might have been installed, please check $ODBCINST_INI!"
 fi

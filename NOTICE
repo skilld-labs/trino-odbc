@@ -1,7 +1,7 @@
-Amazon Timestream ODBC Driver
+Amazon Trino ODBC Driver
 Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
-The Amazon Timestream ODBC Driver utilizes and modifies Apache Ignite 
+The Amazon Trino ODBC Driver utilizes and modifies Apache Ignite 
 source code. The utilized Apache Ignite source code comes from the directories 
 modules/platforms/cpp/common, modules/platforms/cpp/odbc and, 
 modules/platforms/cpp/common/odbc-test of Ignite 2.11.1. Not all 

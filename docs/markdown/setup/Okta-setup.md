@@ -3,7 +3,7 @@
 ## Prerequisites
 1. Admin permissions in AWS to create the identity provider and the roles.
 2. An Okta account at Okta (https://www.okta.com)
-3. Permission to access to Timestream
+3. Permission to access to Trino
 
 
 ## Steps
@@ -33,7 +33,7 @@
 
     ![Okta screenshot 6](../images/Okta6.png)
 
-2. No **`SAMLResponse`** field in the SAML Assertion response returned from Okta when using Timestream ODBC driver.
+2. No **`SAMLResponse`** field in the SAML Assertion response returned from Okta when using Trino ODBC driver.
 
     Go to **`Sign On`** tab in application **`AWS Account Federation`**. Scroll down to the bottom. Check **`Authentication policy`** under  section **`User authentication`**. Make sure it is **`Password only`**.
 

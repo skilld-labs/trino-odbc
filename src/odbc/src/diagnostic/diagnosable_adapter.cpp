@@ -18,18 +18,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/diagnostic/diagnosable_adapter.h"
+#include "trino/odbc/diagnostic/diagnosable_adapter.h"
 
-#include "timestream/odbc/connection.h"
-#include "timestream/odbc/log.h"
+#include "trino/odbc/connection.h"
+#include "trino/odbc/log.h"
 #include "ignite/odbc/odbc_error.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace diagnostic {
 void DiagnosableAdapter::AddStatusRecord(
     SqlState::Type sqlState, const std::string& message,
-    timestream::odbc::LogLevel::Type logLevel, int32_t rowNum,
+    trino::odbc::LogLevel::Type logLevel, int32_t rowNum,
     int32_t columnNum) {
   WRITE_LOG_MSG("Adding new record: " << message << ", rowNum: " << rowNum
                                       << ", columnNum: " << columnNum,
@@ -46,7 +46,7 @@ void DiagnosableAdapter::AddStatusRecord(
 
 void DiagnosableAdapter::AddStatusRecord(
     SqlState::Type sqlState, const std::string& message,
-    timestream::odbc::LogLevel::Type logLevel) {
+    trino::odbc::LogLevel::Type logLevel) {
   AddStatusRecord(sqlState, message, logLevel, 0, 0);
 }
 
@@ -56,7 +56,7 @@ void DiagnosableAdapter::AddStatusRecord(const std::string& message) {
 
 void DiagnosableAdapter::AddStatusRecord(const ignite::odbc::OdbcError& err) {
   AddStatusRecord(err.GetStatus(), err.GetErrorMessage(),
-                  timestream::odbc::LogLevel::Type::ERROR_LEVEL, 0, 0);
+                  trino::odbc::LogLevel::Type::ERROR_LEVEL, 0, 0);
 }
 
 void DiagnosableAdapter::AddStatusRecord(const DiagnosticRecord& rec) {
@@ -64,4 +64,4 @@ void DiagnosableAdapter::AddStatusRecord(const DiagnosticRecord& rec) {
 }
 }  // namespace diagnostic
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

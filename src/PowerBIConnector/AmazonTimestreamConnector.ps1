@@ -11,36 +11,36 @@
 # express or implied. See the License for the specific language governing
 # permissions and limitations under the License.
 
-$ZipFile = '.\AmazonTimestreamConnector.zip'
-$MezFile = '.\AmazonTimestreamConnector.mez'
+$ZipFile = '.\AmazonTrinoConnector.zip'
+$MezFile = '.\AmazonTrinoConnector.mez'
 
 if (Test-Path -Path $ZipFile) {
-    Write-Host Removing previous AmazonTimestreamConnector.zip
+    Write-Host Removing previous AmazonTrinoConnector.zip
 
     Remove-Item $ZipFile
 }
 
-Write-Host Creating AmazonTimestreamConnector.m file
+Write-Host Creating AmazonTrinoConnector.m file
 
-Copy-Item '.\AmazonTimestreamConnector\AmazonTimestreamConnector.pq' '.\AmazonTimestreamConnector\AmazonTimestreamConnector.m'
+Copy-Item '.\AmazonTrinoConnector\AmazonTrinoConnector.pq' '.\AmazonTrinoConnector\AmazonTrinoConnector.m'
 
-Write-Host Creating AmazonTimestreamConnector.zip file
+Write-Host Creating AmazonTrinoConnector.zip file
 
-compress-archive -path '.\AmazonTimestreamConnector\*.png', '.\AmazonTimestreamConnector\*.pqm', '.\AmazonTimestreamConnector\*.resx', '.\AmazonTimestreamConnector\AmazonTimestreamConnector.m' -destinationpath $ZipFile -update -compressionlevel optimal
+compress-archive -path '.\AmazonTrinoConnector\*.png', '.\AmazonTrinoConnector\*.pqm', '.\AmazonTrinoConnector\*.resx', '.\AmazonTrinoConnector\AmazonTrinoConnector.m' -destinationpath $ZipFile -update -compressionlevel optimal
 
-if (Test-Path -Path '.\AmazonTimestreamConnector\AmazonTimestreamConnector.m') {
-    Write-Host Removing AmazonTimestreamConnector.m
+if (Test-Path -Path '.\AmazonTrinoConnector\AmazonTrinoConnector.m') {
+    Write-Host Removing AmazonTrinoConnector.m
 
-    Remove-Item '.\AmazonTimestreamConnector\AmazonTimestreamConnector.m'
+    Remove-Item '.\AmazonTrinoConnector\AmazonTrinoConnector.m'
 }
 
 if (Test-Path -Path $MezFile) {
-    Write-Host Removing previous AmazonTimestreamConnector.mez
+    Write-Host Removing previous AmazonTrinoConnector.mez
 
     Remove-Item $MezFile
 }
 
-Write-Host Creating AmazonTimestreamConnector.mez
+Write-Host Creating AmazonTrinoConnector.mez
 
 Move-Item $ZipFile $MezFile
 

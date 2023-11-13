@@ -18,7 +18,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-project(timestream-odbc-integration-tests)
+project(trino-odbc-integration-tests)
 
 set(TARGET ${PROJECT_NAME})
 
@@ -29,7 +29,7 @@ endif()
 find_package(Boost 1.53 REQUIRED COMPONENTS unit_test_framework chrono thread system regex)
 
 find_package(ODBC REQUIRED)
-find_package(AWSSDK REQUIRED COMPONENTS core sts timestream-query)
+find_package(AWSSDK REQUIRED COMPONENTS core sts trino-query)
 if (UNIX)
     find_package(ZLIB REQUIRED)
 endif()
@@ -39,9 +39,9 @@ find_package(Threads REQUIRED)
 include_directories(SYSTEM ${ODBC_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} ${AWSSDK_INCLUDE_DIRS})
 include_directories(include ../../odbc/include)
 if (WIN32)
-     include_directories(../../odbc/os/ignite/common/os/win/include ../../odbc/os/timestream/win/include)
+     include_directories(../../odbc/os/ignite/common/os/win/include ../../odbc/os/trino/win/include)
 else ()
-    include_directories(../../odbc/os/ignite/common/os/linux/include ../../odbc/os/timestream/linux/include)
+    include_directories(../../odbc/os/ignite/common/os/linux/include ../../odbc/os/trino/linux/include)
 endif()
 
 set(SOURCES 
@@ -64,10 +64,10 @@ if (WIN32)
         ../../odbc/os/ignite/common/os/win/src/common/concurrent_os.cpp
         ../../odbc/os/ignite/common/os/win/src/common/platform_utils.cpp
         ../../odbc/os/ignite/common/os/win/src/common/dynamic_load_os.cpp
-        ../../odbc/os/timestream/win/src/system_dsn.cpp
-        ../../odbc/os/timestream/win/src/system/ui/custom_window.cpp
-        ../../odbc/os/timestream/win/src/system/ui/dsn_configuration_window.cpp
-        ../../odbc/os/timestream/win/src/system/ui/window.cpp
+        ../../odbc/os/trino/win/src/system_dsn.cpp
+        ../../odbc/os/trino/win/src/system/ui/custom_window.cpp
+        ../../odbc/os/trino/win/src/system/ui/dsn_configuration_window.cpp
+        ../../odbc/os/trino/win/src/system/ui/window.cpp
     )
 else()
     list(APPEND SOURCES
@@ -78,14 +78,14 @@ else()
 endif()
 
 add_executable(${TARGET} ${SOURCES})
-add_dependencies(timestream-odbc-integration-tests timestream-odbc)
+add_dependencies(trino-odbc-integration-tests trino-odbc)
 
 target_link_libraries(${TARGET} ${ODBC_LIBRARIES})
 target_link_libraries(${TARGET} ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY} ${Boost_LIBRARIES})
 
 if (WIN32)
     # ensure our self-build aws sdk library could be found
-    set_target_properties(aws-cpp-sdk-core aws-cpp-sdk-sts aws-cpp-sdk-timestream-query PROPERTIES
+    set_target_properties(aws-cpp-sdk-core aws-cpp-sdk-sts aws-cpp-sdk-trino-query PROPERTIES
       IMPORTED_IMPLIB ${CMAKE_SOURCE_DIR}/../build/aws-sdk/install/bin
     )
     set_target_properties(AWS::aws-crt-cpp AWS::aws-c-cal AWS::aws-c-auth AWS::aws-c-common AWS::aws-c-io AWS::aws-checksums AWS::aws-c-event-stream AWS::aws-c-s3  AWS::aws-c-http AWS::aws-c-mqtt AWS::aws-c-compression AWS::aws-c-sdkutils PROPERTIES
@@ -93,11 +93,11 @@ if (WIN32)
     )
 
     target_link_libraries(${TARGET} ${AWSSDK_LINK_LIBRARIES})
-    target_link_libraries(${TARGET} ${CMAKE_BINARY_DIR}/odbc/${CMAKE_BUILD_TYPE}/timestream-odbc-static.lib)
+    target_link_libraries(${TARGET} ${CMAKE_BINARY_DIR}/odbc/${CMAKE_BUILD_TYPE}/trino-odbc-static.lib)
 elseif(APPLE)
-    target_link_libraries(${TARGET} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libtimestream-odbc.dylib)
+    target_link_libraries(${TARGET} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libtrino-odbc.dylib)
 else()
-    target_link_libraries(${TARGET} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libtimestream-odbc.so)
+    target_link_libraries(${TARGET} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libtrino-odbc.so)
 endif()
 
 if (${CODE_COVERAGE}) 

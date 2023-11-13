@@ -18,18 +18,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_QUERY_TYPE_INFO_QUERY
-#define _TIMESTREAM_ODBC_QUERY_TYPE_INFO_QUERY
+#ifndef _TRINO_ODBC_QUERY_TYPE_INFO_QUERY
+#define _TRINO_ODBC_QUERY_TYPE_INFO_QUERY
 
-#include "timestream/odbc/query/query.h"
+#include "trino/odbc/query/query.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace query {
 /**
  * Type info query.
  */
-class TypeInfoQuery : public timestream::odbc::query::Query {
+class TypeInfoQuery : public trino::odbc::query::Query {
  public:
   /**
    * Constructor.
@@ -138,6 +138,6 @@ class TypeInfoQuery : public timestream::odbc::query::Query {
 };
 }  // namespace query
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_QUERY_TYPE_INFO_QUERY
+#endif  //_TRINO_ODBC_QUERY_TYPE_INFO_QUERY

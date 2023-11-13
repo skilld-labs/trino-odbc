@@ -18,25 +18,25 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_ODBC
-#define _TIMESTREAM_ODBC_ODBC
+#ifndef _TRINO_ODBC_ODBC
+#define _TRINO_ODBC_ODBC
 
-#include "timestream/odbc/system/odbc_constants.h"
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/system/odbc_constants.h"
+#include "trino/odbc/utility.h"
 
 /**
  * @file odbc.h
  *
- * Functions here are placed to the timestream namespace so there are no
+ * Functions here are placed to the trino namespace so there are no
  * collisions with standard ODBC functions when we call driver API
  * functions from other API functions. I.e, when we call SQLAllocEnv
  * from SQLAllocHandle linker can place Driver Manager call here,
  * instead of internal driver call. On other hand if we call
- * timestream::SQLAllocEnv from timestream::SQLAllocHandle we can be sure
+ * trino::SQLAllocEnv from trino::SQLAllocHandle we can be sure
  * there are no collisions.
  */
 
-namespace timestream {
+namespace trino {
 SQLRETURN SQLGetInfo(SQLHDBC conn, SQLUSMALLINT infoType, SQLPOINTER infoValue,
                      SQLSMALLINT infoValueMax, SQLSMALLINT* length);
 
@@ -248,6 +248,6 @@ SQLRETURN SQLColAttributes(SQLHSTMT stmt, SQLUSMALLINT colNum,
                            SQLUSMALLINT fieldId, SQLPOINTER strAttrBuf,
                            SQLSMALLINT strAttrBufLen,
                            SQLSMALLINT* strAttrResLen, SQLLEN* numAttrBuf);
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC
+#endif  //_TRINO_ODBC

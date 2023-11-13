@@ -11,36 +11,36 @@
 # express or implied. See the License for the specific language governing
 # permissions and limitations under the License.
 
-$ZipFile = '.\AmazonTimestreamAADConnector.zip'
-$MezFile = '.\AmazonTimestreamAADConnector.mez'
+$ZipFile = '.\AmazonTrinoAADConnector.zip'
+$MezFile = '.\AmazonTrinoAADConnector.mez'
 
 if (Test-Path -Path $ZipFile) {
-    Write-Host Removing previous AmazonTimestreamAADConnector.zip
+    Write-Host Removing previous AmazonTrinoAADConnector.zip
 
     Remove-Item $ZipFile
 }
 
-Write-Host Creating AmazonTimestreamAADConnector.m file
+Write-Host Creating AmazonTrinoAADConnector.m file
 
-Copy-Item '.\AmazonTimestreamAADConnector\AmazonTimestreamAADConnector.pq' '.\AmazonTimestreamAADConnector\AmazonTimestreamAADConnector.m'
+Copy-Item '.\AmazonTrinoAADConnector\AmazonTrinoAADConnector.pq' '.\AmazonTrinoAADConnector\AmazonTrinoAADConnector.m'
 
-Write-Host Creating AmazonTimestreamAADConnector.zip file
+Write-Host Creating AmazonTrinoAADConnector.zip file
 
-compress-archive -path '.\AmazonTimestreamAADConnector\*.png', '.\AmazonTimestreamAADConnector\*.pqm', '.\AmazonTimestreamAADConnector\*.resx', '.\AmazonTimestreamAADConnector\AmazonTimestreamAADConnector.m' -destinationpath $ZipFile -update -compressionlevel optimal
+compress-archive -path '.\AmazonTrinoAADConnector\*.png', '.\AmazonTrinoAADConnector\*.pqm', '.\AmazonTrinoAADConnector\*.resx', '.\AmazonTrinoAADConnector\AmazonTrinoAADConnector.m' -destinationpath $ZipFile -update -compressionlevel optimal
 
-if (Test-Path -Path '.\AmazonTimestreamAADConnector\AmazonTimestreamAADConnector.m') {
-    Write-Host Removing AmazonTimestreamAADConnector.m
+if (Test-Path -Path '.\AmazonTrinoAADConnector\AmazonTrinoAADConnector.m') {
+    Write-Host Removing AmazonTrinoAADConnector.m
 
-    Remove-Item '.\AmazonTimestreamAADConnector\AmazonTimestreamAADConnector.m'
+    Remove-Item '.\AmazonTrinoAADConnector\AmazonTrinoAADConnector.m'
 }
 
 if (Test-Path -Path $MezFile) {
-    Write-Host Removing previous AmazonTimestreamAADConnector.mez
+    Write-Host Removing previous AmazonTrinoAADConnector.mez
 
     Remove-Item $MezFile
 }
 
-Write-Host Creating AmazonTimestreamAADConnector.mez
+Write-Host Creating AmazonTrinoAADConnector.mez
 
 Move-Item $ZipFile $MezFile
 

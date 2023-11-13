@@ -1,16 +1,16 @@
 Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
-The performance testing tools used to test the Amazon Timestream ODBC Driver use
+The performance testing tools used to test the Amazon Trino ODBC Driver use
 Google Test as a dependency. The performance testing tools are for testing only
 and not distribution.
 
 In the event that we accidentally failed to list a required notice,
 please bring it to our attention through any of the ways detailed here:
 
-    https://github.com/awslabs/amazon-timestream-odbc-driver/issues
+    https://github.com/awslabs/amazon-trino-odbc-driver/issues
 
 For any licenses that require disclosure of source, sources are available at
-https://github.com/awslabs/amazon-timestream-odbc-driver.
+https://github.com/awslabs/amazon-trino-odbc-driver.
 
 1) License Notice for cmake code to incorporate Gtest
 -----------------------------------------

@@ -18,27 +18,27 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_APP_APPLICATION_DATA_BUFFER
-#define _TIMESTREAM_ODBC_APP_APPLICATION_DATA_BUFFER
+#ifndef _TRINO_ODBC_APP_APPLICATION_DATA_BUFFER
+#define _TRINO_ODBC_APP_APPLICATION_DATA_BUFFER
 
 #include <ignite/common/include/date.h>
 #include <ignite/common/include/common/decimal.h>
-#include <timestream/odbc/time.h>
-#include <timestream/odbc/timestamp.h>
+#include <trino/odbc/time.h>
+#include <trino/odbc/timestamp.h>
 #include <stdint.h>
 #include <boost/optional.hpp>
 
 #include <map>
 
-#include "timestream/odbc/common_types.h"
-#include "timestream/odbc/type_traits.h"
-#include "timestream/odbc/interval_year_month.h"
-#include "timestream/odbc/interval_day_second.h"
+#include "trino/odbc/common_types.h"
+#include "trino/odbc/type_traits.h"
+#include "trino/odbc/interval_year_month.h"
+#include "trino/odbc/interval_day_second.h"
 
 using ignite::odbc::Date;
 using ignite::odbc::common::Decimal;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace app {
 /**
@@ -589,7 +589,7 @@ class ApplicationDataBuffer {
    * Set the interval buffer interval value.
    *
    * @param buffer The interval buffer for output
-   * @param value The value retrieved from Timestream
+   * @param value The value retrieved from Trino
    */
   void SetIntervalBufferValue(SQL_INTERVAL_STRUCT* buffer,
                               const IntervalYearMonth& value);
@@ -598,7 +598,7 @@ class ApplicationDataBuffer {
    * Set the interval buffer interval value.
    *
    * @param buffer The interval buffer for output
-   * @param value The value retrieved from Timestream
+   * @param value The value retrieved from Trino
    */
   void SetIntervalBufferValue(SQL_INTERVAL_STRUCT* buffer,
                               const IntervalDaySecond& value);
@@ -626,6 +626,6 @@ class ApplicationDataBuffer {
 typedef std::map< uint16_t, ApplicationDataBuffer > ColumnBindingMap;
 }  // namespace app
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_APP_APPLICATION_DATA_BUFFER
+#endif  //_TRINO_ODBC_APP_APPLICATION_DATA_BUFFER

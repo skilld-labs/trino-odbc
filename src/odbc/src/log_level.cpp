@@ -14,12 +14,12 @@
  *
  */
 
-#include "timestream/odbc/log_level.h"
+#include "trino/odbc/log_level.h"
 
-#include <timestream/odbc/utils.h>
-#include <timestream/odbc/utility.h>
+#include <trino/odbc/utils.h>
+#include <trino/odbc/utility.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 LogLevel::Type LogLevel::FromString(const std::string& val, Type dflt) {
   std::string logLevel = utility::Trim(val);
@@ -86,4 +86,4 @@ std::wstring LogLevel::ToCBString(Type val) {
   }
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

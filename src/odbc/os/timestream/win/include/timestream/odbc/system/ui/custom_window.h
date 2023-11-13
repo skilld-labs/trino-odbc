@@ -21,10 +21,10 @@
 #ifndef _IGNITE_ODBC_SYSTEM_UI_CUSTOM_WINDOW
 #define _IGNITE_ODBC_SYSTEM_UI_CUSTOM_WINDOW
 
-#include "timestream/odbc/system/ui/window.h"
+#include "trino/odbc/system/ui/window.h"
 #include <commctrl.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace system {
 namespace ui {
@@ -215,6 +215,6 @@ class CustomWindow : public Window {
 }  // namespace ui
 }  // namespace system
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
 #endif  //_IGNITE_ODBC_SYSTEM_UI_CUSTOM_WINDOW

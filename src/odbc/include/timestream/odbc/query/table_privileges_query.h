@@ -18,12 +18,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_QUERY_TABLE_PRIVILEGES_QUERY
-#define _TIMESTREAM_ODBC_QUERY_TABLE_PRIVILEGES_QUERY
+#ifndef _TRINO_ODBC_QUERY_TABLE_PRIVILEGES_QUERY
+#define _TRINO_ODBC_QUERY_TABLE_PRIVILEGES_QUERY
 
-#include "timestream/odbc/query/query.h"
+#include "trino/odbc/query/query.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace query {
 /**
@@ -117,6 +117,6 @@ class TablePrivilegesQuery : public Query {
 };
 }  // namespace query
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_QUERY_TABLE_PRIVILEGES_QUERY
+#endif  //_TRINO_ODBC_QUERY_TABLE_PRIVILEGES_QUERY

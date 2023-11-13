@@ -18,18 +18,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/query/foreign_keys_query.h"
+#include "trino/odbc/query/foreign_keys_query.h"
 
-#include "timestream/odbc/connection.h"
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/type_traits.h"
+#include "trino/odbc/connection.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/type_traits.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace query {
 ForeignKeysQuery::ForeignKeysQuery(diagnostic::DiagnosableAdapter& diag)
     : Query(diag, QueryType::FOREIGN_KEYS) {
-  using namespace timestream::odbc::type_traits;
+  using namespace trino::odbc::type_traits;
 
   using meta::ColumnMeta;
   using meta::Nullability;
@@ -124,4 +124,4 @@ SqlResult::Type ForeignKeysQuery::NextResultSet() {
 }
 }  // namespace query
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

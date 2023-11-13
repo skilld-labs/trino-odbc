@@ -21,21 +21,21 @@
 #include <chrono>
 #include <ctime>
 #include <time.h>
-#include "timestream/odbc/timestream_column.h"
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/trino_column.h"
+#include "trino/odbc/utility.h"
 /*@*/
-#include <aws/timestream-query/model/ColumnInfo.h>
-#include <aws/timestream-query/model/TimeSeriesDataPoint.h>
+#include <aws/trino-query/model/ColumnInfo.h>
+#include <aws/trino-query/model/TimeSeriesDataPoint.h>
 
-using Aws::TimestreamQuery::Model::ScalarType;
-using Aws::TimestreamQuery::Model::TimeSeriesDataPoint;
-using timestream::odbc::type_traits::OdbcNativeType;
+using Aws::TrinoQuery::Model::ScalarType;
+using Aws::TrinoQuery::Model::TimeSeriesDataPoint;
+using trino::odbc::type_traits::OdbcNativeType;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 #define BUFFER_SIZE 1024
 
-TimestreamColumn::TimestreamColumn(
+TrinoColumn::TrinoColumn(
                                    uint32_t columnIdx,
                                    const meta::ColumnMeta& columnMeta)
     :
@@ -43,9 +43,9 @@ TimestreamColumn::TimestreamColumn(
       columnMeta_(columnMeta) {
 }
 
-ConversionResult::Type TimestreamColumn::ReadToBuffer(const Datum& datum, ApplicationDataBuffer& dataBuf) const {
+ConversionResult::Type TrinoColumn::ReadToBuffer(const Datum& datum, ApplicationDataBuffer& dataBuf) const {
   LOG_DEBUG_MSG("ReadToBuffer is called");
-  const boost::optional< Aws::TimestreamQuery::Model::ColumnInfo >& columnInfo =
+  const boost::optional< Aws::TrinoQuery::Model::ColumnInfo >& columnInfo =
       columnMeta_.GetColumnInfo();
 
   if (!columnInfo || !columnInfo->TypeHasBeenSet()) {
@@ -58,7 +58,7 @@ ConversionResult::Type TimestreamColumn::ReadToBuffer(const Datum& datum, Applic
   return retval;
 }
 
-ConversionResult::Type TimestreamColumn::ParseDatum(
+ConversionResult::Type TrinoColumn::ParseDatum(
     const Datum& datum, ApplicationDataBuffer& dataBuf) const {
   LOG_DEBUG_MSG("ParseDatum is called");
 
@@ -81,8 +81,8 @@ ConversionResult::Type TimestreamColumn::ParseDatum(
   return retval;
 }
 
-ConversionResult::Type TimestreamColumn::ParseScalarType(
-    const Aws::TimestreamQuery::Model::Datum& datum,
+ConversionResult::Type TrinoColumn::ParseScalarType(
+    const Aws::TrinoQuery::Model::Datum& datum,
     ApplicationDataBuffer& dataBuf) const {
   LOG_DEBUG_MSG("ParseScalarType is called");
 
@@ -191,7 +191,7 @@ ConversionResult::Type TimestreamColumn::ParseScalarType(
   return convRes;
 }
 
-ConversionResult::Type TimestreamColumn::ParseTimeSeriesType(
+ConversionResult::Type TrinoColumn::ParseTimeSeriesType(
     const Datum& datum, ApplicationDataBuffer& dataBuf) const {
   LOG_DEBUG_MSG("ParseTimeSeriesType is called");
 
@@ -229,7 +229,7 @@ ConversionResult::Type TimestreamColumn::ParseTimeSeriesType(
   return convRes;
 }
 
-ConversionResult::Type TimestreamColumn::ParseArrayType(
+ConversionResult::Type TrinoColumn::ParseArrayType(
     const Datum& datum, ApplicationDataBuffer& dataBuf) const {
   LOG_DEBUG_MSG("ParseArrayType is called");
 
@@ -261,7 +261,7 @@ ConversionResult::Type TimestreamColumn::ParseArrayType(
   return convRes;
 }
 
-ConversionResult::Type TimestreamColumn::ParseRowType(
+ConversionResult::Type TrinoColumn::ParseRowType(
     const Datum& datum, ApplicationDataBuffer& dataBuf) const {
   LOG_DEBUG_MSG("ParseRowType is called");
 
@@ -296,4 +296,4 @@ ConversionResult::Type TimestreamColumn::ParseRowType(
   return convRes;
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

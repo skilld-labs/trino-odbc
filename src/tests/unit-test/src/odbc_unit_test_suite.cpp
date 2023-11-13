@@ -38,17 +38,17 @@ struct OdbcUnitTestConfig {
 
 BOOST_GLOBAL_FIXTURE(OdbcUnitTestConfig);
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 OdbcUnitTestSuite::OdbcUnitTestSuite()
     : env(new MockEnvironment()), dbc(nullptr), stmt(nullptr) {
   dbc = static_cast< MockConnection* >(env->CreateConnection());
 
-  // MockTimestreamService is singleton
-  MockTimestreamService::CreateMockTimestreamService();
+  // MockTrinoService is singleton
+  MockTrinoService::CreateMockTrinoService();
 
-  // setup credentials in MockTimestreamService
-  MockTimestreamService::GetInstance()->AddCredential("AwsTSUnitTestKeyId",
+  // setup credentials in MockTrinoService
+  MockTrinoService::GetInstance()->AddCredential("AwsTSUnitTestKeyId",
                                                       "AwsTSUnitTestSecretKey");
 }
 
@@ -70,11 +70,11 @@ OdbcUnitTestSuite::~OdbcUnitTestSuite() {
   }
 
   // clear the credentials for this test
-  MockTimestreamService::GetInstance()->RemoveCredential("AwsTSUnitTestKeyId");
+  MockTrinoService::GetInstance()->RemoveCredential("AwsTSUnitTestKeyId");
 
   // destory the singleton to avoid memory leak
-  MockTimestreamService::DestoryMockTimestreamService();
+  MockTrinoService::DestoryMockTrinoService();
 }
 
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

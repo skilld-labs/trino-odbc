@@ -18,22 +18,22 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/config/connection_string_parser.h"
-#include "timestream/odbc/diagnostic/diagnosable_adapter.h"
-#include "timestream/odbc/dsn_config.h"
-#include "timestream/odbc/log.h"
+#include "trino/odbc/config/connection_string_parser.h"
+#include "trino/odbc/diagnostic/diagnosable_adapter.h"
+#include "trino/odbc/dsn_config.h"
+#include "trino/odbc/log.h"
 #include "ignite/odbc/odbc_error.h"
-#include "timestream/odbc/system/odbc_constants.h"
-#include "timestream/odbc/system/ui/dsn_configuration_window.h"
-#include "timestream/odbc/system/ui/window.h"
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/system/odbc_constants.h"
+#include "trino/odbc/system/ui/dsn_configuration_window.h"
+#include "trino/odbc/system/ui/window.h"
+#include "trino/odbc/utility.h"
 
-using timestream::odbc::config::Configuration;
-using timestream::odbc::utility::FromUtf8;
+using trino::odbc::config::Configuration;
+using trino::odbc::utility::FromUtf8;
 
 #ifdef _WIN32
 bool DisplayConnectionWindow(void* windowParent, Configuration& config) {
-  using namespace timestream::odbc::system::ui;
+  using namespace trino::odbc::system::ui;
 
   HWND hwndParent = (HWND)windowParent;
 
@@ -51,7 +51,7 @@ bool DisplayConnectionWindow(void* windowParent, Configuration& config) {
     window.Update();
 
     return ProcessMessages(window) == Result::OK;
-  } catch (const timestream::odbc::IgniteError& err) {
+  } catch (const trino::odbc::IgniteError& err) {
     std::wstringstream buf;
 
     buf << L"Message: " << err.GetText() << L", Code: " << err.GetCode();
@@ -73,7 +73,7 @@ bool DisplayConnectionWindow(void* windowParent, Configuration& config) {
  * @return True on success and false on fail.
  */
 bool InternalRegisterDsn(const Configuration& config, LPCSTR driver) {
-  using namespace timestream::odbc::config;
+  using namespace trino::odbc::config;
 
   typedef Configuration::ArgumentMap ArgMap;
 
@@ -84,7 +84,7 @@ bool InternalRegisterDsn(const Configuration& config, LPCSTR driver) {
     if (!RegisterDsn(config, driver, error))
       throw error;
     return true;
-  } catch (timestream::odbc::IgniteError& err) {
+  } catch (trino::odbc::IgniteError& err) {
     std::wstring errText = FromUtf8(err.GetText());
     MessageBox(NULL, errText.c_str(), L"Error!", MB_ICONEXCLAMATION | MB_OK);
 
@@ -107,7 +107,7 @@ bool InternalUnregisterDsn(const std::string& dsn) {
       throw error;
 
     return true;
-  } catch (timestream::odbc::IgniteError& err) {
+  } catch (trino::odbc::IgniteError& err) {
     std::wstring errText = FromUtf8(err.GetText());
     MessageBox(NULL, errText.c_str(), L"Error!", MB_ICONEXCLAMATION | MB_OK);
 
@@ -119,7 +119,7 @@ bool InternalUnregisterDsn(const std::string& dsn) {
 
 BOOL INSTAPI ConfigDSN(HWND hwndParent, WORD req, LPCSTR driver,
                        LPCSTR attributes) {
-  using namespace timestream::odbc;
+  using namespace trino::odbc;
 
   LOG_INFO_MSG("ConfigDSN called");
 

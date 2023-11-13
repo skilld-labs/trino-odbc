@@ -18,9 +18,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/time.h"
+#include "trino/odbc/time.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 Time::Time() : seconds(0), fractionNs(0) {
   // No-op.
@@ -88,4 +88,4 @@ bool operator>=(const Time& val1, const Time& val2) {
              && val1.fractionNs >= val2.fractionNs);
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

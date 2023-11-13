@@ -31,10 +31,10 @@
 #include <boost/test/unit_test.hpp>
 
 #include <ignite/common/include/common/platform_utils.h>
-#include <timestream/odbc/config/configuration.h>
-#include <timestream/odbc/config/connection_string_parser.h>
-#include <timestream/odbc/authentication/auth_type.h>
-#include <timestream/odbc/system/odbc_constants.h>
+#include <trino/odbc/config/configuration.h>
+#include <trino/odbc/config/connection_string_parser.h>
+#include <trino/odbc/authentication/auth_type.h>
+#include <trino/odbc/system/odbc_constants.h>
 
 #ifndef BOOST_TEST_CONTEXT
 #define BOOST_TEST_CONTEXT(...)
@@ -46,9 +46,9 @@
 
 using boost::unit_test::test_unit_id;
 using ignite::odbc::common::GetEnv;
-using namespace timestream::odbc::config;
+using namespace trino::odbc::config;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /**
  * Test setup fixture.
@@ -182,7 +182,7 @@ struct OdbcTestSuite {
                                      const std::string& expectedError);
 
   /**
-   * Connect to Timestream (ODBC Ver is 3 by default)
+   * Connect to Trino (ODBC Ver is 3 by default)
    */
   void ConnectToTS(int odbcVer = SQL_OV_ODBC3);
 
@@ -489,6 +489,6 @@ struct if_integration {
   }
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
 #endif  // ODBC_TEST_ODBC_TEST_SUITE

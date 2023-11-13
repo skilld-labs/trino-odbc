@@ -13,8 +13,8 @@ env:
   ODBC_LIB_PATH: "${{github.workspace}}/build/odbc/lib"
   ODBC_BIN_PATH: "${{github.workspace}}/build/odbc/bin"
   ODBC_BUILD_PATH: "${{github.workspace}}/build/odbc/build"
-  TIMESTREAM_LOG_PATH: "${{github.workspace}}/build/odbc/logs"
-  TIMESTREAM_LOG_LEVEL: "4"
+  TRINO_LOG_PATH: "${{github.workspace}}/build/odbc/logs"
+  TRINO_LOG_LEVEL: "4"
   BIG_TABLE_PAGINATION_TEST_ENABLE: "TRUE"
 
   # # AAD Test environment variables. Uncomment out to use GitHub secrets to enable AAD integration tests
@@ -75,8 +75,8 @@ jobs:
     - name: upload-package
       uses: actions/upload-artifact@v3
       with:
-        name: AmazonTimestreamODBC_${{env.ODBC_DRIVER_VERSION}}_RELEASE_amd64
-        path: cmake-build64/AmazonTimestreamODBC_${{env.ODBC_DRIVER_VERSION}}_RELEASE_amd64.deb
+        name: AmazonTrinoODBC_${{env.ODBC_DRIVER_VERSION}}_RELEASE_amd64
+        path: cmake-build64/AmazonTrinoODBC_${{env.ODBC_DRIVER_VERSION}}_RELEASE_amd64.deb
 
     - name: register-odbc-driver
       run: |
@@ -96,8 +96,8 @@ jobs:
     - name: run-unit-tests
       id: rununittests
       run: |
-        mkdir -p "${{env.TIMESTREAM_LOG_PATH}}"
-        ./build/odbc/bin/timestream-odbc-unit-tests --catch_system_errors=false
+        mkdir -p "${{env.TRINO_LOG_PATH}}"
+        ./build/odbc/bin/trino-odbc-unit-tests --catch_system_errors=false
 
     - name: upload-unit-test-report
       if: always()
@@ -114,14 +114,14 @@ jobs:
         name: odbc-unit-test-results
         path: |
           ./odbc_unit_test_result.xml
-          ./build/odbc/logs/timestream_odbc_*.log 
+          ./build/odbc/logs/trino_odbc_*.log 
           ./aws_sdk_*.log
 
     # run odbc tests
     - name: run-odbc-tests
       id: runodbctests
       run: |
-        ./build/odbc/bin/timestream-odbc-integration-tests --catch_system_errors=false
+        ./build/odbc/bin/trino-odbc-integration-tests --catch_system_errors=false
 
     - name: upload-odbc-test-report
       if: always()
@@ -138,7 +138,7 @@ jobs:
         name: odbc-test-results
         path: |
           ./odbc_test_result.xml
-          ./build/odbc/logs/timestream_odbc_*.log 
+          ./build/odbc/logs/trino_odbc_*.log 
           ./aws_sdk_*.log
 
   build-linux64-debug:
@@ -183,8 +183,8 @@ jobs:
     - name: upload-package
       uses: actions/upload-artifact@v3
       with:
-        name: AmazonTimestreamODBC_${{env.ODBC_DRIVER_VERSION}}_DEBUG_amd64
-        path: cmake-build64/AmazonTimestreamODBC_${{env.ODBC_DRIVER_VERSION}}_DEBUG_amd64.deb
+        name: AmazonTrinoODBC_${{env.ODBC_DRIVER_VERSION}}_DEBUG_amd64
+        path: cmake-build64/AmazonTrinoODBC_${{env.ODBC_DRIVER_VERSION}}_DEBUG_amd64.deb
 
     - name: register-odbc-driver
       run: |
@@ -204,8 +204,8 @@ jobs:
     - name: run-unit-tests
       id: rununittests
       run: |
-        mkdir -p "${{env.TIMESTREAM_LOG_PATH}}"
-        ./build/odbc/bin/timestream-odbc-unit-tests --catch_system_errors=false
+        mkdir -p "${{env.TRINO_LOG_PATH}}"
+        ./build/odbc/bin/trino-odbc-unit-tests --catch_system_errors=false
   
     - name: upload-test-report
       if: always()
@@ -222,15 +222,15 @@ jobs:
         name: odbc-unit-test-results-linux-debug
         path: |
           ./odbc_unit_test_result.xml
-          ./build/odbc/logs/timestream_odbc_*.log 
+          ./build/odbc/logs/trino_odbc_*.log 
           ./aws_sdk_*.log
 
     # run odbc tests
     - name: run-odbc-tests
       id: runodbctests
       run: |
-        ./build/odbc/bin/timestream-odbc-integration-tests --catch_system_errors=false
-        gcovr --exclude-directories=cmake-build64/tests/integration-test/CMakeFiles/timestream-odbc-integration-tests.dir$ --exclude-directories=cmake-build64/tests/unit-test/CMakeFiles/timestream-odbc-unit-tests.dir$ --cobertura --output coverage.cobertura.xml
+        ./build/odbc/bin/trino-odbc-integration-tests --catch_system_errors=false
+        gcovr --exclude-directories=cmake-build64/tests/integration-test/CMakeFiles/trino-odbc-integration-tests.dir$ --exclude-directories=cmake-build64/tests/unit-test/CMakeFiles/timestrino-unit-tests.dir$ --cobertura --output coverage.cobertura.xml
 
     - name: Code Coverage Summary Report
       uses: irongut/CodeCoverageSummary@v1.2.0
@@ -269,7 +269,7 @@ jobs:
         name: odbc-test-results-linux-debug
         path: |
           ./odbc_test_result.xml
-          ./build/odbc/logs/timestream_odbc_*.log 
+          ./build/odbc/logs/trino_odbc_*.log 
           ./aws_sdk_*.log   
 
     - name: upload-coverage

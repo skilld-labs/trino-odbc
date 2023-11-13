@@ -18,11 +18,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/common_types.h"
+#include "trino/odbc/common_types.h"
 
-#include "timestream/odbc/system/odbc_constants.h"
+#include "trino/odbc/system/odbc_constants.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 int SqlResultToReturnCode(SqlResult::Type result) {
   switch (result) {
@@ -187,4 +187,4 @@ SqlState::Type ResponseStatusToSqlState(int32_t status) {
   }
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

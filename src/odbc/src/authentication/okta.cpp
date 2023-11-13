@@ -14,9 +14,9 @@
  *
  */
 
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/authentication/okta.h"
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/authentication/okta.h"
+#include "trino/odbc/utility.h"
 
 /*@*/
 #include <aws/core/Aws.h>
@@ -26,16 +26,16 @@
 
 #include <regex>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 
-const size_t TimestreamOktaCredentialsProvider::SINGLE_NUM_CHAR_REF_LENGTH = 6;
-const std::string TimestreamOktaCredentialsProvider::SAML_RESPONSE_PATTERN =
+const size_t TrinoOktaCredentialsProvider::SINGLE_NUM_CHAR_REF_LENGTH = 6;
+const std::string TrinoOktaCredentialsProvider::SAML_RESPONSE_PATTERN =
     std::string(
         "<input name=\"SAMLResponse\" type=\"hidden\" value=\"(.*?)\"/>");
 
 std::shared_ptr< Aws::Http::HttpRequest >
-TimestreamOktaCredentialsProvider::CreateSessionTokenReq() {
+TrinoOktaCredentialsProvider::CreateSessionTokenReq() {
   LOG_DEBUG_MSG("CreateSessionTokenReq is called");
 
   std::string baseUri = "https://" + config_.GetIdPHost() + "/api/v1/authn";
@@ -66,7 +66,7 @@ TimestreamOktaCredentialsProvider::CreateSessionTokenReq() {
   return req;
 }
 
-std::string TimestreamOktaCredentialsProvider::GetSessionToken(
+std::string TrinoOktaCredentialsProvider::GetSessionToken(
     std::string& errInfo) {
   LOG_DEBUG_MSG("GetSessionToken is called");
 
@@ -107,7 +107,7 @@ std::string TimestreamOktaCredentialsProvider::GetSessionToken(
   return sessionToken;
 }
 
-std::string TimestreamOktaCredentialsProvider::DecodeNumericCharacters(
+std::string TrinoOktaCredentialsProvider::DecodeNumericCharacters(
     const std::string& htmlString) {
   LOG_DEBUG_MSG("DecodeNumericCharacters is called");
   if (htmlString.length() < SINGLE_NUM_CHAR_REF_LENGTH) {
@@ -136,7 +136,7 @@ std::string TimestreamOktaCredentialsProvider::DecodeNumericCharacters(
   return result;
 }
 
-std::string TimestreamOktaCredentialsProvider::GetSAMLAssertion(
+std::string TrinoOktaCredentialsProvider::GetSAMLAssertion(
     std::string& errInfo) {
   LOG_DEBUG_MSG("GetSAMLAssertion is called");
   std::string samlResponse("");
@@ -189,4 +189,4 @@ std::string TimestreamOktaCredentialsProvider::GetSAMLAssertion(
 }
 
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

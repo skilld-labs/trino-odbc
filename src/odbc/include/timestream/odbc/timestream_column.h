@@ -18,26 +18,26 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_IGNITE_COLUMN
-#define _TIMESTREAM_ODBC_IGNITE_COLUMN
+#ifndef _TRINO_ODBC_IGNITE_COLUMN
+#define _TRINO_ODBC_IGNITE_COLUMN
 
 #include <stdint.h>
-#include <timestream/odbc/app/application_data_buffer.h>
-#include "timestream/odbc/meta/column_meta.h"
+#include <trino/odbc/app/application_data_buffer.h>
+#include "trino/odbc/meta/column_meta.h"
 /*@*/
-#include <aws/timestream-query/model/Row.h>
+#include <aws/trino-query/model/Row.h>
 
-using Aws::TimestreamQuery::Model::Datum;
-using Aws::TimestreamQuery::Model::Row;
-using timestream::odbc::app::ApplicationDataBuffer;
-using timestream::odbc::app::ConversionResult;
+using Aws::TrinoQuery::Model::Datum;
+using Aws::TrinoQuery::Model::Row;
+using trino::odbc::app::ApplicationDataBuffer;
+using trino::odbc::app::ConversionResult;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /**
  * Result set column.
  */
-class TimestreamColumn {
+class TrinoColumn {
  public:
   /**
    * Constructor.
@@ -45,7 +45,7 @@ class TimestreamColumn {
    * @param columnIdx The column index, start from 0.
    * @param columnMetadata The column metadata.
    */
-  TimestreamColumn(
+  TrinoColumn(
                    uint32_t columnIdx, const meta::ColumnMeta& columnMetadata);
 
   /**
@@ -53,7 +53,7 @@ class TimestreamColumn {
    *
    * @param other Another instance.
    */
-  TimestreamColumn(const TimestreamColumn& other) = default;
+  TrinoColumn(const TrinoColumn& other) = default;
 
   /**
    * Copy operator.
@@ -61,12 +61,12 @@ class TimestreamColumn {
    * @param other Another instance.
    * @return This.
    */
-  TimestreamColumn& operator=(const TimestreamColumn& other) = delete;
+  TrinoColumn& operator=(const TrinoColumn& other) = delete;
 
   /**
    * Destructor.
    */
-  ~TimestreamColumn() = default;
+  ~TrinoColumn() = default;
 
   /**
    * Read column data and store it in application data buffer.
@@ -136,6 +136,6 @@ class TimestreamColumn {
   const meta::ColumnMeta& columnMeta_;
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_IGNITE_COLUMN
+#endif  //_TRINO_ODBC_IGNITE_COLUMN

@@ -21,14 +21,14 @@
 #include "test_utils.h"
 
 #include <ignite/common/include/common/platform_utils.h>
-#include <timestream/odbc/utility.h>
+#include <trino/odbc/utility.h>
 
 #include <boost/test/unit_test.hpp>
 #include <cassert>
 
-using namespace timestream::odbc;
+using namespace trino::odbc;
 
-namespace timestream_test {
+namespace trino_test {
 OdbcClientError GetOdbcError(SQLSMALLINT handleType, SQLHANDLE handle) {
   SQLWCHAR sqlstate[7] = {};
   SQLINTEGER nativeCode;
@@ -92,4 +92,4 @@ std::string AppendPath(const std::string& base, const std::string& toAdd) {
 
   return stream.str();
 }
-}  // namespace timestream_test
+}  // namespace trino_test

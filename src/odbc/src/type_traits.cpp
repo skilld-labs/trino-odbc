@@ -18,11 +18,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/type_traits.h"
+#include "trino/odbc/type_traits.h"
 
-#include "timestream/odbc/system/odbc_constants.h"
+#include "trino/odbc/system/odbc_constants.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace type_traits {
 const std::string SqlTypeName::INTEGER("INTEGER");
@@ -427,7 +427,7 @@ boost::optional< int32_t > SqlTypeDisplaySize(boost::optional< int16_t > type) {
     case SQL_WLONGVARCHAR:
     case SQL_DECIMAL:
     case SQL_NUMERIC:
-      return TIMESTREAM_SQL_MAX_LENGTH;
+      return TRINO_SQL_MAX_LENGTH;
 
     case SQL_BIT:
     case SQL_TYPE_NULL:
@@ -470,7 +470,7 @@ boost::optional< int32_t > SqlTypeDisplaySize(boost::optional< int16_t > type) {
     case SQL_GUID:
       return 36;
 
-    // Binary types are not supported in Timestream, return 0
+    // Binary types are not supported in Trino, return 0
     default:
       return 0;
   }
@@ -495,7 +495,7 @@ boost::optional< int32_t > SqlTypeColumnSize(boost::optional< int16_t > type) {
     case SQL_WLONGVARCHAR:
     case SQL_DECIMAL:
     case SQL_NUMERIC:
-      return TIMESTREAM_SQL_MAX_LENGTH;
+      return TRINO_SQL_MAX_LENGTH;
 
     case SQL_BIT:
     case SQL_TYPE_NULL:
@@ -538,7 +538,7 @@ boost::optional< int32_t > SqlTypeColumnSize(boost::optional< int16_t > type) {
     case SQL_INTERVAL_YEAR_TO_MONTH:
       return 12;
 
-    // Binary types are not supported in Timestream, return 0
+    // Binary types are not supported in Trino, return 0
     default:
       return 0;
   }
@@ -564,7 +564,7 @@ boost::optional< int32_t > SqlTypeTransferLength(
     case SQL_WLONGVARCHAR:
     case SQL_DECIMAL:
     case SQL_NUMERIC:
-      return TIMESTREAM_SQL_MAX_LENGTH;
+      return TRINO_SQL_MAX_LENGTH;
 
     case SQL_BIT:
     case SQL_TINYINT:
@@ -601,7 +601,7 @@ boost::optional< int32_t > SqlTypeTransferLength(
     case SQL_INTERVAL_YEAR_TO_MONTH:
       return 34;
 
-    // Binary types are not supported in Timestream, return 0
+    // Binary types are not supported in Trino, return 0
     default:
       return 0;
   }
@@ -733,14 +733,14 @@ boost::optional< int32_t > SqlTypeCharOctetLength(
     case SQL_CHAR:
     case SQL_VARCHAR:
     case SQL_LONGVARCHAR:
-      return TIMESTREAM_SQL_MAX_LENGTH;
+      return TRINO_SQL_MAX_LENGTH;
 
     case SQL_WCHAR:
     case SQL_WVARCHAR:
     case SQL_WLONGVARCHAR:
-      return sizeof(SQLWCHAR) * TIMESTREAM_SQL_MAX_LENGTH;
+      return sizeof(SQLWCHAR) * TRINO_SQL_MAX_LENGTH;
 
-    // Binary types are not supported in Timestream, return 0
+    // Binary types are not supported in Trino, return 0
     default:
       return 0;
   }
@@ -779,4 +779,4 @@ bool BinaryTypeUnsigned(boost::optional< int16_t > type) {
 }
 }  // namespace type_traits
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

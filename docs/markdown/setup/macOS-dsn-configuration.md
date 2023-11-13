@@ -1,22 +1,22 @@
 # MacOS - Configuring a DSN
 
 ## Prerequisites
-In order to use the Timestream ODBC Driver, [ODBC Manager](http://www.odbcmanager.net/) or [iODBC Driver Manager](http://www.iodbc.org/dataspace/doc/iodbc/wiki/iodbcWiki/Downloads) must be installed.
+In order to use the Trino ODBC Driver, [ODBC Manager](http://www.odbcmanager.net/) or [iODBC Driver Manager](http://www.iodbc.org/dataspace/doc/iodbc/wiki/iodbcWiki/Downloads) must be installed.
 
 ### Using ODBC Manager ###
-If ODBC Manager does not have an Amazon Timestream ODBC Driver entry, you can add it following the steps below.
+If ODBC Manager does not have an Amazon Trino ODBC Driver entry, you can add it following the steps below.
 
 1. Open ODBC Manager.
 2. Go to the **Drivers** tab.
 3. Click **Add...**.
-    * **Driver Name**: The driver name used for ODBC connections (ex. `Amazon Timestream ODBC Driver`)
-    * **Driver File**: The path to the driver file (default installed path: `/Library/ODBC/timestream-odbc/lib/libtimestream-odbc.dylib`)
-    * **Setup File**: The path to the driver file (default installed path: `/Library/ODBC/timestream-odbc/lib/libtimestream-odbc.dylib`)
+    * **Driver Name**: The driver name used for ODBC connections (ex. `Amazon Trino ODBC Driver`)
+    * **Driver File**: The path to the driver file (default installed path: `/Library/ODBC/trino-odbc/lib/libtrino-odbc.dylib`)
+    * **Setup File**: The path to the driver file (default installed path: `/Library/ODBC/trino-odbc/lib/libtrino-odbc.dylib`)
     * Set as a **User** or **System** driver
 4. Click **OK** to save the options.
 
 ### Using iODBC Administrator ###
-If iODBC Administrator does not have an Amazon Timestream ODBC Driver entry, you can add it following the steps below.
+If iODBC Administrator does not have an Amazon Trino ODBC Driver entry, you can add it following the steps below.
 
 To give the application permission to save the Driver & DSN configurations, run the following from Terminal.
 
@@ -24,14 +24,14 @@ To give the application permission to save the Driver & DSN configurations, run 
 
 1. Go to the **ODBC Drivers** tab.
 2. Click **Add a driver**.
-    * **Description of the Driver**: The driver name used for ODBC connections (ex. `Amazon Timestream ODBC Driver`)
-    * **Driver File Name**: The path to the driver file (default installed path: `/Library/ODBC/timestream-odbc/lib/libtimestream-odbc.dylib`)
-    * **Setup File Name**: The path to the driver file (default installed path: `/Library/ODBC/timestream-odbc/lib/libtimestream-odbc.dylib`)
+    * **Description of the Driver**: The driver name used for ODBC connections (ex. `Amazon Trino ODBC Driver`)
+    * **Driver File Name**: The path to the driver file (default installed path: `/Library/ODBC/trino-odbc/lib/libtrino-odbc.dylib`)
+    * **Setup File Name**: The path to the driver file (default installed path: `/Library/ODBC/trino-odbc/lib/libtrino-odbc.dylib`)
     * Set as a **System** driver
 3. Click **OK** to save the options.
 
 ### Add a System Driver Entry ###
-If /Library/ODBC/odbcinst.ini does not have an Amazon Timestream ODBC Driver entry, you can add it following the steps below.
+If /Library/ODBC/odbcinst.ini does not have an Amazon Trino ODBC Driver entry, you can add it following the steps below.
 
 Use a text editor from Terminal to edit the odbcinst.ini file such as vi.
 
@@ -39,17 +39,17 @@ Use a text editor from Terminal to edit the odbcinst.ini file such as vi.
 `sudo vi /Library/ODBC/odbcinst.ini`
 
 **To add the driver entries:**
-1. Add `Amazon Timestream ODBC Driver` in the `[ODBC Drivers]` section.
-2. Add the `[Amazon Timestream ODBC Driver]` section.
+1. Add `Amazon Trino ODBC Driver` in the `[ODBC Drivers]` section.
+2. Add the `[Amazon Trino ODBC Driver]` section.
 
 #### Sample odbcinst.ini file
 ```
 [ODBC Drivers]
-Amazon Timestream ODBC Driver  = Installed
+Amazon Trino ODBC Driver  = Installed
 
-[Amazon Timestream ODBC Driver]
-Driver = /Library/ODBC/timestream-odbc/lib/libtimestream-odbc.dylib
-Setup = /Library/ODBC/timestream-odbc/lib/libtimestream-odbc.dylib
+[Amazon Trino ODBC Driver]
+Driver = /Library/ODBC/trino-odbc/lib/libtrino-odbc.dylib
+Setup = /Library/ODBC/trino-odbc/lib/libtrino-odbc.dylib
 ```
 
 ## Adding a DSN Entry
@@ -59,8 +59,8 @@ You can use **ODBC Manager** or **iODBC Administrator** which is installed with 
 ### Using ODBC Manager ###
 1. Go to the **User DSN** tab to create an entry that only you can use or to the **System DSN** tab to create an entry for all users.
 2. Select **Add** on the right side of the window.
-    * Choose the Driver you added above (e.g. Amazon Timestream ODBC Driver).
-    * **Data Source Name (DSN)**: The name of the DSN used to store connection options (e.g. `AWS Timestream ODBC DSN`)
+    * Choose the Driver you added above (e.g. Amazon Trino ODBC Driver).
+    * **Data Source Name (DSN)**: The name of the DSN used to store connection options (e.g. `AWS Trino ODBC DSN`)
     * **Description**: Not required
     * Add key-value pairs by using the **'Add'** button. See the sample [odbc.ini](#odbc_data_source) file below for entries for each authentication type.
 3. Click **OK** to save the DSN configuration.
@@ -74,8 +74,8 @@ To give the application permission to save the Driver & DSN configurations, run 
 
 1. Go to the **Users** tab to create an entry that only you can use or to the **System** tab to create an entry for all users.
 2. Select **Add** on the right side of the window.
-    * Choose the Driver you added above (e.g. Amazon Timestream ODBC Driver).
-    * **Data Source Name (DSN)**: The name of the DSN used to store connection options (e.g. `AWS Timestream ODBC DSN`)
+    * Choose the Driver you added above (e.g. Amazon Trino ODBC Driver).
+    * **Data Source Name (DSN)**: The name of the DSN used to store connection options (e.g. `AWS Trino ODBC DSN`)
     * **Comment**: Not required
     * Add key-value pairs by using the **'+'** button. See the sample [odbc.ini](#odbc_data_source) file below for entries for each authentication type.
 3. Click **OK** to save the DSN configuration.
@@ -107,19 +107,19 @@ Use a text editor from Terminal to edit the odbc.ini file such as vi. See [Confi
 #### <a name="odbc_data_source"></a>Sample odbc.ini file
 ```
 [ODBC Data Sources]
-timestream-iam-profile  = Amazon Timestream ODBC Driver
-timestream-aad-profile  = Amazon Timestream ODBC Driver
-timestream-okta-profile = Amazon Timestream ODBC Driver
-timestream-aws-profile  = Amazon Timestream ODBC Driver
+trino-iam-profile  = Amazon Trino ODBC Driver
+trino-aad-profile  = Amazon Trino ODBC Driver
+trino-okta-profile = Amazon Trino ODBC Driver
+trino-aws-profile  = Amazon Trino ODBC Driver
 
-[timestream-aws-profile]
-Driver    = Amazon Timestream ODBC Driver
+[trino-aws-profile]
+Driver    = Amazon Trino ODBC Driver
 Region    = us-east-2
 Auth      = AWS_PROFILE
 ProfileName = default
 
-[timestream-aad-profile]
-Driver           = Amazon Timestream ODBC Driver
+[trino-aad-profile]
+Driver           = Amazon Trino ODBC Driver
 Region           = us-east-1
 Auth             = AAD
 IdpName          = AzureAD
@@ -131,8 +131,8 @@ IdpARN           =
 IdpUserName      = 
 IdpPassword      = 
 
-[timestream-okta-profile]
-Driver            = Amazon Timestream ODBC Driver
+[trino-okta-profile]
+Driver            = Amazon Trino ODBC Driver
 Region            = us-east-1
 Auth              = OKTA
 IdpName           = Okta
@@ -143,8 +143,8 @@ IdpARN            =
 IdpUserName       = 
 IdpPassword       = 
 
-[timestream-iam-profile]
-Driver         = Amazon Timestream ODBC Driver
+[trino-iam-profile]
+Driver         = Amazon Trino ODBC Driver
 Region         = us-east-1
 LogLevel       = 0
 Auth           = IAM

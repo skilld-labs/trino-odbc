@@ -18,13 +18,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/diagnostic/diagnostic_record_storage.h"
-#include "timestream/odbc/log.h"
+#include "trino/odbc/diagnostic/diagnostic_record_storage.h"
+#include "trino/odbc/log.h"
 
 #include <set>
 #include <string>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace diagnostic {
 DiagnosticRecordStorage::DiagnosticRecordStorage()
@@ -237,4 +237,4 @@ SqlResult::Type DiagnosticRecordStorage::GetField(
 
 }  // namespace diagnostic
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

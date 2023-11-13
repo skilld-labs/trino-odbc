@@ -18,18 +18,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/meta/column_meta.h"
+#include "trino/odbc/meta/column_meta.h"
 
-#include "timestream/odbc/utils.h"
-#include "timestream/odbc/common_types.h"
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/system/odbc_constants.h"
-#include "timestream/odbc/type_traits.h"
+#include "trino/odbc/utils.h"
+#include "trino/odbc/common_types.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/system/odbc_constants.h"
+#include "trino/odbc/type_traits.h"
 
 /*@*/
-#include <aws/timestream-query/model/Type.h>
+#include <aws/trino-query/model/Type.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace meta {
 
@@ -114,31 +114,31 @@ const std::string NULLABLE = "NULLABLE";
 const std::string ORDINAL_POSITION = "ORDINAL_POSITION";
 const std::string IS_AUTOINCREMENT = "IS_AUTOINCREMENT";
 
-Aws::TimestreamQuery::Model::ScalarType ColumnMeta::GetScalarDataType(
+Aws::TrinoQuery::Model::ScalarType ColumnMeta::GetScalarDataType(
     const std::string& dataType) {
   LOG_DEBUG_MSG("GetScalarDataType is called with dataType " << dataType);
   if (dataType == "varchar") {
-    return Aws::TimestreamQuery::Model::ScalarType::VARCHAR;
+    return Aws::TrinoQuery::Model::ScalarType::VARCHAR;
   } else if (dataType == "bigint") {
-    return Aws::TimestreamQuery::Model::ScalarType::BIGINT;
+    return Aws::TrinoQuery::Model::ScalarType::BIGINT;
   } else if (dataType == "double") {
-    return Aws::TimestreamQuery::Model::ScalarType::DOUBLE;
+    return Aws::TrinoQuery::Model::ScalarType::DOUBLE;
   } else if (dataType == "boolean") {
-    return Aws::TimestreamQuery::Model::ScalarType::BOOLEAN;
+    return Aws::TrinoQuery::Model::ScalarType::BOOLEAN;
   } else if (dataType == "timestamp") {
-    return Aws::TimestreamQuery::Model::ScalarType::TIMESTAMP;
+    return Aws::TrinoQuery::Model::ScalarType::TIMESTAMP;
   } else if (dataType == "date") {
-    return Aws::TimestreamQuery::Model::ScalarType::DATE;
+    return Aws::TrinoQuery::Model::ScalarType::DATE;
   } else if (dataType == "time") {
-    return Aws::TimestreamQuery::Model::ScalarType::TIME;
+    return Aws::TrinoQuery::Model::ScalarType::TIME;
   } else if (dataType == "integer") {
-    return Aws::TimestreamQuery::Model::ScalarType::INTEGER;
+    return Aws::TrinoQuery::Model::ScalarType::INTEGER;
   } else if (dataType == "interval day to second") {
-    return Aws::TimestreamQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND;
+    return Aws::TrinoQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND;
   } else if (dataType == "interval year to month") {
-    return Aws::TimestreamQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH;
+    return Aws::TrinoQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH;
   } else {
-    return Aws::TimestreamQuery::Model::ScalarType::UNKNOWN;
+    return Aws::TrinoQuery::Model::ScalarType::UNKNOWN;
   }
 }
 
@@ -177,7 +177,7 @@ void ColumnMeta::Read(app::ColumnBindingMap& columnBindings, int32_t position) {
 
 void ColumnMeta::ReadMetadata(const ColumnInfo& tsMetadata) {
   LOG_DEBUG_MSG("ReadMetadata is called");
-  using Aws::TimestreamQuery::Model::Type;
+  using Aws::TrinoQuery::Model::Type;
 
   columnInfo = tsMetadata;
 
@@ -190,7 +190,7 @@ void ColumnMeta::ReadMetadata(const ColumnInfo& tsMetadata) {
     dataType = static_cast< int16_t >(columnType.GetScalarType());
   } else {
     dataType = static_cast< int16_t >(
-        Aws::TimestreamQuery::Model::ScalarType::VARCHAR);
+        Aws::TrinoQuery::Model::ScalarType::VARCHAR);
   }
 }
 
@@ -234,7 +234,7 @@ bool ColumnMeta::GetAttribute(uint16_t fieldId, std::string& value) const {
 
     case SQL_DESC_LITERAL_PREFIX:
       // value should be "'" if data type is VARCHAR,
-      // and "0x" if data type is binary, but Timestream does not have
+      // and "0x" if data type is binary, but Trino does not have
       // binary data type, so SQL_DESC_LITERAL_PREFIX would have same
       // result as SQL_DESC_LITERAL_SUFFIX
     case SQL_DESC_LITERAL_SUFFIX: {
@@ -264,7 +264,7 @@ bool ColumnMeta::GetAttribute(uint16_t fieldId, std::string& value) const {
         retval = false;
       else
         value =
-            timestream::odbc::common::LexicalCast< std::string >(*precision);
+            trino::odbc::common::LexicalCast< std::string >(*precision);
 
       break;
     }
@@ -274,7 +274,7 @@ bool ColumnMeta::GetAttribute(uint16_t fieldId, std::string& value) const {
       if (!scale || *scale == -1)
         retval = false;
       else
-        value = timestream::odbc::common::LexicalCast< std::string >(*scale);
+        value = trino::odbc::common::LexicalCast< std::string >(*scale);
 
       break;
     }
@@ -421,4 +421,4 @@ bool ColumnMeta::GetAttribute(uint16_t fieldId, SqlLen& value) const {
 }
 }  // namespace meta
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

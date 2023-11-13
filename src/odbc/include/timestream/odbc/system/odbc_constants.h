@@ -18,8 +18,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_SYSTEM_ODBC_CONSTANTS
-#define _TIMESTREAM_ODBC_SYSTEM_ODBC_CONSTANTS
+#ifndef _TRINO_ODBC_SYSTEM_ODBC_CONSTANTS
+#define _TRINO_ODBC_SYSTEM_ODBC_CONSTANTS
 
 #ifdef _WIN32
 
@@ -55,10 +55,10 @@
 // true if databases are reported as catalog, false if databases are reported as
 // schema
 #define DATABASE_AS_SCHEMA \
-  timestream::odbc::utility::CheckEnvVarSetToTrue("DATABASE_AS_SCHEMA")
+  trino::odbc::utility::CheckEnvVarSetToTrue("DATABASE_AS_SCHEMA")
 
 #define ANSI_STRING_ONLY \
-  timestream::odbc::utility::CheckEnvVarSetToTrue("ANSI_STRING_ONLY")
+  trino::odbc::utility::CheckEnvVarSetToTrue("ANSI_STRING_ONLY")
 
 #include <odbcinst.h>
 #include <sqlext.h>
@@ -70,4 +70,4 @@
 // For ODBC2 all functions
 #define SQL_API_ALL_FUNCTIONS_SIZE 100
 
-#endif  //_TIMESTREAM_ODBC_SYSTEM_ODBC_CONSTANTS
+#endif  //_TRINO_ODBC_SYSTEM_ODBC_CONSTANTS

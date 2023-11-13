@@ -11,11 +11,11 @@
 # express or implied. See the License for the specific language governing
 # permissions and limitations under the License.
 
-project(timestream-populate-data)
+project(trino-populate-data)
 
 set(TARGET ${PROJECT_NAME})
 
-find_package(AWSSDK REQUIRED COMPONENTS core sts timestream-query timestream-write)
+find_package(AWSSDK REQUIRED COMPONENTS core sts trino-query trino-write)
 if (UNIX)
     find_package(ZLIB REQUIRED)
 endif()
@@ -27,7 +27,7 @@ if (WIN32)
     include_directories(../../odbc/os/win/include)
 
     # ensure our self-build aws sdk library could be found
-    set_target_properties(aws-cpp-sdk-core aws-cpp-sdk-sts aws-cpp-sdk-timestream-query aws-cpp-sdk-timestream-write PROPERTIES
+    set_target_properties(aws-cpp-sdk-core aws-cpp-sdk-sts aws-cpp-sdk-trino-query aws-cpp-sdk-trino-write PROPERTIES
       IMPORTED_IMPLIB ${CMAKE_SOURCE_DIR}/../build/aws-sdk/install/bin
     )
     set_target_properties(AWS::aws-crt-cpp AWS::aws-c-cal AWS::aws-c-auth AWS::aws-c-common AWS::aws-c-io AWS::aws-checksums AWS::aws-c-event-stream AWS::aws-c-s3  AWS::aws-c-http AWS::aws-c-mqtt AWS::aws-c-compression AWS::aws-c-sdkutils PROPERTIES
@@ -39,8 +39,8 @@ else ()
 endif()
 
 set(SOURCES 
-         timestream_data_generator.cpp 
-	 timestream_writer.cpp)
+         trino_data_generator.cpp 
+	 trino_writer.cpp)
 
 add_executable(${TARGET} ${SOURCES})
 

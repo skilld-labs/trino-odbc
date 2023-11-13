@@ -18,18 +18,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_SYSTEM_SYSTEM_DSN
-#define _TIMESTREAM_ODBC_SYSTEM_SYSTEM_DSN
+#ifndef _TRINO_ODBC_SYSTEM_SYSTEM_DSN
+#define _TRINO_ODBC_SYSTEM_SYSTEM_DSN
 
-#include <timestream/odbc/system/odbc_constants.h>
+#include <trino/odbc/system/odbc_constants.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace config {
 class Configuration;
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
 #ifdef _WIN32
 /**
@@ -40,7 +40,7 @@ class Configuration;
  * @return True on success and false on fail.
  */
 bool DisplayConnectionWindow(void* windowParent,
-                             timestream::odbc::config::Configuration& config);
+                             trino::odbc::config::Configuration& config);
 #endif
 
-#endif  //_TIMESTREAM_ODBC_SYSTEM_SYSTEM_DSN
+#endif  //_TRINO_ODBC_SYSTEM_SYSTEM_DSN

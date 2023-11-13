@@ -17,21 +17,22 @@
 #include <iostream>
 
 /*@*/
-#include <aws/timestream-write/model/Record.h>
-#include <aws/timestream-write/model/MeasureValueType.h>
+#include <aws/trino-write/model/Record.h>
+#include <aws/trino-write/model/MeasureValueType.h>
 
-#include "timestream_writer.h"
+#include "trino_writer.h"
 
-bool verifyParameters(std::string& accessKeyId, std::string& secretKey,
-                      std::string& database, std::string& table,
-                      std::string& tableType, int recordNum,
-                      std::string usage) {
-  if (accessKeyId.empty() || secretKey.empty() || database.empty()
-      || table.empty() || tableType.empty() || recordNum == 0) {
-    std::cerr << "Invalid parameters, please check";
-    std::cerr << usage << std::endl;
-    return false;
-  }
+/*$*/
+// bool verifyParameters(std::string& accessKeyId, std::string& secretKey,
+//                       std::string& database, std::string& table,
+//                       std::string& tableType, int recordNum,
+//                       std::string usage) {
+//   if (accessKeyId.empty() || secretKey.empty() || database.empty()
+//       || table.empty() || tableType.empty() || recordNum == 0) {
+//     std::cerr << "Invalid parameters, please check";
+//     std::cerr << usage << std::endl;
+//     return false;
+//   }
 
   std::transform(tableType.begin(), tableType.end(), tableType.begin(),
                  toupper);
@@ -59,7 +60,7 @@ int main(int argc, char* argv[]) {
 
   std::string database;
   std::string table;
-  std::string accessKeyId;
+  // std::string accessKeyId;
   std::string secretKey;
   std::string tableType;
   int recordNum = 0;
@@ -67,9 +68,10 @@ int main(int argc, char* argv[]) {
 
   // read options
   for (int i = 1; i < argc; i++) {
-    if ((i < argc - 1) && !strcmp(argv[i], "-u"))
-      accessKeyId = argv[++i];
-    else if ((i < argc - 1) && !strcmp(argv[i], "-p"))
+    // if ((i < argc - 1) && !strcmp(argv[i], "-u"))
+    //   // accessKeyId = argv[++i];
+    // else 
+    if ((i < argc - 1) && !strcmp(argv[i], "-p"))
       secretKey = argv[++i];
     else if ((i < argc - 1) && !strcmp(argv[i], "-d"))
       database = argv[++i];
@@ -89,30 +91,30 @@ int main(int argc, char* argv[]) {
   }
 
   // use environment variables if accessKeyId and secretKey are not set
-  if (accessKeyId.empty())
-    accessKeyId = getenv("AWS_ACCESS_KEY_ID");
+  // if (accessKeyId.empty())
+  //   accessKeyId = getenv("AWS_ACCESS_KEY_ID");
   if (secretKey.empty())
     secretKey = getenv("AWS_SECRET_ACCESS_KEY");
 
   // verify parameter values
-  if (!verifyParameters(accessKeyId, secretKey, database, table, tableType,
-                        recordNum, usage)) {
-    return -1;
-  }
+  // if (!verifyParameters(accessKeyId, secretKey, database, table, tableType,
+  //                       recordNum, usage)) {
+  //   return -1;
+  // }
 
   Aws::SDKOptions options;
   options.loggingOptions.logLevel = Aws::Utils::Logging::LogLevel::Warn;
   Aws::InitAPI(options);
 
   Aws::Auth::AWSCredentials credentials;
-  credentials.SetAWSAccessKeyId(accessKeyId);
+  // credentials.SetAWSAccessKeyId(accessKeyId);
   credentials.SetAWSSecretKey(secretKey);
 
   Aws::Client::ClientConfiguration clientCfg;
   clientCfg.region = "us-west-2";  // default client region for us
   clientCfg.enableEndpointDiscovery = true;
 
-  timestream::odbc::TimestreamWriter writer(credentials, clientCfg);
+  trino::odbc::TrinoWriter writer(credentials, clientCfg);
 
   // initialize random seed
   srand(time(NULL));
@@ -129,10 +131,10 @@ int main(int argc, char* argv[]) {
   }
 
   if (result) {
-    std::cout << "Wrote " << recordNum << " records to Timestream successfully "
+    std::cout << "Wrote " << recordNum << " records to Trino successfully "
               << std::endl;
   } else {
-    std::cerr << "Failed to write to Timestream" << std::endl;
+    std::cerr << "Failed to write to Trino" << std::endl;
   }
 
   Aws::ShutdownAPI(options);

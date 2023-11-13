@@ -14,23 +14,23 @@
  *
  */
 
-#define BOOST_TEST_MODULE TimestreamUnitTest
+#define BOOST_TEST_MODULE TrinoUnitTest
 #include <string>
 
 #include <odbc_unit_test_suite.h>
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/log_level.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/log_level.h"
 #include <ignite/common/include/common/platform_utils.h>
-#include <timestream/odbc/authentication/auth_type.h>
-#include "mock/mock_timestream_service.h"
-#include "timestream/odbc/log.h"
+#include <trino/odbc/authentication/auth_type.h>
+#include "mock/mock_trino_service.h"
+#include "trino/odbc/log.h"
 #include <regex>
 
-using timestream::odbc::AuthType;
-using timestream::odbc::MockConnection;
-using timestream::odbc::MockTimestreamService;
-using timestream::odbc::OdbcUnitTestSuite;
-using timestream::odbc::config::Configuration;
+using trino::odbc::AuthType;
+using trino::odbc::MockConnection;
+using trino::odbc::MockTrinoService;
+using trino::odbc::OdbcUnitTestSuite;
+using trino::odbc::config::Configuration;
 using namespace boost::unit_test;
 
 /**
@@ -48,10 +48,10 @@ struct ConnectionUnitTestSuiteFixture : OdbcUnitTestSuite {
 
   void getLogOptions(Configuration& config) const {
     using ignite::odbc::common::GetEnv;
-    using timestream::odbc::LogLevel;
+    using trino::odbc::LogLevel;
 
-    std::string logPath = GetEnv("TIMESTREAM_LOG_PATH", "");
-    std::string logLevelStr = GetEnv("TIMESTREAM_LOG_LEVEL", "2");
+    std::string logPath = GetEnv("TRINO_LOG_PATH", "");
+    std::string logLevelStr = GetEnv("TRINO_LOG_LEVEL", "2");
 
     LogLevel::Type logLevel =
         LogLevel::FromString(logLevelStr, LogLevel::Type::UNKNOWN);
@@ -85,13 +85,13 @@ struct ConnectionUnitTestSuiteFixture : OdbcUnitTestSuite {
   void CheckConnectError(Configuration& cfg, const std::string& expectedMsg) {
     std::ostringstream ss;
     std::ostream* original =
-        timestream::odbc::Logger::GetLoggerInstance()->GetLogStream();
-    timestream::odbc::Logger::GetLoggerInstance()->SetLogStream(
+        trino::odbc::Logger::GetLoggerInstance()->GetLogStream();
+    trino::odbc::Logger::GetLoggerInstance()->SetLogStream(
         static_cast< std::ostream* >(&ss));
 
     dbc->Establish(cfg);
 
-    timestream::odbc::Logger::GetLoggerInstance()->SetLogStream(original);
+    trino::odbc::Logger::GetLoggerInstance()->SetLogStream(original);
     std::string logMsg = ss.str();
     std::smatch matches;
     BOOST_REQUIRE_EQUAL(
@@ -115,7 +115,7 @@ BOOST_AUTO_TEST_CASE(TestEstablishUsingKey) {
 }
 
 BOOST_AUTO_TEST_CASE(TestEstablishAuthTypeNotSpecified) {
-  timestream::odbc::config::Configuration cfg;
+  trino::odbc::config::Configuration cfg;
   cfg.SetAccessKeyId("AwsTSUnitTestKeyId");
   cfg.SetSecretKey("AwsTSUnitTestSecretKey");
 
@@ -226,7 +226,7 @@ BOOST_AUTO_TEST_CASE(TestEstablishUsingAAD) {
   short reslen;
   dbc->GetInfo().GetInfo(SQL_USER_NAME, userName, buflen, &reslen);
 
-  BOOST_CHECK(timestream::odbc::utility::SqlWcharToString(userName)
+  BOOST_CHECK(trino::odbc::utility::SqlWcharToString(userName)
               == "aad_valid_user");
   BOOST_CHECK(IsSuccessful());
 }
@@ -395,7 +395,7 @@ BOOST_AUTO_TEST_CASE(TestEstablishUsingOkta) {
   short reslen;
   dbc->GetInfo().GetInfo(SQL_USER_NAME, userName, buflen, &reslen);
 
-  BOOST_CHECK(timestream::odbc::utility::SqlWcharToString(userName)
+  BOOST_CHECK(trino::odbc::utility::SqlWcharToString(userName)
               == "okta_valid_user");
   BOOST_CHECK(IsSuccessful());
 }

@@ -18,8 +18,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_CONFIG_CONFIGURATION
-#define _TIMESTREAM_ODBC_CONFIG_CONFIGURATION
+#ifndef _TRINO_ODBC_CONFIG_CONFIGURATION
+#define _TRINO_ODBC_CONFIG_CONFIGURATION
 
 #include <stdint.h>
 
@@ -28,16 +28,16 @@
 
 #include "ignite/odbc/config/settable_value.h"
 #include "ignite/odbc/diagnostic/diagnosable.h"
-#include "timestream/odbc/authentication/auth_type.h"
+#include "trino/odbc/authentication/auth_type.h"
 #include "ignite/odbc/odbc_error.h"
-#include "timestream/odbc/log_level.h"
+#include "trino/odbc/log_level.h"
 
-/*$*/
-#define DEFAULT_DSN "Timestream DSN"
-#define DEFAULT_DRIVER "Amazon Timestream ODBC Driver"
+#define DEFAULT_DSN "Trino DSN"
+#define DEFAULT_DRIVER "Trino ODBC Driver"
 #define DEFAULT_UID ""
 #define DEFAULT_PWD ""
-#define DEFAULT_ACCESS_KEY_ID ""
+/*$*/
+// #define DEFAULT_ACCESS_KEY_ID ""
 #define DEFAULT_SECRET_KEY ""
 #define DEFAULT_SESSION_TOKEN ""
 
@@ -51,7 +51,6 @@
 #define DEFAULT_ENDPOINT ""
 #define DEFAULT_REGION "us-east-1"
 
-/*$*/
 #define DEFAULT_AUTH_TYPE AuthType::Type::PASSWORD
 #define DEFAULT_IDP_HOST ""
 #define DEFAULT_IDP_USER_NAME ""
@@ -67,7 +66,7 @@
 
 using ignite::odbc::config::SettableValue;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace config {
 /**
@@ -93,7 +92,7 @@ class IGNITE_IMPORT_EXPORT Configuration {
     static const std::string pwd;
 
     /** Default value for accessKeyId attribute. */
-    static const std::string accessKeyId;
+    // static const std::string accessKeyId;
 
     /** Default value for secretKey attribute. */
     static const std::string secretKey;
@@ -133,25 +132,6 @@ class IGNITE_IMPORT_EXPORT Configuration {
 
     /** Default value for idPPassword attribute. */
     static const std::string idPPassword;
-
-    /** Default value for idPArn attribute. */
-    static const std::string idPArn;
-
-/*$*/
-    /** Default value for oktaAppId attribute. */
-    static const std::string oktaAppId;
-
-    /** Default value for roleArn attribute. */
-    static const std::string roleArn;
-
-    /** Default value for aadAppId attribute. */
-    static const std::string aadAppId;
-
-    /** Default value for aadClientSecret attribute. */
-    static const std::string aadClientSecret;
-
-    /** Default value for aadTenant attribute. */
-    static const std::string aadTenant;
 
     /** Default value for logLevel attribute. */
     static const LogLevel::Type logLevel;
@@ -275,21 +255,24 @@ class IGNITE_IMPORT_EXPORT Configuration {
    *
    * @return accessKeyId.
    */
-  const std::string& GetAccessKeyId() const;
+/*$*/
+  // const std::string& GetAccessKeyId() const;
 
   /**
    * Set accessKeyId.
    *
    * @param accessKeyId accessKeyId.
    */
-  void SetAccessKeyId(const std::string& accessKeyIdValue);
+/*$*/
+  // void SetAccessKeyId(const std::string& accessKeyIdValue);
 
   /**
    * Check if the value set.
    *
    * @return @true if the value set.
    */
-  bool IsAccessKeyIdSet() const;
+/*$*/
+  // bool IsAccessKeyIdSet() const;
 
   /**
    * Get secretKey.
@@ -803,7 +786,7 @@ class IGNITE_IMPORT_EXPORT Configuration {
   SettableValue< std::string > pwd = DefaultValue::pwd;
 
   /** Access Key Id. */
-  SettableValue< std::string > accessKeyId = DefaultValue::accessKeyId;
+  // SettableValue< std::string > accessKeyId = DefaultValue::accessKeyId;
 
   /** Secret Key. */
   SettableValue< std::string > secretKey = DefaultValue::secretKey;
@@ -904,6 +887,6 @@ void Configuration::AddToMap< LogLevel::Type >(
     const SettableValue< LogLevel::Type >& value);
 }  // namespace config
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_CONFIG_CONFIGURATION
+#endif  //_TRINO_ODBC_CONFIG_CONFIGURATION

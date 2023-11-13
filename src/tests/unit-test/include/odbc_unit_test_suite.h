@@ -22,7 +22,7 @@
 #include <mock/mock_environment.h>
 #include <mock/mock_connection.h>
 #include <mock/mock_statement.h>
-#include "mock/mock_timestream_service.h"
+#include "mock/mock_trino_service.h"
 
 #ifndef BOOST_TEST_CONTEXT
 #define BOOST_TEST_CONTEXT(...)
@@ -32,7 +32,7 @@
 #define BOOST_TEST_INFO(...)
 #endif
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /**
  * Test setup fixture.
@@ -58,6 +58,6 @@ struct OdbcUnitTestSuite {
   MockStatement* stmt;
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
 #endif  // ODBC_TEST_ODBC_UNIT_TEST_SUITE

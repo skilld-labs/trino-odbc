@@ -1,16 +1,16 @@
-# Amazon Timestream Data Population Guide 
+# Amazon Trino Data Population Guide 
 
-Amazon Timestream uses AWS SDK or AWS Cli to insert/update data instead of SQL insert/update statements. To support large scale data writing to Timestream the tool `timestream-populate-data` has been developed. 
+Amazon Trino uses AWS SDK or AWS Cli to insert/update data instead of SQL insert/update statements. To support large scale data writing to Trino the tool `trino-populate-data` has been developed. 
 
 ## Introduction
-A Timestream table does not behave like a SQL table as it is created without any column info. It is just a container for a set of related time series. The dimensions, measure names and time series are all defined when adding data to Timestream.
+A Trino table does not behave like a SQL table as it is created without any column info. It is just a container for a set of related time series. The dimensions, measure names and time series are all defined when adding data to Trino.
 
-To support large amount of data writing to Timestream for testing purpose measure values are generated randomly based on measure definition. The timestamp of each record uses the execution timestamp with accuracy to microseconds.
+To support large amount of data writing to Trino for testing purpose measure values are generated randomly based on measure definition. The timestamp of each record uses the execution timestamp with accuracy to microseconds.
 
-All the data are generated in a loop and each loop writes a row of record to Timestream. This tool need to be used after build. For how to build, see [developer-guide.md](developer-guide.md)
+All the data are generated in a loop and each loop writes a row of record to Trino. This tool need to be used after build. For how to build, see [developer-guide.md](developer-guide.md)
 
 ## Usage
-The `timestream-populate-data` command has the following parameters to support data writing.
+The `trino-populate-data` command has the following parameters to support data writing.
 
 Optional parameters:
 
@@ -31,11 +31,11 @@ Required parameters:
 `-l <record_number>` The number of records that will be written.
 
 ## Design
-The design principle is to write large amount of data to Timestream in a short time. The work flow of the tool is described below.
+The design principle is to write large amount of data to Trino in a short time. The work flow of the tool is described below.
 
 ```mermaid
 graph TD
-    A[Main] --> |create| B(TimestreamWriter)
+    A[Main] --> |create| B(TrinoWriter)
     B --> |create| C(MeasureMetadataCreater)
     C --> |Create| D(Dimensions)
     C --> |Create if multi-measure| E(MeasureName)
@@ -47,18 +47,18 @@ graph TD
     G --> H(GetCurrentTime)
     H --> |Assign if multi-measure| I(Measure Value)
     H --> |Assign if single-measure| J(Record Value)
-    I --> K(WriteToTimestream)
-    J --> K(WriteToTimestream)
+    I --> K(WriteToTrino)
+    J --> K(WriteToTrino)
     K --> |Loop|H(GetCurrentTime)
 ```
-The main function collects and verify the input parameters. After all parameters are verified it creates a TimestreamWriter. When writing to Timestream, the writer creates a MeasureMetadataCreater firstly. Then the creater creates Dimensions, MeasureName and MeasureValues/Records. After these basic metadata info is prepared, the writer starts to get current timestamp and assign the record/measure value. The writer calls AWS SDK API to write data to Timestream. This is the process of writing a single record to Timestream. Since there are a lot of records to be written, the writer restarts and gets the next record timestamp from GetCurrentTime. The loop continues until the specified number of records are written to Timestream.
+The main function collects and verify the input parameters. After all parameters are verified it creates a TrinoWriter. When writing to Trino, the writer creates a MeasureMetadataCreater firstly. Then the creater creates Dimensions, MeasureName and MeasureValues/Records. After these basic metadata info is prepared, the writer starts to get current timestamp and assign the record/measure value. The writer calls AWS SDK API to write data to Trino. This is the process of writing a single record to Trino. Since there are a lot of records to be written, the writer restarts and gets the next record timestamp from GetCurrentTime. The loop continues until the specified number of records are written to Trino.
 
 ## How to add a new table type
 New table types could be added easily. 
 1. Create a subclass of `MeasureMetadataCreater`.
 2. Implement the virtual functions based on need. If a single measure row is needed, you need to implement `CreateDimensions`, `CreateRecords` and `GetRecordValueAssignFunPtr`. If a multi measure row is needed, you need to implement `CreateDimensions`, `CreateMeasureValues`, `GetMetricName` and `GetMeasureValueAssignFunPtr`.
-3. In `TimestreamWriter::CreateMetadataCreater()`, add a object creation for the new subclass based on input table type string.
-4. Update timestream_data_generator.cpp and this document to add a new valid table type.
+3. In `TrinoWriter::CreateMetadataCreater()`, add a object creation for the new subclass based on input table type string.
+4. Update trino_data_generator.cpp and this document to add a new valid table type.
 
 ## Table structures
 
@@ -87,4 +87,4 @@ Table type: Computer
 ```
 
 ## Note
-More info about Timestream write could be found at https://docs.aws.amazon.com/timestream/latest/developerguide/writes.html
+More info about Trino write could be found at https://docs.aws.amazon.com/trino/latest/developerguide/writes.html

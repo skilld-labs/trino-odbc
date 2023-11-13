@@ -15,9 +15,9 @@
  */
 #include <odbc_unit_test_suite.h>
 
-#include <timestream/odbc/connection.h>
-#include <timestream/odbc/log.h>
-#include <timestream/odbc/log_level.h>
+#include <trino/odbc/connection.h>
+#include <trino/odbc/log.h>
+#include <trino/odbc/log_level.h>
 
 /*@*/
 #include <aws/core/utils/logging/LogLevel.h>
@@ -30,9 +30,9 @@
 using namespace boost::unit_test;
 
 using boost::unit_test::precondition;
-using timestream::odbc::Logger;
-using timestream::odbc::LogLevel;
-using timestream::odbc::OdbcUnitTestSuite;
+using trino::odbc::Logger;
+using trino::odbc::LogLevel;
+using trino::odbc::OdbcUnitTestSuite;
 
 /**
  * Test setup fixture.
@@ -459,7 +459,7 @@ BOOST_AUTO_TEST_CASE(TestLogSetInvalidLogPath) {
 }
 
 BOOST_AUTO_TEST_CASE(TestAWSLogLevelParseMixedCases) {
-  using timestream::odbc::Connection;
+  using trino::odbc::Connection;
 
   // Check default value is Warn
   BOOST_CHECK(Connection::GetAWSLogLevelFromString("")

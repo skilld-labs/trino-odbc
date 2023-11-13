@@ -20,11 +20,11 @@
 
 /**
  * @file
- * Declares timestream::odbc::Timestamp class.
+ * Declares trino::odbc::Timestamp class.
  */
 
-#ifndef _TIMESTREAM_ODBC_TIMESTAMP
-#define _TIMESTREAM_ODBC_TIMESTAMP
+#ifndef _TRINO_ODBC_TIMESTAMP
+#define _TRINO_ODBC_TIMESTAMP
 
 #include <ignite/common/common.h>
 #include <ignite/common/include/date.h>
@@ -32,7 +32,7 @@
 
 using ignite::odbc::Date;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /**
  * %Timestamp type.
@@ -171,5 +171,5 @@ class IGNITE_IMPORT_EXPORT Timestamp {
   int32_t fractionNs;
 };
 }  // namespace odbc
-}  // namespace timestream
-#endif  //_TIMESTREAM_ODBC_TIMESTAMP
+}  // namespace trino
+#endif  //_TRINO_ODBC_TIMESTAMP

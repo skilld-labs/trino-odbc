@@ -18,28 +18,28 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/system/ui/dsn_configuration_window.h"
+#include "trino/odbc/system/ui/dsn_configuration_window.h"
 
 #include <Shlwapi.h>
 #include <ShlObj_core.h>
 #include <Windowsx.h>
 #include <commctrl.h>
 
-#include "timestream/odbc/log.h"
-#include "timestream/odbc/log_level.h"
-#include "timestream/odbc/ignite_error.h"
-#include "timestream/odbc/authentication/auth_type.h"
+#include "trino/odbc/log.h"
+#include "trino/odbc/log_level.h"
+#include "trino/odbc/ignite_error.h"
+#include "trino/odbc/authentication/auth_type.h"
 
 #define TRIM_UTF8(str) utility::Trim(utility::ToUtf8(str))
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace system {
 namespace ui {
 DsnConfigurationWindow::DsnConfigurationWindow(Window* parent,
                                                config::Configuration& config)
-    : CustomWindow(parent, L"TimestreamConfigureDsn",
-                   L"Configure Amazon Timestream DSN"),
+    : CustomWindow(parent, L"TrinoConfigureDsn",
+                   L"Configure Amazon Trino DSN"),
       width(450),
       height(425),
       nameEdit(),
@@ -407,9 +407,6 @@ void DsnConfigurationWindow::OnAuthTypeChanged() const {
   // get value of authType
   AuthType::Type authType =
       static_cast< AuthType::Type >(authTypeComboBox->GetCBSelection());
-  // If authType is not none/unknown, authTypeEqSaml is true.
-  // bool authTypeEqSaml =
-  //     authType == AuthType::Type::OKTA || authType == AuthType::Type::AAD;
   bool authTypePassword = authType == AuthType::Type::PASSWORD;
   // bool authTypeOauth2 = authType == AuthType::Type::OAUTH2;
   // bool authTypeKerberos = authType == AuthType::Type::KERBEROS;
@@ -793,7 +790,7 @@ int DsnConfigurationWindow::CreateLogSettingsGroup(int posX, int posY,
   std::wstring wVal = utility::FromUtf8(config.GetLogPath());
   logPathLabel = CreateLabel(
       labelPosX, rowPos, pathSizeX, ROW_HEIGHT * 2,
-      L"Log Path:\n(the log file name format is timestream_odbc_YYYYMMDD.log)",
+      L"Log Path:\n(the log file name format is trino_odbc_YYYYMMDD.log)",
       ChildId::LOG_PATH_LABEL);
 
   rowPos += INTERVAL * 2 + ROW_HEIGHT;
@@ -883,7 +880,7 @@ bool DsnConfigurationWindow::OnMessage(UINT msg, WPARAM wParam, LPARAM lParam) {
             std::string maxConStr = TRIM_UTF8(maxConWStr);
 
             int16_t maxCon =
-                timestream::odbc::common::LexicalCast< int16_t >(maxConStr);
+                trino::odbc::common::LexicalCast< int16_t >(maxConStr);
 
             if (!shownMaxConBalloon && maxCon <= 0) {
               Edit_ShowBalloonTip(maxConnectionsEdit->GetHandle(),
@@ -1122,7 +1119,7 @@ void DsnConfigurationWindow::RetrieveConnectionParameters(
   int32_t connectionTimeout =
       connectionTimeoutStr.empty()
           ? 0
-          : timestream::odbc::common::LexicalCast< int32_t >(
+          : trino::odbc::common::LexicalCast< int32_t >(
               connectionTimeoutStr);
   if (connectionTimeout < 0) {
     connectionTimeout = config::Configuration::DefaultValue::connectionTimeout;
@@ -1131,7 +1128,7 @@ void DsnConfigurationWindow::RetrieveConnectionParameters(
   int32_t reqTimeout =
       reqTimeoutStr.empty()
           ? 0
-          : timestream::odbc::common::LexicalCast< int32_t >(reqTimeoutStr);
+          : trino::odbc::common::LexicalCast< int32_t >(reqTimeoutStr);
   if (reqTimeout < 0) {
     reqTimeout = config::Configuration::DefaultValue::reqTimeout;
   }
@@ -1139,7 +1136,7 @@ void DsnConfigurationWindow::RetrieveConnectionParameters(
   int32_t maxRetryCountClient =
       maxRetryCountStr.empty()
           ? 0
-          : timestream::odbc::common::LexicalCast< int32_t >(maxRetryCountStr);
+          : trino::odbc::common::LexicalCast< int32_t >(maxRetryCountStr);
   if (maxRetryCountClient < 0) {
     maxRetryCountClient =
         config::Configuration::DefaultValue::maxRetryCountClient;
@@ -1148,7 +1145,7 @@ void DsnConfigurationWindow::RetrieveConnectionParameters(
   int32_t maxCon =
       maxConStr.empty()
           ? 0
-          : timestream::odbc::common::LexicalCast< int32_t >(maxConStr);
+          : trino::odbc::common::LexicalCast< int32_t >(maxConStr);
 
   if (maxCon <= 0)
     throw IgniteError(
@@ -1195,4 +1192,4 @@ void DsnConfigurationWindow::RetrieveLogParameters(
 }  // namespace ui
 }  // namespace system
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

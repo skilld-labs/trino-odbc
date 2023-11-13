@@ -17,7 +17,7 @@
 #include <mock/mock_environment.h>
 #include <mock/mock_connection.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 MockEnvironment::MockEnvironment() : Environment() {
   // No-op.
@@ -41,4 +41,4 @@ SqlResult::Type MockEnvironment::InternalCreateConnection(
   return SqlResult::AI_SUCCESS;
 }
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

@@ -21,12 +21,12 @@
 #ifndef _IGNITE_ODBC_DIAGNOSTIC_DIAGNOSABLE
 #define _IGNITE_ODBC_DIAGNOSTIC_DIAGNOSABLE
 
-#include "timestream/odbc/diagnostic/diagnostic_record_storage.h"
-#include "timestream/odbc/log_level.h"
+#include "trino/odbc/diagnostic/diagnostic_record_storage.h"
+#include "trino/odbc/log_level.h"
 
-using timestream::odbc::LogLevel;
-using timestream::odbc::SqlState;
-using timestream::odbc::diagnostic::DiagnosticRecordStorage;
+using trino::odbc::LogLevel;
+using trino::odbc::SqlState;
+using trino::odbc::diagnostic::DiagnosticRecordStorage;
 
 namespace ignite {
 namespace odbc {
@@ -95,7 +95,7 @@ class Diagnosable {
    * @param rec Record.
    */
   virtual void AddStatusRecord(
-      const timestream::odbc::diagnostic::DiagnosticRecord& rec) = 0;
+      const trino::odbc::diagnostic::DiagnosticRecord& rec) = 0;
 
  protected:
   /**

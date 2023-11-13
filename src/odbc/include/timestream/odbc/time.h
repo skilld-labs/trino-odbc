@@ -20,16 +20,16 @@
 
 /**
  * @file
- * Declares timestream::odbc::Time class.
+ * Declares trino::odbc::Time class.
  */
 
-#ifndef _TIMESTREAM_ODBC_TIME
-#define _TIMESTREAM_ODBC_TIME
+#ifndef _TRINO_ODBC_TIME
+#define _TRINO_ODBC_TIME
 
 #include <ignite/common/common.h>
 #include <stdint.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /**
  * %Time type.
@@ -161,5 +161,5 @@ class IGNITE_IMPORT_EXPORT Time {
   int32_t fractionNs;
 };
 }  // namespace odbc
-}  // namespace timestream
-#endif  //_TIMESTREAM_ODBC_TIME
+}  // namespace trino
+#endif  //_TRINO_ODBC_TIME

@@ -18,15 +18,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/system/ui/custom_window.h"
-#include "timestream/odbc/ignite_error.h"
+#include "trino/odbc/system/ui/custom_window.h"
+#include "trino/odbc/ignite_error.h"
 
 #include <commctrl.h>
 #include <Windowsx.h>
 
-using timestream::odbc::IgniteError;
+using trino::odbc::IgniteError;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace system {
 namespace ui {
@@ -209,4 +209,4 @@ std::unique_ptr< EDITBALLOONTIP > CustomWindow::CreateBalloon(
 }  // namespace ui
 }  // namespace system
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

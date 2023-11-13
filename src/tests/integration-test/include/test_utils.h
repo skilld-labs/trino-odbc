@@ -30,21 +30,21 @@
 #include <string>
 #include <vector>
 
-#include "timestream/odbc/utils.h"
+#include "trino/odbc/utils.h"
 
 #define ODBC_THROW_ON_ERROR(ret, type, handle)         \
   if (!SQL_SUCCEEDED(ret)) {                           \
-    throw timestream_test::GetOdbcError(type, handle); \
+    throw trino_test::GetOdbcError(type, handle); \
   }
 
 #define ODBC_FAIL_ON_ERROR(ret, type, handle)                       \
   if (!SQL_SUCCEEDED(ret)) {                                        \
-    BOOST_FAIL(timestream_test::GetOdbcErrorMessage(type, handle)); \
+    BOOST_FAIL(trino_test::GetOdbcErrorMessage(type, handle)); \
   }
 
 #define ODBC_FAIL_ON_ERROR1(ret, type, handle, msg)               \
   if (!SQL_SUCCEEDED(ret)) {                                      \
-    BOOST_FAIL(timestream_test::GetOdbcErrorMessage(type, handle) \
+    BOOST_FAIL(trino_test::GetOdbcErrorMessage(type, handle) \
                + ", msg = " + msg);                               \
   }
 
@@ -115,7 +115,7 @@ class OdbcClientError : public std::exception {
   std::string message;
 };
 
-namespace timestream_test {
+namespace trino_test {
 /** Read buffer size. */
 enum { ODBC_BUFFER_SIZE = 1024 };
 
@@ -149,6 +149,6 @@ std::string GetOdbcErrorState(SQLSMALLINT handleType, SQLHANDLE handle,
  */
 std::string GetOdbcErrorMessage(SQLSMALLINT handleType, SQLHANDLE handle,
                                 int idx = 1);
-}  // namespace timestream_test
+}  // namespace trino_test
 
 #endif  // _IGNITE_ODBC_TEST_TEST_UTILS

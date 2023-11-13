@@ -21,7 +21,7 @@
 #ifndef _IGNITE_ODBC_COMMON_EXPECTED
 #define _IGNITE_ODBC_COMMON_EXPECTED
 
-#include <timestream/odbc/utils.h>
+#include <trino/odbc/utils.h>
 
 #include <memory>
 
@@ -260,7 +260,7 @@ class Expected {
   }
 
   /** Storage. */
-  int8_t storage[sizeof(typename timestream::odbc::common::Bigger<
+  int8_t storage[sizeof(typename trino::odbc::common::Bigger<
                         ResultType, ErrorType >::type)];
 
   /** Result flag. Set to @c false if the value is an error. */

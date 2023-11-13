@@ -18,9 +18,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/meta/table_meta.h"
+#include "trino/odbc/meta/table_meta.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace meta {
 void TableMeta::Read(std::string& tbType) {
@@ -28,4 +28,4 @@ void TableMeta::Read(std::string& tbType) {
 }
 }  // namespace meta
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

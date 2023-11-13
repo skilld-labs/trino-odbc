@@ -18,19 +18,19 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_DIAGNOSTIC_DIAGNOSTIC_RECORD_STORAGE
-#define _TIMESTREAM_ODBC_DIAGNOSTIC_DIAGNOSTIC_RECORD_STORAGE
+#ifndef _TRINO_ODBC_DIAGNOSTIC_DIAGNOSTIC_RECORD_STORAGE
+#define _TRINO_ODBC_DIAGNOSTIC_DIAGNOSTIC_RECORD_STORAGE
 
 #include <ignite/common/common.h>
 #include <stdint.h>
 
 #include <vector>
 
-#include "timestream/odbc/app/application_data_buffer.h"
-#include "timestream/odbc/common_types.h"
-#include "timestream/odbc/diagnostic/diagnostic_record.h"
+#include "trino/odbc/app/application_data_buffer.h"
+#include "trino/odbc/common_types.h"
+#include "trino/odbc/diagnostic/diagnostic_record.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace diagnostic {
 /**
@@ -217,6 +217,6 @@ class IGNITE_IMPORT_EXPORT DiagnosticRecordStorage {
 };
 }  // namespace diagnostic
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_DIAGNOSTIC_DIAGNOSTIC_RECORD_STORAGE
+#endif  //_TRINO_ODBC_DIAGNOSTIC_DIAGNOSTIC_RECORD_STORAGE

@@ -14,7 +14,7 @@
  *
  */
 
-section AmazonTimestreamAADConnector;
+section AmazonTrinoAADConnector;
 
 // When set to true, additional trace information will be written out to the User log. 
 // This should be set to false before release. Tracing is done through a call to 
@@ -22,11 +22,11 @@ section AmazonTimestreamAADConnector;
 // no-op and simply returns the original value.
 EnableTraceOutput = false;
 
-[DataSource.Kind="AmazonTimestreamAADConnector", Publish="AmazonTimestreamAADConnector.Publish"]
-shared AmazonTimestreamAADConnector.Contents = Value.ReplaceType(AmazonTimestreamAADConnectorImpl, AmazonTimestreamAADConnectorType);
+[DataSource.Kind="AmazonTrinoAADConnector", Publish="AmazonTrinoAADConnector.Publish"]
+shared AmazonTrinoAADConnector.Contents = Value.ReplaceType(AmazonTrinoAADConnectorImpl, AmazonTrinoAADConnectorType);
 
 // Wrapper function to provide additional UI customization.
-AmazonTimestreamAADConnectorType = type function (
+AmazonTrinoAADConnectorType = type function (
         Region as (type text meta [
             Documentation.FieldCaption = "Region",
             Documentation.FieldDescription = "The AWS Region.",
@@ -59,16 +59,16 @@ AmazonTimestreamAADConnectorType = type function (
         ]),
         optional ProfileName as (type text meta [
             Documentation.FieldCaption = "Profile Name",
-            Documentation.FieldDescription = "The AWS profile name for Amazon Timestream.",
+            Documentation.FieldDescription = "The AWS profile name for Amazon Trino.",
             Documentation.SampleValues = { "default" },
             DataSource.Path = true
         ])
     )
     as table meta [
-        Documentation.Name = "Amazon Timestream"
+        Documentation.Name = "Amazon Trino"
     ];
 
-AmazonTimestreamAADConnectorImpl = (
+AmazonTrinoAADConnectorImpl = (
     Region as text,
     optional AADApplicationID  as text,
     optional AADTenant as text,
@@ -110,7 +110,7 @@ AmazonTimestreamAADConnectorImpl = (
         ProfileNameParameter = if ProfileName <> null then [ ProfileName = ProfileName ]  else [],
 
         BaseConnectionString = [
-            Driver = "Amazon Timestream ODBC Driver",
+            Driver = "Amazon Trino ODBC Driver",
             Region = Region
         ],
 
@@ -214,14 +214,14 @@ OnOdbcError = (errorRecord as record) =>
         IsHostUnreachable = (OdbcErrorCode = 202)
     in
         if IsDriverNotInstalled then
-            error Error.Record(errorRecord[Reason], "The Amazon Timestream ODBC driver is not installed. Please install the driver.", errorRecord[Detail])
+            error Error.Record(errorRecord[Reason], "The Amazon Trino ODBC driver is not installed. Please install the driver.", errorRecord[Detail])
         else if IsHostUnreachable then
             error Error.Record(errorRecord[Reason], "Could not reach server. Please double-check the authentication.", errorRecord[Detail])
         else 
             error errorRecord;
 
 // Data Source Kind description.
-AmazonTimestreamAADConnector = [
+AmazonTrinoAADConnector = [
     Label = Extension.LoadString(""),
 
     SupportsEncryption = true,
@@ -246,24 +246,24 @@ AmazonTimestreamAADConnector = [
             IdpArn = json[IdpARN],
             ProfileName = json[ProfileName]
         in
-            { "AmazonTimestreamAADConnector.Contents", Region, AADApplicationID , AADTenant, AADClientSecret, RoleArn, IdpArn, ProfileName }
+            { "AmazonTrinoAADConnector.Contents", Region, AADApplicationID , AADTenant, AADClientSecret, RoleArn, IdpArn, ProfileName }
 ];
 
 // Data Source UI publishing description.
-AmazonTimestreamAADConnector.Publish = [
+AmazonTrinoAADConnector.Publish = [
     Category = "Other",
     SupportsDirectQuery = true,
 
     ButtonText = { Extension.LoadString("ButtonTitle"), Extension.LoadString("ButtonHelp") },
-    LearnMoreUrl = "https://aws.amazon.com/AmazonTimestream/",
+    LearnMoreUrl = "https://aws.amazon.com/AmazonTrino/",
 
-    SourceImage = AmazonTimestreamAADConnector.Icons,
-    SourceTypeImage = AmazonTimestreamAADConnector.Icons
+    SourceImage = AmazonTrinoAADConnector.Icons,
+    SourceTypeImage = AmazonTrinoAADConnector.Icons
 ];
 
-AmazonTimestreamAADConnector.Icons = [
-    Icon16 = { Extension.Contents("AmazonTimestream16.png"), Extension.Contents("AmazonTimestream20.png"), Extension.Contents("AmazonTimestream24.png"), Extension.Contents("AmazonTimestream32.png") },
-    Icon32 = { Extension.Contents("AmazonTimestream32.png"), Extension.Contents("AmazonTimestream40.png"), Extension.Contents("AmazonTimestream48.png"), Extension.Contents("AmazonTimestream64.png") }
+AmazonTrinoAADConnector.Icons = [
+    Icon16 = { Extension.Contents("AmazonTrino16.png"), Extension.Contents("AmazonTrino20.png"), Extension.Contents("AmazonTrino24.png"), Extension.Contents("AmazonTrino32.png") },
+    Icon32 = { Extension.Contents("AmazonTrino32.png"), Extension.Contents("AmazonTrino40.png"), Extension.Contents("AmazonTrino48.png"), Extension.Contents("AmazonTrino64.png") }
 ];
 
 // Loads functions from another project file.

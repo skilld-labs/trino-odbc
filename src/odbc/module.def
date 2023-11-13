@@ -1,5 +1,5 @@
 
-LIBRARY   timestream.odbc.dll
+LIBRARY   trino.odbc.dll
 EXPORTS
 	ConfigDSN
 	SQLAllocConnect

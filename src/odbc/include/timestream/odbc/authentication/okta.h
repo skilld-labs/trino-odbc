@@ -14,19 +14,19 @@
  *
  */
 
-#ifndef _TIMESTREAM_ODBC_AUTHENTICATION_OKTA
-#define _TIMESTREAM_ODBC_AUTHENTICATION_OKTA
+#ifndef _TRINO_ODBC_AUTHENTICATION_OKTA
+#define _TRINO_ODBC_AUTHENTICATION_OKTA
 
 /*@*/
 #include <aws/core/client/ClientConfiguration.h>
 
-#include "timestream/odbc/authentication/saml.h"
+#include "trino/odbc/authentication/saml.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 
-class IGNITE_IMPORT_EXPORT TimestreamOktaCredentialsProvider
-    : public TimestreamSAMLCredentialsProvider {
+class IGNITE_IMPORT_EXPORT TrinoOktaCredentialsProvider
+    : public TrinoSAMLCredentialsProvider {
  public:
   /**
    * Constructor.
@@ -35,11 +35,11 @@ class IGNITE_IMPORT_EXPORT TimestreamOktaCredentialsProvider
    * @param httpClient Shared pointer to httpClient
    * @param stsClient Shared pointer to STSClient
    */
-  TimestreamOktaCredentialsProvider(
+  TrinoOktaCredentialsProvider(
       const config::Configuration& config,
       std::shared_ptr< Aws::Http::HttpClient > httpClient,
       std::shared_ptr< Aws::STS::STSClient > stsClient)
-      : TimestreamSAMLCredentialsProvider(config, httpClient, stsClient) {
+      : TrinoSAMLCredentialsProvider(config, httpClient, stsClient) {
     // No-op.
   }
 
@@ -85,6 +85,6 @@ class IGNITE_IMPORT_EXPORT TimestreamOktaCredentialsProvider
 };
 
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_AUTHENTICATION_OKTA
+#endif  //_TRINO_ODBC_AUTHENTICATION_OKTA

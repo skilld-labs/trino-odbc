@@ -18,15 +18,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_QUERY_TABLE_METADATA_QUERY
-#define _TIMESTREAM_ODBC_QUERY_TABLE_METADATA_QUERY
+#ifndef _TRINO_ODBC_QUERY_TABLE_METADATA_QUERY
+#define _TRINO_ODBC_QUERY_TABLE_METADATA_QUERY
 
-#include "timestream/odbc/meta/table_meta.h"
-#include "timestream/odbc/query/query.h"
-#include "timestream/odbc/query/data_query.h"
-#include "timestream/odbc/statement.h"
+#include "trino/odbc/meta/table_meta.h"
+#include "trino/odbc/query/query.h"
+#include "trino/odbc/query/data_query.h"
+#include "trino/odbc/statement.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /** Connection forward-declaration. */
 class Connection;
@@ -35,7 +35,7 @@ namespace query {
 /**
  * Query.
  */
-class TableMetadataQuery : public timestream::odbc::query::Query {
+class TableMetadataQuery : public trino::odbc::query::Query {
  public:
   struct ResultColumn {
     enum Type {
@@ -273,6 +273,6 @@ class TableMetadataQuery : public timestream::odbc::query::Query {
 };
 }  // namespace query
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_QUERY_TABLE_METADATA_QUERY
+#endif  //_TRINO_ODBC_QUERY_TABLE_METADATA_QUERY

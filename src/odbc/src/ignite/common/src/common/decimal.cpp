@@ -23,7 +23,7 @@
 #include <cstring>
 #include <utility>
 
-#include "timestream/odbc/utils.h"
+#include "trino/odbc/utils.h"
 
 using ignite::odbc::common::BigInteger;
 
@@ -82,7 +82,7 @@ Decimal::operator int64_t() const {
 }
 
 double Decimal::ToDouble() const {
-  return timestream::odbc::common::LexicalCast< double >(*this);
+  return trino::odbc::common::LexicalCast< double >(*this);
 }
 
 int64_t Decimal::ToInt64() const {

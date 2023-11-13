@@ -10,8 +10,8 @@
 - [Supported Statements Options for SQLGetStmtOption](#supported-statements-options-for-sqlgetstmtoption) 
 - [SQLPrepare, SQLExecute and SQLExecDirect](#sqlprepare-sqlexecute-and-sqlexecdirect)
 - [SQLTables](#sqltables)
-- [Database Reporting Differences Between Timestream JDBC Driver and ODBC Driver](#database-reporting-differences-between-timestream-jdbc-driver-and-odbc-driver)
-- [Timestream Data Types](#timestream-data-types)
+- [Database Reporting Differences Between Trino JDBC Driver and ODBC Driver](#database-reporting-differences-between-trino-jdbc-driver-and-odbc-driver)
+- [Trino Data Types](#trino-data-types)
 - [Microsoft Excel on macOS](#microsoft-excel-on-macos)
 
 ## ODBC API Support
@@ -97,8 +97,8 @@ Note that the following table describes the planned functionality for the GA rel
 ## Supported Connection Information Types
 | Connection Information Types | Default | Support Value Change|
 |--------|------|-------|
-| SQL_DRIVER_NAME | 'timestream.odbc.dll' on Windows, 'libtimestream-odbc.dylib' on MacOS, and 'libtimestream-odbc.so' on Linux | no |
-| SQL_DBMS_NAME | 'Amazon Timestream' | no |
+| SQL_DRIVER_NAME | 'trino.odbc.dll' on Windows, 'libtrino-odbc.dylib' on MacOS, and 'libtrino-odbc.so' on Linux | no |
+| SQL_DBMS_NAME | 'Amazon Trino' | no |
 | SQL_DRIVER_ODBC_VER | '03.00' | no |
 | SQL_DRIVER_VER | MM.mm.pppp (MM = major, mm = minor, pppp = patch) | no |
 | SQL_DBMS_VER | MM.mm.pppp (MM = major, mm = minor, pppp = patch) | no |
@@ -130,7 +130,7 @@ Note that the following table describes the planned functionality for the GA rel
 | SQL_PROCEDURES | 'N' | no |
 | SQL_ROW_UPDATES | 'N' | no |
 | SQL_SEARCH_PATTERN_ESCAPE | '' | no |
-| SQL_SERVER_NAME | 'AWS Timestream' | no |
+| SQL_SERVER_NAME | 'AWS Trino' | no |
 | SQL_USER_NAME | '\<user\>' | no |
 | SQL_ASYNC_DBC_FUNCTIONS | SQL_ASYNC_DBC_NOT_CAPABLE | no |
 | SQL_ASYNC_MODE | SQL_AM_NONE | no |
@@ -307,7 +307,7 @@ Note: SQLSetConnectOption is an ODBC 2.x function. It also supports [connection 
 Note: SQLGetConnectOption is an ODBC 2.x function. It also supports [connection attributes](#supported-connection-attributes) if it is called from an ODBC 3 application.
 
 ## Supported Statements Attributes 
-Table of statement attributes supported by the Amazon Timestream ODBC driver.\
+Table of statement attributes supported by the Amazon Trino ODBC driver.\
 In both `SQLSetStmtAttr` and `SQLGetStmtAttr`
 | Statement attribute | Default | Support Value Change|
 |--------|------|-------|
@@ -346,7 +346,7 @@ Attributes that are only supported in `SQLGetStmtAttr`
 Note: SQLGetStmtOption is an ODBC 2.x function. It also supports [statement attributes](#supported-statements-attributes) if it is called from an ODBC 3 application.
 
 ## Supported Descriptor Fields 
-Table of descriptor fields supported by the Amazon Timestream ODBC driver.\
+Table of descriptor fields supported by the Amazon Trino ODBC driver.\
 Currently only ARD is supported, these are fields supported in `SQLSetDescField`
 | Descriptor Field |
 |--------|
@@ -388,7 +388,7 @@ When `SQL_ATTR_METADATA_ID` is set to `true`, it means schema name, catalog name
 To support BI tools that may use the SQLPrepare interface in auto-generated queries, the driver
 supports the use of SQLPrepare. However, the use of parameters in queries (values left as ?) is not supported in SQLPrepare, SQLExecute and SQLExecDirect. 
 
-Timestream does not support SQL queries with ";", so SQLExecDirect does work with SQL queries with ";" at the end. For the types of SQL queries supported by Timestream, visit the official Timestream query [language support page](https://docs.aws.amazon.com/timestream/latest/developerguide/reference.html).
+Trino does not support SQL queries with ";", so SQLExecDirect does work with SQL queries with ";" at the end. For the types of SQL queries supported by Trino, visit the official Trino query [language support page](https://docs.aws.amazon.com/trino/latest/developerguide/reference.html).
 
 ## SQLTables
 Similarly to SQLColumns, the driver supports catalog patterns for SQLTables for both ODBC ver 2.0 and ODBC ver 3.0. 
@@ -401,14 +401,14 @@ When `SQL_ATTR_METADATA_ID` is set to `true`, it means database name and table n
 |Driver supports catalog only ([`DATABASE_AS_SCHEMA`](../setup/developer-guide.md/#database-reporting) not set)      | no | yes | no |
 |Driver supports schema only ([`DATABASE_AS_SCHEMA`](../setup/developer-guide.md/#database-reporting) set to `TRUE`) | yes | no | no |
 
-## Database Reporting Differences Between Timestream JDBC Driver and ODBC Driver
-| --- | [Timestream JDBC Driver](https://github.com/awslabs/amazon-timestream-driver-jdbc) | Timestream ODBC Driver |
+## Database Reporting Differences Between Trino JDBC Driver and ODBC Driver
+| --- | [Trino JDBC Driver](https://github.com/awslabs/amazon-trino-driver-jdbc) | Trino ODBC Driver |
 |-----|------------------------------------------------------------------------------------|------------------------|
 | Database reporting | Databases reported as schemas. This behavior is not configurable. | Databases reported as catalogs by default. This behavior is configurable by setting [`DATABASE_AS_SCHEMA`](docs/markdown/setup/developer-guide.md/#database-reporting) environment variable
-| Reasons for the design decisions  | Databases are reported as schemas for driver to work on Tableau, as Tableau will not include database names in auto-generated queries if databases are reported as catalogs, and Timestream server does not work with queries without database names. | Databases are reported as catalogs for driver to work on macOS Excel, as not all databases show properly on macOS Excel when databases are reported as schemas.
+| Reasons for the design decisions  | Databases are reported as schemas for driver to work on Tableau, as Tableau will not include database names in auto-generated queries if databases are reported as catalogs, and Trino server does not work with queries without database names. | Databases are reported as catalogs for driver to work on macOS Excel, as not all databases show properly on macOS Excel when databases are reported as schemas.
 
-## Timestream Data Types
-Timestream SQL support scalar types int, bigint, boolean, double, varchar, date, time, timestamp, interval_year_month and interval_day_second. Their values could be fetched based using their corresponding SQL data types or as a string/unicode string.
+## Trino Data Types
+Trino SQL support scalar types int, bigint, boolean, double, varchar, date, time, timestamp, interval_year_month and interval_day_second. Their values could be fetched based using their corresponding SQL data types or as a string/unicode string.
 
 Besides regular data types, complex data types are also supported. Complex types include Array, Row and Timeseries. These complex types data could only be fetched as a string using our driver. 
 
@@ -437,7 +437,7 @@ Wrapped in "()". Each element is separated by ",".
 
 For null it could only be fetched as a string and the result is "-".
 
-Please refer to [Timestream Data Types](https://docs.aws.amazon.com/timestream/latest/developerguide/supported-data-types.html) for more info.
+Please refer to [Trino Data Types](https://docs.aws.amazon.com/trino/latest/developerguide/supported-data-types.html) for more info.
 
 ## Microsoft Excel on macOS
-Timestream uses Unicode character set, but Microsoft Excel on macOS is using SQLCHAR to fetch strings instead of SQLWCHAR. Timestream ODBC driver therefore does a SQLWCHAR to SQLCHAR conversion for characters when used with Microsoft Excel on macOS. The unmapped characters from Unicode to ANSI is displayed as "?". 
+Trino uses Unicode character set, but Microsoft Excel on macOS is using SQLCHAR to fetch strings instead of SQLWCHAR. Trino ODBC driver therefore does a SQLWCHAR to SQLCHAR conversion for characters when used with Microsoft Excel on macOS. The unmapped characters from Unicode to ANSI is displayed as "?". 

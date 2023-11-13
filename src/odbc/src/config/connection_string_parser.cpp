@@ -18,25 +18,25 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "timestream/odbc/config/connection_string_parser.h"
-#include "timestream/odbc/log.h"
+#include "trino/odbc/config/connection_string_parser.h"
+#include "trino/odbc/log.h"
 
 #include <vector>
 #include <fstream>
 
-#include "timestream/odbc/utils.h"
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/utils.h"
+#include "trino/odbc/utility.h"
 
-using namespace timestream::odbc;
+using namespace trino::odbc;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace config {
 const std::string ConnectionStringParser::Key::dsn = "dsn";
 const std::string ConnectionStringParser::Key::driver = "driver";
 const std::string ConnectionStringParser::Key::uid = "uid";
 const std::string ConnectionStringParser::Key::pwd = "pwd";
-const std::string ConnectionStringParser::Key::accessKeyId = "accesskeyid";
+// const std::string ConnectionStringParser::Key::accessKeyId = "accesskeyid";
 const std::string ConnectionStringParser::Key::secretKey = "secretkey";
 const std::string ConnectionStringParser::Key::sessionToken = "sessiontoken";
 const std::string ConnectionStringParser::Key::profileName = "profilename";
@@ -55,10 +55,10 @@ const std::string ConnectionStringParser::Key::idPHost = "idphost";
 const std::string ConnectionStringParser::Key::idPUserName = "idpusername";
 const std::string ConnectionStringParser::Key::idPPassword = "idppassword";
 const std::string ConnectionStringParser::Key::idPArn = "idparn";
-const std::string ConnectionStringParser::Key::oktaAppId = "oktaapplicationid";
+// const std::string ConnectionStringParser::Key::oktaAppId = "oktaapplicationid";
 const std::string ConnectionStringParser::Key::roleArn = "rolearn";
-const std::string ConnectionStringParser::Key::aadAppId = "aadapplicationid";
-const std::string ConnectionStringParser::Key::aadClientSecret =
+// const std::string ConnectionStringParser::Key::aadAppId = "aadapplicationid";
+// const std::string ConnectionStringParser::Key::aadClientSecret =
     "aadclientsecret";
 const std::string ConnectionStringParser::Key::aadTenant = "aadtenant";
 const std::string ConnectionStringParser::Key::logLevel = "loglevel";
@@ -100,9 +100,9 @@ void ConnectionStringParser::ParseConnectionString(
       const char* value_begin = connect_str.data() + attr_eq_pos + 1;
       const char* value_end = connect_str.data() + connect_str.size();
 
-      std::string key = timestream::odbc::utility::Trim(
+      std::string key = trino::odbc::utility::Trim(
           connect_str.substr(attr_begin, attr_eq_pos - attr_begin));
-      std::string value = timestream::odbc::utility::Trim(connect_str.substr(
+      std::string value = trino::odbc::utility::Trim(connect_str.substr(
           attr_eq_pos + 1, connect_str.size() - attr_eq_pos));
 
       if (value[0] == '{' && value[value.size() - 1] == '}')
@@ -140,15 +140,16 @@ void ConnectionStringParser::HandleAttributePair(
     const std::string& key, const std::string& value,
     diagnostic::DiagnosticRecordStorage* diag) {
   LOG_DEBUG_MSG("HandleAttributePair is called");
-  std::string lKey = timestream::odbc::common::ToLower(key);
+  std::string lKey = trino::odbc::common::ToLower(key);
 
-  if (lKey == Key::uid || lKey == Key::accessKeyId || lKey == Key::idPUserName
-      || lKey == Key::pwd || lKey == Key::secretKey || lKey == Key::sessionToken
-      || lKey == Key::idPPassword || lKey == Key::aadClientSecret) {
-    LOG_DEBUG_MSG(lKey << " is found");
-  } else {
-    LOG_DEBUG_MSG("key:value is " << lKey << ":" << value);
-  }
+/*$*/
+  // if (lKey == Key::uid || lKey == Key::accessKeyId || lKey == Key::idPUserName
+  //     || lKey == Key::pwd || lKey == Key::secretKey || lKey == Key::sessionToken
+  //     || lKey == Key::idPPassword || lKey == Key::aadClientSecret) {
+  //   LOG_DEBUG_MSG(lKey << " is found");
+  // } else {
+  //   LOG_DEBUG_MSG("key:value is " << lKey << ":" << value);
+  // }
 
   if (lKey == Key::dsn) {
     cfg.SetDsn(value);
@@ -166,7 +167,7 @@ void ConnectionStringParser::HandleAttributePair(
       return;
     }
 
-    if (!timestream::odbc::common::AllDigits(value)) {
+    if (!trino::odbc::common::AllDigits(value)) {
       if (diag) {
         diag->AddStatusRecord(
             SqlState::S01S02_OPTION_VALUE_CHANGED,
@@ -220,7 +221,7 @@ void ConnectionStringParser::HandleAttributePair(
       return;
     }
 
-    if (!timestream::odbc::common::AllDigits(value)) {
+    if (!trino::odbc::common::AllDigits(value)) {
       if (diag) {
         diag->AddStatusRecord(
             SqlState::S01S02_OPTION_VALUE_CHANGED,
@@ -275,7 +276,7 @@ void ConnectionStringParser::HandleAttributePair(
       return;
     }
 
-    if (!timestream::odbc::common::AllDigits(value)) {
+    if (!trino::odbc::common::AllDigits(value)) {
       if (diag) {
         diag->AddStatusRecord(
             SqlState::S01S02_OPTION_VALUE_CHANGED,
@@ -330,7 +331,7 @@ void ConnectionStringParser::HandleAttributePair(
       return;
     }
 
-    if (!timestream::odbc::common::AllDigits(value)) {
+    if (!trino::odbc::common::AllDigits(value)) {
       if (diag) {
         diag->AddStatusRecord(
             SqlState::S01S02_OPTION_VALUE_CHANGED,
@@ -379,7 +380,7 @@ void ConnectionStringParser::HandleAttributePair(
     AuthType::Type authType = AuthType::FromString(value);
 
 /*$*/
-    std::string val = utility::Trim(timestream::odbc::common::ToLower(value));
+    std::string val = utility::Trim(trino::odbc::common::ToLower(value));
     if (val != "password" && authType == AuthType::Type::PASSWORD) {
       if (diag) {
         diag->AddStatusRecord(SqlState::S01S02_OPTION_VALUE_CHANGED,
@@ -501,21 +502,22 @@ void ConnectionStringParser::HandleAttributePair(
     }
 
     cfg.SetPwd(value);
-  } else if (lKey == Key::accessKeyId) {
-    if (!cfg.GetAccessKeyId().empty() && diag) {
-      diag->AddStatusRecord(
-          SqlState::S01S02_OPTION_VALUE_CHANGED,
-          "Re-writing AccessKeyId (have you specified it several times?");
-    }
+/*$*/
+  // } else if (lKey == Key::accessKeyId) {
+  //   if (!cfg.GetAccessKeyId().empty() && diag) {
+  //     diag->AddStatusRecord(
+  //         SqlState::S01S02_OPTION_VALUE_CHANGED,
+  //         "Re-writing AccessKeyId (have you specified it several times?");
+  //   }
 
-    if (!cfg.GetUid().empty()) {
-      LOG_WARNING_MSG(
-          "UID is already set, but AccessKeyId is being set too. Only one of "
-          "{UID, AccessKeyId} is needed. UID will take precedence when making "
-          "a connection.");
-    }
+  //   if (!cfg.GetUid().empty()) {
+  //     LOG_WARNING_MSG(
+  //         "UID is already set, but AccessKeyId is being set too. Only one of "
+  //         "{UID, AccessKeyId} is needed. UID will take precedence when making "
+  //         "a connection.");
+  //   }
 
-    cfg.SetAccessKeyId(value);
+  //   cfg.SetAccessKeyId(value);
   } else if (lKey == Key::secretKey) {
     if (!cfg.GetSecretKey().empty() && diag) {
       diag->AddStatusRecord(
@@ -551,7 +553,7 @@ void ConnectionStringParser::HandleAttributePair(
       return;
     }
 
-    if (!timestream::odbc::common::AllDigits(value)) {
+    if (!trino::odbc::common::AllDigits(value)) {
       if (diag) {
         diag->AddStatusRecord(
             SqlState::S01S02_OPTION_VALUE_CHANGED,
@@ -604,7 +606,7 @@ void ConnectionStringParser::HandleAttributePair(
 
 ConnectionStringParser::BoolParseResult::Type
 ConnectionStringParser::StringToBool(const std::string& value) {
-  std::string lower = timestream::odbc::common::ToLower(value);
+  std::string lower = trino::odbc::common::ToLower(value);
 
   if (lower == "true")
     return BoolParseResult::Type::AI_TRUE;
@@ -626,4 +628,4 @@ std::string ConnectionStringParser::MakeErrorMessage(const std::string& msg,
 }
 }  // namespace config
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

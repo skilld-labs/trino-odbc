@@ -1,9 +1,9 @@
-#  Microsoft Power BI Service - Connecting to Amazon Timestream
+#  Microsoft Power BI Service - Connecting to Amazon Trino
 
 ## Setup
 * Download and Install the [On-premises data gateway](https://docs.microsoft.com/en-us/data-integration/gateway/service-gateway-install)
-* Copy the `AmazonTimestreamConnector.mez` custom connector file to `C:\Windows\ServiceProfiles\PBIEgwService\Documents\Power BI Desktop\Custom Connectors\Power BI Desktop\Custom Connectors`. Create the directory if it is missing.
-* Start the On-premises data gateway and click on the `Connectors` tab. Ensure that `AmazonTimestreamConnector` appears.
+* Copy the `AmazonTrinoConnector.mez` custom connector file to `C:\Windows\ServiceProfiles\PBIEgwService\Documents\Power BI Desktop\Custom Connectors\Power BI Desktop\Custom Connectors`. Create the directory if it is missing.
+* Start the On-premises data gateway and click on the `Connectors` tab. Ensure that `AmazonTrinoConnector` appears.
 
     ![](../../images/powerbi-connector/pbi_gateway_connector_path.png)
 

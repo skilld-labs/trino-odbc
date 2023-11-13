@@ -18,20 +18,20 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_QUERY_QUERY
-#define _TIMESTREAM_ODBC_QUERY_QUERY
+#ifndef _TRINO_ODBC_QUERY_QUERY
+#define _TRINO_ODBC_QUERY_QUERY
 
 #include <stdint.h>
 
 #include <map>
 
-#include "timestream/odbc/common_types.h"
-#include "timestream/odbc/diagnostic/diagnosable_adapter.h"
-#include "timestream/odbc/meta/column_meta.h"
+#include "trino/odbc/common_types.h"
+#include "trino/odbc/diagnostic/diagnosable_adapter.h"
+#include "trino/odbc/meta/column_meta.h"
 
-using timestream::odbc::SqlResult;
+using trino::odbc::SqlResult;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace query {
 /** Query type. */
@@ -111,7 +111,7 @@ class Query {
    * @return Operation result.
    */
   virtual SqlResult::Type FetchNextRow(
-      timestream::odbc::app::ColumnBindingMap& columnBindings) = 0;
+      trino::odbc::app::ColumnBindingMap& columnBindings) = 0;
 
   /**
    * Get data of the specified column in the result set.
@@ -122,7 +122,7 @@ class Query {
    */
   virtual SqlResult::Type GetColumn(
       uint16_t columnIdx,
-      timestream::odbc::app::ApplicationDataBuffer& buffer) = 0;
+      trino::odbc::app::ApplicationDataBuffer& buffer) = 0;
 
   /**
    * Close query.
@@ -136,7 +136,7 @@ class Query {
    *
    * @return Column metadata.
    */
-  virtual const timestream::odbc::meta::ColumnMetaVector* GetMeta() = 0;
+  virtual const trino::odbc::meta::ColumnMetaVector* GetMeta() = 0;
 
   /**
    * Check if data is available.
@@ -184,20 +184,20 @@ class Query {
   /**
    * Constructor.
    */
-  Query(timestream::odbc::diagnostic::DiagnosableAdapter& diag,
+  Query(trino::odbc::diagnostic::DiagnosableAdapter& diag,
         QueryType::Type type)
       : diag(diag), type(type) {
     // No-op.
   }
 
   /** Diagnostics collector. */
-  timestream::odbc::diagnostic::DiagnosableAdapter& diag;
+  trino::odbc::diagnostic::DiagnosableAdapter& diag;
 
   /** Query type. */
   QueryType::Type type;
 };
 }  // namespace query
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_QUERY_QUERY
+#endif  //_TRINO_ODBC_QUERY_QUERY

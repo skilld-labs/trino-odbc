@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#define BOOST_TEST_MODULE TimestreamTest
+#define BOOST_TEST_MODULE TrinoTest
 #ifdef _WIN32
 #include <Windows.h>
 #endif
@@ -33,7 +33,7 @@
 
 #include "odbc_test_suite.h"
 #include "test_utils.h"
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/utility.h"
 #include <ignite/common/include/common/platform_utils.h>
 
 #include <boost/thread.hpp>
@@ -41,10 +41,10 @@
 #include <boost/bind.hpp>
 
 using boost::unit_test::precondition;
-using timestream::odbc::AuthType;
-using timestream::odbc::OdbcTestSuite;
-using timestream::odbc::utility::CheckEnvVarSetToTrue;
-using timestream_test::GetOdbcErrorMessage;
+using trino::odbc::AuthType;
+using trino::odbc::OdbcTestSuite;
+using trino::odbc::utility::CheckEnvVarSetToTrue;
+using trino_test::GetOdbcErrorMessage;
 using namespace boost::unit_test;
 
 /**
@@ -97,7 +97,7 @@ BOOST_AUTO_TEST_CASE(TestDriverConnection) {
 BOOST_AUTO_TEST_CASE(TestDriverConnectionWithEndpoint) {
   std::string connectionString;
   std::string misc(
-      "EndpointOverride=query.timestream.us-west-2.amazonaws.com;");
+      "EndpointOverride=query.trino.us-west-2.amazonaws.com;");
 
   CreateDsnConnectionStringForAWS(connectionString, "", "", misc);
 
@@ -217,7 +217,7 @@ BOOST_AUTO_TEST_CASE(TestDriverConnectionUsingDupCredStringWithWrongUidPwd) {
 
   ExpectConnectionReject(
       connectionString, "08001",
-      "Failed to establish connection to Timestream.\nINVALID_ENDPOINT: "
+      "Failed to establish connection to Trino.\nINVALID_ENDPOINT: "
       "Failed to discover endpoint");
 
   Disconnect();
@@ -241,7 +241,7 @@ BOOST_AUTO_TEST_CASE(TestDriverConnectionUsingDupCredStringWithWrongUid) {
 
   ExpectConnectionReject(
       connectionString, "08001",
-      "Failed to establish connection to Timestream.\nINVALID_ENDPOINT: "
+      "Failed to establish connection to Trino.\nINVALID_ENDPOINT: "
       "Failed to discover endpoint");
 
   Disconnect();
@@ -265,7 +265,7 @@ BOOST_AUTO_TEST_CASE(TestDriverConnectionUsingDupCredStringWithWrongPwd) {
 
   ExpectConnectionReject(
       connectionString, "08001",
-      "Failed to establish connection to Timestream.\nINVALID_ENDPOINT: "
+      "Failed to establish connection to Trino.\nINVALID_ENDPOINT: "
       "Failed to discover endpoint");
 
   Disconnect();
@@ -304,12 +304,12 @@ BOOST_AUTO_TEST_CASE(TestSQLConnectionGenericConnectionStringUsingAAD) {
     std::string pwd = GetEnv("AAD_USER_PWD");
     std::string clientSecret = GetEnv("AAD_CLIENT_SECRET");
 
-    std::string logPath = GetEnv("TIMESTREAM_LOG_PATH", "");
-    std::string logLevel = GetEnv("TIMESTREAM_LOG_LEVEL", "2");
+    std::string logPath = GetEnv("TRINO_LOG_PATH", "");
+    std::string logLevel = GetEnv("TRINO_LOG_LEVEL", "2");
     std::string region = GetEnv("AWS_REGION", "us-west-2");
 
     connectionString =
-      "driver={Amazon Timestream ODBC Driver};"
+      "driver={Amazon Trino ODBC Driver};"
       "dsn={" + dsn + "};"
       "auth=" + AuthType::ToString(AuthType::Type::AAD) + ";"
       "region=" + region + ";"
@@ -345,7 +345,7 @@ BOOST_AUTO_TEST_CASE(TestSQLConnectionUsingAADInvalidUser) {
 
     ExpectConnectionReject(
         connectionString, "08001",
-        "Failed to establish connection to Timestream.\n"
+        "Failed to establish connection to Trino.\n"
         "Request to Azure Active Directory for access token failed.");
 
     Disconnect();
@@ -385,7 +385,7 @@ BOOST_AUTO_TEST_CASE(TestSQLConnectionUsingAADInvalidPassword) {
 
     ExpectConnectionReject(
         connectionString, "08001",
-        "Failed to establish connection to Timestream.\n"
+        "Failed to establish connection to Trino.\n"
         "Request to Azure Active Directory for access token failed.");
 
     Disconnect();
@@ -426,7 +426,7 @@ BOOST_AUTO_TEST_CASE(TestSQLConnectionUsingAADInvalidAPPId) {
 
     ExpectConnectionReject(
         connectionString, "08001",
-        "Failed to establish connection to Timestream.\n"
+        "Failed to establish connection to Trino.\n"
         "Request to Azure Active Directory for access token failed.");
 
     Disconnect();
@@ -467,7 +467,7 @@ BOOST_AUTO_TEST_CASE(TestSQLConnectionUsingAADInvalidTenant) {
 
     ExpectConnectionReject(
         connectionString, "08001",
-        "Failed to establish connection to Timestream.\n"
+        "Failed to establish connection to Trino.\n"
         "Request to Azure Active Directory for access token failed.");
 
     Disconnect();
@@ -509,7 +509,7 @@ BOOST_AUTO_TEST_CASE(TestSQLConnectionUsingAADInvalidClientSecret) {
 
     ExpectConnectionReject(
         connectionString, "08001",
-        "Failed to establish connection to Timestream.\n"
+        "Failed to establish connection to Trino.\n"
         "Request to Azure Active Directory for access token failed.");
 
     Disconnect();
@@ -551,7 +551,7 @@ BOOST_AUTO_TEST_CASE(TestSQLConnectionUsingAADInvalidRoleArn) {
 
     ExpectConnectionReject(
         connectionString, "08001",
-        "Failed to establish connection to Timestream.\n"
+        "Failed to establish connection to Trino.\n"
         "Failed to fetch credentials, ERROR: ValidationError: 1 validation "
         "error detected: Value 'invalid-role-arn' at 'roleArn' failed to "
         "satisfy constraint: Member must have length greater than or equal to "
@@ -596,7 +596,7 @@ BOOST_AUTO_TEST_CASE(TestSQLConnectionUsingAADInvalidIdpArn) {
 
     ExpectConnectionReject(
         connectionString, "08001",
-        "Failed to establish connection to Timestream.\n"
+        "Failed to establish connection to Trino.\n"
         "Failed to fetch credentials, ERROR: ValidationError: 1 validation "
         "error detected: Value 'invalid-idp-arn' at 'principalArn' failed to "
         "satisfy constraint: Member must have length greater than or equal to "
@@ -653,12 +653,12 @@ BOOST_AUTO_TEST_CASE(TestSQLConnectionUsingOktaUidPwd) {
     // which are from environment variables by default.
     // Using Uid/Pwd instead of idPUsername/idPPassword
     std::string  connectionString =
-      "driver={Amazon Timestream ODBC Driver};"
+      "driver={Amazon Trino ODBC Driver};"
       "dsn={" + Configuration::DefaultValue::dsn + "};"
       "auth=" + AuthType::ToString(AuthType::Type::OKTA) + ";"
       "region=" + GetEnv("AWS_REGION", "us-west-2") + ";"
-      "logOutput=" + GetEnv("TIMESTREAM_LOG_PATH", "") + ";"
-      "logLevel=" + GetEnv("TIMESTREAM_LOG_LEVEL", "2") + ";";
+      "logOutput=" + GetEnv("TRINO_LOG_PATH", "") + ";"
+      "logLevel=" + GetEnv("TRINO_LOG_LEVEL", "2") + ";";
 
     std::string tsAuthentication = 
       "idPHost=" + GetEnv("OKTA_HOST") + ";" +
@@ -687,12 +687,12 @@ BOOST_AUTO_TEST_CASE(TestSQLConnectionUsingOktaInvalidHost) {
 #ifdef _WIN32
     ExpectConnectionReject(
         connectionString, "08001",
-        "Failed to establish connection to Timestream.\n"
+        "Failed to establish connection to Trino.\n"
         "Failed to get Okta session token. Error info: 'Encountered network "
         "error when sending http request'");
 #else
     ExpectConnectionReject(connectionString, "08001",
-                           "Failed to establish connection to Timestream.\n"
+                           "Failed to establish connection to Trino.\n"
                            "Failed to get Okta session token. Error info: "
                            "'curlCode: 6, Couldn't resolve host name'");
 #endif
@@ -730,7 +730,7 @@ BOOST_AUTO_TEST_CASE(TestSQLConnectionUsingOktaInvalidUser) {
     CreateOktaDsnConnectionString(connectionString, nullptr, "invalid_user");
 
     ExpectConnectionReject(connectionString, "08001",
-                           "Failed to establish connection to Timestream.\n"
+                           "Failed to establish connection to Trino.\n"
                            "Failed to get Okta session token.");
 
     Disconnect();
@@ -767,7 +767,7 @@ BOOST_AUTO_TEST_CASE(TestSQLConnectionUsingOktaInvalidPasswd) {
                                   "invalid_password");
 
     ExpectConnectionReject(connectionString, "08001",
-                           "Failed to establish connection to Timestream.\n"
+                           "Failed to establish connection to Trino.\n"
                            "Failed to get Okta session token.");
 
     Disconnect();
@@ -804,7 +804,7 @@ BOOST_AUTO_TEST_CASE(TestSQLConnectionUsingOktaInvalidAPPId) {
                                   "invalid_app_id");
 
     ExpectConnectionReject(connectionString, "08001",
-                           "Failed to establish connection to Timestream.\n"
+                           "Failed to establish connection to Trino.\n"
                            "Failed to get SAML asseration.");
 
     Disconnect();
@@ -843,7 +843,7 @@ BOOST_AUTO_TEST_CASE(TestSQLConnectionUsingOktaInvalidRoleArn) {
 
     ExpectConnectionReject(
         connectionString, "08001",
-        "Failed to establish connection to Timestream.\n"
+        "Failed to establish connection to Trino.\n"
         "Failed to fetch credentials, ERROR: ValidationError: 1 validation "
         "error detected"
         ": Value 'invalid_role_arn' at 'roleArn' failed to satisfy constraint"
@@ -885,7 +885,7 @@ BOOST_AUTO_TEST_CASE(TestSQLConnectionUsingOktaInvalidIdpArn) {
 
     ExpectConnectionReject(
         connectionString, "08001",
-        "Failed to establish connection to Timestream.\nFailed to fetch "
+        "Failed to establish connection to Trino.\nFailed to fetch "
         "credentials, "
         "ERROR: ValidationError: 1 validation error detected"
         ": Value 'invalid_idp_arn' at 'principalArn' failed to satisfy "
@@ -961,11 +961,11 @@ BOOST_AUTO_TEST_CASE(TestDriverConnectionWithUIDSecretKey) {
   std::string secretKey = GetEnv("AWS_SECRET_ACCESS_KEY");
   std::string sessionToken = GetEnv("AWS_SESSION_TOKEN");
   std::string region = GetEnv("AWS_REGION", "us-west-2");
-  std::string logPath = GetEnv("TIMESTREAM_LOG_PATH");
-  std::string logLevel = GetEnv("TIMESTREAM_LOG_LEVEL", "2");
+  std::string logPath = GetEnv("TRINO_LOG_PATH");
+  std::string logLevel = GetEnv("TRINO_LOG_LEVEL", "2");
 
   connectionString =
-            "driver={Amazon Timestream ODBC Driver};"
+            "driver={Amazon Trino ODBC Driver};"
             "dsn={" + Configuration::DefaultValue::dsn + "};"
             "auth=" + AuthType::ToString(AuthType::Type::IAM) + ";"
             "secretKey=" + secretKey + ";"
@@ -986,11 +986,11 @@ BOOST_AUTO_TEST_CASE(TestDriverConnectionWithAccessKeyIdPWD) {
   std::string secretKey = GetEnv("AWS_SECRET_ACCESS_KEY");
   std::string sessionToken = GetEnv("AWS_SESSION_TOKEN");
   std::string region = GetEnv("AWS_REGION", "us-west-2");
-  std::string logPath = GetEnv("TIMESTREAM_LOG_PATH");
-  std::string logLevel = GetEnv("TIMESTREAM_LOG_LEVEL", "2");
+  std::string logPath = GetEnv("TRINO_LOG_PATH");
+  std::string logLevel = GetEnv("TRINO_LOG_LEVEL", "2");
 
   connectionString =
-            "driver={Amazon Timestream ODBC Driver};"
+            "driver={Amazon Trino ODBC Driver};"
             "dsn={" + Configuration::DefaultValue::dsn + "};"
             "auth=" + AuthType::ToString(AuthType::Type::IAM) + ";"
             "pwd=" + secretKey + ";"
@@ -1010,7 +1010,7 @@ BOOST_AUTO_TEST_CASE(TestConnectionUsingProfile) {
     const std::string profile = "test-profile";
     std::string connectionString;
     CreateDsnConnectionStringForAWS(connectionString,
-                                    AuthType::Type::AWS_PROFILE, profile);
+                                    AuthType::Type::PASSWORD, profile);
     Connect(connectionString);
     Disconnect();
   } else {
@@ -1025,11 +1025,11 @@ BOOST_AUTO_TEST_CASE(TestConnectionUsingIncompleteProfile) {
 
     std::string connectionString;
     CreateDsnConnectionStringForAWS(connectionString,
-                                    AuthType::Type::AWS_PROFILE, profile);
+                                    AuthType::Type::PASSWORD, profile);
 
     ExpectConnectionReject(
         connectionString, "08001",
-        "Failed to establish connection to Timestream.\nINVALID_ENDPOINT: "
+        "Failed to establish connection to Trino.\nINVALID_ENDPOINT: "
         "Failed to discover endpoint");
 
     Disconnect();
@@ -1042,11 +1042,11 @@ BOOST_AUTO_TEST_CASE(TestConnectionUsingIncompleteProfile) {
 BOOST_AUTO_TEST_CASE(TestConnectionUsingNonExistProfile) {
   const std::string profile = "nonexist-profile";
   std::string connectionString;
-  CreateDsnConnectionStringForAWS(connectionString, AuthType::Type::AWS_PROFILE,
+  CreateDsnConnectionStringForAWS(connectionString, AuthType::Type::PASSWORD,
                                   profile);
 
   ExpectConnectionReject(connectionString, "08001",
-                         "Failed to establish connection to Timestream.\n"
+                         "Failed to establish connection to Trino.\n"
                          "Empty or expired credentials");
 
   Disconnect();
@@ -1055,11 +1055,11 @@ BOOST_AUTO_TEST_CASE(TestConnectionUsingNonExistProfile) {
 BOOST_AUTO_TEST_CASE(TestConnectionUsingEmptyProfile) {
   const std::string profile = "";
   std::string connectionString;
-  CreateDsnConnectionStringForAWS(connectionString, AuthType::Type::AWS_PROFILE,
+  CreateDsnConnectionStringForAWS(connectionString, AuthType::Type::PASSWORD,
                                   profile);
 
   ExpectConnectionReject(connectionString, "08001",
-                         "Failed to establish connection to Timestream.\n"
+                         "Failed to establish connection to Trino.\n"
                          "Empty or expired credentials");
   Disconnect();
 }
@@ -1098,7 +1098,7 @@ BOOST_AUTO_TEST_CASE(TestConnectionOnlyDisconnect) {
 BOOST_AUTO_TEST_CASE(TestSQLConnectionIncompleteBasicProperties) {
   const std::string dsn = "IncompleteBasicProperties";
   std::string connectionString =
-      "driver={Amazon Timestream ODBC Driver};"
+      "driver={Amazon Trino ODBC Driver};"
       "auth=IAM;"
       "accessKeyId=key;";
 
@@ -1118,7 +1118,7 @@ BOOST_AUTO_TEST_CASE(TestSQLConnectionIncompleteBasicProperties) {
 
 BOOST_AUTO_TEST_CASE(TestSQLDriverConnectionIncompleteBasicProperties) {
   std::string connectionString =
-      "driver={Amazon Timestream ODBC Driver};"
+      "driver={Amazon Trino ODBC Driver};"
       "auth=IAM;"
       "accessKeyId=key;";
   ExpectConnectionReject(connectionString, "01S00",
@@ -1140,7 +1140,7 @@ BOOST_AUTO_TEST_CASE(TestSQLConnectionInvalidUser) {
   WriteDsnConfiguration(dsn, connectionString, username, password);
   ExpectConnectionReject(dsn, username, password, "08001",
                          "Failed to establish connection to "
-                         "Timestream.\nINVALID_ENDPOINT: Failed to discover");
+                         "Trino.\nINVALID_ENDPOINT: Failed to discover");
 
   Disconnect();
 
@@ -1153,7 +1153,7 @@ BOOST_AUTO_TEST_CASE(TestSQLDriverConnectionInvalidUser) {
 
   ExpectConnectionReject(connectionString, "08001",
                          "Failed to establish connection to "
-                         "Timestream.\nINVALID_ENDPOINT: Failed to discover");
+                         "Trino.\nINVALID_ENDPOINT: Failed to discover");
 
   Disconnect();
 }
@@ -1172,7 +1172,7 @@ BOOST_AUTO_TEST_CASE(TestSQLConnectionInvalidUserUsingGenericIAMString) {
   WriteDsnConfiguration(dsn, connectionString, username, password);
   ExpectConnectionReject(dsn, username, password, "08001",
                          "Failed to establish connection to "
-                         "Timestream.\nINVALID_ENDPOINT: Failed to discover");
+                         "Trino.\nINVALID_ENDPOINT: Failed to discover");
 
   Disconnect();
 
@@ -1189,7 +1189,7 @@ BOOST_AUTO_TEST_CASE(TestSQLDriverConnectionInvalidUserUsingGenericIAMString) {
 
   ExpectConnectionReject(connectionString, "08001",
                          "Failed to establish connection to "
-                         "Timestream.\nINVALID_ENDPOINT: Failed to discover");
+                         "Trino.\nINVALID_ENDPOINT: Failed to discover");
 
   Disconnect();
 }

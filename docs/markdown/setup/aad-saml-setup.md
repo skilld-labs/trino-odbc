@@ -12,7 +12,7 @@ This is a guide to set up SAML 2.0 for AWS with Azure Active Directory. All step
     - [Create am IAM role](#create-an-iam-role)
     - [Create an IAM policy](#create-an-iam-policy)
     - [Provisioning](#provisioning)
-- [Timestream ODBC DSN Configuration](#timestream-odbc-dsn-configuration)
+- [Trino ODBC DSN Configuration](#trino-odbc-dsn-configuration)
 - [Troubleshooting Guide](#troubleshooting-guide)
 
 ## Prerequisites
@@ -20,7 +20,7 @@ This is a guide to set up SAML 2.0 for AWS with Azure Active Directory. All step
 
 2. An Azure Active Directory account: [https://azure.microsoft.com/en-ca/services/active-directory/](https://azure.microsoft.com/en-ca/services/active-directory/)
 
-3. Access to Timestream.
+3. Access to Trino.
 
 ## Setting up Azure AD
 1. Sign in to [Azure Portal](https://portal.azure.com/#home).
@@ -67,7 +67,7 @@ This is a guide to set up SAML 2.0 for AWS with Azure Active Directory. All step
     
     ![](../images/azuread/certificates_and_secrets.png)
 
-15. Under `Client secrets`, create a new client secret with `+ New client secret`. Take note of the generated value, this is required when creating a connection to Timestream.
+15. Under `Client secrets`, create a new client secret with `+ New client secret`. Take note of the generated value, this is required when creating a connection to Trino.
 
     ![](../images/azuread/aad_new_client_secret.png)
 
@@ -75,7 +75,7 @@ This is a guide to set up SAML 2.0 for AWS with Azure Active Directory. All step
 
     ![](../images/azuread/aad_api_permissions.png)
 
-17. In the `Configured permissions`, use `Add a permission` to grant Azure AD permission to sign in to Timestream. Select `Microsoft Graph` on the `Request API permissions` page.   
+17. In the `Configured permissions`, use `Add a permission` to grant Azure AD permission to sign in to Trino. Select `Microsoft Graph` on the `Request API permissions` page.   
     
     ![](../images/azuread/request_api_permissions.png)
 
@@ -98,9 +98,9 @@ This set up will guide you through the following:
 
 1. Creating the SAML identity provider.
 
-2. Creating an IAM role for access to Timestream.
+2. Creating an IAM role for access to Trino.
 
-3. Creating an IAM policy allowing the IAM role to generate an AWS STS token to connect to Timestream.
+3. Creating an IAM policy allowing the IAM role to generate an AWS STS token to connect to Trino.
 
 #### Create a SAML Identity Provider
 1. Sign in to the AWS Management Console.
@@ -138,7 +138,7 @@ Pre-requisite: be on the page for `IAM` (follow steps 1-2 under ["Create a SAML 
 
 6. Click `Next` to set up permissions. 
 
-7. Attach permissions policies or continue to `Next:Tags`. The role needs to have Timestream full access permission to access Timestream databases.
+7. Attach permissions policies or continue to `Next:Tags`. The role needs to have Trino full access permission to access Trino databases.
 
 8. Add optional tags or continue to `Next:Review`.
 
@@ -174,7 +174,7 @@ Pre-requisite: be on the page for `IAM` (follow steps 1-2 under ["Create a SAML 
 
 4. Click `Next: Tags`. Add tags if needed.
 
-5. Click `Next: Review`. Enter a policy name, this example will use `TimestreamAccessPolicy`.
+5. Click `Next: Review`. Enter a policy name, this example will use `TrinoAccessPolicy`.
 
 6. Click `Create Policy`. 
 
@@ -217,7 +217,7 @@ Pre-requisite: be on the page for `IAM` (follow steps 1-2 under ["Create a SAML 
 
 12. Select `+ Add user/group`.
 
-13. Select the Azure AD user to provide access to Timestream.
+13. Select the Azure AD user to provide access to Trino.
 
 14. Select the IAM Azure AD role and the corresponding Azure Identity Provider created in AWS.
 
@@ -242,7 +242,7 @@ Pre-requisite: be on the page for `IAM` (follow steps 1-2 under ["Create a SAML 
     ![](../images/azuread/aad_sso_test_sign_in.png)
  
 
-### Timestream ODBC DSN Configuration
+### Trino ODBC DSN Configuration
 
 Connection properties for Azure AD
 
@@ -262,13 +262,13 @@ Connection properties for Azure AD
 
     Try using the original email of your Microsoft Azure AD instead. 
 
-2. Able to sign in using Single-Sign-On (SSO) from Azure AD, but unable to sign in using Timestream ODBC Driver. 
+2. Able to sign in using Single-Sign-On (SSO) from Azure AD, but unable to sign in using Trino ODBC Driver. 
 
     Double check that the Azure AD (AAD) credentials are entered correctly in the DSN. If all credentials are correct, note that it may take some time for Azure AD account to properly work after set up. Try sign in again in 1 hour after the Azure AD account set up is complete. 
 
-3. Error `Request to Azure Active Directory for access token failed` is seen when connect to Timestream.
+3. Error `Request to Azure Active Directory for access token failed` is seen when connect to Trino.
 
-    Try to create [a test user](https://learn.microsoft.com/en-us/azure/active-directory/saas-apps/amazon-web-service-tutorial#create-an-azure-ad-test-user) and [assign IAM Identity Provider and Roles](https://learn.microsoft.com/en-us/azure/active-directory/saas-apps/amazon-web-service-tutorial#assign-the-azure-ad-test-user) to the user. Use the test user to connect to Timestream.
+    Try to create [a test user](https://learn.microsoft.com/en-us/azure/active-directory/saas-apps/amazon-web-service-tutorial#create-an-azure-ad-test-user) and [assign IAM Identity Provider and Roles](https://learn.microsoft.com/en-us/azure/active-directory/saas-apps/amazon-web-service-tutorial#assign-the-azure-ad-test-user) to the user. Use the test user to connect to Trino.
 
     To verify the test user could work, follow the steps below.
 

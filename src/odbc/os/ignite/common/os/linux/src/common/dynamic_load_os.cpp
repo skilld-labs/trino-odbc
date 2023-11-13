@@ -19,7 +19,7 @@
 
 #include <sstream>
 #include "ignite/common/dynamic_load_os.h"
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/utility.h"
 
 namespace ignite {
 namespace odbc {
@@ -61,7 +61,7 @@ void Module::Unload() {
 }
 
 Module LoadModule(const wchar_t* path) {
-  std::string path0 = timestream::odbc::utility::ToUtf8(path);
+  std::string path0 = trino::odbc::utility::ToUtf8(path);
   void* handle = dlopen(path0.c_str(), RTLD_NOW);
 
   return Module(handle);

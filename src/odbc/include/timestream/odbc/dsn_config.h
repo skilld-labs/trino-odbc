@@ -18,17 +18,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_DSN_CONFIG
-#define _TIMESTREAM_ODBC_DSN_CONFIG
+#ifndef _TRINO_ODBC_DSN_CONFIG
+#define _TRINO_ODBC_DSN_CONFIG
 
-#include "timestream/odbc/config/configuration.h"
-#include "timestream/odbc/ignite_error.h"
+#include "trino/odbc/config/configuration.h"
+#include "trino/odbc/ignite_error.h"
 #include "sqltypes.h"
 
-using namespace timestream::odbc::config;
-using namespace timestream::odbc;
+using namespace trino::odbc::config;
+using namespace trino::odbc;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /**
  * Extract last setup error and throw it like IgniteError.
@@ -100,6 +100,6 @@ bool RegisterDsn(const Configuration& config, const LPCSTR driver,
  */
 bool UnregisterDsn(const std::string& dsn, IgniteError& error);
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_DSN_CONFIG
+#endif  //_TRINO_ODBC_DSN_CONFIG

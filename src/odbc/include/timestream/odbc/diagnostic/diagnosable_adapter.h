@@ -18,8 +18,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_DIAGNOSTIC_DIAGNOSABLE_ADAPTER
-#define _TIMESTREAM_ODBC_DIAGNOSTIC_DIAGNOSABLE_ADAPTER
+#ifndef _TRINO_ODBC_DIAGNOSTIC_DIAGNOSABLE_ADAPTER
+#define _TRINO_ODBC_DIAGNOSTIC_DIAGNOSABLE_ADAPTER
 
 #include "ignite/odbc/diagnostic/diagnosable.h"
 #include "ignite/odbc/odbc_error.h"
@@ -33,7 +33,7 @@
   diagnosticRecords.Reset();                \
   diagnosticRecords.SetHeaderRecord(SqlResult::AI_SUCCESS)
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 class OdbcError;
 class Connection;
@@ -91,7 +91,7 @@ class IGNITE_IMPORT_EXPORT DiagnosableAdapter
    */
   virtual void AddStatusRecord(SqlState::Type sqlState,
                                const std::string& message,
-                               timestream::odbc::LogLevel::Type logLevel,
+                               trino::odbc::LogLevel::Type logLevel,
                                int32_t rowNum, int32_t columnNum);
 
   /**
@@ -103,8 +103,8 @@ class IGNITE_IMPORT_EXPORT DiagnosableAdapter
    */
   virtual void AddStatusRecord(
       SqlState::Type sqlState, const std::string& message,
-      timestream::odbc::LogLevel::Type logLevel =
-          timestream::odbc::LogLevel::Type::ERROR_LEVEL);
+      trino::odbc::LogLevel::Type logLevel =
+          trino::odbc::LogLevel::Type::ERROR_LEVEL);
 
   /**
    * Add new status record with SqlState::SHY000_GENERAL_ERROR state.
@@ -137,6 +137,6 @@ class IGNITE_IMPORT_EXPORT DiagnosableAdapter
 };
 }  // namespace diagnostic
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_DIAGNOSTIC_DIAGNOSABLE_ADAPTER
+#endif  //_TRINO_ODBC_DIAGNOSTIC_DIAGNOSABLE_ADAPTER

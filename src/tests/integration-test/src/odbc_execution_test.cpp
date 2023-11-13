@@ -32,10 +32,10 @@
 
 #include "odbc_test_suite.h"
 #include "test_utils.h"
-#include <timestream/odbc/utility.h>
+#include <trino/odbc/utility.h>
 
-using namespace timestream;
-using namespace timestream_test;
+using namespace trino;
+using namespace trino_test;
 
 using namespace boost::unit_test;
 
@@ -342,8 +342,8 @@ BOOST_AUTO_TEST_CASE(TestSetGetCursorName) {
     BOOST_FAIL(GetOdbcErrorMessage(SQL_HANDLE_STMT, stmt));
 
   BOOST_CHECK_EQUAL(
-      timestream::odbc::utility::SqlWcharToString(cursorName.data()),
-      timestream::odbc::utility::SqlWcharToString(cursorNameRes));
+      trino::odbc::utility::SqlWcharToString(cursorName.data()),
+      trino::odbc::utility::SqlWcharToString(cursorNameRes));
   BOOST_CHECK_EQUAL(resLen, 7);
 }
 
@@ -384,7 +384,7 @@ BOOST_AUTO_TEST_CASE(TestSQLSetCursorNameTruncated) {
   if (!SQL_SUCCEEDED(ret))
     BOOST_FAIL(GetOdbcErrorMessage(SQL_HANDLE_STMT, stmt));
 
-  BOOST_CHECK_EQUAL(timestream::odbc::utility::SqlWcharToString(cursorNameRes),
+  BOOST_CHECK_EQUAL(trino::odbc::utility::SqlWcharToString(cursorNameRes),
                     "curso");
   BOOST_CHECK_EQUAL(resLen, 5);
 }
@@ -417,8 +417,8 @@ BOOST_AUTO_TEST_CASE(TestSQLSetCursorNameMultipleTimes) {
     BOOST_FAIL(GetOdbcErrorMessage(SQL_HANDLE_STMT, stmt));
 
   BOOST_CHECK_EQUAL(
-      timestream::odbc::utility::SqlWcharToString(cursorName2.data()),
-      timestream::odbc::utility::SqlWcharToString(cursorNameRes));
+      trino::odbc::utility::SqlWcharToString(cursorName2.data()),
+      trino::odbc::utility::SqlWcharToString(cursorNameRes));
   BOOST_CHECK_EQUAL(resLen, 7);
 }
 
@@ -532,7 +532,7 @@ BOOST_AUTO_TEST_CASE(TestSQLGetFunctions) {
   for (int i = 0; i < 58; i++) {
     retcode = SQLGetFunctions(dbc, supportedFuncArray[i], &exists);
     if (retcode != SQL_SUCCESS) {
-      BOOST_FAIL("Failed for " + timestream::odbc::common::LongToString(i)
+      BOOST_FAIL("Failed for " + trino::odbc::common::LongToString(i)
                  + ", error is " + GetOdbcErrorMessage(SQL_HANDLE_DBC, dbc));
     }
     BOOST_CHECK_EQUAL(exists, true);
@@ -605,7 +605,7 @@ BOOST_AUTO_TEST_CASE(TestSQLGetFunctionsForODBC2) {
   for (int i = 0; i < 54; i++) {
     retcode = SQLGetFunctions(dbc, supportedFuncArray[i], &exists);
     if (retcode != SQL_SUCCESS) {
-      BOOST_FAIL("Failed for " + timestream::odbc::common::LongToString(i)
+      BOOST_FAIL("Failed for " + trino::odbc::common::LongToString(i)
                  + ", error is " + GetOdbcErrorMessage(SQL_HANDLE_DBC, dbc));
     }
     BOOST_CHECK_EQUAL(exists, true);

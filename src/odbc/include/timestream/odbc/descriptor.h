@@ -14,17 +14,17 @@
  *
  */
 
-#ifndef _TIMESTREAM_ODBC_DESCRIPTOR
-#define _TIMESTREAM_ODBC_DESCRIPTOR
+#ifndef _TRINO_ODBC_DESCRIPTOR
+#define _TRINO_ODBC_DESCRIPTOR
 
 #include <map>
 
 #include <ignite/common/common.h>
 
-#include "timestream/odbc/common_types.h"
-#include "timestream/odbc/diagnostic/diagnosable_adapter.h"
+#include "trino/odbc/common_types.h"
+#include "trino/odbc/diagnostic/diagnosable_adapter.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 
 class Connection;
@@ -343,6 +343,6 @@ class IGNITE_IMPORT_EXPORT Descriptor : public diagnostic::DiagnosableAdapter {
 };
 
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  // _TIMESTREAM_ODBC_DESCRIPTOR
+#endif  // _TRINO_ODBC_DESCRIPTOR

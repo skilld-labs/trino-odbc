@@ -20,11 +20,11 @@
 
 /**
  * @file
- * Declares timestream::odbc::IgniteError class.
+ * Declares trino::odbc::IgniteError class.
  */
 
-#ifndef _TIMESTREAM_ODBC_IGNITE_ERROR
-#define _TIMESTREAM_ODBC_IGNITE_ERROR
+#ifndef _TRINO_ODBC_IGNITE_ERROR
+#define _TRINO_ODBC_IGNITE_ERROR
 
 #include <ignite/common/common.h>
 #include <stdint.h>
@@ -98,7 +98,7 @@
 #pragma warning(disable : 4275)
 #endif  //_MSC_VER
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 
 /**
@@ -109,7 +109,7 @@ class IGNITE_IMPORT_EXPORT IgniteError : public std::exception {
   /** Success. */
   static const int IGNITE_SUCCESS = 0;
 
-  /** Failed to connect to Timestream */
+  /** Failed to connect to Trino */
   static const int IGNITE_ERR_TS_CONNECT = 102;
 
   /** Memory operation error. */
@@ -289,10 +289,10 @@ class IGNITE_IMPORT_EXPORT IgniteError : public std::exception {
   char* msg;
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
 #ifdef _MSC_VER
 #pragma warning(pop)
 #endif  //_MSC_VER
 
-#endif  //_TIMESTREAM_ODBC_IGNITE_ERROR
+#endif  //_TRINO_ODBC_IGNITE_ERROR

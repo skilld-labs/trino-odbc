@@ -3,9 +3,9 @@
 1. Open ODBC Driver Data Source Administrator (choose the proper bitness: 32 or 64)
     ![ODBC Driver Data Source Administrator](../images/odbc-data-source-admin.png)
 2. Click `Add` to add a new DSN.
-3. Choose Amazon Timestream ODBC Driver.
+3. Choose Amazon Trino ODBC Driver.
 4. Fill the Windows Form properly. For information on how to fill the properties, see [Connection String Properties](connection-string.md). 
-    ![Amazon Timestream DSN](../images/windows-dsn-configuration.png)
+    ![Amazon Trino DSN](../images/windows-dsn-configuration.png)
 5. Click `Test` to verify connectivity; you will get a `Connection succeeded` message if your configuration is correct.
 6. Click `OK` to save the DSN values. 
 

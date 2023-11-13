@@ -18,14 +18,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_COMMON_TYPES
-#define _TIMESTREAM_ODBC_COMMON_TYPES
+#ifndef _TRINO_ODBC_COMMON_TYPES
+#define _TRINO_ODBC_COMMON_TYPES
 
 #include <stdint.h>
 
 #include "system/odbc_constants.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 
 #define STRING_BUFFER_SIZE 2048
@@ -395,7 +395,7 @@ struct ResponseStatus {
     NULL_VALUE = 4004,
 
     /** EntryProcessor has thrown an exception during
-       TIMESTREAMCache::invokeAll. */
+       TRINOCache::invokeAll. */
     ENTRY_PROCESSING = 4005,
 
     /** Cache not found. */
@@ -410,7 +410,7 @@ struct ResponseStatus {
 };
 
 /**
- * Convert internal TIMESTREAM type into ODBC SQL return code.
+ * Convert internal TRINO type into ODBC SQL return code.
  *
  * @param result Internal result type.
  * @return ODBC result type.
@@ -418,7 +418,7 @@ struct ResponseStatus {
 int SqlResultToReturnCode(SqlResult::Type result);
 
 /**
- * Convert ODBC SQL return code into internal TIMESTREAM type.
+ * Convert ODBC SQL return code into internal TRINO type.
  *
  * @param ODBC result type.
  * @return result Internal result type.
@@ -450,6 +450,6 @@ EnvironmentAttribute::Type EnvironmentAttributeToInternal(int32_t attr);
  */
 SqlState::Type ResponseStatusToSqlState(int32_t status);
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_COMMON_TYPES
+#endif  //_TRINO_ODBC_COMMON_TYPES

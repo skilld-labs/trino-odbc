@@ -1,6 +1,6 @@
 # Connection Proxy Setup Guide
 
-Timestream ODBC driver supports connecting to Amazon Timestream through a proxy. To use this feauture the following environment variables should be configured based on your proxy setting.
+Trino ODBC driver supports connecting to Amazon Trino through a proxy. To use this feauture the following environment variables should be configured based on your proxy setting.
 
 |  Environment Variable       |   Comment                                                              |
 |-----------------------------|------------------------------------------------------------------------|

@@ -1,7 +1,7 @@
-# Microsoft Power BI Desktop - Connecting to an Amazon Timestream ODBC data source
+# Microsoft Power BI Desktop - Connecting to an Amazon Trino ODBC data source
 
 ## Prerequisites
-Before you get started, [configure the Amazon Timestream ODBC driver DSN](windows-dsn-configuration.md) using the Windows ODBC Data Source Administrator. 
+Before you get started, [configure the Amazon Trino ODBC driver DSN](windows-dsn-configuration.md) using the Windows ODBC Data Source Administrator. 
 
 ## Connecting to an ODBC data source
 
@@ -9,7 +9,7 @@ Before you get started, [configure the Amazon Timestream ODBC driver DSN](window
 
 ![PowerBI ODBC select](../images/get_data_odbc.png)
 
-2. Select the DSN from the `Data source name (DSN)` drop-down box (e.g. timestream-aws-profile) and click `OK`.
+2. Select the DSN from the `Data source name (DSN)` drop-down box (e.g. trino-aws-profile) and click `OK`.
 
 ![PowerBI ODBC DSN select](../images/from_odbc.png)
 

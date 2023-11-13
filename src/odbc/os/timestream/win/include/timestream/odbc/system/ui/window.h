@@ -21,10 +21,10 @@
 #ifndef _IGNITE_ODBC_SYSTEM_UI_WINDOW
 #define _IGNITE_ODBC_SYSTEM_UI_WINDOW
 
-#include "timestream/odbc/system/odbc_constants.h"
-#include "timestream/odbc/utility.h"
+#include "trino/odbc/system/odbc_constants.h"
+#include "trino/odbc/utility.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace system {
 namespace ui {
@@ -222,6 +222,6 @@ class Window {
 }  // namespace ui
 }  // namespace system
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
 #endif  //_IGNITE_ODBC_SYSTEM_UI_WINDOW

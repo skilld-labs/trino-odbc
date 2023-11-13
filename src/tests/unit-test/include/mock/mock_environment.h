@@ -17,9 +17,9 @@
 #ifndef _IGNITE_ODBC_MOCK_ENVIRONMENT
 #define _IGNITE_ODBC_MOCK_ENVIRONMENT
 
-#include "timestream/odbc/environment.h"
+#include "trino/odbc/environment.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /**
  * Mock Environment so function level test could be done against Environment.
@@ -54,6 +54,6 @@ class MockEnvironment : public Environment {
   virtual SqlResult::Type InternalCreateConnection(Connection*& connection);
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
 #endif  //_IGNITE_ODBC_MOCK_ENVIRONMENT

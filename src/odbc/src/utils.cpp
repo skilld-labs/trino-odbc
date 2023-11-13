@@ -18,9 +18,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <timestream/odbc/utils.h>
+#include <trino/odbc/utils.h>
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace common {
 /**
@@ -189,4 +189,4 @@ IGNITE_IMPORT_EXPORT bool AllDigits(const std::string& val) {
 
 }  // namespace common
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino

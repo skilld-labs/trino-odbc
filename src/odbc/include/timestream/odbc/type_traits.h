@@ -18,12 +18,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _TIMESTREAM_ODBC_TYPE_TRAITS
-#define _TIMESTREAM_ODBC_TYPE_TRAITS
+#ifndef _TRINO_ODBC_TYPE_TRAITS
+#define _TRINO_ODBC_TYPE_TRAITS
 
-#ifndef TIMESTREAM_SQL_MAX_LENGTH
-#define TIMESTREAM_SQL_MAX_LENGTH 65532
-#endif  // TIMESTREAM_SQL_MAX_LENGTH
+#ifndef TRINO_SQL_MAX_LENGTH
+#define TRINO_SQL_MAX_LENGTH 65532
+#endif  // TRINO_SQL_MAX_LENGTH
 
 #include <stdint.h>
 
@@ -32,11 +32,11 @@
 #include <boost/optional.hpp>
 #include <ignite/common/common.h>
 /*@*/
-#include <aws/timestream-query/model/ScalarType.h>
+#include <aws/trino-query/model/ScalarType.h>
 
-using Aws::TimestreamQuery::Model::ScalarType;
+using Aws::TrinoQuery::Model::ScalarType;
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 namespace type_traits {
 #ifdef _DEBUG
@@ -410,6 +410,6 @@ bool SqlTypeUnsigned(boost::optional< int16_t > type);
 bool BinaryTypeUnsigned(boost::optional< int16_t > type);
 }  // namespace type_traits
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
-#endif  //_TIMESTREAM_ODBC_TYPE_TRAITS
+#endif  //_TRINO_ODBC_TYPE_TRAITS

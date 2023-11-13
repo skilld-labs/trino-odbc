@@ -17,9 +17,9 @@
 #ifndef _IGNITE_ODBC_MOCK_STATEMENT
 #define _IGNITE_ODBC_MOCK_STATEMENT
 
-#include "timestream/odbc/statement.h"
+#include "trino/odbc/statement.h"
 
-namespace timestream {
+namespace trino {
 namespace odbc {
 /**
  * Mock Statement so function level test could be done against Statement.
@@ -39,6 +39,6 @@ class MockStatement : public Statement {
   ~MockStatement();
 };
 }  // namespace odbc
-}  // namespace timestream
+}  // namespace trino
 
 #endif  //_IGNITE_ODBC_MOCK_STATEMENT

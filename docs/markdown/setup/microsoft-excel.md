@@ -1,4 +1,4 @@
-# Microsoft Excel - Connecting to an Amazon Timestream ODBC data source
+# Microsoft Excel - Connecting to an Amazon Trino ODBC data source
 
 ## Topics
 - [Excel on Windows](#windows)
@@ -7,7 +7,7 @@
 # Windows
 
 ## Prerequisites
-Before you get started, [configure the Amazon Timestream ODBC driver DSN](windows-dsn-configuration.md) using the Windows ODBC Data Source Administrator. 
+Before you get started, [configure the Amazon Trino ODBC driver DSN](windows-dsn-configuration.md) using the Windows ODBC Data Source Administrator. 
 
 ## Connecting to an ODBC data source
 
@@ -19,7 +19,7 @@ Before you get started, [configure the Amazon Timestream ODBC driver DSN](window
 
 ![Excel ODBC](../images/excel_odbc.png)
 
-4. Choose predefined DSN (e.g., Timestream DSN-test), click "OK"
+4. Choose predefined DSN (e.g., Trino DSN-test), click "OK"
 
 ![Excel DSN](../images/excel_dsn.png)
 
@@ -57,7 +57,7 @@ We suggest to remove saved cache and try loading data again.
 # MacOS
 
 ## Prerequisites
-Before you get started, [configure the Amazon Timestream ODBC driver DSN](macOS-dsn-configuration.md) by using the iODBC 
+Before you get started, [configure the Amazon Trino ODBC driver DSN](macOS-dsn-configuration.md) by using the iODBC 
 Driver Manager or editing `odbcinst.ini` file.
 
 ## Connecting to an ODBC data source
@@ -70,14 +70,14 @@ Driver Manager or editing `odbcinst.ini` file.
 
 ![Excel ODBC (Mac)](../images/mac_excel_odbc.png)
 
-4. choose pre-defined DSN (e.g., Timestream-DSN) and click "Ok"
+4. choose pre-defined DSN (e.g., Trino-DSN) and click "Ok"
 
 ![Excel DSN (Mac)](../images/mac_excel_dsn.png)
 
 5. You're now successfully connected on Excel
 
 ## Connection with AWS Profile
-Microsoft Excel in macOS is a sandboxed application, which means it cannot access all files on the user's machine, and the access to AWS profile file can be impacted. Follow below steps for connecting Timestream ODBC driver with AWS Profile on macOS Excel.
+Microsoft Excel in macOS is a sandboxed application, which means it cannot access all files on the user's machine, and the access to AWS profile file can be impacted. Follow below steps for connecting Trino ODBC driver with AWS Profile on macOS Excel.
 1. Put AWS Profile `credentials` file in a folder where Excel has read access, such as `/Library`, `/Library/ODBC`, or `/Users/<username>/Library/Containers/com.microsoft.Excel/Data`. 
    - `/Users/<username>/Library/Containers/com.microsoft.Excel/Data` folder is automatically created by Excel. 
 2. Set the environment variable `AWS_SHARED_CREDENTIALS_FILE` to point to file in #1. 
@@ -88,4 +88,4 @@ Microsoft Excel in macOS is a sandboxed application, which means it cannot acces
 ## Trouble-shooting with macOS Excel
 We suggest users to not change log path by setting `logOutput` for DSNs used to connect on Excel in macOS. This is because macOS Excel can only write files in `/Users/<username>/Library/Containers/com.microsoft.Excel/Data`, which is the default driver logging location for Excel.
 
-If any issues occur, such as databases/tables aren't shown in Excel, check Timestream ODBC driver logs at `/Users/<username>/Library/Containers/com.microsoft.Excel/Data` to see the root cause.
+If any issues occur, such as databases/tables aren't shown in Excel, check Trino ODBC driver logs at `/Users/<username>/Library/Containers/com.microsoft.Excel/Data` to see the root cause.
