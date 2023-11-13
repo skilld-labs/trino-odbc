@@ -40,10 +40,8 @@ const std::string Configuration::DefaultValue::dsn = DEFAULT_DSN;
 const std::string Configuration::DefaultValue::driver = DEFAULT_DRIVER;
 const std::string Configuration::DefaultValue::uid = DEFAULT_UID;
 const std::string Configuration::DefaultValue::pwd = DEFAULT_PWD;
-// const std::string Configuration::DefaultValue::accessKeyId = DEFAULT_ACCESS_KEY_ID;
-const std::string Configuration::DefaultValue::secretKey = DEFAULT_SECRET_KEY;
-const std::string Configuration::DefaultValue::sessionToken =
-    DEFAULT_SESSION_TOKEN;
+const std::string Configuration::DefaultValue::secretKey = DEFAULT_SECRET_KEY; /*$*/
+const std::string Configuration::DefaultValue::sessionToken = DEFAULT_SESSION_TOKEN; /*$*/
 
 // Credential Providers Options
 const std::string Configuration::DefaultValue::profileName =
@@ -141,10 +139,6 @@ const std::string& Configuration::GetDSNUserName() const {
 
   LOG_DEBUG_MSG("AuthType: " << AuthType::ToCBString(GetAuthType()));
   switch (GetAuthType()) {
-    case AuthType::Type::IAM:
-      return GetAccessKeyId();
-
-    case AuthType::Type::OKTA:
     case AuthType::Type::AAD:
       return GetIdPUserName();
 
@@ -430,39 +424,27 @@ bool Configuration::IsLogPathSet() const {
   return logPath.IsSet();
 }
 
-// const std::string& Configuration::GetAccessKeyId() const {
-//   return accessKeyId.GetValue();
-// }
-
-// void Configuration::SetAccessKeyId(const std::string& accessKeyIdValue) {
-//   this->accessKeyId.SetValue(accessKeyIdValue);
-// }
-
-// bool Configuration::IsAccessKeyIdSet() const {
-//   return accessKeyId.IsSet();
-// }
-
 const std::string& Configuration::GetSecretKey() const {
-  return secretKey.GetValue();
+  return secretKey.GetValue(); /*$*/
 }
 
 void Configuration::SetSecretKey(const std::string& secretKey) {
-  this->secretKey.SetValue(secretKey);
+  this->secretKey.SetValue(secretKey); /*$*/
 }
 
 bool Configuration::IsSecretKeySet() const {
-  return secretKey.IsSet();
+  return secretKey.IsSet(); /*$*/
 }
 const std::string& Configuration::GetSessionToken() const {
-  return sessionToken.GetValue();
+  return sessionToken.GetValue(); /*$*/
 }
 
 void Configuration::SetSessionToken(const std::string& token) {
-  this->sessionToken.SetValue(token);
+  this->sessionToken.SetValue(token); /*$*/
 }
 
 bool Configuration::IsSessionTokenSet() const {
-  return sessionToken.IsSet();
+  return sessionToken.IsSet(); /*$*/
 }
 
 int32_t Configuration::GetMaxRowPerPage() const {
@@ -482,9 +464,8 @@ void Configuration::ToMap(ArgumentMap& res) const {
   AddToMap(res, ConnectionStringParser::Key::driver, driver);
   AddToMap(res, ConnectionStringParser::Key::uid, uid);
   AddToMap(res, ConnectionStringParser::Key::pwd, pwd);
-  // AddToMap(res, ConnectionStringParser::Key::accessKeyId, accessKeyId);
-  AddToMap(res, ConnectionStringParser::Key::secretKey, secretKey);
-  AddToMap(res, ConnectionStringParser::Key::sessionToken, sessionToken);
+  AddToMap(res, ConnectionStringParser::Key::secretKey, secretKey); /*$*/
+  AddToMap(res, ConnectionStringParser::Key::sessionToken, sessionToken); /*$*/
   AddToMap(res, ConnectionStringParser::Key::profileName, profileName);
   AddToMap(res, ConnectionStringParser::Key::reqTimeout, reqTimeout);
   AddToMap(res, ConnectionStringParser::Key::connectionTimeout,

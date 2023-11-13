@@ -36,9 +36,8 @@ const std::string ConnectionStringParser::Key::dsn = "dsn";
 const std::string ConnectionStringParser::Key::driver = "driver";
 const std::string ConnectionStringParser::Key::uid = "uid";
 const std::string ConnectionStringParser::Key::pwd = "pwd";
-// const std::string ConnectionStringParser::Key::accessKeyId = "accesskeyid";
-const std::string ConnectionStringParser::Key::secretKey = "secretkey";
-const std::string ConnectionStringParser::Key::sessionToken = "sessiontoken";
+const std::string ConnectionStringParser::Key::secretKey = "secretkey"; /*$*/
+const std::string ConnectionStringParser::Key::sessionToken = "sessiontoken"; /*$*/
 const std::string ConnectionStringParser::Key::profileName = "profilename";
 const std::string ConnectionStringParser::Key::reqTimeout = "requesttimeout";
 const std::string ConnectionStringParser::Key::connectionTimeout =
@@ -143,13 +142,13 @@ void ConnectionStringParser::HandleAttributePair(
   std::string lKey = trino::odbc::common::ToLower(key);
 
 /*$*/
-  // if (lKey == Key::uid || lKey == Key::accessKeyId || lKey == Key::idPUserName
-  //     || lKey == Key::pwd || lKey == Key::secretKey || lKey == Key::sessionToken
-  //     || lKey == Key::idPPassword || lKey == Key::aadClientSecret) {
-  //   LOG_DEBUG_MSG(lKey << " is found");
-  // } else {
-  //   LOG_DEBUG_MSG("key:value is " << lKey << ":" << value);
-  // }
+  if (lKey == Key::uid || lKey == Key::idPUserName
+      || lKey == Key::pwd || lKey == Key::secretKey || lKey == Key::sessionToken
+      || lKey == Key::idPPassword || lKey == Key::aadClientSecret) {
+    LOG_DEBUG_MSG(lKey << " is found");
+  } else {
+    LOG_DEBUG_MSG("key:value is " << lKey << ":" << value);
+  }
 
   if (lKey == Key::dsn) {
     cfg.SetDsn(value);
@@ -465,13 +464,6 @@ void ConnectionStringParser::HandleAttributePair(
           "Re-writing UID (have you specified it several times?");
     }
 
-    if (!cfg.GetAccessKeyId().empty()) {
-      LOG_WARNING_MSG(
-          "AccessKeyId is already set, but UID is being set too. Only one of "
-          "{UID, AccessKeyId} is needed. UID will take precedence when making "
-          "a connection.");
-    }
-
     if (!cfg.GetIdPUserName().empty()) {
       LOG_WARNING_MSG(
           "IdPUserName is already set, but UID is being set too. Only one of "
@@ -502,23 +494,7 @@ void ConnectionStringParser::HandleAttributePair(
     }
 
     cfg.SetPwd(value);
-/*$*/
-  // } else if (lKey == Key::accessKeyId) {
-  //   if (!cfg.GetAccessKeyId().empty() && diag) {
-  //     diag->AddStatusRecord(
-  //         SqlState::S01S02_OPTION_VALUE_CHANGED,
-  //         "Re-writing AccessKeyId (have you specified it several times?");
-  //   }
-
-  //   if (!cfg.GetUid().empty()) {
-  //     LOG_WARNING_MSG(
-  //         "UID is already set, but AccessKeyId is being set too. Only one of "
-  //         "{UID, AccessKeyId} is needed. UID will take precedence when making "
-  //         "a connection.");
-  //   }
-
-  //   cfg.SetAccessKeyId(value);
-  } else if (lKey == Key::secretKey) {
+  } else if (lKey == Key::secretKey) { /*$*/
     if (!cfg.GetSecretKey().empty() && diag) {
       diag->AddStatusRecord(
           SqlState::S01S02_OPTION_VALUE_CHANGED,
@@ -533,7 +509,7 @@ void ConnectionStringParser::HandleAttributePair(
     }
 
     cfg.SetSecretKey(value);
-  } else if (lKey == Key::sessionToken) {
+  } else if (lKey == Key::sessionToken) { /*$*/
     if (!cfg.GetSessionToken().empty() && diag) {
       diag->AddStatusRecord(
           SqlState::S01S02_OPTION_VALUE_CHANGED,

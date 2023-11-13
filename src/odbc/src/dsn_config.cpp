@@ -150,22 +150,16 @@ void ReadDsnConfiguration(const char* dsn, Configuration& config,
   if (pwd.IsSet() && !config.IsPwdSet())
     config.SetPwd(pwd.GetValue());
 
-  // SettableValue< std::string > accessKeyId =
-      // ReadDsnString(dsn, ConnectionStringParser::Key::accessKeyId);
-
-  // if (accessKeyId.IsSet() && !config.IsAccessKeyIdSet())
-  //   config.SetAccessKeyId(accessKeyId.GetValue());
-
   SettableValue< std::string > secretKey =
-      ReadDsnString(dsn, ConnectionStringParser::Key::secretKey);
+      ReadDsnString(dsn, ConnectionStringParser::Key::secretKey); /*$*/
 
-  if (secretKey.IsSet() && !config.IsSecretKeySet())
+  if (secretKey.IsSet() && !config.IsSecretKeySet()) /*$*/
     config.SetSecretKey(secretKey.GetValue());
 
   SettableValue< std::string > sessionToken =
-      ReadDsnString(dsn, ConnectionStringParser::Key::sessionToken);
+      ReadDsnString(dsn, ConnectionStringParser::Key::sessionToken); /*$*/
 
-  if (sessionToken.IsSet() && !config.IsSessionTokenSet())
+  if (sessionToken.IsSet() && !config.IsSessionTokenSet()) /*$*/
     config.SetSessionToken(sessionToken.GetValue());
 
   SettableValue< std::string > profileName =

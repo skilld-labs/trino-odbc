@@ -656,7 +656,6 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
     credentials = credProvider.GetAWSCredentials();
     LOG_DEBUG_MSG("profile name is " << cfg.GetProfileName());
   // } else if (authType == AuthType::Type::IAM) {
-  //   credentials.SetAWSAccessKeyId(cfg.GetDSNUserName());
   //   credentials.SetAWSSecretKey(cfg.GetDSNPassword());
   //   credentials.SetSessionToken(cfg.GetSessionToken());
   } else {

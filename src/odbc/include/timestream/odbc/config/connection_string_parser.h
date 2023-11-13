@@ -48,14 +48,11 @@ class IGNITE_IMPORT_EXPORT ConnectionStringParser {
     /** Connection attribute keyword for pwd attribute. */
     static const std::string pwd;
 
-    /** Connection attribute keyword for accessKeyId attribute. */
-    // static const std::string accessKeyId;
-
     /** Connection attribute keyword for secretKey attribute. */
-    static const std::string secretKey;
+    static const std::string secretKey; /*$*/
 
     /** Connection attribute keyword for sessiontoken attribute. */
-    static const std::string sessionToken;
+    static const std::string sessionToken; /*$*/
 
     /** Connection attribute keyword for profileName attribute. */
     static const std::string profileName;

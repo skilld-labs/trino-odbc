@@ -53,7 +53,7 @@ DsnConfigurationWindow::DsnConfigurationWindow(Window* parent,
       tabsGroupBox(),
       authTypeComboBox(),
       authTypeLabel(),
-      accessKeyIdEdit(),
+      accessKeyIdEdit(), /*$*/
       accessKeyIdLabel(),
       secretAccessKeyEdit(),
       secretAccessKeyLabel(),
@@ -296,7 +296,7 @@ void DsnConfigurationWindow::ShowAdvanceAuth(bool visible) const {
     // Show fields in Advance Authentication based on selection of authType
     OnAuthTypeChanged();
   } else {
-    ShowWindow(accessKeyIdEdit->GetHandle(), visible);
+    ShowWindow(accessKeyIdEdit->GetHandle(), visible); /*$*/
     ShowWindow(accessKeyIdLabel->GetHandle(), visible);
     ShowWindow(secretAccessKeyEdit->GetHandle(), visible);
     ShowWindow(secretAccessKeyLabel->GetHandle(), visible);
@@ -422,57 +422,15 @@ void DsnConfigurationWindow::OnAuthTypeChanged() const {
   ShowWindow(profileNameLabel->GetHandle(), authTypePassword);
 
   // // enable/disable OAUTH2 Credentials fields
-  // accessKeyIdEdit->SetEnabled(authTypeOauth2);
   // secretAccessKeyEdit->SetEnabled(authTypeOauth2);
   // sessionTokenEdit->SetEnabled(authTypeOauth2);
 
   // // hide/show OAUTH2 Credentials fields
-  // ShowWindow(accessKeyIdLabel->GetHandle(), authTypeOauth2);
-  // ShowWindow(accessKeyIdEdit->GetHandle(), authTypeOauth2);
   // ShowWindow(secretAccessKeyLabel->GetHandle(), authTypeOauth2);
   // ShowWindow(secretAccessKeyEdit->GetHandle(), authTypeOauth2);
   // ShowWindow(sessionTokenLabel->GetHandle(), authTypeOauth2);
   // ShowWindow(sessionTokenEdit->GetHandle(), authTypeOauth2);
 
-  // // enable/disable generic advance authenication fields
-  // // (fields that apply to both Okta and AAD)
-  // roleArnEdit->SetEnabled(authTypeEqSaml);
-  // idPUserNameEdit->SetEnabled(authTypeEqSaml);
-  // idPPasswordEdit->SetEnabled(authTypeEqSaml);
-  // idPArnEdit->SetEnabled(authTypeEqSaml);
-
-  // // hide/show generic advance authenication fields
-  // ShowWindow(idPUserNameEdit->GetHandle(), authTypeEqSaml);
-  // ShowWindow(idPUserNameLabel->GetHandle(), authTypeEqSaml);
-  // ShowWindow(idPPasswordEdit->GetHandle(), authTypeEqSaml);
-  // ShowWindow(idPPasswordLabel->GetHandle(), authTypeEqSaml);
-  // ShowWindow(idPArnEdit->GetHandle(), authTypeEqSaml);
-  // ShowWindow(idPArnLabel->GetHandle(), authTypeEqSaml);
-  // ShowWindow(roleArnEdit->GetHandle(), authTypeEqSaml);
-  // ShowWindow(roleArnLabel->GetHandle(), authTypeEqSaml);
-
-  // // enable/disable Okta-related fields
-  // idPHostEdit->SetEnabled(authTypeCertificate);
-  // oktaAppIdEdit->SetEnabled(authTypeCertificate);
-
-  // // hide/show Okta-related fields
-  // ShowWindow(idPHostLabel->GetHandle(), authTypeCertificate);
-  // ShowWindow(idPHostEdit->GetHandle(), authTypeCertificate);
-  // ShowWindow(oktaAppIdEdit->GetHandle(), authTypeCertificate);
-  // ShowWindow(oktaAppIdLabel->GetHandle(), authTypeCertificate);
-
-  // // enable/disable AAD-related fields
-  // aadAppIdEdit->SetEnabled(authTypeKerberos);
-  // aadClientSecretEdit->SetEnabled(authTypeKerberos);
-  // aadTenantEdit->SetEnabled(authTypeKerberos);
-
-  // // hide/show AAD-related fields
-  // ShowWindow(aadAppIdEdit->GetHandle(), authTypeKerberos);
-  // ShowWindow(aadAppIdLabel->GetHandle(), authTypeKerberos);
-  // ShowWindow(aadClientSecretEdit->GetHandle(), authTypeKerberos);
-  // ShowWindow(aadClientSecretLabel->GetHandle(), authTypeKerberos);
-  // ShowWindow(aadTenantEdit->GetHandle(), authTypeKerberos);
-  // ShowWindow(aadTenantLabel->GetHandle(), authTypeKerberos);
 }
 
 void DsnConfigurationWindow::OnLogLevelChanged() const {
@@ -574,7 +532,7 @@ int DsnConfigurationWindow::CreateAuthenticationSettingsGroup(int posX,
 
   int authTypeRowPos = rowPos;
 
-  std::wstring wVal = utility::FromUtf8(config.GetAccessKeyId());
+/*$*/
   accessKeyIdLabel =
       CreateLabel(labelPosX, rowPos, LABEL_WIDTH, ROW_HEIGHT, L"Access Key ID:",
                   ChildId::ACCESS_KEY_ID_LABEL);
@@ -1006,7 +964,7 @@ void DsnConfigurationWindow::RetrieveBasicParameters(
 
 void DsnConfigurationWindow::RetrieveBasicAuthParameters(
     config::Configuration& cfg) const {
-  std::wstring accessKeyIdWStr;
+  std::wstring accessKeyIdWStr; /*$*/
   std::wstring secretKeyWStr;
   std::wstring sessionTokenWStr;
   std::wstring profileNameWStr;
@@ -1021,7 +979,6 @@ void DsnConfigurationWindow::RetrieveBasicAuthParameters(
   std::string sessionTokenStr = TRIM_UTF8(sessionTokenWStr);
   std::string profileNameStr = TRIM_UTF8(profileNameWStr);
 
-  cfg.SetAccessKeyId(accessKeyIdStr);
   cfg.SetSecretKey(secretKeyStr);
   cfg.SetSessionToken(sessionTokenStr);
   cfg.SetProfileName(profileNameStr);
@@ -1029,8 +986,6 @@ void DsnConfigurationWindow::RetrieveBasicAuthParameters(
   LOG_INFO_MSG("Retrieving arguments:");
   LOG_INFO_MSG("Session Token:                   " << sessionTokenStr);
   LOG_INFO_MSG("Profile Name: " << profileNameStr);
-  LOG_INFO_MSG("Access Key Id is "
-               << (accessKeyIdStr.empty() ? "empty" : "not empty"));
   LOG_INFO_MSG("Secret key is  "
                << (secretKeyStr.empty() ? "empty" : "not empty"));
   // username and password intentionally not logged for security reasons

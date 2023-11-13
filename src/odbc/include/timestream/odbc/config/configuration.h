@@ -37,7 +37,6 @@
 #define DEFAULT_UID ""
 #define DEFAULT_PWD ""
 /*$*/
-// #define DEFAULT_ACCESS_KEY_ID ""
 #define DEFAULT_SECRET_KEY ""
 #define DEFAULT_SESSION_TOKEN ""
 
@@ -91,14 +90,11 @@ class IGNITE_IMPORT_EXPORT Configuration {
     /** Default value for pwd attribute. */
     static const std::string pwd;
 
-    /** Default value for accessKeyId attribute. */
-    // static const std::string accessKeyId;
-
     /** Default value for secretKey attribute. */
-    static const std::string secretKey;
+    static const std::string secretKey; /*$*/
 
     /** Default value for sessionToken attribute. */
-    static const std::string sessionToken;
+    static const std::string sessionToken; /*$*/
 
     /** Default value for profileName attribute. */
     static const std::string profileName;
@@ -249,30 +245,6 @@ class IGNITE_IMPORT_EXPORT Configuration {
    * @return @true if the value set.
    */
   bool IsPwdSet() const;
-
-  /**
-   * Get accessKeyId.
-   *
-   * @return accessKeyId.
-   */
-/*$*/
-  // const std::string& GetAccessKeyId() const;
-
-  /**
-   * Set accessKeyId.
-   *
-   * @param accessKeyId accessKeyId.
-   */
-/*$*/
-  // void SetAccessKeyId(const std::string& accessKeyIdValue);
-
-  /**
-   * Check if the value set.
-   *
-   * @return @true if the value set.
-   */
-/*$*/
-  // bool IsAccessKeyIdSet() const;
 
   /**
    * Get secretKey.
@@ -785,14 +757,11 @@ class IGNITE_IMPORT_EXPORT Configuration {
   /** PWD. */
   SettableValue< std::string > pwd = DefaultValue::pwd;
 
-  /** Access Key Id. */
-  // SettableValue< std::string > accessKeyId = DefaultValue::accessKeyId;
-
   /** Secret Key. */
-  SettableValue< std::string > secretKey = DefaultValue::secretKey;
+  SettableValue< std::string > secretKey = DefaultValue::secretKey; /*$*/
 
   /** Session Token. */
-  SettableValue< std::string > sessionToken = DefaultValue::sessionToken;
+  SettableValue< std::string > sessionToken = DefaultValue::sessionToken; /*$*/
 
   /** Profile Name. */
   SettableValue< std::string > profileName = DefaultValue::profileName;

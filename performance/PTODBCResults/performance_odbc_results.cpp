@@ -1041,8 +1041,7 @@ int main(int argc, char** argv) {
   // Enable malloc logging for detecting memory leaks.
   system("export MallocStackLogging=1");
 #endif
-  // std::string accessKeyId;
-  std::string secretKey;
+  std::string secretKey; /*$*/
   std::string region = "us-west-2";
   std::string defaultConnStr = "DSN=trino-iam;";
   std::string specialConnStr;
@@ -1052,11 +1051,8 @@ int main(int argc, char** argv) {
     for (int i = 1; i < argc; i++) {
       if (strcmp(argv[i], "--large-test") == 0) {
         enableLargeTest = true;
-      // } else if (strcmp(argv[i], "--access-key-id") == 0 && i + 1 < argc) {
-      //   accessKeyId = std::string(argv[i + 1]);
-      //   i++;
       } else if (strcmp(argv[i], "--secret-key") == 0 && i + 1 < argc) {
-        secretKey = std::string(argv[i + 1]);
+        secretKey = std::string(argv[i + 1]); /*$*/
         i++;
       } else if (strcmp(argv[i], "--region") == 0 && i + 1 < argc) {
         region = std::string(argv[i + 1]);
@@ -1081,11 +1077,6 @@ int main(int argc, char** argv) {
 
 /*$*/
   // if (!accessKeyId.empty() && !secretKey.empty()) {
-  //   specialConnStr = std::string("Driver=Amazon Trino ODBC Driver;")
-  //                    + "Region=" + region + ";LogLevel=0;Auth=IAM;AccessKeyId="
-  //                    + accessKeyId + ";" + "SecretKey=" + secretKey + ";";
-  //   connectionString =
-  //       std::vector< SQLWCHAR >(specialConnStr.begin(), specialConnStr.end());
   // } else {
   //   connectionString =
   //       std::vector< SQLWCHAR >(defaultConnStr.begin(), defaultConnStr.end());
