@@ -53,12 +53,6 @@ DsnConfigurationWindow::DsnConfigurationWindow(Window* parent,
       tabsGroupBox(),
       authTypeComboBox(),
       authTypeLabel(),
-      accessKeyIdEdit(), /*$*/
-      accessKeyIdLabel(),
-      secretAccessKeyEdit(),
-      secretAccessKeyLabel(),
-      sessionTokenEdit(),
-      sessionTokenLabel(),
       profileNameEdit(),
       profileNameLabel(),
       roleArnEdit(),
@@ -296,12 +290,6 @@ void DsnConfigurationWindow::ShowAdvanceAuth(bool visible) const {
     // Show fields in Advance Authentication based on selection of authType
     OnAuthTypeChanged();
   } else {
-    ShowWindow(accessKeyIdEdit->GetHandle(), visible); /*$*/
-    ShowWindow(accessKeyIdLabel->GetHandle(), visible);
-    ShowWindow(secretAccessKeyEdit->GetHandle(), visible);
-    ShowWindow(secretAccessKeyLabel->GetHandle(), visible);
-    ShowWindow(sessionTokenEdit->GetHandle(), visible);
-    ShowWindow(sessionTokenLabel->GetHandle(), visible);
     ShowWindow(profileNameEdit->GetHandle(), visible);
     ShowWindow(profileNameLabel->GetHandle(), visible);
     ShowWindow(roleArnEdit->GetHandle(), visible);
@@ -421,16 +409,6 @@ void DsnConfigurationWindow::OnAuthTypeChanged() const {
   ShowWindow(profileNameEdit->GetHandle(), authTypePassword);
   ShowWindow(profileNameLabel->GetHandle(), authTypePassword);
 
-  // // enable/disable OAUTH2 Credentials fields
-  // secretAccessKeyEdit->SetEnabled(authTypeOauth2);
-  // sessionTokenEdit->SetEnabled(authTypeOauth2);
-
-  // // hide/show OAUTH2 Credentials fields
-  // ShowWindow(secretAccessKeyLabel->GetHandle(), authTypeOauth2);
-  // ShowWindow(secretAccessKeyEdit->GetHandle(), authTypeOauth2);
-  // ShowWindow(sessionTokenLabel->GetHandle(), authTypeOauth2);
-  // ShowWindow(sessionTokenEdit->GetHandle(), authTypeOauth2);
-
 }
 
 void DsnConfigurationWindow::OnLogLevelChanged() const {
@@ -531,34 +509,6 @@ int DsnConfigurationWindow::CreateAuthenticationSettingsGroup(int posX,
   rowPos += INTERVAL + ROW_HEIGHT;
 
   int authTypeRowPos = rowPos;
-
-/*$*/
-  accessKeyIdLabel =
-      CreateLabel(labelPosX, rowPos, LABEL_WIDTH, ROW_HEIGHT, L"Access Key ID:",
-                  ChildId::ACCESS_KEY_ID_LABEL);
-  accessKeyIdEdit = CreateEdit(editPosX, rowPos, editSizeX, ROW_HEIGHT, wVal,
-                               ChildId::ACCESS_KEY_ID_EDIT);
-
-  rowPos += INTERVAL + ROW_HEIGHT;
-
-  wVal = utility::FromUtf8(config.GetSecretKey());
-  secretAccessKeyLabel =
-      CreateLabel(labelPosX, rowPos, LABEL_WIDTH, ROW_HEIGHT,
-                  L"Secret Access Key:", ChildId::SECRET_ACCESS_KEY_LABEL);
-  secretAccessKeyEdit =
-      CreateEdit(editPosX, rowPos, editSizeX, ROW_HEIGHT, wVal,
-                 ChildId::SECRET_ACCESS_KEY_EDIT, ES_PASSWORD);
-
-  rowPos += INTERVAL + ROW_HEIGHT;
-
-  wVal = utility::FromUtf8(config.GetSessionToken());
-  sessionTokenLabel =
-      CreateLabel(labelPosX, rowPos, LABEL_WIDTH, ROW_HEIGHT, L"Session Token:",
-                  ChildId::SESSION_TOKEN_LABEL);
-  sessionTokenEdit = CreateEdit(editPosX, rowPos, editSizeX, ROW_HEIGHT, wVal,
-                                ChildId::SESSION_TOKEN_EDIT);
-
-  rowPos = authTypeRowPos;
 
   wVal = utility::FromUtf8(config.GetProfileName());
   profileNameLabel = CreateLabel(labelPosX, rowPos, LABEL_WIDTH, ROW_HEIGHT,
@@ -964,30 +914,16 @@ void DsnConfigurationWindow::RetrieveBasicParameters(
 
 void DsnConfigurationWindow::RetrieveBasicAuthParameters(
     config::Configuration& cfg) const {
-  std::wstring accessKeyIdWStr; /*$*/
-  std::wstring secretKeyWStr;
-  std::wstring sessionTokenWStr;
   std::wstring profileNameWStr;
 
-  accessKeyIdEdit->GetText(accessKeyIdWStr);
-  secretAccessKeyEdit->GetText(secretKeyWStr);
-  sessionTokenEdit->GetText(sessionTokenWStr);
   profileNameEdit->GetText(profileNameWStr);
 
-  std::string accessKeyIdStr = TRIM_UTF8(accessKeyIdWStr);
-  std::string secretKeyStr = TRIM_UTF8(secretKeyWStr);
-  std::string sessionTokenStr = TRIM_UTF8(sessionTokenWStr);
   std::string profileNameStr = TRIM_UTF8(profileNameWStr);
 
-  cfg.SetSecretKey(secretKeyStr);
-  cfg.SetSessionToken(sessionTokenStr);
   cfg.SetProfileName(profileNameStr);
 
   LOG_INFO_MSG("Retrieving arguments:");
-  LOG_INFO_MSG("Session Token:                   " << sessionTokenStr);
   LOG_INFO_MSG("Profile Name: " << profileNameStr);
-  LOG_INFO_MSG("Secret key is  "
-               << (secretKeyStr.empty() ? "empty" : "not empty"));
   // username and password intentionally not logged for security reasons
 }
 

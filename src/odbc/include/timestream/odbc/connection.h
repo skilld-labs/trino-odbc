@@ -321,6 +321,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
    */
   Connection(Environment* env);
 
+/*$*/
   /**
    * Create TrinoQueryClient object.
    *

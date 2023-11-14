@@ -36,9 +36,6 @@ bool TrinoSAMLCredentialsProvider::FetchCredentialsWithSAMLAssertion(
     const Aws::STS::Model::Credentials& credentials =
         outcome.GetResult().GetCredentials();
 
-    awsCredentials.SetAWSSecretKey(credentials.GetSecretAccessKey());
-    awsCredentials.SetSessionToken(credentials.GetSessionToken());
-
     retval = true;
   } else {
     auto error = outcome.GetError();

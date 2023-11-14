@@ -40,8 +40,6 @@ const std::string Configuration::DefaultValue::dsn = DEFAULT_DSN;
 const std::string Configuration::DefaultValue::driver = DEFAULT_DRIVER;
 const std::string Configuration::DefaultValue::uid = DEFAULT_UID;
 const std::string Configuration::DefaultValue::pwd = DEFAULT_PWD;
-const std::string Configuration::DefaultValue::secretKey = DEFAULT_SECRET_KEY; /*$*/
-const std::string Configuration::DefaultValue::sessionToken = DEFAULT_SESSION_TOKEN; /*$*/
 
 // Credential Providers Options
 const std::string Configuration::DefaultValue::profileName =
@@ -154,10 +152,6 @@ const std::string& Configuration::GetDSNPassword() const {
 
   LOG_DEBUG_MSG("AuthType: " << AuthType::ToCBString(GetAuthType()));
   switch (GetAuthType()) {
-    case AuthType::Type::IAM:
-      return GetSecretKey();
-
-    case AuthType::Type::OKTA:
     case AuthType::Type::AAD:
       return GetIdPPassword();
 
@@ -424,29 +418,6 @@ bool Configuration::IsLogPathSet() const {
   return logPath.IsSet();
 }
 
-const std::string& Configuration::GetSecretKey() const {
-  return secretKey.GetValue(); /*$*/
-}
-
-void Configuration::SetSecretKey(const std::string& secretKey) {
-  this->secretKey.SetValue(secretKey); /*$*/
-}
-
-bool Configuration::IsSecretKeySet() const {
-  return secretKey.IsSet(); /*$*/
-}
-const std::string& Configuration::GetSessionToken() const {
-  return sessionToken.GetValue(); /*$*/
-}
-
-void Configuration::SetSessionToken(const std::string& token) {
-  this->sessionToken.SetValue(token); /*$*/
-}
-
-bool Configuration::IsSessionTokenSet() const {
-  return sessionToken.IsSet(); /*$*/
-}
-
 int32_t Configuration::GetMaxRowPerPage() const {
   return maxRowPerPage.GetValue();
 }
@@ -464,8 +435,6 @@ void Configuration::ToMap(ArgumentMap& res) const {
   AddToMap(res, ConnectionStringParser::Key::driver, driver);
   AddToMap(res, ConnectionStringParser::Key::uid, uid);
   AddToMap(res, ConnectionStringParser::Key::pwd, pwd);
-  AddToMap(res, ConnectionStringParser::Key::secretKey, secretKey); /*$*/
-  AddToMap(res, ConnectionStringParser::Key::sessionToken, sessionToken); /*$*/
   AddToMap(res, ConnectionStringParser::Key::profileName, profileName);
   AddToMap(res, ConnectionStringParser::Key::reqTimeout, reqTimeout);
   AddToMap(res, ConnectionStringParser::Key::connectionTimeout,
@@ -506,6 +475,7 @@ void Configuration::Validate() const {
         "and IdpArn");
   }
 
+/*$*/
   if ((GetAuthType() == trino::odbc::AuthType::Type::AAD)
       && (GetDSNUserName().empty() || GetDSNPassword().empty()
           || GetIdPArn().empty() || GetRoleArn().empty()
@@ -525,9 +495,7 @@ void Configuration::Validate() const {
     throw ignite::odbc::OdbcError(
         SqlState::S01S00_INVALID_CONNECTION_STRING_ATTRIBUTE,
         "The following is required to connect:\n"
-        "AUTH is \"IAM\" and "
-        "UID and PWD or "
-        "AccessKeyId and Secretkey");
+        "AUTH is ");
   }
 }
 

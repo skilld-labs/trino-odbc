@@ -30,6 +30,7 @@
 #include "performance_helper.h"
 // clang-format on
 #define ITERATION_COUNT 12
+/*$*/
 testString dsn_conn_string = CREATE_STRING("DSN=trino-iam");
 const wchar_t* const query = L"SELECT * FROM ODBCTest.IoT limit 10000";
 

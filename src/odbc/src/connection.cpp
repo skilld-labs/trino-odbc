@@ -626,7 +626,6 @@ std::shared_ptr< Aws::STS::STSClient > Connection::GetStsClient() {
   return std::make_shared< Aws::STS::STSClient >();
 }
 
-/*$*/
 bool Connection::TryRestoreConnection(const config::Configuration& cfg,
                                       IgniteError& err) {
   LOG_DEBUG_MSG("TryRestoreConnection is called");
@@ -635,29 +634,11 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
 
   AuthType::Type authType = cfg.GetAuthType();
   LOG_DEBUG_MSG("auth type is " << static_cast< int >(authType));
-  // if (authType == AuthType::Type::OKTA) {
-  //   std::shared_ptr< Aws::Http::HttpClient > httpClient = GetHttpClient();
-  //   std::shared_ptr< Aws::STS::STSClient > stsClient = GetStsClient();
-  //   samlCredProvider_ =
-  //       std::make_shared< trino::odbc::TrinoOktaCredentialsProvider >(
-  //           cfg, httpClient, stsClient);
-  //   samlCredProvider_->GetAWSCredentials(credentials, errInfo);
-  // } else if (authType == AuthType::Type::AAD) {
-  //   std::shared_ptr< Aws::Http::HttpClient > httpClient = GetHttpClient();
-  //   std::shared_ptr< Aws::STS::STSClient > stsClient = GetStsClient();
-  //   samlCredProvider_ =
-  //       std::make_shared< trino::odbc::TrinoAADCredentialsProvider >(
-  //           cfg, httpClient, stsClient);
-  //   samlCredProvider_->GetAWSCredentials(credentials, errInfo);
-  // } else 
   if (authType == AuthType::Type::PASSWORD) {
     Aws::Auth::ProfileConfigFileAWSCredentialsProvider credProvider(
         cfg.GetProfileName().data());
     credentials = credProvider.GetAWSCredentials();
     LOG_DEBUG_MSG("profile name is " << cfg.GetProfileName());
-  // } else if (authType == AuthType::Type::IAM) {
-  //   credentials.SetAWSSecretKey(cfg.GetDSNPassword());
-  //   credentials.SetSessionToken(cfg.GetSessionToken());
   } else {
     std::string errMsg =
         "AuthType is not PASSWORD, but "

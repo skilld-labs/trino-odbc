@@ -333,24 +333,6 @@ class DsnConfigurationWindow : public CustomWindow {
   /** Auth Type label. */
   std::unique_ptr< Window > authTypeLabel;
 
-  /** Access key Id edit. */
-  std::unique_ptr< Window > accessKeyIdEdit;
-
-  /** Access key Id label. */
-  std::unique_ptr< Window > accessKeyIdLabel;
-
-  /** Secret Access Key edit. */
-  std::unique_ptr< Window > secretAccessKeyEdit;
-
-  /** Secret Access Key label. */
-  std::unique_ptr< Window > secretAccessKeyLabel;
-
-  /** Session Token edit. */
-  std::unique_ptr< Window > sessionTokenEdit;
-
-  /** Session Token label. */
-  std::unique_ptr< Window > sessionTokenLabel;
-
   /** Profile Name edit. */
   std::unique_ptr< Window > profileNameEdit;
 

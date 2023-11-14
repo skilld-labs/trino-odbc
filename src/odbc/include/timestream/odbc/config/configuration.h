@@ -36,9 +36,6 @@
 #define DEFAULT_DRIVER "Trino ODBC Driver"
 #define DEFAULT_UID ""
 #define DEFAULT_PWD ""
-/*$*/
-#define DEFAULT_SECRET_KEY ""
-#define DEFAULT_SESSION_TOKEN ""
 
 #define DEFAULT_PROFILE_NAME ""
 
@@ -89,12 +86,6 @@ class IGNITE_IMPORT_EXPORT Configuration {
 
     /** Default value for pwd attribute. */
     static const std::string pwd;
-
-    /** Default value for secretKey attribute. */
-    static const std::string secretKey; /*$*/
-
-    /** Default value for sessionToken attribute. */
-    static const std::string sessionToken; /*$*/
 
     /** Default value for profileName attribute. */
     static const std::string profileName;
@@ -245,48 +236,6 @@ class IGNITE_IMPORT_EXPORT Configuration {
    * @return @true if the value set.
    */
   bool IsPwdSet() const;
-
-  /**
-   * Get secretKey.
-   *
-   * @return secretKey.
-   */
-  const std::string& GetSecretKey() const;
-
-  /**
-   * Set secretKey.
-   *
-   * @param secretKey secretKey.
-   */
-  void SetSecretKey(const std::string& secretKey);
-
-  /**
-   * Check if the value set.
-   *
-   * @return @true if the value set.
-   */
-  bool IsSecretKeySet() const;
-
-  /**
-   * Get sessionToken.
-   *
-   * @return sessionToken.
-   */
-  const std::string& GetSessionToken() const;
-
-  /**
-   * Set sessionToken.
-   *
-   * @param token sessionToken.
-   */
-  void SetSessionToken(const std::string& token);
-
-  /**
-   * Check if the value set.
-   *
-   * @return @true if the value set.
-   */
-  bool IsSessionTokenSet() const;
 
   /**
    * Get profileName.
@@ -756,12 +705,6 @@ class IGNITE_IMPORT_EXPORT Configuration {
 
   /** PWD. */
   SettableValue< std::string > pwd = DefaultValue::pwd;
-
-  /** Secret Key. */
-  SettableValue< std::string > secretKey = DefaultValue::secretKey; /*$*/
-
-  /** Session Token. */
-  SettableValue< std::string > sessionToken = DefaultValue::sessionToken; /*$*/
 
   /** Profile Name. */
   SettableValue< std::string > profileName = DefaultValue::profileName;

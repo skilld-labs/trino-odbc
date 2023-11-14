@@ -36,17 +36,11 @@ const std::string ConnectionStringParser::Key::dsn = "dsn";
 const std::string ConnectionStringParser::Key::driver = "driver";
 const std::string ConnectionStringParser::Key::uid = "uid";
 const std::string ConnectionStringParser::Key::pwd = "pwd";
-const std::string ConnectionStringParser::Key::secretKey = "secretkey"; /*$*/
-const std::string ConnectionStringParser::Key::sessionToken = "sessiontoken"; /*$*/
 const std::string ConnectionStringParser::Key::profileName = "profilename";
 const std::string ConnectionStringParser::Key::reqTimeout = "requesttimeout";
-const std::string ConnectionStringParser::Key::connectionTimeout =
-    "connectiontimeout";
-const std::string ConnectionStringParser::Key::maxRetryCountClient =
-    "maxretrycountclient";
-const std::string ConnectionStringParser::Key::maxConnections =
-    "maxconnections";
-/*$*/
+const std::string ConnectionStringParser::Key::connectionTimeout = "connectiontimeout";
+const std::string ConnectionStringParser::Key::maxRetryCountClient = "maxretrycountclient";
+const std::string ConnectionStringParser::Key::maxConnections = "maxconnections";
 const std::string ConnectionStringParser::Key::endpoint = "endpointoverride";
 const std::string ConnectionStringParser::Key::region = "region";
 const std::string ConnectionStringParser::Key::authType = "auth";
@@ -54,11 +48,10 @@ const std::string ConnectionStringParser::Key::idPHost = "idphost";
 const std::string ConnectionStringParser::Key::idPUserName = "idpusername";
 const std::string ConnectionStringParser::Key::idPPassword = "idppassword";
 const std::string ConnectionStringParser::Key::idPArn = "idparn";
-// const std::string ConnectionStringParser::Key::oktaAppId = "oktaapplicationid";
+// const std::string ConnectionStringParser::Key::oktaAppId = "oktaapplicationid"; /*$*/
 const std::string ConnectionStringParser::Key::roleArn = "rolearn";
 // const std::string ConnectionStringParser::Key::aadAppId = "aadapplicationid";
-// const std::string ConnectionStringParser::Key::aadClientSecret =
-    "aadclientsecret";
+// const std::string ConnectionStringParser::Key::aadClientSecret = "aadclientsecret";
 const std::string ConnectionStringParser::Key::aadTenant = "aadtenant";
 const std::string ConnectionStringParser::Key::logLevel = "loglevel";
 const std::string ConnectionStringParser::Key::logPath = "logoutput";
@@ -141,9 +134,7 @@ void ConnectionStringParser::HandleAttributePair(
   LOG_DEBUG_MSG("HandleAttributePair is called");
   std::string lKey = trino::odbc::common::ToLower(key);
 
-/*$*/
-  if (lKey == Key::uid || lKey == Key::idPUserName
-      || lKey == Key::pwd || lKey == Key::secretKey || lKey == Key::sessionToken
+  if (lKey == Key::uid || lKey == Key::idPUserName || lKey == Key::pwd 
       || lKey == Key::idPPassword || lKey == Key::aadClientSecret) {
     LOG_DEBUG_MSG(lKey << " is found");
   } else {
@@ -479,13 +470,6 @@ void ConnectionStringParser::HandleAttributePair(
           "Re-writing PWD (have you specified it several times?");
     }
 
-    if (!cfg.GetSecretKey().empty()) {
-      LOG_WARNING_MSG(
-          "SecretKey is already set, but PWD is being set too. Only one of "
-          "{PWD, SecretKey} is needed. PWD will take precedence when making a "
-          "connection.");
-    }
-
     if (!cfg.GetIdPPassword().empty()) {
       LOG_WARNING_MSG(
           "IdPPassword is already set, but PWD is being set too. Only one of "
@@ -494,29 +478,6 @@ void ConnectionStringParser::HandleAttributePair(
     }
 
     cfg.SetPwd(value);
-  } else if (lKey == Key::secretKey) { /*$*/
-    if (!cfg.GetSecretKey().empty() && diag) {
-      diag->AddStatusRecord(
-          SqlState::S01S02_OPTION_VALUE_CHANGED,
-          "Re-writing SecretKey (have you specified it several times?");
-    }
-
-    if (!cfg.GetPwd().empty()) {
-      LOG_WARNING_MSG(
-          "PWD is already set, but SecretKey is being set too. Only one of "
-          "{PWD, SecretKey} is needed. PWD will take precedence when making a "
-          "connection.");
-    }
-
-    cfg.SetSecretKey(value);
-  } else if (lKey == Key::sessionToken) { /*$*/
-    if (!cfg.GetSessionToken().empty() && diag) {
-      diag->AddStatusRecord(
-          SqlState::S01S02_OPTION_VALUE_CHANGED,
-          "Re-writing SessionToken (have you specified it several times?");
-    }
-
-    cfg.SetSessionToken(value);
   } else if (lKey == Key::maxRowPerPage) {
     if (value.empty()) {
       if (diag) {
