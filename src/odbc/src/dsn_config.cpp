@@ -194,66 +194,12 @@ void ReadDsnConfiguration(const char* dsn, Configuration& config,
 
   SettableValue< std::string > authType =
       ReadDsnString(dsn, ConnectionStringParser::Key::authType);
-/*$*/
+
   if (authType.IsSet() && !config.IsAuthTypeSet()) {
     AuthType::Type type =
         AuthType::FromString(authType.GetValue(), AuthType::Type::PASSWORD);
     config.SetAuthType(type);
   }
-
-  SettableValue< std::string > idPHost =
-      ReadDsnString(dsn, ConnectionStringParser::Key::idPHost);
-
-  if (idPHost.IsSet() && !config.IsIdPHostSet())
-    config.SetIdPHost(idPHost.GetValue());
-
-  SettableValue< std::string > idPUserName =
-      ReadDsnString(dsn, ConnectionStringParser::Key::idPUserName);
-
-  if (idPUserName.IsSet() && !config.IsIdPUserNameSet())
-    config.SetIdPUserName(idPUserName.GetValue());
-
-  SettableValue< std::string > idPPassword =
-      ReadDsnString(dsn, ConnectionStringParser::Key::idPPassword);
-
-  if (idPPassword.IsSet() && !config.IsIdPPasswordSet())
-    config.SetIdPPassword(idPPassword.GetValue());
-
-  SettableValue< std::string > idPArn =
-      ReadDsnString(dsn, ConnectionStringParser::Key::idPArn);
-
-  if (idPArn.IsSet() && !config.IsIdPArnSet())
-    config.SetIdPArn(idPArn.GetValue());
-
-  SettableValue< std::string > oktaAppId =
-      ReadDsnString(dsn, ConnectionStringParser::Key::oktaAppId);
-
-  if (oktaAppId.IsSet() && !config.IsOktaAppIdSet())
-    config.SetOktaAppId(oktaAppId.GetValue());
-
-  SettableValue< std::string > roleArn =
-      ReadDsnString(dsn, ConnectionStringParser::Key::roleArn);
-
-  if (roleArn.IsSet() && !config.IsRoleArnSet())
-    config.SetRoleArn(roleArn.GetValue());
-
-  SettableValue< std::string > aadAppId =
-      ReadDsnString(dsn, ConnectionStringParser::Key::aadAppId);
-
-  if (aadAppId.IsSet() && !config.IsAADAppIdSet())
-    config.SetAADAppId(aadAppId.GetValue());
-
-  SettableValue< std::string > aadClientSecret =
-      ReadDsnString(dsn, ConnectionStringParser::Key::aadClientSecret);
-
-  if (aadClientSecret.IsSet() && !config.IsAADClientSecretSet())
-    config.SetAADClientSecret(aadClientSecret.GetValue());
-
-  SettableValue< std::string > aadTenant =
-      ReadDsnString(dsn, ConnectionStringParser::Key::aadTenant);
-
-  if (aadTenant.IsSet() && !config.IsAADTenantSet())
-    config.SetAADTenant(aadTenant.GetValue());
 
   SettableValue< std::string > logLevel =
       ReadDsnString(dsn, ConnectionStringParser::Key::logLevel);

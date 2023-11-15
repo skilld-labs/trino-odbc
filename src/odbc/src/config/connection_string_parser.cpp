@@ -44,15 +44,6 @@ const std::string ConnectionStringParser::Key::maxConnections = "maxconnections"
 const std::string ConnectionStringParser::Key::endpoint = "endpointoverride";
 const std::string ConnectionStringParser::Key::region = "region";
 const std::string ConnectionStringParser::Key::authType = "auth";
-const std::string ConnectionStringParser::Key::idPHost = "idphost";
-const std::string ConnectionStringParser::Key::idPUserName = "idpusername";
-const std::string ConnectionStringParser::Key::idPPassword = "idppassword";
-const std::string ConnectionStringParser::Key::idPArn = "idparn";
-// const std::string ConnectionStringParser::Key::oktaAppId = "oktaapplicationid"; /*$*/
-const std::string ConnectionStringParser::Key::roleArn = "rolearn";
-// const std::string ConnectionStringParser::Key::aadAppId = "aadapplicationid";
-// const std::string ConnectionStringParser::Key::aadClientSecret = "aadclientsecret";
-const std::string ConnectionStringParser::Key::aadTenant = "aadtenant";
 const std::string ConnectionStringParser::Key::logLevel = "loglevel";
 const std::string ConnectionStringParser::Key::logPath = "logoutput";
 const std::string ConnectionStringParser::Key::maxRowPerPage = "maxrowperpage";
@@ -134,8 +125,7 @@ void ConnectionStringParser::HandleAttributePair(
   LOG_DEBUG_MSG("HandleAttributePair is called");
   std::string lKey = trino::odbc::common::ToLower(key);
 
-  if (lKey == Key::uid || lKey == Key::idPUserName || lKey == Key::pwd 
-      || lKey == Key::idPPassword || lKey == Key::aadClientSecret) {
+  if (lKey == Key::uid || lKey == Key::pwd) {
     LOG_DEBUG_MSG(lKey << " is found");
   } else {
     LOG_DEBUG_MSG("key:value is " << lKey << ":" << value);
@@ -369,7 +359,6 @@ void ConnectionStringParser::HandleAttributePair(
   } else if (lKey == Key::authType) {
     AuthType::Type authType = AuthType::FromString(value);
 
-/*$*/
     std::string val = utility::Trim(trino::odbc::common::ToLower(value));
     if (val != "password" && authType == AuthType::Type::PASSWORD) {
       if (diag) {
@@ -381,56 +370,6 @@ void ConnectionStringParser::HandleAttributePair(
     }
 
     cfg.SetAuthType(authType);
-  } else if (lKey == Key::idPHost) {
-    cfg.SetIdPHost(value);
-  } else if (lKey == Key::idPUserName) {
-    if (!cfg.GetIdPUserName().empty() && diag) {
-      diag->AddStatusRecord(
-          SqlState::S01S02_OPTION_VALUE_CHANGED,
-          "Re-writing IdPUserName (have you specified it several times?");
-    }
-
-    if (!cfg.GetUid().empty()) {
-      LOG_WARNING_MSG(
-          "UID is already set, but IdPUserName is being set too. Only one of "
-          "{UID, IdPUserName} is needed. UID will take precedence when making "
-          "a connection.");
-    }
-
-    cfg.SetIdPUserName(value);
-  } else if (lKey == Key::idPPassword) {
-    if (!cfg.GetIdPPassword().empty() && diag) {
-      diag->AddStatusRecord(
-          SqlState::S01S02_OPTION_VALUE_CHANGED,
-          "Re-writing IdPPassword (have you specified it several times?");
-    }
-
-    if (!cfg.GetPwd().empty()) {
-      LOG_WARNING_MSG(
-          "PWD is already set, but IdPPassword is being set too. Only one of "
-          "{PWD, IdPPassword} is needed. PWD will take precedence when making "
-          "a connection.");
-    }
-
-    cfg.SetIdPPassword(value);
-  } else if (lKey == Key::idPArn) {
-    cfg.SetIdPArn(value);
-  } else if (lKey == Key::oktaAppId) {
-    cfg.SetOktaAppId(value);
-  } else if (lKey == Key::roleArn) {
-    cfg.SetRoleArn(value);
-  } else if (lKey == Key::aadAppId) {
-    cfg.SetAADAppId(value);
-  } else if (lKey == Key::aadClientSecret) {
-    if (!cfg.GetAADClientSecret().empty() && diag) {
-      diag->AddStatusRecord(
-          SqlState::S01S02_OPTION_VALUE_CHANGED,
-          "Re-writing AADClientSecret (have you specified it several times?");
-    }
-
-    cfg.SetAADClientSecret(value);
-  } else if (lKey == Key::aadTenant) {
-    cfg.SetAADTenant(value);
   } else if (lKey == Key::logLevel) {
     LogLevel::Type level = LogLevel::FromString(value);
 
@@ -455,26 +394,12 @@ void ConnectionStringParser::HandleAttributePair(
           "Re-writing UID (have you specified it several times?");
     }
 
-    if (!cfg.GetIdPUserName().empty()) {
-      LOG_WARNING_MSG(
-          "IdPUserName is already set, but UID is being set too. Only one of "
-          "{UID, IdPUserName} is needed. UID will take precedence when making "
-          "a connection.");
-    }
-
     cfg.SetUid(value);
   } else if (lKey == Key::pwd) {
     if (!cfg.GetPwd().empty() && diag) {
       diag->AddStatusRecord(
           SqlState::S01S02_OPTION_VALUE_CHANGED,
           "Re-writing PWD (have you specified it several times?");
-    }
-
-    if (!cfg.GetIdPPassword().empty()) {
-      LOG_WARNING_MSG(
-          "IdPPassword is already set, but PWD is being set too. Only one of "
-          "{PWD, IdPPassword} is needed. PWD will take precedence when making "
-          "a connection.");
     }
 
     cfg.SetPwd(value);

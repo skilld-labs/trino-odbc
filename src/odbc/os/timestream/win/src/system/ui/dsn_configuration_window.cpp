@@ -55,24 +55,6 @@ DsnConfigurationWindow::DsnConfigurationWindow(Window* parent,
       authTypeLabel(),
       profileNameEdit(),
       profileNameLabel(),
-      roleArnEdit(),
-      roleArnLabel(),
-      idPUserNameEdit(),
-      idPUserNameLabel(),
-      idPPasswordEdit(),
-      idPPasswordLabel(),
-      idPArnEdit(),
-      idPArnLabel(),
-      idPHostEdit(),
-      idPHostLabel(),
-      oktaAppIdEdit(),
-      oktaAppIdLabel(),
-      aadAppIdEdit(),
-      aadAppIdLabel(),
-      aadClientSecretEdit(),
-      aadClientSecretLabel(),
-      aadTenantEdit(),
-      aadTenantLabel(),
       connectionTimeoutEdit(),
       connectionTimeoutLabel(),
       reqTimeoutEdit(),
@@ -292,24 +274,6 @@ void DsnConfigurationWindow::ShowAdvanceAuth(bool visible) const {
   } else {
     ShowWindow(profileNameEdit->GetHandle(), visible);
     ShowWindow(profileNameLabel->GetHandle(), visible);
-    ShowWindow(roleArnEdit->GetHandle(), visible);
-    ShowWindow(roleArnLabel->GetHandle(), visible);
-    ShowWindow(idPUserNameEdit->GetHandle(), visible);
-    ShowWindow(idPUserNameLabel->GetHandle(), visible);
-    ShowWindow(idPPasswordEdit->GetHandle(), visible);
-    ShowWindow(idPPasswordLabel->GetHandle(), visible);
-    ShowWindow(idPArnEdit->GetHandle(), visible);
-    ShowWindow(idPArnLabel->GetHandle(), visible);
-    ShowWindow(idPHostEdit->GetHandle(), visible);
-    ShowWindow(idPHostLabel->GetHandle(), visible);
-    ShowWindow(oktaAppIdEdit->GetHandle(), visible);
-    ShowWindow(oktaAppIdLabel->GetHandle(), visible);
-    ShowWindow(aadAppIdEdit->GetHandle(), visible);
-    ShowWindow(aadAppIdLabel->GetHandle(), visible);
-    ShowWindow(aadClientSecretEdit->GetHandle(), visible);
-    ShowWindow(aadClientSecretLabel->GetHandle(), visible);
-    ShowWindow(aadTenantEdit->GetHandle(), visible);
-    ShowWindow(aadTenantLabel->GetHandle(), visible);
   }
 }
 
@@ -519,89 +483,6 @@ int DsnConfigurationWindow::CreateAuthenticationSettingsGroup(int posX,
   rowPos += INTERVAL + ROW_HEIGHT;
 
   rowPos = authTypeRowPos;
-
-  wVal = utility::FromUtf8(config.GetRoleArn());
-  roleArnLabel = CreateLabel(labelPosX, rowPos, LABEL_WIDTH, ROW_HEIGHT,
-                             L"Role ARN:", ChildId::ROLE_ARN_LABEL);
-  roleArnEdit = CreateEdit(editPosX, rowPos, editSizeX, ROW_HEIGHT, wVal,
-                           ChildId::ROLE_ARN_EDIT);
-
-  rowPos += INTERVAL + ROW_HEIGHT;
-
-  wVal = utility::FromUtf8(config.GetIdPUserName());
-  idPUserNameLabel =
-      CreateLabel(labelPosX, rowPos, LABEL_WIDTH, ROW_HEIGHT, L"IdP User Name:",
-                  ChildId::IDP_USER_NAME_LABEL);
-  idPUserNameEdit = CreateEdit(editPosX, rowPos, editSizeX, ROW_HEIGHT, wVal,
-                               ChildId::IDP_USER_NAME_EDIT);
-
-  rowPos += INTERVAL + ROW_HEIGHT;
-
-  wVal = utility::FromUtf8(config.GetIdPPassword());
-  idPPasswordLabel = CreateLabel(labelPosX, rowPos, LABEL_WIDTH, ROW_HEIGHT,
-                                 L"IdP Password:", ChildId::IDP_PASSWORD_LABEL);
-  idPPasswordEdit = CreateEdit(editPosX, rowPos, editSizeX, ROW_HEIGHT, wVal,
-                               ChildId::IDP_PASSWORD_EDIT, ES_PASSWORD);
-
-  rowPos += INTERVAL + ROW_HEIGHT;
-
-  wVal = utility::FromUtf8(config.GetIdPArn());
-  idPArnLabel = CreateLabel(labelPosX, rowPos, LABEL_WIDTH, ROW_HEIGHT,
-                            L"IdP ARN:", ChildId::IDP_ARN_LABEL);
-  idPArnEdit = CreateEdit(editPosX, rowPos, editSizeX, ROW_HEIGHT, wVal,
-                          ChildId::IDP_ARN_EDIT);
-
-  rowPos += INTERVAL + ROW_HEIGHT;
-
-  // Okta Only fields
-  int arnRowPos = rowPos;
-
-  wVal = utility::FromUtf8(config.GetIdPHost());
-  idPHostLabel = CreateLabel(labelPosX, rowPos, LABEL_WIDTH, ROW_HEIGHT,
-                             L"IdP Host:", ChildId::IDP_HOST_LABEL);
-  idPHostEdit = CreateEdit(editPosX, rowPos, editSizeX, ROW_HEIGHT, wVal,
-                           ChildId::IDP_HOST_EDIT);
-
-  rowPos += INTERVAL + ROW_HEIGHT;
-
-  wVal = utility::FromUtf8(config.GetOktaAppId());
-  oktaAppIdLabel =
-      CreateLabel(labelPosX, rowPos, LABEL_WIDTH, ROW_HEIGHT,
-                  L"Okta Application ID:", ChildId::OKTA_APP_ID_LABEL);
-  oktaAppIdEdit = CreateEdit(editPosX, rowPos, editSizeX, ROW_HEIGHT, wVal,
-                             ChildId::OKTA_APP_ID_EDIT);
-
-  // retrieve y position value from IdP ARN field
-  // so that AAD specific fields can be put right after IdP ARN field.
-  rowPos = arnRowPos;
-
-  // AAD specific fields
-  wVal = utility::FromUtf8(config.GetAADAppId());
-  aadAppIdLabel =
-      CreateLabel(labelPosX, rowPos, LABEL_WIDTH, ROW_HEIGHT,
-                  L"AAD Application ID:", ChildId::AAD_APP_ID_LABEL);
-  aadAppIdEdit = CreateEdit(editPosX, rowPos, editSizeX, ROW_HEIGHT, wVal,
-                            ChildId::AAD_APP_ID_EDIT);
-
-  rowPos += INTERVAL + ROW_HEIGHT;
-
-  wVal = utility::FromUtf8(config.GetAADClientSecret());
-  aadClientSecretLabel =
-      CreateLabel(labelPosX, rowPos, LABEL_WIDTH, ROW_HEIGHT,
-                  L"AAD Client Secret:", ChildId::AAD_CLIENT_SECRET_LABEL);
-  aadClientSecretEdit =
-      CreateEdit(editPosX, rowPos, editSizeX, ROW_HEIGHT, wVal,
-                 ChildId::AAD_CLIENT_SECRET_EDIT, ES_PASSWORD);
-
-  rowPos += INTERVAL + ROW_HEIGHT;
-
-  wVal = utility::FromUtf8(config.GetAADTenant());
-  aadTenantLabel = CreateLabel(labelPosX, rowPos, LABEL_WIDTH, ROW_HEIGHT,
-                               L"AAD Tenant:", ChildId::AAD_TENANT_LABEL);
-  aadTenantEdit = CreateEdit(editPosX, rowPos, editSizeX, ROW_HEIGHT, wVal,
-                             ChildId::AAD_TENANT_EDIT);
-
-  rowPos += INTERVAL + ROW_HEIGHT;
 
   OnAuthTypeChanged();
 
@@ -931,63 +812,17 @@ void DsnConfigurationWindow::RetrieveBasicAuthParameters(
 void DsnConfigurationWindow::RetrieveAdvanceAuthParameters(
     config::Configuration& cfg) const {
   std::wstring authTypeWStr;
-  std::wstring roleArnWStr;
-  std::wstring idPUserNameWStr;
-  std::wstring idPPasswordWStr;
-  std::wstring idPArnWStr;
-  std::wstring idPHostWStr;
-  std::wstring oktaAppIdWStr;
-  std::wstring aadAppIdWStr;
-  std::wstring aadClientSecretWStr;
-  std::wstring aadTenantWStr;
 
   authTypeComboBox->GetText(authTypeWStr);  // auth type comboBox string
                                             // retrieved for debugging purpose
-  roleArnEdit->GetText(roleArnWStr);
-  idPUserNameEdit->GetText(idPUserNameWStr);
-  idPPasswordEdit->GetText(idPPasswordWStr);
-  idPArnEdit->GetText(idPArnWStr);
-  idPHostEdit->GetText(idPHostWStr);
-  oktaAppIdEdit->GetText(oktaAppIdWStr);
-  aadAppIdEdit->GetText(aadAppIdWStr);
-  aadClientSecretEdit->GetText(aadClientSecretWStr);
-  aadTenantEdit->GetText(aadTenantWStr);
-
-  std::string roleArnStr = TRIM_UTF8(roleArnWStr);
-  std::string idPUserNameStr = TRIM_UTF8(idPUserNameWStr);
-  std::string idPPasswordStr = TRIM_UTF8(idPPasswordWStr);
-  std::string idPArnStr = TRIM_UTF8(idPArnWStr);
-  std::string idPHostStr = TRIM_UTF8(idPHostWStr);
-  std::string oktaAppIdStr = TRIM_UTF8(oktaAppIdWStr);
-  std::string aadAppIdStr = TRIM_UTF8(aadAppIdWStr);
-  std::string aadClientSecretStr = TRIM_UTF8(aadClientSecretWStr);
-  std::string aadTenantStr = TRIM_UTF8(aadTenantWStr);
-
   AuthType::Type authType =
       static_cast< AuthType::Type >(authTypeComboBox->GetCBSelection());
 
   cfg.SetAuthType(authType);
-  cfg.SetRoleArn(roleArnStr);
-  cfg.SetIdPUserName(idPUserNameStr);
-  cfg.SetIdPPassword(idPPasswordStr);
-  cfg.SetIdPArn(idPArnStr);
-  cfg.SetIdPHost(idPHostStr);
-  cfg.SetOktaAppId(oktaAppIdStr);
-  cfg.SetAADAppId(aadAppIdStr);
-  cfg.SetAADClientSecret(aadClientSecretStr);
-  cfg.SetAADTenant(aadTenantStr);
 
   LOG_INFO_MSG("Auth Type:    " << AuthType::ToString(authType));
   LOG_DEBUG_MSG("Auth Type string from combobox" << TRIM_UTF8(authTypeWStr));
   LOG_DEBUG_MSG("AuthType::Type authType: " << static_cast< int >(authType));
-  LOG_INFO_MSG("Role ARN:     " << roleArnStr);
-  LOG_INFO_MSG("IdP User Name:     " << idPUserNameStr);
-  LOG_INFO_MSG("IdP ARN:     " << idPArnStr);
-  LOG_INFO_MSG("IdP Host:     " << idPHostStr);
-  LOG_INFO_MSG("Okta Application ID:     " << oktaAppIdStr);
-  LOG_INFO_MSG("Azure AD Application Id:     " << aadAppIdStr);
-  LOG_INFO_MSG("Azure AD Tenant:     " << aadTenantStr);
-  // IdP password and AAD client secret not logged intentionally
 }
 
 void DsnConfigurationWindow::RetrieveConnectionParameters(

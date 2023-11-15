@@ -42,17 +42,13 @@ const std::string Configuration::DefaultValue::uid = DEFAULT_UID;
 const std::string Configuration::DefaultValue::pwd = DEFAULT_PWD;
 
 // Credential Providers Options
-const std::string Configuration::DefaultValue::profileName =
-    DEFAULT_PROFILE_NAME;
+const std::string Configuration::DefaultValue::profileName = DEFAULT_PROFILE_NAME;
 
 // Connection Options
 const int32_t Configuration::DefaultValue::reqTimeout = DEFAULT_REQ_TIMEOUT;
-const int32_t Configuration::DefaultValue::connectionTimeout =
-    DEFAULT_CONNECTION_TIMEOUT;
-const int32_t Configuration::DefaultValue::maxRetryCountClient =
-    DEFAULT_MAX_RETRY_COUNT_CLIENT;
-const int32_t Configuration::DefaultValue::maxConnections =
-    DEFAULT_MAX_CONNECTIONS;
+const int32_t Configuration::DefaultValue::connectionTimeout = DEFAULT_CONNECTION_TIMEOUT;
+const int32_t Configuration::DefaultValue::maxRetryCountClient = DEFAULT_MAX_RETRY_COUNT_CLIENT;
+const int32_t Configuration::DefaultValue::maxConnections = DEFAULT_MAX_CONNECTIONS;
 
 // Endpoint Options
 const std::string Configuration::DefaultValue::endpoint = DEFAULT_ENDPOINT;
@@ -60,24 +56,11 @@ const std::string Configuration::DefaultValue::region = DEFAULT_REGION;
 
 // Advance Authentication Settings
 const AuthType::Type Configuration::DefaultValue::authType = DEFAULT_AUTH_TYPE;
-const std::string Configuration::DefaultValue::idPHost = DEFAULT_IDP_HOST;
-const std::string Configuration::DefaultValue::idPUserName =
-    DEFAULT_IDP_USER_NAME;
-const std::string Configuration::DefaultValue::idPPassword =
-    DEFAULT_IDP_PASSWORD;
-const std::string Configuration::DefaultValue::idPArn = DEFAULT_IDP_ARN;
-const std::string Configuration::DefaultValue::oktaAppId = DEFAULT_OKTA_APP_ID;
-const std::string Configuration::DefaultValue::roleArn = DEFAULT_ROLE_ARN;
-const std::string Configuration::DefaultValue::aadAppId = DEFAULT_AAD_APP_ID;
-const std::string Configuration::DefaultValue::aadClientSecret =
-    DEFAULT_ACCESS_CLIENT_SECRET;
-const std::string Configuration::DefaultValue::aadTenant = DEFAULT_AAD_TENANT;
 
 // Logging Configuration Options
 const LogLevel::Type Configuration::DefaultValue::logLevel = DEFAULT_LOG_LEVEL;
 const std::string Configuration::DefaultValue::logPath = DEFAULT_LOG_PATH;
-const int32_t Configuration::DefaultValue::maxRowPerPage =
-    DEFAULT_MAX_ROW_PER_PAGE;
+const int32_t Configuration::DefaultValue::maxRowPerPage = DEFAULT_MAX_ROW_PER_PAGE;
 
 std::string Configuration::ToConnectString() const {
   LOG_DEBUG_MSG("ToConnectString is called");
@@ -132,32 +115,27 @@ void Configuration::SetDriver(const std::string& driverName) {
 /*$*/
 const std::string& Configuration::GetDSNUserName() const {
   LOG_DEBUG_MSG("GetDSNUserName is called");
-  if (!GetUid().empty())
-    return GetUid();
+  // if (!GetUid().empty())
+  //   return GetUid();
 
   LOG_DEBUG_MSG("AuthType: " << AuthType::ToCBString(GetAuthType()));
-  switch (GetAuthType()) {
-    case AuthType::Type::AAD:
-      return GetIdPUserName();
-
-    default:
-      return GetUid();
-  }
+  // switch (GetAuthType()) {
+  //   default:
+  return GetUid();
+  // }
 }
 
+/*$*/
 const std::string& Configuration::GetDSNPassword() const {
   LOG_DEBUG_MSG("GetDSNPassword is called");
-  if (!GetPwd().empty())
-    return GetPwd();
+  // if (!GetPwd().empty())
+  //   return GetPwd();
 
   LOG_DEBUG_MSG("AuthType: " << AuthType::ToCBString(GetAuthType()));
-  switch (GetAuthType()) {
-    case AuthType::Type::AAD:
-      return GetIdPPassword();
-
-    default:
-      return GetPwd();
-  }
+  // switch (GetAuthType()) {
+  //   default:
+  return GetPwd();
+  // }
 }
 
 const std::string& Configuration::GetUid() const {
@@ -280,114 +258,6 @@ bool Configuration::IsAuthTypeSet() const {
   return authType.IsSet();
 }
 
-const std::string& Configuration::GetIdPHost() const {
-  return idPHost.GetValue();
-}
-
-void Configuration::SetIdPHost(const std::string& value) {
-  this->idPHost.SetValue(value);
-}
-
-bool Configuration::IsIdPHostSet() const {
-  return idPHost.IsSet();
-}
-
-const std::string& Configuration::GetIdPUserName() const {
-  return idPUserName.GetValue();
-}
-
-void Configuration::SetIdPUserName(const std::string& value) {
-  this->idPUserName.SetValue(value);
-}
-
-bool Configuration::IsIdPUserNameSet() const {
-  return idPUserName.IsSet();
-}
-
-const std::string& Configuration::GetIdPPassword() const {
-  return idPPassword.GetValue();
-}
-
-void Configuration::SetIdPPassword(const std::string& value) {
-  this->idPPassword.SetValue(value);
-}
-
-bool Configuration::IsIdPPasswordSet() const {
-  return idPPassword.IsSet();
-}
-
-const std::string& Configuration::GetIdPArn() const {
-  return idPArn.GetValue();
-}
-
-void Configuration::SetIdPArn(const std::string& value) {
-  this->idPArn.SetValue(value);
-}
-
-bool Configuration::IsIdPArnSet() const {
-  return idPArn.IsSet();
-}
-
-const std::string& Configuration::GetOktaAppId() const {
-  return oktaAppId.GetValue();
-}
-
-void Configuration::SetOktaAppId(const std::string& value) {
-  this->oktaAppId.SetValue(value);
-}
-
-bool Configuration::IsOktaAppIdSet() const {
-  return oktaAppId.IsSet();
-}
-
-const std::string& Configuration::GetRoleArn() const {
-  return roleArn.GetValue();
-}
-
-void Configuration::SetRoleArn(const std::string& value) {
-  this->roleArn.SetValue(value);
-}
-
-bool Configuration::IsRoleArnSet() const {
-  return roleArn.IsSet();
-}
-
-const std::string& Configuration::GetAADAppId() const {
-  return aadAppId.GetValue();
-}
-
-void Configuration::SetAADAppId(const std::string& value) {
-  this->aadAppId.SetValue(value);
-}
-
-bool Configuration::IsAADAppIdSet() const {
-  return aadAppId.IsSet();
-}
-
-const std::string& Configuration::GetAADClientSecret() const {
-  return aadClientSecret.GetValue();
-}
-
-void Configuration::SetAADClientSecret(const std::string& value) {
-  this->aadClientSecret.SetValue(value);
-}
-
-bool Configuration::IsAADClientSecretSet() const {
-  return aadClientSecret.IsSet();
-}
-
-const std::string& Configuration::GetAADTenant() const {
-  return aadTenant.GetValue();
-}
-
-void Configuration::SetAADTenant(const std::string& value) {
-  this->aadTenant.SetValue(value);
-}
-
-bool Configuration::IsAADTenantSet() const {
-  return aadTenant.IsSet();
-}
-
 LogLevel::Type Configuration::GetLogLevel() const {
   return logLevel.GetValue();
 }
@@ -437,23 +307,12 @@ void Configuration::ToMap(ArgumentMap& res) const {
   AddToMap(res, ConnectionStringParser::Key::pwd, pwd);
   AddToMap(res, ConnectionStringParser::Key::profileName, profileName);
   AddToMap(res, ConnectionStringParser::Key::reqTimeout, reqTimeout);
-  AddToMap(res, ConnectionStringParser::Key::connectionTimeout,
-           connectionTimeout);
-  AddToMap(res, ConnectionStringParser::Key::maxRetryCountClient,
-           maxRetryCountClient);
+  AddToMap(res, ConnectionStringParser::Key::connectionTimeout, connectionTimeout);
+  AddToMap(res, ConnectionStringParser::Key::maxRetryCountClient, maxRetryCountClient);
   AddToMap(res, ConnectionStringParser::Key::maxConnections, maxConnections);
   AddToMap(res, ConnectionStringParser::Key::endpoint, endpoint);
   AddToMap(res, ConnectionStringParser::Key::region, region);
   AddToMap(res, ConnectionStringParser::Key::authType, authType);
-  AddToMap(res, ConnectionStringParser::Key::idPHost, idPHost);
-  AddToMap(res, ConnectionStringParser::Key::idPUserName, idPUserName);
-  AddToMap(res, ConnectionStringParser::Key::idPPassword, idPPassword);
-  AddToMap(res, ConnectionStringParser::Key::idPArn, idPArn);
-  AddToMap(res, ConnectionStringParser::Key::oktaAppId, oktaAppId);
-  AddToMap(res, ConnectionStringParser::Key::roleArn, roleArn);
-  AddToMap(res, ConnectionStringParser::Key::aadAppId, aadAppId);
-  AddToMap(res, ConnectionStringParser::Key::aadClientSecret, aadClientSecret);
-  AddToMap(res, ConnectionStringParser::Key::aadTenant, aadTenant);
   AddToMap(res, ConnectionStringParser::Key::logLevel, logLevel);
   AddToMap(res, ConnectionStringParser::Key::logPath, logPath);
   AddToMap(res, ConnectionStringParser::Key::maxRowPerPage, maxRowPerPage);
@@ -461,32 +320,14 @@ void Configuration::ToMap(ArgumentMap& res) const {
 
 void Configuration::Validate() const {
   LOG_DEBUG_MSG("Validate is called");
-  // Validate minimum required properties.
-/*$*/
-  if ((GetAuthType() == trino::odbc::AuthType::Type::OKTA)
-      && (GetIdPHost().empty() || GetDSNUserName().empty()
-          || GetDSNPassword().empty() || GetIdPArn().empty()
-          || GetRoleArn().empty() || GetOktaAppId().empty())) {
-    throw ignite::odbc::OdbcError(
-        SqlState::S01S00_INVALID_CONNECTION_STRING_ATTRIBUTE,
-        "The following is required to connect:\n"
-        "AUTH is \"OKTA\" and "
-        "IdpHost, UID or IdpUserName, PWD or IdpPassword, OktaAppId, RoleArn "
-        "and IdpArn");
-  }
-
 /*$*/
   if ((GetAuthType() == trino::odbc::AuthType::Type::AAD)
-      && (GetDSNUserName().empty() || GetDSNPassword().empty()
-          || GetIdPArn().empty() || GetRoleArn().empty()
-          || GetAADAppId().empty() || GetAADTenant().empty()
-          || GetAADClientSecret().empty())) {
+      && (GetDSNUserName().empty() || GetDSNPassword().empty())) {
     throw ignite::odbc::OdbcError(
         SqlState::S01S00_INVALID_CONNECTION_STRING_ATTRIBUTE,
         "The following is required to connect:\n"
         "AUTH is \"AAD\" and "
-        "UID or IdpUserName, PWD or IdpPassword, and "
-        "AADAppId, RoleArn, IdpArn, AADTenant and AADClientSecret");
+        "UID and PWD");
   }
 
 /*$*/

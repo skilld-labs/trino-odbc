@@ -36,7 +36,6 @@ class DsnConfigurationWindow : public CustomWindow {
   /**
    * Children windows ids.
    */
-  /*$*/
   struct ChildId {
     enum Type {
       NAME_EDIT = 100,
@@ -49,26 +48,10 @@ class DsnConfigurationWindow : public CustomWindow {
       TABS_GROUP_BOX,
       AUTH_TYPE_LABEL,
       AUTH_TYPE_COMBO_BOX,
-      ACCESS_KEY_ID_LABEL,
-      ACCESS_KEY_ID_EDIT,
-      SECRET_ACCESS_KEY_LABEL,
-      SECRET_ACCESS_KEY_EDIT,
-      SESSION_TOKEN_LABEL,
-      SESSION_TOKEN_EDIT,
       PROFILE_NAME_EDIT,
       PROFILE_NAME_LABEL,
       ROLE_ARN_EDIT,
       ROLE_ARN_LABEL,
-      IDP_USER_NAME_EDIT,
-      IDP_USER_NAME_LABEL,
-      IDP_PASSWORD_EDIT,
-      IDP_PASSWORD_LABEL,
-      IDP_ARN_EDIT,
-      IDP_ARN_LABEL,
-      IDP_HOST_EDIT,
-      IDP_HOST_LABEL,
-      OKTA_APP_ID_EDIT, /*$*/
-      OKTA_APP_ID_LABEL,
       AAD_APP_ID_EDIT,
       AAD_APP_ID_LABEL,
       AAD_CLIENT_SECRET_EDIT,
@@ -338,61 +321,6 @@ class DsnConfigurationWindow : public CustomWindow {
 
   /** Profile Name label. */
   std::unique_ptr< Window > profileNameLabel;
-
-  /** Role ARN edit. */
-  std::unique_ptr< Window > roleArnEdit;
-
-  /** Role ARN label. */
-  std::unique_ptr< Window > roleArnLabel;
-
-  /** IdP User Name edit. */
-  std::unique_ptr< Window > idPUserNameEdit;
-
-  /** IdP User Name label. */
-  std::unique_ptr< Window > idPUserNameLabel;
-
-  /** IdP Password edit. */
-  std::unique_ptr< Window > idPPasswordEdit;
-
-  /** IdP Password label. */
-  std::unique_ptr< Window > idPPasswordLabel;
-
-  /** IdP ARN edit. */
-  std::unique_ptr< Window > idPArnEdit;
-
-  /** IdP ARN label. */
-  std::unique_ptr< Window > idPArnLabel;
-
-  /** IdP Host edit. */
-  std::unique_ptr< Window > idPHostEdit;
-
-  /** IdP Host label. */
-  std::unique_ptr< Window > idPHostLabel;
-
-/*$*/
-  /** Okta Application Id edit. */
-  std::unique_ptr< Window > oktaAppIdEdit;
-
-  /** Okta Application Id label. */
-  std::unique_ptr< Window > oktaAppIdLabel;
-
-  /** AAD Application Id edit. */
-  std::unique_ptr< Window > aadAppIdEdit;
-
-  /** AAD Application Id label. */
-  std::unique_ptr< Window > aadAppIdLabel;
-
-  /** AAD Client Secret edit. */
-  std::unique_ptr< Window > aadClientSecretEdit;
-
-  /** AAD Client Secret label. */
-  std::unique_ptr< Window > aadClientSecretLabel;
-
-  /** AAD Tenant edit. */
-  std::unique_ptr< Window > aadTenantEdit;
-
-  /** AAD Tenant label. */
-  std::unique_ptr< Window > aadTenantLabel;
 
   /** Connection timeout edit. */
   std::unique_ptr< Window > connectionTimeoutEdit;

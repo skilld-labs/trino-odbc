@@ -72,34 +72,6 @@ class IGNITE_IMPORT_EXPORT ConnectionStringParser {
     /** Connection attribute keyword for authType attribute. */
     static const std::string authType;
 
-    /** Connection attribute keyword for idPHost attribute. */
-    static const std::string idPHost;
-
-    /** Connection attribute keyword for idPUserName attribute. */
-    static const std::string idPUserName;
-
-    /** Connection attribute keyword for idPPassword attribute. */
-    static const std::string idPPassword;
-
-    /** Connection attribute keyword for idPArn attribute. */
-    static const std::string idPArn;
-
-/*$*/
-    /** Connection attribute keyword for oktaAppId attribute. */
-    static const std::string oktaAppId;
-
-    /** Connection attribute keyword for roleArn attribute. */
-    static const std::string roleArn;
-
-    /** Connection attribute keyword for aadAppId attribute. */
-    static const std::string aadAppId;
-
-    /** Connection attribute keyword for aadClientSecret attribute. */
-    static const std::string aadClientSecret;
-
-    /** Connection attribute keyword for aadTenant attribute. */
-    static const std::string aadTenant;
-
     /** Connection attribute keyword for log level. */
     static const std::string logLevel;
 

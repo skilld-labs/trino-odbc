@@ -48,15 +48,6 @@
 #define DEFAULT_REGION "us-east-1"
 
 #define DEFAULT_AUTH_TYPE AuthType::Type::PASSWORD
-#define DEFAULT_IDP_HOST ""
-#define DEFAULT_IDP_USER_NAME ""
-#define DEFAULT_IDP_PASSWORD ""
-#define DEFAULT_IDP_ARN ""
-#define DEFAULT_OKTA_APP_ID ""
-#define DEFAULT_ROLE_ARN ""
-#define DEFAULT_AAD_APP_ID ""
-#define DEFAULT_ACCESS_CLIENT_SECRET ""
-#define DEFAULT_AAD_TENANT ""
 #define DEFAULT_LOG_LEVEL LogLevel::Type::WARNING_LEVEL
 #define DEFAULT_MAX_ROW_PER_PAGE -1
 
@@ -110,15 +101,6 @@ class IGNITE_IMPORT_EXPORT Configuration {
 
     /** Default value for authType attribute. */
     static const AuthType::Type authType;
-
-    /** Default value for idPHost attribute. */
-    static const std::string idPHost;
-
-    /** Default value for idPUserName attribute. */
-    static const std::string idPUserName;
-
-    /** Default value for idPPassword attribute. */
-    static const std::string idPPassword;
 
     /** Default value for logLevel attribute. */
     static const LogLevel::Type logLevel;
@@ -406,196 +388,6 @@ class IGNITE_IMPORT_EXPORT Configuration {
   bool IsAuthTypeSet() const;
 
   /**
-   * Get idPHost.
-   *
-   * @return value IdPHost.
-   */
-  const std::string& GetIdPHost() const;
-
-  /**
-   * Set idPHost.
-   *
-   * @param value IdPHost.
-   */
-  void SetIdPHost(const std::string& value);
-
-  /**
-   * Check if the value set.
-   *
-   * @return @true if the value set.
-   */
-  bool IsIdPHostSet() const;
-
-  /**
-   * Get idPUserName.
-   *
-   * @return value IdPUserName.
-   */
-  const std::string& GetIdPUserName() const;
-
-  /**
-   * Set idPUserName.
-   *
-   * @param value IdPUserName.
-   */
-  void SetIdPUserName(const std::string& value);
-
-  /**
-   * Check if the value set.
-   *
-   * @return @true if the value set.
-   */
-  bool IsIdPUserNameSet() const;
-
-  /**
-   * Get idPPassword.
-   *
-   * @return value IdPPassword.
-   */
-  const std::string& GetIdPPassword() const;
-
-  /**
-   * Set idPPassword.
-   *
-   * @param value IdPPassword.
-   */
-  void SetIdPPassword(const std::string& value);
-
-  /**
-   * Check if the value set.
-   *
-   * @return @true if the value set.
-   */
-  bool IsIdPPasswordSet() const;
-
-  /**
-   * Get idPArn.
-   *
-   * @return value IdPArn.
-   */
-  const std::string& GetIdPArn() const;
-
-  /**
-   * Set idPArn.
-   *
-   * @param value IdPArn.
-   */
-  void SetIdPArn(const std::string& value);
-
-  /**
-   * Check if the value set.
-   *
-   * @return @true if the value set.
-   */
-  bool IsIdPArnSet() const;
-
-/*$*/
-  /**
-   * Get oktaAppId.
-   *
-   * @return value OktaAppId.
-   */
-  const std::string& GetOktaAppId() const;
-
-  /**
-   * Set oktaAppId.
-   *
-   * @param value OktaAppId.
-   */
-  void SetOktaAppId(const std::string& value);
-
-  /**
-   * Check if the value set.
-   *
-   * @return @true if the value set.
-   */
-  bool IsOktaAppIdSet() const;
-
-  /**
-   * Get roleArn.
-   *
-   * @return value RoleArn.
-   */
-  const std::string& GetRoleArn() const;
-
-  /**
-   * Set roleArn.
-   *
-   * @param value RoleArn.
-   */
-  void SetRoleArn(const std::string& value);
-
-  /**
-   * Check if the value set.
-   *
-   * @return @true if the value set.
-   */
-  bool IsRoleArnSet() const;
-
-  /**
-   * Get aadAppId.
-   *
-   * @return value AADAppId.
-   */
-  const std::string& GetAADAppId() const;
-
-  /**
-   * Set aadAppId.
-   *
-   * @param value AADAppId.
-   */
-  void SetAADAppId(const std::string& value);
-
-  /**
-   * Check if the value set.
-   *
-   * @return @true if the value set.
-   */
-  bool IsAADAppIdSet() const;
-
-  /**
-   * Get aadClientSecret.
-   *
-   * @return value AADClientSecret.
-   */
-  const std::string& GetAADClientSecret() const;
-
-  /**
-   * Set aadClientSecret.
-   *
-   * @param value AADClientSecret.
-   */
-  void SetAADClientSecret(const std::string& value);
-
-  /**
-   * Check if the value set.
-   *
-   * @return @true if the value set.
-   */
-  bool IsAADClientSecretSet() const;
-
-  /**
-   * Get aadTenant.
-   *
-   * @return value AADTenant.
-   */
-  const std::string& GetAADTenant() const;
-
-  /**
-   * Set aadTenant.
-   *
-   * @param value AADTenant.
-   */
-  void SetAADTenant(const std::string& value);
-
-  /**
-   * Check if the value set.
-   *
-   * @return @true if the value set.
-   */
-  bool IsAADTenantSet() const;
-
-  /**
    * Get log level.
    *
    * @return Log level.
@@ -730,34 +522,6 @@ class IGNITE_IMPORT_EXPORT Configuration {
 
   /** Auth Type. */
   SettableValue< AuthType::Type > authType = DefaultValue::authType;
-
-  /** IdP Host. */
-  SettableValue< std::string > idPHost = DefaultValue::idPHost;
-
-  /** IdP User Name. */
-  SettableValue< std::string > idPUserName = DefaultValue::idPUserName;
-
-  /** IdP Password. */
-  SettableValue< std::string > idPPassword = DefaultValue::idPPassword;
-
-  /** IdP ARN. */
-  SettableValue< std::string > idPArn = DefaultValue::idPArn;
-
-/*$*/
-  /** Okta Application ID. */
-  SettableValue< std::string > oktaAppId = DefaultValue::oktaAppId;
-
-  /** Role ARN. */
-  SettableValue< std::string > roleArn = DefaultValue::roleArn;
-
-  /** Azure AD Application ID. */
-  SettableValue< std::string > aadAppId = DefaultValue::aadAppId;
-
-  /** Azure AD Client Secret. */
-  SettableValue< std::string > aadClientSecret = DefaultValue::aadClientSecret;
-
-  /** Azure AD Tenant. */
-  SettableValue< std::string > aadTenant = DefaultValue::aadTenant;
 
   /** The log level for the log file. */
   SettableValue< LogLevel::Type > logLevel = DefaultValue::logLevel;
