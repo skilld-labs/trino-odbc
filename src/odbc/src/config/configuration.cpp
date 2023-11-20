@@ -112,7 +112,6 @@ void Configuration::SetDriver(const std::string& driverName) {
   this->driver.SetValue(driverName);
 }
 
-/*$*/
 const std::string& Configuration::GetDSNUserName() const {
   LOG_DEBUG_MSG("GetDSNUserName is called");
   // if (!GetUid().empty())
@@ -125,7 +124,6 @@ const std::string& Configuration::GetDSNUserName() const {
   // }
 }
 
-/*$*/
 const std::string& Configuration::GetDSNPassword() const {
   LOG_DEBUG_MSG("GetDSNPassword is called");
   // if (!GetPwd().empty())
@@ -320,7 +318,6 @@ void Configuration::ToMap(ArgumentMap& res) const {
 
 void Configuration::Validate() const {
   LOG_DEBUG_MSG("Validate is called");
-/*$*/
   if ((GetAuthType() == trino::odbc::AuthType::Type::PASSWORD)
       && (GetDSNUserName().empty() || GetDSNPassword().empty())) {
     throw ignite::odbc::OdbcError(

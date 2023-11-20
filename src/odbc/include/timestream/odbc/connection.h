@@ -148,6 +148,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
    *
    * @return Shared Pointer to Trino query client.
    */
+/*@*/
   std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
   GetQueryClient() const;
 
@@ -253,6 +254,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
    *
    * @return awsLogLevel AWS Log Level, default is Warn.
    */
+/*@*/
   static Aws::Utils::Logging::LogLevel GetAWSLogLevelFromString(
       std::string awsLogLvl);
 
@@ -321,7 +323,6 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
    */
   Connection(Environment* env);
 
-/*$*/
   /**
    * Create TrinoQueryClient object.
    *
@@ -329,6 +330,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
    * @param clientCfg AWS client configuration.
    * @return a shared_ptr to created TrinoQueryClient object.
    */
+/*@*/
   virtual std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
   CreateTSQueryClient(const Aws::Auth::AWSCredentials& credentials,
                       const Aws::Client::ClientConfiguration& clientCfg);
@@ -338,6 +340,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
    *
    * @return a shared_ptr to created HttpClient object.
    */
+/*@*/
   virtual std::shared_ptr< Aws::Http::HttpClient > GetHttpClient();
 
   /**
@@ -345,6 +348,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
    *
    * @return a shared_ptr to created STSClient object.
    */
+/*@*/
   virtual std::shared_ptr< Aws::STS::STSClient > GetStsClient();
 
   /**
@@ -589,6 +593,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
    *
    * @param clientCfg Client configuration.
    */
+/*@*/
   void SetClientProxy(Aws::Client::ClientConfiguration& clientCfg);
 
   /** Parent. */
@@ -611,18 +616,21 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   config::ConnectionInfo info_;
 
   /** Trino query client. */
+/*@*/
   std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > queryClient_;
 
   /** SAML credentials provider */
   std::shared_ptr< TrinoSAMLCredentialsProvider > samlCredProvider_;
 
   /** Aws SDK options. */
+/*@*/
   Aws::SDKOptions options_;
 
   /** mutex for exclusive access */
   static std::mutex mutex_;
 
   /** Aws SDK has been initialization flag */
+/*@*/
   static bool awsSDKReady_;
 
   /** This class object count */

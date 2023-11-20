@@ -55,6 +55,7 @@ namespace trino {
 namespace odbc {
 
 std::mutex Connection::mutex_;
+/*@*/
 bool Connection::awsSDKReady_ = false;
 std::atomic< int > Connection::refCount_(0);
 
@@ -65,10 +66,12 @@ Connection::Connection(Environment* env)
   // It should only be initialized only once during the application running
   // All Connections in different thread must wait before the InitAPI is
   // finished.
+/*@*/
   if (!awsSDKReady_) {
     // Use awsSDKReady_ and mutex_ to guarantee InitAPI is executed before all
     // Connection objects start to run.
     std::lock_guard< std::mutex > lock(mutex_);
+/*@*/
     if (!awsSDKReady_) {
       Aws::Utils::Logging::LogLevel awsLogLvl = GetAWSLogLevelFromString(
           ignite::odbc::common::GetEnv("TS_AWS_LOG_LEVEL"));
@@ -94,6 +97,7 @@ Connection::~Connection() {
   // It should be shutdown only once by the last Connection
   // destructor during the application running. The atomic counter
   // guarantees this.
+/*@*/
   if (0 == --refCount_) {
     Aws::ShutdownAPI(options_);
     awsSDKReady_ = false;
@@ -216,6 +220,7 @@ void Connection::Deregister() {
   env_->DeregisterConnection(this);
 }
 
+/*@*/
 std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
 Connection::GetQueryClient() const {
   return queryClient_;
@@ -502,10 +507,12 @@ void UpdateConnectionRuntimeInfo(const config::Configuration& config,
 #endif
 }
 
+/*@*/
 std::shared_ptr< Aws::Http::HttpClient > Connection::GetHttpClient() {
   return Aws::Http::CreateHttpClient(Aws::Client::ClientConfiguration());
 }
 
+/*@*/
 Aws::Utils::Logging::LogLevel Connection::GetAWSLogLevelFromString(
     std::string awsLogLvl) {
   std::transform(awsLogLvl.begin(), awsLogLvl.end(), awsLogLvl.begin(),
@@ -536,6 +543,7 @@ Aws::Utils::Logging::LogLevel Connection::GetAWSLogLevelFromString(
   return Aws::Utils::Logging::LogLevel::Warn;
 }
 
+/*@*/
 void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) {
   LOG_DEBUG_MSG("SetClientProxy is called");
   // proxy host
@@ -562,6 +570,7 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) {
     LOG_DEBUG_MSG("proxy scheme is " << proxyScheme);
     std::transform(proxyScheme.begin(), proxyScheme.end(), proxyScheme.begin(),
                    ::toupper);
+/*@*/
     if (proxyScheme == "HTTPS") {
       clientCfg.proxyScheme = Aws::Http::Scheme::HTTPS;
     } else {
@@ -622,10 +631,12 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) {
   }
 }
 
+/*@*/
 std::shared_ptr< Aws::STS::STSClient > Connection::GetStsClient() {
   return std::make_shared< Aws::STS::STSClient >();
 }
 
+/*@*/
 bool Connection::TryRestoreConnection(const config::Configuration& cfg,
                                       IgniteError& err) {
   LOG_DEBUG_MSG("TryRestoreConnection is called");
@@ -634,6 +645,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
 
   AuthType::Type authType = cfg.GetAuthType();
   LOG_DEBUG_MSG("auth type is " << static_cast< int >(authType));
+/*@*/
   if (authType == AuthType::Type::PASSWORD) {
     Aws::Auth::ProfileConfigFileAWSCredentialsProvider credProvider(
         cfg.GetProfileName().data());
@@ -662,6 +674,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
     return false;
   }
 
+/*@*/
   Aws::Client::ClientConfiguration clientCfg;
   clientCfg.region = cfg.GetRegion();
   clientCfg.enableEndpointDiscovery = true;
@@ -687,6 +700,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
 
   SetClientProxy(clientCfg);
 
+/*@*/
   if (cfg.GetMaxRetryCountClient() > 0) {
     clientCfg.retryStrategy =
         std::make_shared< Aws::Client::DefaultRetryStrategy >(
@@ -703,6 +717,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
     LOG_DEBUG_MSG("endpoint is set to " << endpoint);
   }
   // try a simple query with query client
+/*@*/
   Aws::TrinoQuery::Model::QueryRequest queryRequest;
   queryRequest.SetQueryString("SELECT 1");
 
@@ -728,6 +743,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
   return true;
 }
 
+/*@*/
 std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
 Connection::CreateTSQueryClient(
     const Aws::Auth::AWSCredentials& credentials,

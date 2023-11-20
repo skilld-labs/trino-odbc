@@ -27,6 +27,7 @@
 #include <aws/trino-query/model/ColumnInfo.h>
 #include <aws/trino-query/model/TimeSeriesDataPoint.h>
 
+/*@*/
 using Aws::TrinoQuery::Model::ScalarType;
 using Aws::TrinoQuery::Model::TimeSeriesDataPoint;
 using trino::odbc::type_traits::OdbcNativeType;
@@ -43,6 +44,7 @@ TrinoColumn::TrinoColumn(
       columnMeta_(columnMeta) {
 }
 
+/*@*/
 ConversionResult::Type TrinoColumn::ReadToBuffer(const Datum& datum, ApplicationDataBuffer& dataBuf) const {
   LOG_DEBUG_MSG("ReadToBuffer is called");
   const boost::optional< Aws::TrinoQuery::Model::ColumnInfo >& columnInfo =
@@ -81,11 +83,13 @@ ConversionResult::Type TrinoColumn::ParseDatum(
   return retval;
 }
 
+/*@*/
 ConversionResult::Type TrinoColumn::ParseScalarType(
     const Aws::TrinoQuery::Model::Datum& datum,
     ApplicationDataBuffer& dataBuf) const {
   LOG_DEBUG_MSG("ParseScalarType is called");
 
+/*@*/
   Aws::String value = datum.GetScalarValue();
   LOG_DEBUG_MSG("value is " << value << ", scalar type is "
                             << static_cast< int >(columnMeta_.GetScalarType()));
@@ -195,6 +199,7 @@ ConversionResult::Type TrinoColumn::ParseTimeSeriesType(
     const Datum& datum, ApplicationDataBuffer& dataBuf) const {
   LOG_DEBUG_MSG("ParseTimeSeriesType is called");
 
+/*@*/
   const Aws::Vector< TimeSeriesDataPoint >& valueVec =
       datum.GetTimeSeriesValue();
 
@@ -233,6 +238,7 @@ ConversionResult::Type TrinoColumn::ParseArrayType(
     const Datum& datum, ApplicationDataBuffer& dataBuf) const {
   LOG_DEBUG_MSG("ParseArrayType is called");
 
+/*@*/
   const Aws::Vector< Datum >& valueVec = datum.GetArrayValue();
 
   std::string result("");
@@ -272,6 +278,7 @@ ConversionResult::Type TrinoColumn::ParseRowType(
     return ConversionResult::Type::AI_NO_DATA;
   }
 
+/*@*/
   const Aws::Vector< Datum >& valueVec = row.GetData();
   std::string result = "(";
   for (const auto& itr : valueVec) {

@@ -864,6 +864,7 @@ ConnectionInfo::ConnectionInfo(const Configuration& config)
   // A character string with the actual data source-specific server name; useful
   // when a data source name is used during SQLConnect, SQLDriverConnect, and
   // SQLBrowseConnect.
+/*@*/
   strParams[SQL_SERVER_NAME] = "AWS Trino";
 #endif  // SQL_SERVER_NAME
 

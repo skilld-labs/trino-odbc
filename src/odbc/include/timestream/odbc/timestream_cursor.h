@@ -34,6 +34,7 @@
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/trino-query/model/Row.h>
 
+/*@*/
 using Aws::TrinoQuery::Model::Row;
 
 namespace trino {
@@ -48,6 +49,7 @@ class TrinoCursor {
    * @param rowVec Aws Row vector.
    * @param columnMetadataVec Column metadata vector.
    */
+/*@*/
   TrinoCursor(const Aws::Vector< Row > rowVec,
                    const meta::ColumnMetaVector& columnMetadataVec);
 
@@ -118,9 +120,11 @@ class TrinoCursor {
   bool EnsureColumnDiscovered(uint32_t columnIdx);
 
   /** Resultset rows */
+/*@*/
   const Aws::Vector< Row > rowVec_;
 
   /** The iterator to beginning of cursor */
+/*@*/
   Aws::Vector< Row >::const_iterator iterator_;
 
   /** The column metadata vector*/

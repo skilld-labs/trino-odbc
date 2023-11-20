@@ -78,6 +78,7 @@ SqlResult::Type DataQuery::Cancel() {
     }
 
     // Try to cancel current query
+/*@*/
     Aws::TrinoQuery::Model::CancelQueryRequest cancel_request;
     cancel_request.SetQueryId(result_->GetQueryId());
 
@@ -127,6 +128,7 @@ const meta::ColumnMetaVector* DataQuery::GetMeta() {
  *
  * @return void.
  */
+/*@*/
 void AsyncFetchOnePage(
     const std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > client,
     const QueryRequest& request, DataQueryContext& context_) {
@@ -149,6 +151,7 @@ void AsyncFetchOnePage(
   }
 }
 
+/*@*/
 SqlResult::Type DataQuery::SwitchCursor() {
   LOG_DEBUG_MSG("SwitchCursor is called");
   std::unique_lock< std::mutex > locker(context_.mutex_);
@@ -168,6 +171,7 @@ SqlResult::Type DataQuery::SwitchCursor() {
   }
 
   result_ = std::make_shared< QueryResult >(outcome.GetResult());
+/*@*/
   const Aws::Vector< Row >& rows = outcome.GetResult().GetRows();
   const Aws::String& token = outcome.GetResult().GetNextToken();
   if (rows.empty()) {
@@ -357,6 +361,7 @@ SqlResult::Type DataQuery::MakeRequestExecute() {
   }
 
   do {
+/*@*/
     Aws::TrinoQuery::Model::QueryOutcome outcome =
         connection_.GetQueryClient()->Query(request_);
 
@@ -412,6 +417,7 @@ SqlResult::Type DataQuery::MakeRequestFetch() {
     return SqlResult::AI_ERROR;
   }
 
+/*@*/
   const Aws::Vector< ColumnInfo >& columnInfo = result_->GetColumnInfo();
 
   if (!resultMetaAvailable_) {
@@ -438,6 +444,7 @@ SqlResult::Type DataQuery::MakeRequestResultsetMeta() {
   QueryRequest request;
   request.SetQueryString(sql_);
 
+/*@*/
   Aws::TrinoQuery::Model::QueryOutcome outcome =
       connection_.GetQueryClient()->Query(request);
 
@@ -453,6 +460,7 @@ SqlResult::Type DataQuery::MakeRequestResultsetMeta() {
   }
   // outcome is successful
   QueryResult result = outcome.GetResult();
+/*@*/
   const Aws::Vector< ColumnInfo >& columnInfo = result.GetColumnInfo();
 
   ReadColumnMetadataVector(columnInfo);
@@ -460,6 +468,7 @@ SqlResult::Type DataQuery::MakeRequestResultsetMeta() {
   return SqlResult::AI_SUCCESS;
 }
 
+/*@*/
 void DataQuery::ReadColumnMetadataVector(
     const Aws::Vector< ColumnInfo >& tsVector) {
   LOG_DEBUG_MSG("ReadColumnMetadataVector is called");

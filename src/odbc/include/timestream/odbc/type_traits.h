@@ -34,6 +34,7 @@
 /*@*/
 #include <aws/trino-query/model/ScalarType.h>
 
+/*@*/
 using Aws::TrinoQuery::Model::ScalarType;
 
 namespace trino {

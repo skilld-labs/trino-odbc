@@ -37,6 +37,7 @@
 #include <aws/trino-query/model/ColumnInfo.h>
 #include <aws/trino-query/model/ScalarType.h>
 
+/*@*/
 using Aws::TrinoQuery::Model::ColumnInfo;
 using Aws::TrinoQuery::Model::ScalarType;
 
@@ -236,6 +237,7 @@ class IGNITE_IMPORT_EXPORT ColumnMeta {
    * Get Aws ColumnInfo.
    * @return Aws ColumnInfo.
    */
+/*@*/
   const boost::optional< Aws::TrinoQuery::Model::ColumnInfo >&
   GetColumnInfo() const {
     return columnInfo;
@@ -386,6 +388,7 @@ class IGNITE_IMPORT_EXPORT ColumnMeta {
   ScalarType GetScalarDataType(const std::string& dataType);
 
   /** Aws columnInfo. */
+/*@*/
   boost::optional< Aws::TrinoQuery::Model::ColumnInfo > columnInfo;
 
   /** Catalog name. */

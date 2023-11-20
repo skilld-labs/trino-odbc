@@ -114,6 +114,7 @@ const std::string NULLABLE = "NULLABLE";
 const std::string ORDINAL_POSITION = "ORDINAL_POSITION";
 const std::string IS_AUTOINCREMENT = "IS_AUTOINCREMENT";
 
+/*@*/
 Aws::TrinoQuery::Model::ScalarType ColumnMeta::GetScalarDataType(
     const std::string& dataType) {
   LOG_DEBUG_MSG("GetScalarDataType is called with dataType " << dataType);
@@ -177,6 +178,7 @@ void ColumnMeta::Read(app::ColumnBindingMap& columnBindings, int32_t position) {
 
 void ColumnMeta::ReadMetadata(const ColumnInfo& tsMetadata) {
   LOG_DEBUG_MSG("ReadMetadata is called");
+/*@*/
   using Aws::TrinoQuery::Model::Type;
 
   columnInfo = tsMetadata;
@@ -189,6 +191,7 @@ void ColumnMeta::ReadMetadata(const ColumnInfo& tsMetadata) {
   if (columnType.ScalarTypeHasBeenSet()) {
     dataType = static_cast< int16_t >(columnType.GetScalarType());
   } else {
+/*@*/
     dataType = static_cast< int16_t >(
         Aws::TrinoQuery::Model::ScalarType::VARCHAR);
   }

@@ -22,6 +22,7 @@
 
 namespace trino {
 namespace odbc {
+/*@*/
 TrinoCursor::TrinoCursor(
     const Aws::Vector< Row > rowVec,
     const meta::ColumnMetaVector& columnMetadataVec)

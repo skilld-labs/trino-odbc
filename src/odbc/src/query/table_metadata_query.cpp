@@ -29,6 +29,7 @@
 #include "trino/odbc/log.h"
 #include "trino/odbc/type_traits.h"
 
+/*@*/
 using Aws::TrinoQuery::Model::ScalarType;
 
 namespace trino {
@@ -650,12 +651,14 @@ SqlResult::Type TableMetadataQuery::getTablesWithIdentifier(
   // get all database names, then do filtering based on database name identifier
   int numDatabases = databaseNames.size();
   bool match = false;
+/*@*/
   Aws::String databaseUpper =
       Aws::Utils::StringUtils::ToUpper(databaseIdentifier.data());
 
   std::string databaseName("");
   for (int i = 0; i < numDatabases; i++) {
     databaseName = databaseNames.at(i);
+/*@*/
     Aws::String dbNameUpper =
         Aws::Utils::StringUtils::ToUpper(databaseName.data());
     match = (databaseUpper == dbNameUpper);
@@ -692,6 +695,7 @@ SqlResult::Type TableMetadataQuery::getTablesWithIdentifier(
 
     // Check exact match for table name case-insensitive identifier
     std::string foundTableName = tableNames.at(j);
+/*@*/
     Aws::String tableUpper =
         Aws::Utils::StringUtils::ToUpper(table.get().data());
     Aws::String tbNameUpper =
