@@ -321,22 +321,13 @@ void Configuration::ToMap(ArgumentMap& res) const {
 void Configuration::Validate() const {
   LOG_DEBUG_MSG("Validate is called");
 /*$*/
-  if ((GetAuthType() == trino::odbc::AuthType::Type::AAD)
+  if ((GetAuthType() == trino::odbc::AuthType::Type::PASSWORD)
       && (GetDSNUserName().empty() || GetDSNPassword().empty())) {
     throw ignite::odbc::OdbcError(
         SqlState::S01S00_INVALID_CONNECTION_STRING_ATTRIBUTE,
         "The following is required to connect:\n"
-        "AUTH is \"AAD\" and "
+        "AUTH is \"PASSWORD\" and "
         "UID and PWD");
-  }
-
-/*$*/
-  if ((GetAuthType() == trino::odbc::AuthType::Type::IAM)
-      && (GetDSNUserName().empty() || GetDSNPassword().empty())) {
-    throw ignite::odbc::OdbcError(
-        SqlState::S01S00_INVALID_CONNECTION_STRING_ATTRIBUTE,
-        "The following is required to connect:\n"
-        "AUTH is ");
   }
 }
 
