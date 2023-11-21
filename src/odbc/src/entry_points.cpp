@@ -20,6 +20,7 @@
 
 /*@*//*aws marker*/
 /*$*//*WIP marker*/
+/*#*//*important marker*/
 
 #include <ignite/common/common.h>
 

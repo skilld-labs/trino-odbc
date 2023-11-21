@@ -79,7 +79,7 @@ Connection::Connection(Environment* env)
 
       LOG_INFO_MSG("AWS SDK log level is set to: "
                    << Aws::Utils::Logging::GetLogLevelName(awsLogLvl));
-
+/*#*/
       Aws::InitAPI(options_);
       awsSDKReady_ = true;
       LOG_DEBUG_MSG("AWS SDK is Initialized");
@@ -97,7 +97,7 @@ Connection::~Connection() {
   // It should be shutdown only once by the last Connection
   // destructor during the application running. The atomic counter
   // guarantees this.
-/*@*/
+/*#*/
   if (0 == --refCount_) {
     Aws::ShutdownAPI(options_);
     awsSDKReady_ = false;
