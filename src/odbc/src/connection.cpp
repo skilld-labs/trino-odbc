@@ -197,6 +197,7 @@ SqlResult::Type Connection::InternalEstablish(
   IgniteError err;
   bool connected = TryRestoreConnection(cfg, err);
 
+/* */
   if (!connected) {
     std::string errMessage = "Failed to establish connection to Trino.\n";
     errMessage.append(err.GetText());
@@ -636,16 +637,16 @@ std::shared_ptr< Aws::STS::STSClient > Connection::GetStsClient() {
   return std::make_shared< Aws::STS::STSClient >();
 }
 
-/*@*/
 bool Connection::TryRestoreConnection(const config::Configuration& cfg,
                                       IgniteError& err) {
   LOG_DEBUG_MSG("TryRestoreConnection is called");
+  /*@*/
   Aws::Auth::AWSCredentials credentials;
   std::string errInfo("");
 
   AuthType::Type authType = cfg.GetAuthType();
   LOG_DEBUG_MSG("auth type is " << static_cast< int >(authType));
-/*@*/
+  /*@*/
   if (authType == AuthType::Type::PASSWORD) {
     Aws::Auth::ProfileConfigFileAWSCredentialsProvider credProvider(
         cfg.GetProfileName().data());
@@ -674,7 +675,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
     return false;
   }
 
-/*@*/
+  /*@*/
   Aws::Client::ClientConfiguration clientCfg;
   clientCfg.region = cfg.GetRegion();
   clientCfg.enableEndpointDiscovery = true;
@@ -700,7 +701,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
 
   SetClientProxy(clientCfg);
 
-/*@*/
+  /*@*/
   if (cfg.GetMaxRetryCountClient() > 0) {
     clientCfg.retryStrategy =
         std::make_shared< Aws::Client::DefaultRetryStrategy >(
@@ -708,6 +709,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
     LOG_DEBUG_MSG("max retry count is " << cfg.GetMaxRetryCountClient());
   }
 
+  /*@*/
   queryClient_ = CreateTSQueryClient(credentials, clientCfg);
 
   const std::string& endpoint = cfg.GetEndpoint();
@@ -717,7 +719,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
     LOG_DEBUG_MSG("endpoint is set to " << endpoint);
   }
   // try a simple query with query client
-/*@*/
+  /*@*/
   Aws::TrinoQuery::Model::QueryRequest queryRequest;
   queryRequest.SetQueryString("SELECT 1");
 
