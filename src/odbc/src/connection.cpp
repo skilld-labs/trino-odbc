@@ -490,7 +490,6 @@ SqlResult::Type Connection::InternalSetAttribute(int attr, void* value,
   return SqlResult::AI_SUCCESS;
 }
 
-/* */
 /**
  * Updates connection runtime information used by SQLGetInfo.
  *
@@ -505,43 +504,42 @@ void UpdateConnectionRuntimeInfo(const config::Configuration& config,
 #endif
 }
 
-/*@*/
 std::shared_ptr< Aws::Http::HttpClient > Connection::GetHttpClient() {
   return Aws::Http::CreateHttpClient(Aws::Client::ClientConfiguration());
 }
 
-/*@*/
 Aws::Utils::Logging::LogLevel Connection::GetAWSLogLevelFromString(
     std::string awsLogLvl) {
   std::transform(awsLogLvl.begin(), awsLogLvl.end(), awsLogLvl.begin(),
                  ::toupper);
 
-  if (awsLogLvl == "OFF")
+  switch (awsLogLvl) {
+  case "OFF":
     return Aws::Utils::Logging::LogLevel::Off;
 
-  if (awsLogLvl == "FATAL")
+  case "FATAL":
     return Aws::Utils::Logging::LogLevel::Fatal;
 
-  if (awsLogLvl == "ERROR")
+  case "ERROR":
     return Aws::Utils::Logging::LogLevel::Error;
 
-  if (awsLogLvl == "WARN")
+  case "WARN":
     return Aws::Utils::Logging::LogLevel::Warn;
 
-  if (awsLogLvl == "INFO")
+  case "INFO":
     return Aws::Utils::Logging::LogLevel::Info;
 
-  if (awsLogLvl == "DEBUG")
+  case "DEBUG":
     return Aws::Utils::Logging::LogLevel::Debug;
 
-  if (awsLogLvl == "TRACE")
+  case "TRACE":
     return Aws::Utils::Logging::LogLevel::Trace;
-
-  // Return default
-  return Aws::Utils::Logging::LogLevel::Warn;
+  
+  default:
+    return Aws::Utils::Logging::LogLevel::Warn;
+  }
 }
 
-/*@*/
 void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) {
   LOG_DEBUG_MSG("SetClientProxy is called");
   // proxy host
@@ -568,7 +566,6 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) {
     LOG_DEBUG_MSG("proxy scheme is " << proxyScheme);
     std::transform(proxyScheme.begin(), proxyScheme.end(), proxyScheme.begin(),
                    ::toupper);
-/*@*/
     if (proxyScheme == "HTTPS") {
       clientCfg.proxyScheme = Aws::Http::Scheme::HTTPS;
     } else {
@@ -629,6 +626,7 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) {
   }
 }
 
+/* */
 /*@*/
 std::shared_ptr< Aws::STS::STSClient > Connection::GetStsClient() {
   return std::make_shared< Aws::STS::STSClient >();
