@@ -176,22 +176,20 @@ void ColumnMeta::Read(app::ColumnBindingMap& columnBindings, int32_t position) {
   ordinalPosition = position;
 }
 
-void ColumnMeta::ReadMetadata(const ColumnInfo& tsMetadata) {
+void ColumnMeta::ReadMetadata(const ColumnInfo& trinoMetadata) {
   LOG_DEBUG_MSG("ReadMetadata is called");
-/*@*/
   using Aws::TrinoQuery::Model::Type;
 
-  columnInfo = tsMetadata;
+  columnInfo = trinoMetadata;
 
-  Type columnType = tsMetadata.GetType();
+  Type columnType = trinoMetadata.GetType();
 
   // columnName and scalarType are the only 2 piece of info from Type object
-  columnName = tsMetadata.GetName();
+  columnName = trinoMetadata.GetName();
   LOG_DEBUG_MSG("columnName is " << columnName);
   if (columnType.ScalarTypeHasBeenSet()) {
     dataType = static_cast< int16_t >(columnType.GetScalarType());
   } else {
-/*@*/
     dataType = static_cast< int16_t >(
         Aws::TrinoQuery::Model::ScalarType::VARCHAR);
   }

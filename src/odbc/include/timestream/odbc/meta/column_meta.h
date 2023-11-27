@@ -229,15 +229,14 @@ class IGNITE_IMPORT_EXPORT ColumnMeta {
 
   /**
    * Read using reader.
-   * @param tsVector Vector containing metadata for one row.
+   * @param trinoVector Vector containing metadata for one row.
    */
-  void ReadMetadata(const ColumnInfo& tsVector);
+  void ReadMetadata(const ColumnInfo& TrinoVector);
 
   /**
    * Get Aws ColumnInfo.
    * @return Aws ColumnInfo.
    */
-/*@*/
   const boost::optional< Aws::TrinoQuery::Model::ColumnInfo >&
   GetColumnInfo() const {
     return columnInfo;
@@ -388,7 +387,6 @@ class IGNITE_IMPORT_EXPORT ColumnMeta {
   ScalarType GetScalarDataType(const std::string& dataType);
 
   /** Aws columnInfo. */
-/*@*/
   boost::optional< Aws::TrinoQuery::Model::ColumnInfo > columnInfo;
 
   /** Catalog name. */

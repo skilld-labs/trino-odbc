@@ -529,7 +529,7 @@ class IGNITE_IMPORT_EXPORT Configuration {
   /** The logging file path. */
   SettableValue< std::string > logPath = DefaultValue::logPath;
 
-  /** The max row number in one page returned from TS */
+  /** The max row number in one page returned from Trino */
   SettableValue< int32_t > maxRowPerPage = DefaultValue::maxRowPerPage;
 };
 

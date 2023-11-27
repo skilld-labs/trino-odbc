@@ -460,31 +460,31 @@ SqlResult::Type DataQuery::MakeRequestResultsetMeta() {
   }
   // outcome is successful
   QueryResult result = outcome.GetResult();
-/*@*/
   const Aws::Vector< ColumnInfo >& columnInfo = result.GetColumnInfo();
 
+/*@*/
   ReadColumnMetadataVector(columnInfo);
 
   return SqlResult::AI_SUCCESS;
 }
 
-/*@*/
 void DataQuery::ReadColumnMetadataVector(
-    const Aws::Vector< ColumnInfo >& tsVector) {
+    const Aws::Vector< ColumnInfo >& trinoVector) {
   LOG_DEBUG_MSG("ReadColumnMetadataVector is called");
 
   using trino::odbc::meta::ColumnMeta;
   resultMeta_.clear();
 
-  if (tsVector.empty()) {
+  if (trinoVector.empty()) {
     LOG_ERROR_MSG("Exit due to column vector is empty");
 
     return;
   }
 
-  for (ColumnInfo tsMetadata : tsVector) {
+/*@*/
+  for (ColumnInfo trinoMetadata : trinoVector) {
     resultMeta_.emplace_back(ColumnMeta());
-    resultMeta_.back().ReadMetadata(tsMetadata);
+    resultMeta_.back().ReadMetadata(trinoMetadata);
   }
   resultMetaAvailable_ = true;
 }

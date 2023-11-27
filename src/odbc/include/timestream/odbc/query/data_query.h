@@ -217,10 +217,10 @@ class IGNITE_IMPORT_EXPORT DataQuery : public trino::odbc::query::Query {
   /**
    * Set result set meta by reading AWS Trino column metadata vector.
    *
-   * @param tsVector Aws::TrinoQuery::Model::ColumnInfo vector.
+   * @param trinoVector Aws::TrinoQuery::Model::ColumnInfo vector.
    */
 /*@*/
-  void ReadColumnMetadataVector(const Aws::Vector< ColumnInfo >& tsVector);
+  void ReadColumnMetadataVector(const Aws::Vector< ColumnInfo >& trinoVector);
 
   /**
    * Process column conversion operation result.
@@ -276,10 +276,10 @@ class IGNITE_IMPORT_EXPORT DataQuery : public trino::odbc::query::Query {
   /** Result set metadata. */
   meta::ColumnMetaVector resultMeta_;
 
-  /** Current TS Query Request. */
+  /** Current Trino Query Request. */
   QueryRequest request_;
 
-  /** Current TS Query Result. */
+  /** Current Trino Query Result. */
   std::shared_ptr< QueryResult > result_;
 
   /** Cursor. */

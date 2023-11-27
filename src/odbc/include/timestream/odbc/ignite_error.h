@@ -110,7 +110,7 @@ class IGNITE_IMPORT_EXPORT IgniteError : public std::exception {
   static const int IGNITE_SUCCESS = 0;
 
   /** Failed to connect to Trino */
-  static const int IGNITE_ERR_TS_CONNECT = 102;
+  static const int IGNITE_ERR_TRINO_CONNECT = 102;
 
   /** Memory operation error. */
   static const int IGNITE_ERR_MEMORY = 1001;

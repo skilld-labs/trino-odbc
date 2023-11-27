@@ -74,7 +74,7 @@ Connection::Connection(Environment* env)
 /*@*/
     if (!awsSDKReady_) {
       Aws::Utils::Logging::LogLevel awsLogLvl = GetAWSLogLevelFromString(
-          ignite::odbc::common::GetEnv("TS_AWS_LOG_LEVEL"));
+          ignite::odbc::common::GetEnv("TS_AWS_LOG_LEVEL")); /*@*/
       options_.loggingOptions.logLevel = awsLogLvl;
 
       LOG_INFO_MSG("AWS SDK log level is set to: "
@@ -197,7 +197,6 @@ SqlResult::Type Connection::InternalEstablish(
   IgniteError err;
   bool connected = TryRestoreConnection(cfg, err);
 
-/* */
   if (!connected) {
     std::string errMessage = "Failed to establish connection to Trino.\n";
     errMessage.append(err.GetText());
@@ -251,9 +250,6 @@ void Connection::Close() {
     queryClient_.reset();
   }
 
-  if (samlCredProvider_) {
-    samlCredProvider_.reset();
-  }
 }
 
 Statement* Connection::CreateStatement() {
@@ -389,7 +385,7 @@ SqlResult::Type Connection::InternalGetAttribute(int attr, void* buf,
       break;
     }
 
-    case SQL_ATTR_TSLOG_DEBUG: {
+    case SQL_ATTR_TRINOLOG_DEBUG: {
       SQLUINTEGER* val = reinterpret_cast< SQLUINTEGER* >(buf);
 
       std::shared_ptr< Logger > logger = Logger::GetLoggerInstance();
@@ -474,7 +470,7 @@ SqlResult::Type Connection::InternalSetAttribute(int attr, void* value,
       return SqlResult::AI_ERROR;
     }
 
-    case SQL_ATTR_TSLOG_DEBUG: {
+    case SQL_ATTR_TRINOLOG_DEBUG: {
       LogLevel::Type type =
           static_cast< LogLevel::Type >(reinterpret_cast< ptrdiff_t >(value));
 
@@ -494,6 +490,7 @@ SqlResult::Type Connection::InternalSetAttribute(int attr, void* value,
   return SqlResult::AI_SUCCESS;
 }
 
+/* */
 /**
  * Updates connection runtime information used by SQLGetInfo.
  *
@@ -548,7 +545,7 @@ Aws::Utils::Logging::LogLevel Connection::GetAWSLogLevelFromString(
 void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) {
   LOG_DEBUG_MSG("SetClientProxy is called");
   // proxy host
-  std::string proxyHost = utility::Trim(GetEnv("TS_PROXY_HOST"));
+  std::string proxyHost = utility::Trim(GetEnv("TS_PROXY_HOST")); /*@*/
   if (!proxyHost.empty()) {
     LOG_DEBUG_MSG("proxy host is " << proxyHost);
     clientCfg.proxyHost = proxyHost;
@@ -556,7 +553,7 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) {
 
   // proxy port
   int proxyPort = 0;
-  std::string portStr = utility::Trim(GetEnv("TS_PROXY_PORT"));
+  std::string portStr = utility::Trim(GetEnv("TS_PROXY_PORT")); /*@*/
   if (!portStr.empty()) {
     LOG_DEBUG_MSG("proxy port is " << portStr);
     proxyPort = utility::StringToInt(portStr);
@@ -566,7 +563,7 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) {
   }
 
   // proxy scheme
-  std::string proxyScheme = utility::Trim(GetEnv("TS_PROXY_SCHEME"));
+  std::string proxyScheme = utility::Trim(GetEnv("TS_PROXY_SCHEME")); /*@*/
   if (!proxyScheme.empty()) {
     LOG_DEBUG_MSG("proxy scheme is " << proxyScheme);
     std::transform(proxyScheme.begin(), proxyScheme.end(), proxyScheme.begin(),
@@ -580,14 +577,14 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) {
   }
 
   // proxy user name
-  std::string proxyUser = utility::Trim(GetEnv("TS_PROXY_USER"));
+  std::string proxyUser = utility::Trim(GetEnv("TS_PROXY_USER")); /*@*/
   if (!proxyUser.empty()) {
     LOG_DEBUG_MSG("proxy username is set");
     clientCfg.proxyUserName = proxyUser;
   }
 
   // proxy user password
-  std::string proxyPassword = utility::Trim(GetEnv("TS_PROXY_PASSWORD"));
+  std::string proxyPassword = utility::Trim(GetEnv("TS_PROXY_PASSWORD")); /*@*/
   if (!proxyPassword.empty()) {
     LOG_DEBUG_MSG("proxy user password is set");
     clientCfg.proxyPassword = proxyPassword;
@@ -595,7 +592,7 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) {
 
   // proxy SSL certificate path
   std::string proxySSLCertPath =
-      utility::Trim(GetEnv("TS_PROXY_SSL_CERT_PATH"));
+      utility::Trim(GetEnv("TS_PROXY_SSL_CERT_PATH")); /*@*/
   if (!proxySSLCertPath.empty()) {
     LOG_DEBUG_MSG("proxy SSL certificate path is " << proxySSLCertPath);
     clientCfg.proxySSLCertPath = proxySSLCertPath;
@@ -603,21 +600,21 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) {
 
   // proxy SSL certificate type
   std::string proxySSLCertType =
-      utility::Trim(GetEnv("TS_PROXY_SSL_CERT_TYPE"));
+      utility::Trim(GetEnv("TS_PROXY_SSL_CERT_TYPE")); /*@*/
   if (!proxySSLCertType.empty()) {
     LOG_DEBUG_MSG("proxy SSL certificate type is " << proxySSLCertType);
     clientCfg.proxySSLCertType = proxySSLCertType;
   }
 
   // proxy SSL key path
-  std::string proxySSLKeyPath = utility::Trim(GetEnv("TS_PROXY_SSL_KEY_PATH"));
+  std::string proxySSLKeyPath = utility::Trim(GetEnv("TS_PROXY_SSL_KEY_PATH")); /*@*/
   if (!proxySSLKeyPath.empty()) {
     LOG_DEBUG_MSG("proxy SSL key path is " << proxySSLKeyPath);
     clientCfg.proxySSLKeyPath = proxySSLKeyPath;
   }
 
   // proxy SSL key type
-  std::string proxySSLKeyType = utility::Trim(GetEnv("TS_PROXY_SSL_KEY_TYPE"));
+  std::string proxySSLKeyType = utility::Trim(GetEnv("TS_PROXY_SSL_KEY_TYPE")); /*@*/
   if (!proxySSLKeyType.empty()) {
     LOG_DEBUG_MSG("proxy SSL key type is " << proxySSLKeyType);
     clientCfg.proxySSLCertType = proxySSLKeyType;
@@ -625,7 +622,7 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) {
 
   // proxy SSL key password
   std::string proxySSLKeyPassword =
-      utility::Trim(GetEnv("TS_PROXY_SSL_KEY_PASSWORD"));
+      utility::Trim(GetEnv("TS_PROXY_SSL_KEY_PASSWORD")); /*@*/
   if (!proxySSLKeyPassword.empty()) {
     LOG_DEBUG_MSG("proxy SSL key password is set");
     clientCfg.proxySSLKeyPassword = proxySSLKeyPassword;
@@ -658,7 +655,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
         "TryRestoreConnection is "
         "called.";
     LOG_ERROR_MSG(errMsg);
-    err = IgniteError(IgniteError::IGNITE_ERR_TS_CONNECT, errMsg.data());
+    err = IgniteError(IgniteError::IGNITE_ERR_TRINO_CONNECT, errMsg.data());
 
     Close();
     return false;
@@ -669,7 +666,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
       errInfo += "Empty or expired credentials";
 
     LOG_ERROR_MSG(errInfo);
-    err = IgniteError(IgniteError::IGNITE_ERR_TS_CONNECT, errInfo.data());
+    err = IgniteError(IgniteError::IGNITE_ERR_TRINO_CONNECT, errInfo.data());
 
     Close();
     return false;
@@ -691,7 +688,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
   std::string platform("Linux");
 #endif
   // pass driver info to Trino as user agent
-  clientCfg.userAgent = "ts-odbc." + utility::GetFormatedDriverVersion() + " on " + platform;
+  clientCfg.userAgent = "trino-odbc." + utility::GetFormatedDriverVersion() + " on " + platform;
   LOG_DEBUG_MSG("region is "
                 << cfg.GetRegion() << ", connection timeout is "
                 << clientCfg.connectTimeoutMs << ", request timeout is "
@@ -710,7 +707,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
   }
 
   /*@*/
-  queryClient_ = CreateTSQueryClient(credentials, clientCfg);
+  queryClient_ = CreateTRINOQueryClient(credentials, clientCfg);
 
   const std::string& endpoint = cfg.GetEndpoint();
   // endpoint could not be set to empty string
@@ -730,7 +727,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
     LOG_DEBUG_MSG("ERROR: " << error.GetExceptionName() << ": "
                             << error.GetMessage());
 
-    err = IgniteError(IgniteError::IGNITE_ERR_TS_CONNECT,
+    err = IgniteError(IgniteError::IGNITE_ERR_TRINO_CONNECT,
                       std::string(error.GetExceptionName())
                           .append(": ")
                           .append(error.GetMessage())
@@ -747,7 +744,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
 
 /*@*/
 std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
-Connection::CreateTSQueryClient(
+Connection::CreateTRINOQueryClient(
     const Aws::Auth::AWSCredentials& credentials,
     const Aws::Client::ClientConfiguration& clientCfg) {
   return std::make_shared< Aws::TrinoQuery::TrinoQueryClient >(
