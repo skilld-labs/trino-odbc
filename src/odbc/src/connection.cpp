@@ -626,8 +626,7 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) {
   }
 }
 
-/* */
-/*@*/
+/*#*/
 std::shared_ptr< Aws::STS::STSClient > Connection::GetStsClient() {
   return std::make_shared< Aws::STS::STSClient >();
 }
@@ -635,16 +634,15 @@ std::shared_ptr< Aws::STS::STSClient > Connection::GetStsClient() {
 bool Connection::TryRestoreConnection(const config::Configuration& cfg,
                                       IgniteError& err) {
   LOG_DEBUG_MSG("TryRestoreConnection is called");
-  /*@*/
+  /*#*/
   Aws::Auth::AWSCredentials credentials;
   std::string errInfo("");
 
   AuthType::Type authType = cfg.GetAuthType();
   LOG_DEBUG_MSG("auth type is " << static_cast< int >(authType));
-  /*@*/
   if (authType == AuthType::Type::PASSWORD) {
-    Aws::Auth::ProfileConfigFileAWSCredentialsProvider credProvider(
-        cfg.GetProfileName().data());
+    /*#*/
+    Aws::Auth::ProfileConfigFileAWSCredentialsProvider credProvider(cfg.GetProfileName().data());
     credentials = credProvider.GetAWSCredentials();
     LOG_DEBUG_MSG("profile name is " << cfg.GetProfileName());
   } else {
@@ -670,6 +668,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
     return false;
   }
 
+/* */
   /*@*/
   Aws::Client::ClientConfiguration clientCfg;
   clientCfg.region = cfg.GetRegion();

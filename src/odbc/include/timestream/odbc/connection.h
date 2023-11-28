@@ -330,6 +330,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
    * @param clientCfg AWS client configuration.
    * @return a shared_ptr to created TrinoQueryClient object.
    */
+  /*#*/
   virtual std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
   CreateTrinoQueryClient(const Aws::Auth::AWSCredentials& credentials,
                       const Aws::Client::ClientConfiguration& clientCfg);
