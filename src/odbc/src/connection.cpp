@@ -668,8 +668,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
     return false;
   }
 
-/* */
-  /*@*/
+  /*#*/
   Aws::Client::ClientConfiguration clientCfg;
   clientCfg.region = cfg.GetRegion();
   clientCfg.enableEndpointDiscovery = true;
@@ -695,15 +694,12 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
 
   SetClientProxy(clientCfg);
 
-  /*@*/
   if (cfg.GetMaxRetryCountClient() > 0) {
     clientCfg.retryStrategy =
-        std::make_shared< Aws::Client::DefaultRetryStrategy >(
-            cfg.GetMaxRetryCountClient());
+        std::make_shared< Aws::Client::DefaultRetryStrategy >(cfg.GetMaxRetryCountClient()); /*#*/
     LOG_DEBUG_MSG("max retry count is " << cfg.GetMaxRetryCountClient());
   }
 
-  /*@*/
   queryClient_ = CreateTRINOQueryClient(credentials, clientCfg);
 
   const std::string& endpoint = cfg.GetEndpoint();
@@ -713,12 +709,10 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
     LOG_DEBUG_MSG("endpoint is set to " << endpoint);
   }
   // try a simple query with query client
-  /*@*/
-  Aws::TrinoQuery::Model::QueryRequest queryRequest;
+  Aws::TrinoQuery::Model::QueryRequest queryRequest; /*#*/
   queryRequest.SetQueryString("SELECT 1");
 
-  Aws::TrinoQuery::Model::QueryOutcome outcome =
-      queryClient_->Query(queryRequest);
+  Aws::TrinoQuery::Model::QueryOutcome outcome = queryClient_->Query(queryRequest); /*#*/
   if (!outcome.IsSuccess()) {
     auto error = outcome.GetError();
     LOG_DEBUG_MSG("ERROR: " << error.GetExceptionName() << ": "
@@ -739,13 +733,11 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
   return true;
 }
 
-/*@*/
 std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
 Connection::CreateTRINOQueryClient(
     const Aws::Auth::AWSCredentials& credentials,
     const Aws::Client::ClientConfiguration& clientCfg) {
-  return std::make_shared< Aws::TrinoQuery::TrinoQueryClient >(
-      credentials, clientCfg);
+  return std::make_shared< Aws::TrinoQuery::TrinoQueryClient >(credentials, clientCfg); /*#*/
 }
 
 Descriptor* Connection::CreateDescriptor() {
@@ -795,14 +787,12 @@ bool Connection::CursorNameExists(std::string& cursorName) {
   return retval;
 }
 
-SqlResult::Type Connection::AddCursorName(const Statement* stmt,
-                                          std::string& cursorName) {
+SqlResult::Type Connection::AddCursorName(const Statement* stmt, std::string& cursorName) {
   LOG_DEBUG_MSG("AddCursorName is called");
 
   // in case multiple statement in different threads
   std::lock_guard< std::mutex > lock(cursorNameMutex_);
-  std::map< const Statement*, std::string >::iterator itr =
-      cursorNameMap_.find(stmt);
+  std::map< const Statement*, std::string >::iterator itr = cursorNameMap_.find(stmt);
   if (itr != cursorNameMap_.end()) {
     cursorNames_.erase(itr->second);
   }
@@ -817,8 +807,7 @@ void Connection::RemoveCursorName(const Statement* stmt) {
 
   // locks to support having multiple statement in different threads
   std::lock_guard< std::mutex > lock(cursorNameMutex_);
-  std::map< const Statement*, std::string >::iterator itr =
-      cursorNameMap_.find(stmt);
+  std::map< const Statement*, std::string >::iterator itr = cursorNameMap_.find(stmt);
   if (itr != cursorNameMap_.end()) {
     cursorNames_.erase(itr->second);
     cursorNameMap_.erase(itr);
@@ -830,8 +819,7 @@ void Connection::GetFunctions(SQLUSMALLINT funcId, SQLUSMALLINT* valueBuf) {
   IGNITE_ODBC_API_CALL(InternalGetFunctions(funcId, valueBuf));
 }
 
-SqlResult::Type Connection::InternalGetFunctions(SQLUSMALLINT funcId,
-                                                 SQLUSMALLINT* valueBuf) {
+SqlResult::Type Connection::InternalGetFunctions(SQLUSMALLINT funcId, SQLUSMALLINT* valueBuf) {
   LOG_DEBUG_MSG("InternalGetFunctions is called, funcId is " << funcId);
   switch (funcId) {
     case SQL_API_ODBC3_ALL_FUNCTIONS: {
@@ -1354,8 +1342,7 @@ void Connection::SetStmtAttribute(SQLUSMALLINT option, SQLULEN value) {
   IGNITE_ODBC_API_CALL(InternalSetStmtAttribute(option, value));
 }
 
-SqlResult::Type Connection::InternalSetStmtAttribute(SQLUSMALLINT option,
-                                                     SQLULEN value) {
+SqlResult::Type Connection::InternalSetStmtAttribute(SQLUSMALLINT option, SQLULEN value) {
   switch (option) {
     case SQL_BIND_TYPE: {
       if (value != SQL_BIND_BY_COLUMN) {
@@ -1438,6 +1425,7 @@ SqlResult::Type Connection::InternalSetStmtAttribute(SQLUSMALLINT option,
   return SqlResult::AI_SUCCESS;
 }
 
+/* */
 void Connection::SetConnectOption(SQLUSMALLINT option, SQLULEN value) {
   IGNITE_ODBC_API_CALL(InternalSetConnectOption(option, value));
 }
