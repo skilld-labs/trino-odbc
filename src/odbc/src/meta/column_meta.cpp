@@ -26,7 +26,7 @@
 #include "trino/odbc/system/odbc_constants.h"
 #include "trino/odbc/type_traits.h"
 
-/*@*/
+/*#*/
 #include <aws/trino-query/model/Type.h>
 
 namespace trino {

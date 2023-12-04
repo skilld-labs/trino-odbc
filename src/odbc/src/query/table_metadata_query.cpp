@@ -20,7 +20,7 @@
 
 #include "trino/odbc/query/table_metadata_query.h"
 
-/*@*/
+/*#*/
 #include <aws/trino-query/model/ScalarType.h>
 
 #include <vector>
@@ -29,8 +29,7 @@
 #include "trino/odbc/log.h"
 #include "trino/odbc/type_traits.h"
 
-/*@*/
-using Aws::TrinoQuery::Model::ScalarType;
+using Aws::TrinoQuery::Model::ScalarType; /*#*/
 
 namespace trino {
 namespace odbc {
@@ -651,16 +650,14 @@ SqlResult::Type TableMetadataQuery::getTablesWithIdentifier(
   // get all database names, then do filtering based on database name identifier
   int numDatabases = databaseNames.size();
   bool match = false;
-/*@*/
   Aws::String databaseUpper =
-      Aws::Utils::StringUtils::ToUpper(databaseIdentifier.data());
+      Aws::Utils::StringUtils::ToUpper(databaseIdentifier.data()); /*#*/
 
   std::string databaseName("");
   for (int i = 0; i < numDatabases; i++) {
     databaseName = databaseNames.at(i);
-/*@*/
     Aws::String dbNameUpper =
-        Aws::Utils::StringUtils::ToUpper(databaseName.data());
+        Aws::Utils::StringUtils::ToUpper(databaseName.data()); /*#*/
     match = (databaseUpper == dbNameUpper);
 
     if (match) {
@@ -695,11 +692,10 @@ SqlResult::Type TableMetadataQuery::getTablesWithIdentifier(
 
     // Check exact match for table name case-insensitive identifier
     std::string foundTableName = tableNames.at(j);
-/*@*/
     Aws::String tableUpper =
-        Aws::Utils::StringUtils::ToUpper(table.get().data());
+        Aws::Utils::StringUtils::ToUpper(table.get().data()); /*#*/
     Aws::String tbNameUpper =
-        Aws::Utils::StringUtils::ToUpper(foundTableName.data());
+        Aws::Utils::StringUtils::ToUpper(foundTableName.data()); /*#*/
     match = (tableUpper == tbNameUpper);
 
     if (match) {

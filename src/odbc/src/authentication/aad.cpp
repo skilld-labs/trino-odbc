@@ -18,7 +18,7 @@
 #include "trino/odbc/authentication/aad.h"
 #include "trino/odbc/diagnostic/diagnosable_adapter.h"
 
-/*@*/
+/*#*/
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/utils/base64/Base64.h>
 #include <aws/core/http/HttpClient.h>

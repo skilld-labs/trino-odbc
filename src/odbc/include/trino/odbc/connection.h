@@ -34,7 +34,7 @@
 #include "trino/odbc/authentication/saml.h"
 #include "trino/odbc/descriptor.h"
 
-/*@*/
+/*#*/
 #include <aws/core/Aws.h>
 #include <aws/core/auth/AWSCredentials.h>
 #include <aws/trino-query/TrinoQueryClient.h>
@@ -148,9 +148,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
    *
    * @return Shared Pointer to Trino query client.
    */
-/*@*/
-  std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
-  GetQueryClient() const;
+  std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > GetQueryClient() const; /*#*/
 
   /**
    * Create statement associated with the connection.
@@ -254,9 +252,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
    *
    * @return awsLogLevel AWS Log Level, default is Warn.
    */
-/*@*/
-  static Aws::Utils::Logging::LogLevel GetAWSLogLevelFromString(
-      std::string awsLogLvl);
+  static Aws::Utils::Logging::LogLevel GetAWSLogLevelFromString(std::string awsLogLvl); /*#*/
 
   /**
    * Get cursor name for a statement
@@ -330,7 +326,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
    * @param clientCfg AWS client configuration.
    * @return a shared_ptr to created TrinoQueryClient object.
    */
-  /*#*/
+/*@*/
   virtual std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
   CreateTrinoQueryClient(const Aws::Auth::AWSCredentials& credentials,
                       const Aws::Client::ClientConfiguration& clientCfg);
@@ -340,16 +336,14 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
    *
    * @return a shared_ptr to created HttpClient object.
    */
-/*@*/
-  virtual std::shared_ptr< Aws::Http::HttpClient > GetHttpClient();
+  virtual std::shared_ptr< Aws::Http::HttpClient > GetHttpClient(); /*#*/
 
   /**
    * Create Aws STSClient object.
    *
    * @return a shared_ptr to created STSClient object.
    */
-/*@*/
-  virtual std::shared_ptr< Aws::STS::STSClient > GetStsClient();
+  virtual std::shared_ptr< Aws::STS::STSClient > GetStsClient(); /*#*/
 
   /**
    * Create statement associated with the connection.
@@ -593,8 +587,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
    *
    * @param clientCfg Client configuration.
    */
-/*@*/
-  void SetClientProxy(Aws::Client::ClientConfiguration& clientCfg);
+  void SetClientProxy(Aws::Client::ClientConfiguration& clientCfg); /*@*/
 
   /** Parent. */
   Environment* env_;
@@ -606,7 +599,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   bool autoCommit_ = true;
 
   /** Metadata ID flag, indicate if the string arguments of catalog functions
-   * are treated as identifiers. */
+   * are treated as identifiers. *//*@*/
   bool metadataID_;
 
   /** Configuration. */
@@ -616,21 +609,18 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   config::ConnectionInfo info_;
 
   /** Trino query client. */
-/*@*/
-  std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > queryClient_;
+  std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > queryClient_; /*#*/
 
   /** SAML credentials provider */
   std::shared_ptr< TrinoSAMLCredentialsProvider > samlCredProvider_;
 
   /** Aws SDK options. */
-/*@*/
-  Aws::SDKOptions options_;
+  Aws::SDKOptions options_; /*#*/
 
   /** mutex for exclusive access */
   static std::mutex mutex_;
 
   /** Aws SDK has been initialization flag */
-/*@*/
   static bool awsSDKReady_;
 
   /** This class object count */

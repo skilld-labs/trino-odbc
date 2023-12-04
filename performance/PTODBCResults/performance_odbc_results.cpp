@@ -22,7 +22,7 @@
 #include <boost/thread.hpp>
 #include <boost/thread/detail/thread.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <vector>
+// #include <vector>
 #include <numeric>
 #include <sql.h>
 #include <sqlext.h>
@@ -42,7 +42,7 @@ typedef SQLULEN SQLTRANSID;
 typedef SQLLEN SQLROWOFFSET;
 #endif
 
-std::vector< SQLWCHAR > connectionString;
+// std::vector< SQLWCHAR > connectionString;
 std::string outFileName = "performance_results_report.csv";
 
 const testString _query =
@@ -103,7 +103,7 @@ void queryMemUsage(long long& averageMem, long long& peakMem) {
 }
 
 auto RecordBindingFetching = [](SQLHSTMT& hstmt,
-                                std::vector< long long >& times,
+                                // std::vector< long long >& times,
                                 const testString& query, bool is_wchar) {
   SQLSMALLINT total_columns = 0;
   int row_count = 0;
@@ -122,7 +122,7 @@ auto RecordBindingFetching = [](SQLHSTMT& hstmt,
     // Performance tests use WCHAR exclusively since the Amazon Trino ODBC
     // driver is a unicode driver and CHAR is an uncommon real-life use case
     if (is_wchar) {
-      std::vector< WCol > cols(total_columns);
+      // std::vector< WCol > cols(total_columns);
 
       // Bind and fetch
       for (size_t i = 0; i < cols.size(); i++)
@@ -139,7 +139,7 @@ auto RecordBindingFetching = [](SQLHSTMT& hstmt,
       logDiagnostics(SQL_HANDLE_STMT, hstmt, ret);
       SQLCloseCursor(hstmt);
     } else {
-      std::vector< Col > cols(total_columns);
+      // std::vector< Col > cols(total_columns);
 
       // Bind and fetch
       for (size_t i = 0; i < cols.size(); i++)
@@ -170,7 +170,7 @@ auto RecordBindingFetching = [](SQLHSTMT& hstmt,
         && !enableLargeTest) {                                               \
       GTEST_SKIP();                                                          \
     }                                                                        \
-    std::vector< long long > times;                                          \
+    // std::vector< long long > times;                                          \
     int currentMem = currentMemUsage();                                      \
     long long averageMem = 0;                                                \
     long long peakMem = 0;                                                   \
@@ -253,7 +253,7 @@ const std::string sync_average_memory_usage = "%%__AVERAGE_MEMORY_USAGE__%%";
 const std::string sync_peak_memory_usage = "%%__PEAK_MEMORY_USAGE__%%";
 const std::string sync_end = "%%__PARSE__SYNC__END__%%";
 
-void Report(const std::string& test_case, std::vector< long long > data,
+// void Report(const std::string& test_case, std::vector< long long > data,
             const testString& query, long long averageMemoryUsage,
             long long peakMemoryUsage) {
   size_t size = data.size();
@@ -328,7 +328,7 @@ void Report(const std::string& test_case, std::vector< long long > data,
 TEST_F(TestPerformance, DISABLED_Time_Execute) {
   // Execute a warm up query
   std::cout << "_hstmt: " << _hstmt << std::endl;
-  std::vector< long long > times;
+  // std::vector< long long > times;
   int currentMem = currentMemUsage();
   long long averageMem = 0;
   long long peakMem = 0;
@@ -359,7 +359,7 @@ TEST_F(TestPerformance, DISABLED_Time_Execute) {
 TEST_PERF_TEST(DISABLED_Time_BindColumn_FetchSingleRow, _query, true)
 
 TEST_F(TestPerformance, DISABLED_Time_BindColumn_Fetch5Rows) {
-  std::vector< long long > times;
+  // std::vector< long long > times;
   int currentMem = currentMemUsage();
   long long averageMem = 0;
   long long peakMem = 0;
@@ -378,7 +378,7 @@ TEST_F(TestPerformance, DISABLED_Time_BindColumn_Fetch5Rows) {
 
       // Get column count
       SQLNumResultCols(_hstmt, &total_columns);
-      std::vector< std::vector< Col > > cols(total_columns);
+      // // std::vector< std::vector< Col > > cols(total_columns);
       for (size_t i = 0; i < cols.size(); i++)
         cols[i].resize(ROWSET_SIZE_5);
 
@@ -410,7 +410,7 @@ TEST_F(TestPerformance, DISABLED_Time_BindColumn_Fetch5Rows) {
 }
 
 TEST_F(TestPerformance, DISABLED_Time_BindColumn_Fetch50Rows) {
-  std::vector< long long > times;
+  // std::vector< long long > times;
   int currentMem = currentMemUsage();
   long long averageMem = 0;
   long long peakMem = 0;
@@ -429,7 +429,7 @@ TEST_F(TestPerformance, DISABLED_Time_BindColumn_Fetch50Rows) {
 
       // Get column count
       SQLNumResultCols(_hstmt, &total_columns);
-      std::vector< std::vector< Col > > cols(total_columns);
+      // // std::vector< std::vector< Col > > cols(total_columns);
       for (size_t i = 0; i < cols.size(); i++)
         cols[i].resize(ROWSET_SIZE_50);
 
@@ -462,7 +462,7 @@ TEST_F(TestPerformance, DISABLED_Time_BindColumn_Fetch50Rows) {
 }
 
 TEST_F(TestPerformance, DISABLED_Time_Execute_FetchSingleRow) {
-  std::vector< long long > times;
+  // std::vector< long long > times;
   int currentMem = currentMemUsage();
   long long averageMem = 0;
   long long peakMem = 0;
@@ -479,7 +479,7 @@ TEST_F(TestPerformance, DISABLED_Time_Execute_FetchSingleRow) {
 
       // Get column count
       SQLNumResultCols(_hstmt, &total_columns);
-      std::vector< std::vector< Col > > cols(total_columns);
+      // // std::vector< std::vector< Col > > cols(total_columns);
       for (size_t i = 0; i < cols.size(); i++)
         cols[i].resize(SINGLE_ROW);
 
@@ -1041,7 +1041,6 @@ int main(int argc, char** argv) {
   // Enable malloc logging for detecting memory leaks.
   system("export MallocStackLogging=1");
 #endif
-/*$*/
   std::string region = "us-west-2";
   std::string defaultConnStr = "DSN=trino-iam;";
   std::string specialConnStr;
@@ -1072,7 +1071,6 @@ int main(int argc, char** argv) {
     }
   }
 
-/*$*/
   // connectionString = std::vector< SQLWCHAR >(defaultConnStr.begin(), defaultConnStr.end()); 
 
   prepareOutFile();

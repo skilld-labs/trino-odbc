@@ -31,11 +31,10 @@
 
 #include <boost/optional.hpp>
 #include <ignite/common/common.h>
-/*@*/
+/*#*/
 #include <aws/trino-query/model/ScalarType.h>
 
-/*@*/
-using Aws::TrinoQuery::Model::ScalarType;
+using Aws::TrinoQuery::Model::ScalarType; /*#*/
 
 namespace trino {
 namespace odbc {

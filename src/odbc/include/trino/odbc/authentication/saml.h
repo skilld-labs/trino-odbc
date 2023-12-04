@@ -19,7 +19,7 @@
 
 #include "trino/odbc/config/configuration.h"
 
-/*@*/
+/*#*/
 #include <aws/core/Aws.h>
 #include <aws/core/auth/AWSCredentials.h>
 #include <aws/sts/model/AssumeRoleWithSAMLRequest.h>

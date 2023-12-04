@@ -1287,10 +1287,8 @@ SqlResult::Type Statement::InternalSetCursorName(SQLWCHAR* name,
   std::string cursorName =
       trino::odbc::utility::SqlWcharToString(name, nameLen);
   std::string pattern("SQL_CUR");
-/*@*/
   if (cursorName.length() >= pattern.length()
-      && Aws::Utils::StringUtils::ToUpper(
-             cursorName.substr(0, pattern.length()).data())
+      && Aws::Utils::StringUtils::ToUpper(cursorName.substr(0, pattern.length()).data()) /*#*/
              == pattern) {
     std::stringstream ss;
     ss << "Cursor name should not start with " << pattern;

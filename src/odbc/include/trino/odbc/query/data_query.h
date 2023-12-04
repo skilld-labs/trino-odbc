@@ -25,7 +25,7 @@
 #include "trino/odbc/query/query.h"
 #include "trino/odbc/connection.h"
 
-/*@*/
+/*#*/
 #include <aws/trino-query/model/QueryRequest.h>
 #include <aws/trino-query/model/QueryResult.h>
 #include <aws/trino-query/model/ColumnInfo.h>
@@ -34,10 +34,9 @@
 #include <mutex>
 #include <condition_variable>
 
-/*@*/
-using Aws::TrinoQuery::Model::ColumnInfo;
-using Aws::TrinoQuery::Model::QueryRequest;
-using Aws::TrinoQuery::Model::QueryResult;
+using Aws::TrinoQuery::Model::ColumnInfo; /*#*/
+using Aws::TrinoQuery::Model::QueryRequest; /*#*/
+using Aws::TrinoQuery::Model::QueryResult; /*#*/
 
 namespace trino {
 namespace odbc {
@@ -62,8 +61,7 @@ class IGNITE_IMPORT_EXPORT DataQueryContext {
   std::condition_variable cv_;
 
   /** queue to save query execution outcome objects. */
-/*@*/
-  std::queue< Aws::TrinoQuery::Model::QueryOutcome > queue_;
+  std::queue< Aws::TrinoQuery::Model::QueryOutcome > queue_; /*#*/
 
   /** Flag to indicate if the main thread is exiting or not. */
   bool isClosing_;
@@ -219,8 +217,7 @@ class IGNITE_IMPORT_EXPORT DataQuery : public trino::odbc::query::Query {
    *
    * @param trinoVector Aws::TrinoQuery::Model::ColumnInfo vector.
    */
-/*@*/
-  void ReadColumnMetadataVector(const Aws::Vector< ColumnInfo >& trinoVector);
+  void ReadColumnMetadataVector(const Aws::Vector< ColumnInfo >& trinoVector); /*#*/
 
   /**
    * Process column conversion operation result.
@@ -286,8 +283,7 @@ class IGNITE_IMPORT_EXPORT DataQuery : public trino::odbc::query::Query {
   std::unique_ptr< TrinoCursor > cursor_;
 
   /** Trino query client. */
-/*@*/
-  std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > queryClient_;
+  std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > queryClient_; /*#*/
 
   /** Context for asynchornous result fetching. */
   DataQueryContext context_;

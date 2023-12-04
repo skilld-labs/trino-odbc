@@ -17,7 +17,7 @@
 #ifndef _TRINO_ODBC_AUTHENTICATION_OKTA
 #define _TRINO_ODBC_AUTHENTICATION_OKTA
 
-/*@*/
+/*#*/
 #include <aws/core/client/ClientConfiguration.h>
 
 #include "trino/odbc/authentication/saml.h"

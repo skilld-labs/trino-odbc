@@ -24,12 +24,11 @@
 #include <stdint.h>
 #include <trino/odbc/app/application_data_buffer.h>
 #include "trino/odbc/meta/column_meta.h"
-/*@*/
+/*#*/
 #include <aws/trino-query/model/Row.h>
 
-/*@*/
-using Aws::TrinoQuery::Model::Datum;
-using Aws::TrinoQuery::Model::Row;
+using Aws::TrinoQuery::Model::Datum; /*#*/
+using Aws::TrinoQuery::Model::Row; /*#*/
 using trino::odbc::app::ApplicationDataBuffer;
 using trino::odbc::app::ConversionResult;
 

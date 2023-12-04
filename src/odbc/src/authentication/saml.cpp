@@ -17,7 +17,7 @@
 #include "trino/odbc/log.h"
 #include "trino/odbc/authentication/saml.h"
 
-/*@*/
+/*#*/
 #include <aws/sts/model/Credentials.h>
 
 namespace trino {

@@ -23,13 +23,12 @@
 #include <time.h>
 #include "trino/odbc/trino_column.h"
 #include "trino/odbc/utility.h"
-/*@*/
+/*#*/
 #include <aws/trino-query/model/ColumnInfo.h>
 #include <aws/trino-query/model/TimeSeriesDataPoint.h>
 
-/*@*/
-using Aws::TrinoQuery::Model::ScalarType;
-using Aws::TrinoQuery::Model::TimeSeriesDataPoint;
+using Aws::TrinoQuery::Model::ScalarType; /*#*/
+using Aws::TrinoQuery::Model::TimeSeriesDataPoint; /*#*/
 using trino::odbc::type_traits::OdbcNativeType;
 
 namespace trino {
@@ -89,7 +88,6 @@ ConversionResult::Type TrinoColumn::ParseScalarType(
     ApplicationDataBuffer& dataBuf) const {
   LOG_DEBUG_MSG("ParseScalarType is called");
 
-/*@*/
   Aws::String value = datum.GetScalarValue();
   LOG_DEBUG_MSG("value is " << value << ", scalar type is "
                             << static_cast< int >(columnMeta_.GetScalarType()));
@@ -271,6 +269,7 @@ ConversionResult::Type TrinoColumn::ParseRowType(
     const Datum& datum, ApplicationDataBuffer& dataBuf) const {
   LOG_DEBUG_MSG("ParseRowType is called");
 
+/*@*/
   const Row& row = datum.GetRowValue();
 
   if (!row.DataHasBeenSet()) {

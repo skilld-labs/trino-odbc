@@ -40,7 +40,7 @@
 #include "trino/odbc/authentication/aad.h"
 #include "trino/odbc/authentication/okta.h"
 
-/*@*/
+/*#*/
 #include <aws/trino-query/model/QueryRequest.h>
 #include <aws/trino-query/model/QueryResult.h>
 #include <aws/core/utils/logging/LogLevel.h>
@@ -55,7 +55,6 @@ namespace trino {
 namespace odbc {
 
 std::mutex Connection::mutex_;
-/*@*/
 bool Connection::awsSDKReady_ = false;
 std::atomic< int > Connection::refCount_(0);
 
@@ -71,7 +70,6 @@ Connection::Connection(Environment* env)
     // Use awsSDKReady_ and mutex_ to guarantee InitAPI is executed before all
     // Connection objects start to run.
     std::lock_guard< std::mutex > lock(mutex_);
-/*@*/
     if (!awsSDKReady_) {
       Aws::Utils::Logging::LogLevel awsLogLvl = GetAWSLogLevelFromString(
           ignite::odbc::common::GetEnv("TS_AWS_LOG_LEVEL")); /*@*/
@@ -79,8 +77,7 @@ Connection::Connection(Environment* env)
 
       LOG_INFO_MSG("AWS SDK log level is set to: "
                    << Aws::Utils::Logging::GetLogLevelName(awsLogLvl));
-/*#*/
-      Aws::InitAPI(options_);
+      Aws::InitAPI(options_); /*#*/
       awsSDKReady_ = true;
       LOG_DEBUG_MSG("AWS SDK is Initialized");
     }
@@ -97,9 +94,8 @@ Connection::~Connection() {
   // It should be shutdown only once by the last Connection
   // destructor during the application running. The atomic counter
   // guarantees this.
-/*#*/
   if (0 == --refCount_) {
-    Aws::ShutdownAPI(options_);
+    Aws::ShutdownAPI(options_); /*#*/
     awsSDKReady_ = false;
     LOG_DEBUG_MSG("AWS SDK is shut down");
   }
@@ -504,6 +500,7 @@ void UpdateConnectionRuntimeInfo(const config::Configuration& config,
 #endif
 }
 
+/*@*/
 std::shared_ptr< Aws::Http::HttpClient > Connection::GetHttpClient() {
   return Aws::Http::CreateHttpClient(Aws::Client::ClientConfiguration());
 }
@@ -626,23 +623,20 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) {
   }
 }
 
-/*#*/
 std::shared_ptr< Aws::STS::STSClient > Connection::GetStsClient() {
-  return std::make_shared< Aws::STS::STSClient >();
+  return std::make_shared< Aws::STS::STSClient >(); /*#*/
 }
 
 bool Connection::TryRestoreConnection(const config::Configuration& cfg,
                                       IgniteError& err) {
   LOG_DEBUG_MSG("TryRestoreConnection is called");
-  /*#*/
-  Aws::Auth::AWSCredentials credentials;
+  Aws::Auth::AWSCredentials credentials; /*#*/
   std::string errInfo("");
 
   AuthType::Type authType = cfg.GetAuthType();
   LOG_DEBUG_MSG("auth type is " << static_cast< int >(authType));
   if (authType == AuthType::Type::PASSWORD) {
-    /*#*/
-    Aws::Auth::ProfileConfigFileAWSCredentialsProvider credProvider(cfg.GetProfileName().data());
+    Aws::Auth::ProfileConfigFileAWSCredentialsProvider credProvider(cfg.GetProfileName().data()); /*#*/
     credentials = credProvider.GetAWSCredentials();
     LOG_DEBUG_MSG("profile name is " << cfg.GetProfileName());
   } else {
@@ -668,8 +662,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
     return false;
   }
 
-  /*#*/
-  Aws::Client::ClientConfiguration clientCfg;
+  Aws::Client::ClientConfiguration clientCfg; /*#*/
   clientCfg.region = cfg.GetRegion();
   clientCfg.enableEndpointDiscovery = true;
   clientCfg.connectTimeoutMs = cfg.GetConnectionTimeout();
@@ -733,11 +726,12 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
   return true;
 }
 
+/*@*/
 std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
 Connection::CreateTRINOQueryClient(
     const Aws::Auth::AWSCredentials& credentials,
     const Aws::Client::ClientConfiguration& clientCfg) {
-  return std::make_shared< Aws::TrinoQuery::TrinoQueryClient >(credentials, clientCfg); /*#*/
+  return std::make_shared< Aws::TrinoQuery::TrinoQueryClient >(credentials, clientCfg);
 }
 
 Descriptor* Connection::CreateDescriptor() {
@@ -1425,7 +1419,6 @@ SqlResult::Type Connection::InternalSetStmtAttribute(SQLUSMALLINT option, SQLULE
   return SqlResult::AI_SUCCESS;
 }
 
-/* */
 void Connection::SetConnectOption(SQLUSMALLINT option, SQLULEN value) {
   IGNITE_ODBC_API_CALL(InternalSetConnectOption(option, value));
 }
@@ -1465,8 +1458,7 @@ SqlResult::Type Connection::InternalSetConnectOption(SQLUSMALLINT option,
 
     case SQL_AUTOCOMMIT:
     default:
-      return InternalSetAttribute(option, reinterpret_cast< SQLPOINTER >(value),
-                                  0);
+      return InternalSetAttribute(option, reinterpret_cast< SQLPOINTER >(value), 0);
   }
 }
 

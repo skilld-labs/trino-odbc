@@ -32,14 +32,13 @@
 #include "trino/odbc/utility.h"
 #include "trino/odbc/app/application_data_buffer.h"
 
-/*@*/
+/*#*/
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/trino-query/model/ColumnInfo.h>
 #include <aws/trino-query/model/ScalarType.h>
 
-/*@*/
-using Aws::TrinoQuery::Model::ColumnInfo;
-using Aws::TrinoQuery::Model::ScalarType;
+using Aws::TrinoQuery::Model::ColumnInfo; /*#*/
+using Aws::TrinoQuery::Model::ScalarType; /*#*/
 
 namespace trino {
 namespace odbc {

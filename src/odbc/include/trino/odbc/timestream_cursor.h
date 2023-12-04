@@ -30,12 +30,11 @@
 #include "trino/odbc/trino_column.h"
 #include "trino/odbc/meta/column_meta.h"
 
-/*@*/
+/*#*/
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/trino-query/model/Row.h>
 
-/*@*/
-using Aws::TrinoQuery::Model::Row;
+using Aws::TrinoQuery::Model::Row; /*#*/
 
 namespace trino {
 namespace odbc {
@@ -49,9 +48,7 @@ class TrinoCursor {
    * @param rowVec Aws Row vector.
    * @param columnMetadataVec Column metadata vector.
    */
-/*@*/
-  TrinoCursor(const Aws::Vector< Row > rowVec,
-                   const meta::ColumnMetaVector& columnMetadataVec);
+  TrinoCursor(const Aws::Vector< Row > rowVec, const meta::ColumnMetaVector& columnMetadataVec); /*@*/
 
   /**
    * Destructor.
@@ -120,12 +117,10 @@ class TrinoCursor {
   bool EnsureColumnDiscovered(uint32_t columnIdx);
 
   /** Resultset rows */
-/*@*/
-  const Aws::Vector< Row > rowVec_;
+  const Aws::Vector< Row > rowVec_; /*#*/
 
   /** The iterator to beginning of cursor */
-/*@*/
-  Aws::Vector< Row >::const_iterator iterator_;
+  Aws::Vector< Row >::const_iterator iterator_; /*#*/
 
   /** The column metadata vector*/
   const meta::ColumnMetaVector& columnMetadataVec_;

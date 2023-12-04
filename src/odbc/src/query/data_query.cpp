@@ -24,7 +24,7 @@
 #include "trino/odbc/log.h"
 #include "ignite/odbc/odbc_error.h"
 
-/*@*/
+/*#*/
 #include <aws/trino-query/model/Type.h>
 #include <aws/trino-query/model/CancelQueryRequest.h>
 
@@ -78,8 +78,7 @@ SqlResult::Type DataQuery::Cancel() {
     }
 
     // Try to cancel current query
-/*@*/
-    Aws::TrinoQuery::Model::CancelQueryRequest cancel_request;
+    Aws::TrinoQuery::Model::CancelQueryRequest cancel_request; /*#*/
     cancel_request.SetQueryId(result_->GetQueryId());
 
     auto outcome = connection_.GetQueryClient()->CancelQuery(cancel_request);
@@ -171,9 +170,8 @@ SqlResult::Type DataQuery::SwitchCursor() {
   }
 
   result_ = std::make_shared< QueryResult >(outcome.GetResult());
-/*@*/
-  const Aws::Vector< Row >& rows = outcome.GetResult().GetRows();
-  const Aws::String& token = outcome.GetResult().GetNextToken();
+  const Aws::Vector< Row >& rows = outcome.GetResult().GetRows(); /*#*/
+  const Aws::String& token = outcome.GetResult().GetNextToken(); /*#*/
   if (rows.empty()) {
     LOG_INFO_MSG(
         "Data fetching is finished, number of rows fetched: " << rowCounter);
@@ -462,7 +460,6 @@ SqlResult::Type DataQuery::MakeRequestResultsetMeta() {
   QueryResult result = outcome.GetResult();
   const Aws::Vector< ColumnInfo >& columnInfo = result.GetColumnInfo();
 
-/*@*/
   ReadColumnMetadataVector(columnInfo);
 
   return SqlResult::AI_SUCCESS;
