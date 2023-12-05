@@ -18,8 +18,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/*@*//*aws marker*/
 /*$*//*WIP marker*/
+/*@*//*aws marker*/
 /*#*//*direct aws marker*/
 
 #include <ignite/common/common.h>

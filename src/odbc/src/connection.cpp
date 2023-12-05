@@ -55,31 +55,30 @@ namespace trino {
 namespace odbc {
 
 std::mutex Connection::mutex_;
-bool Connection::awsSDKReady_ = false;
+bool Connection::trinoSDKReady_ = false; /*@*/
 std::atomic< int > Connection::refCount_(0);
 
 Connection::Connection(Environment* env)
     : env_(env), info_(config_), metadataID_(false) {
   LOG_DEBUG_MSG("Connection is called");
-  // The AWS SDK for C++ must be initialized by calling Aws::InitAPI.
+  // The trino SDK for C++ must be initialized by calling trino::InitAPI.
   // It should only be initialized only once during the application running
   // All Connections in different thread must wait before the InitAPI is
   // finished.
-/*@*/
-  if (!awsSDKReady_) {
-    // Use awsSDKReady_ and mutex_ to guarantee InitAPI is executed before all
+  if (!trinoSDKReady_) { /*@*/
+    // Use trinoSDKReady_ and mutex_ to guarantee InitAPI is executed before all
     // Connection objects start to run.
     std::lock_guard< std::mutex > lock(mutex_);
-    if (!awsSDKReady_) {
+    if (!trinoSDKReady_) { /*@*/
       Aws::Utils::Logging::LogLevel awsLogLvl = GetAWSLogLevelFromString(
-          ignite::odbc::common::GetEnv("TS_AWS_LOG_LEVEL")); /*@*/
-      options_.loggingOptions.logLevel = awsLogLvl;
+          ignite::odbc::common::GetEnv("TS_AWS_LOG_LEVEL")); /*#*/ /*@*/
+      options_.loggingOptions.logLevel = awsLogLvl; /*#*/ /*@*/
 
-      LOG_INFO_MSG("AWS SDK log level is set to: "
-                   << Aws::Utils::Logging::GetLogLevelName(awsLogLvl));
+      LOG_INFO_MSG("trino SDK log level is set to: "
+                   << Aws::Utils::Logging::GetLogLevelName(awsLogLvl)); /*#*/
       Aws::InitAPI(options_); /*#*/
-      awsSDKReady_ = true;
-      LOG_DEBUG_MSG("AWS SDK is Initialized");
+      trinoSDKReady_ = true; /*@*/
+      LOG_DEBUG_MSG("trino SDK is Initialized");
     }
   }
 
@@ -96,8 +95,8 @@ Connection::~Connection() {
   // guarantees this.
   if (0 == --refCount_) {
     Aws::ShutdownAPI(options_); /*#*/
-    awsSDKReady_ = false;
-    LOG_DEBUG_MSG("AWS SDK is shut down");
+    trinoSDKReady_ = false; /*@*/
+    LOG_DEBUG_MSG("trino SDK is shut down");
   }
 }
 
@@ -216,9 +215,8 @@ void Connection::Deregister() {
   env_->DeregisterConnection(this);
 }
 
-/*@*/
 std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
-Connection::GetQueryClient() const {
+Connection::GetQueryClient() const { /*@*/
   return queryClient_;
 }
 
@@ -500,17 +498,14 @@ void UpdateConnectionRuntimeInfo(const config::Configuration& config,
 #endif
 }
 
-/*@*/
-std::shared_ptr< Aws::Http::HttpClient > Connection::GetHttpClient() {
-  return Aws::Http::CreateHttpClient(Aws::Client::ClientConfiguration());
+std::shared_ptr< Aws::Http::HttpClient > Connection::GetHttpClient() { /*@*/
+  return Aws::Http::CreateHttpClient(Aws::Client::ClientConfiguration()); /*#*/
 }
 
-Aws::Utils::Logging::LogLevel Connection::GetAWSLogLevelFromString(
-    std::string awsLogLvl) {
-  std::transform(awsLogLvl.begin(), awsLogLvl.end(), awsLogLvl.begin(),
-                 ::toupper);
+Aws::Utils::Logging::LogLevel Connection::GetAWSLogLevelFromString(std::string trinoLogLvl) { /*#*/
+  std::transform(trinoLogLvl.begin(), trinoLogLvl.end(), trinoLogLvl.begin(), ::toupper);
 
-  switch (awsLogLvl) {
+  switch (trinoLogLvl) {
   case "OFF":
     return Aws::Utils::Logging::LogLevel::Off;
 
@@ -537,7 +532,7 @@ Aws::Utils::Logging::LogLevel Connection::GetAWSLogLevelFromString(
   }
 }
 
-void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) {
+void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) { /*@*/
   LOG_DEBUG_MSG("SetClientProxy is called");
   // proxy host
   std::string proxyHost = utility::Trim(GetEnv("TS_PROXY_HOST")); /*@*/
@@ -554,7 +549,7 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) {
     proxyPort = utility::StringToInt(portStr);
   }
   if (proxyPort > 0) {
-    clientCfg.proxyPort = proxyPort;
+    clientCfg.proxyPort = proxyPort; /*@*/
   }
 
   // proxy scheme
@@ -564,9 +559,9 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) {
     std::transform(proxyScheme.begin(), proxyScheme.end(), proxyScheme.begin(),
                    ::toupper);
     if (proxyScheme == "HTTPS") {
-      clientCfg.proxyScheme = Aws::Http::Scheme::HTTPS;
+      clientCfg.proxyScheme = Aws::Http::Scheme::HTTPS; /*@*/
     } else {
-      clientCfg.proxyScheme = Aws::Http::Scheme::HTTP;
+      clientCfg.proxyScheme = Aws::Http::Scheme::HTTP; /*@*/
     }
   }
 
@@ -623,8 +618,8 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) {
   }
 }
 
-std::shared_ptr< Aws::STS::STSClient > Connection::GetStsClient() {
-  return std::make_shared< Aws::STS::STSClient >(); /*#*/
+std::shared_ptr< Aws::STS::STSClient > Connection::GetStsClient() { /*@*/
+  return std::make_shared< Aws::STS::STSClient >(); /*@*/
 }
 
 bool Connection::TryRestoreConnection(const config::Configuration& cfg,
@@ -637,7 +632,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
   LOG_DEBUG_MSG("auth type is " << static_cast< int >(authType));
   if (authType == AuthType::Type::PASSWORD) {
     Aws::Auth::ProfileConfigFileAWSCredentialsProvider credProvider(cfg.GetProfileName().data()); /*#*/
-    credentials = credProvider.GetAWSCredentials();
+    credentials = credProvider.GetAWSCredentials(); /*@*/
     LOG_DEBUG_MSG("profile name is " << cfg.GetProfileName());
   } else {
     std::string errMsg =
@@ -705,7 +700,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
   Aws::TrinoQuery::Model::QueryRequest queryRequest; /*#*/
   queryRequest.SetQueryString("SELECT 1");
 
-  Aws::TrinoQuery::Model::QueryOutcome outcome = queryClient_->Query(queryRequest); /*#*/
+  Aws::TrinoQuery::Model::QueryOutcome outcome = queryClient_->Query(queryRequest); /*#*/ /*@*/
   if (!outcome.IsSuccess()) {
     auto error = outcome.GetError();
     LOG_DEBUG_MSG("ERROR: " << error.GetExceptionName() << ": "
@@ -726,12 +721,11 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
   return true;
 }
 
-/*@*/
 std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
 Connection::CreateTRINOQueryClient(
     const Aws::Auth::AWSCredentials& credentials,
-    const Aws::Client::ClientConfiguration& clientCfg) {
-  return std::make_shared< Aws::TrinoQuery::TrinoQueryClient >(credentials, clientCfg);
+    const Aws::Client::ClientConfiguration& clientCfg) { /*@*/
+  return std::make_shared< Aws::TrinoQuery::TrinoQueryClient >(credentials, clientCfg); /*@*/
 }
 
 Descriptor* Connection::CreateDescriptor() {

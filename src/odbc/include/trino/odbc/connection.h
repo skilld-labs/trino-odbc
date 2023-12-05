@@ -246,13 +246,13 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   Descriptor* CreateDescriptor();
 
   /**
-   * Get AWS Log Level from string
+   * Get trino Log Level from string
    *
-   * @param awsLogLvl AWS Log Level String
+   * @param trinoLogLvl trino Log Level String
    *
-   * @return awsLogLevel AWS Log Level, default is Warn.
+   * @return trinoLogLevel trino Log Level, default is Warn.
    */
-  static Aws::Utils::Logging::LogLevel GetAWSLogLevelFromString(std::string awsLogLvl); /*#*/
+  static Aws::Utils::Logging::LogLevel GetAWSLogLevelFromString(std::string trinoLogLvl); /*#*/
 
   /**
    * Get cursor name for a statement
@@ -322,24 +322,23 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   /**
    * Create TrinoQueryClient object.
    *
-   * @param credentials AWS IAM credentials.
-   * @param clientCfg AWS client configuration.
+   * @param credentials trino IAM credentials.
+   * @param clientCfg trino client configuration.
    * @return a shared_ptr to created TrinoQueryClient object.
    */
-/*@*/
   virtual std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
   CreateTrinoQueryClient(const Aws::Auth::AWSCredentials& credentials,
-                      const Aws::Client::ClientConfiguration& clientCfg);
+                      const Aws::Client::ClientConfiguration& clientCfg); /*#*/ /*@*/
 
   /**
-   * Create Aws HttpClient object.
+   * Create trino HttpClient object.
    *
    * @return a shared_ptr to created HttpClient object.
    */
   virtual std::shared_ptr< Aws::Http::HttpClient > GetHttpClient(); /*#*/
 
   /**
-   * Create Aws STSClient object.
+   * Create trino STSClient object.
    *
    * @return a shared_ptr to created STSClient object.
    */
@@ -599,7 +598,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   bool autoCommit_ = true;
 
   /** Metadata ID flag, indicate if the string arguments of catalog functions
-   * are treated as identifiers. *//*@*/
+   * are treated as identifiers. */
   bool metadataID_;
 
   /** Configuration. */
@@ -614,14 +613,14 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   /** SAML credentials provider */
   std::shared_ptr< TrinoSAMLCredentialsProvider > samlCredProvider_;
 
-  /** Aws SDK options. */
+  /** trino SDK options. */
   Aws::SDKOptions options_; /*#*/
 
   /** mutex for exclusive access */
   static std::mutex mutex_;
 
-  /** Aws SDK has been initialization flag */
-  static bool awsSDKReady_;
+  /** trino SDK has been initialization flag */
+  static bool trinoSDKReady_; /*@*/
 
   /** This class object count */
   static std::atomic< int > refCount_;
