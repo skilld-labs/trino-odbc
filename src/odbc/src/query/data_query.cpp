@@ -127,12 +127,11 @@ const meta::ColumnMetaVector* DataQuery::GetMeta() {
  *
  * @return void.
  */
-/*@*/
 void AsyncFetchOnePage(
-    const std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > client,
+    const std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > client, /*#*/
     const QueryRequest& request, DataQueryContext& context_) {
   LOG_DEBUG_MSG("AsyncFetchOnePage is called");
-  Aws::TrinoQuery::Model::QueryOutcome result;
+  Aws::TrinoQuery::Model::QueryOutcome result; /*#*/
   result = client->Query(request);
 
   std::unique_lock< std::mutex > locker(context_.mutex_);
@@ -150,12 +149,11 @@ void AsyncFetchOnePage(
   }
 }
 
-/*@*/
 SqlResult::Type DataQuery::SwitchCursor() {
   LOG_DEBUG_MSG("SwitchCursor is called");
   std::unique_lock< std::mutex > locker(context_.mutex_);
   context_.cv_.wait(locker, [&]() { return !context_.queue_.empty(); });
-  Aws::TrinoQuery::Model::QueryOutcome outcome = context_.queue_.front();
+  Aws::TrinoQuery::Model::QueryOutcome outcome = context_.queue_.front(); /*#*/
   context_.queue_.pop();
   locker.unlock();
 
@@ -359,9 +357,8 @@ SqlResult::Type DataQuery::MakeRequestExecute() {
   }
 
   do {
-/*@*/
     Aws::TrinoQuery::Model::QueryOutcome outcome =
-        connection_.GetQueryClient()->Query(request_);
+        connection_.GetQueryClient()->Query(request_); /*#*/
 
     if (!outcome.IsSuccess()) {
       auto error = outcome.GetError();
@@ -370,7 +367,7 @@ SqlResult::Type DataQuery::MakeRequestExecute() {
 
       diag.AddStatusRecord(
           SqlState::SHY000_GENERAL_ERROR,
-          "AWS API Failure: Failed to execute query \"" + sql_ + "\"");
+          "API Failure: Failed to execute query \"" + sql_ + "\"");
       InternalClose();
       return SqlResult::AI_ERROR;
     }
@@ -415,8 +412,7 @@ SqlResult::Type DataQuery::MakeRequestFetch() {
     return SqlResult::AI_ERROR;
   }
 
-/*@*/
-  const Aws::Vector< ColumnInfo >& columnInfo = result_->GetColumnInfo();
+  const Aws::Vector< ColumnInfo >& columnInfo = result_->GetColumnInfo(); /*#*/
 
   if (!resultMetaAvailable_) {
     ReadColumnMetadataVector(columnInfo);
@@ -442,15 +438,14 @@ SqlResult::Type DataQuery::MakeRequestResultsetMeta() {
   QueryRequest request;
   request.SetQueryString(sql_);
 
-/*@*/
   Aws::TrinoQuery::Model::QueryOutcome outcome =
-      connection_.GetQueryClient()->Query(request);
+      connection_.GetQueryClient()->Query(request); /*@*/
 
   if (!outcome.IsSuccess()) {
     auto const error = outcome.GetError();
 
     diag.AddStatusRecord(SqlState::SHY000_GENERAL_ERROR,
-                         "AWS API ERROR: " + error.GetExceptionName() + ": "
+                         "API ERROR: " + error.GetExceptionName() + ": "
                              + error.GetMessage() + " for query " + sql_);
 
     InternalClose();
@@ -466,7 +461,7 @@ SqlResult::Type DataQuery::MakeRequestResultsetMeta() {
 }
 
 void DataQuery::ReadColumnMetadataVector(
-    const Aws::Vector< ColumnInfo >& trinoVector) {
+    const Aws::Vector< ColumnInfo >& trinoVector) {/*@*/
   LOG_DEBUG_MSG("ReadColumnMetadataVector is called");
 
   using trino::odbc::meta::ColumnMeta;

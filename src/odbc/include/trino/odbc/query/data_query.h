@@ -213,11 +213,11 @@ class IGNITE_IMPORT_EXPORT DataQuery : public trino::odbc::query::Query {
   SqlResult::Type FetchOnePage(bool isFirst);
 
   /**
-   * Set result set meta by reading AWS Trino column metadata vector.
+   * Set result set meta by reading Trino column metadata vector.
    *
    * @param trinoVector Aws::TrinoQuery::Model::ColumnInfo vector.
    */
-  void ReadColumnMetadataVector(const Aws::Vector< ColumnInfo >& trinoVector); /*#*/
+  void ReadColumnMetadataVector(const Aws::Vector< ColumnInfo >& trinoVector); /*@*/
 
   /**
    * Process column conversion operation result.

@@ -71,7 +71,7 @@ class TrinoColumn {
   /**
    * Read column data and store it in application data buffer.
    *
-   * @param datum Aws datum which contains the result data.
+   * @param datum datum which contains the result data.
    * @param dataBuf Application data buffer.
    * @return Operation result.
    */
@@ -80,9 +80,9 @@ class TrinoColumn {
 
  private:
   /**
-   * Parse Aws Datum data and save result to dataBuf
+   * Parse Datum data and save result to dataBuf
    *
-   * @param datum Aws datum which contains the result data
+   * @param datum datum which contains the result data
    * @param dataBuf Application data buffer.
    * @return Operation result.
    */
@@ -92,7 +92,7 @@ class TrinoColumn {
   /**
    * Parse scalar data type in datum and save result to dataBuf.
    *
-   * @param datum Aws datum which contains the result data
+   * @param datum datum which contains the result data
    * @param dataBuf Application data buffer.
    * @return Operation result.
    */
@@ -102,7 +102,7 @@ class TrinoColumn {
   /**
    * Parse TimeSeries data type in datum and save result to dataBuf.
    *
-   * @param datum Aws datum which contains the result data
+   * @param datum datum which contains the result data
    * @param dataBuf Application data buffer.
    * @return Operation result.
    */
@@ -112,7 +112,7 @@ class TrinoColumn {
   /**
    * Parse Array data type in datum and save result to dataBuf.
    *
-   * @param datum Aws datum which contains the result data
+   * @param datum datum which contains the result data
    * @param dataBuf Application data buffer.
    * @return Operation result.
    */
@@ -122,7 +122,7 @@ class TrinoColumn {
   /**
    * Parse Row data type in datum and save result to dataBuf.
    *
-   * @param datum Aws datum which contains the result data
+   * @param datum datum which contains the result data
    * @param dataBuf Application data buffer.
    * @return Operation result.
    */

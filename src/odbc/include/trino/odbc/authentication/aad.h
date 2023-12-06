@@ -13,6 +13,7 @@
  * permissions and limitations under the License.
  *
  */
+/*#*/
 
 #ifndef _TRINO_ODBC_AUTHENTICATION_AAD
 #define _TRINO_ODBC_AUTHENTICATION_AAD

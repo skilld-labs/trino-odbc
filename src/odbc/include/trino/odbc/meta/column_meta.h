@@ -236,7 +236,7 @@ class IGNITE_IMPORT_EXPORT ColumnMeta {
    * Get Aws ColumnInfo.
    * @return Aws ColumnInfo.
    */
-  const boost::optional< Aws::TrinoQuery::Model::ColumnInfo >&
+  const boost::optional< Aws::TrinoQuery::Model::ColumnInfo >& /*#*/
   GetColumnInfo() const {
     return columnInfo;
   }
@@ -381,12 +381,12 @@ class IGNITE_IMPORT_EXPORT ColumnMeta {
    * Get the scalar type based on string data type.
    *
    * @param dataType data type in string.
-   * @return Aws TrinoQuery ScalarType
+   * @return TrinoQuery ScalarType
    */
   ScalarType GetScalarDataType(const std::string& dataType);
 
-  /** Aws columnInfo. */
-  boost::optional< Aws::TrinoQuery::Model::ColumnInfo > columnInfo;
+  /** columnInfo. */
+  boost::optional< Aws::TrinoQuery::Model::ColumnInfo > columnInfo; /*#*/
 
   /** Catalog name. */
   boost::optional< std::string > catalogName;

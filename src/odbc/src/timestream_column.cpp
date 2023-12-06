@@ -43,11 +43,10 @@ TrinoColumn::TrinoColumn(
       columnMeta_(columnMeta) {
 }
 
-/*@*/
 ConversionResult::Type TrinoColumn::ReadToBuffer(const Datum& datum, ApplicationDataBuffer& dataBuf) const {
   LOG_DEBUG_MSG("ReadToBuffer is called");
   const boost::optional< Aws::TrinoQuery::Model::ColumnInfo >& columnInfo =
-      columnMeta_.GetColumnInfo();
+      columnMeta_.GetColumnInfo(); /*@*/
 
   if (!columnInfo || !columnInfo->TypeHasBeenSet()) {
     LOG_ERROR_MSG("ColumnInfo is not found or type is not set");
@@ -82,13 +81,12 @@ ConversionResult::Type TrinoColumn::ParseDatum(
   return retval;
 }
 
-/*@*/
 ConversionResult::Type TrinoColumn::ParseScalarType(
     const Aws::TrinoQuery::Model::Datum& datum,
-    ApplicationDataBuffer& dataBuf) const {
+    ApplicationDataBuffer& dataBuf) const { /*@*/
   LOG_DEBUG_MSG("ParseScalarType is called");
 
-  Aws::String value = datum.GetScalarValue();
+  Aws::String value = datum.GetScalarValue(); /*@*/
   LOG_DEBUG_MSG("value is " << value << ", scalar type is "
                             << static_cast< int >(columnMeta_.GetScalarType()));
 
@@ -197,9 +195,8 @@ ConversionResult::Type TrinoColumn::ParseTimeSeriesType(
     const Datum& datum, ApplicationDataBuffer& dataBuf) const {
   LOG_DEBUG_MSG("ParseTimeSeriesType is called");
 
-/*@*/
   const Aws::Vector< TimeSeriesDataPoint >& valueVec =
-      datum.GetTimeSeriesValue();
+      datum.GetTimeSeriesValue(); /*@*/
 
   std::string result = "[";
   for (const auto& itr : valueVec) {
@@ -236,8 +233,7 @@ ConversionResult::Type TrinoColumn::ParseArrayType(
     const Datum& datum, ApplicationDataBuffer& dataBuf) const {
   LOG_DEBUG_MSG("ParseArrayType is called");
 
-/*@*/
-  const Aws::Vector< Datum >& valueVec = datum.GetArrayValue();
+  const Aws::Vector< Datum >& valueVec = datum.GetArrayValue(); /*@*/
 
   std::string result("");
   if (valueVec.empty()) {
@@ -269,7 +265,6 @@ ConversionResult::Type TrinoColumn::ParseRowType(
     const Datum& datum, ApplicationDataBuffer& dataBuf) const {
   LOG_DEBUG_MSG("ParseRowType is called");
 
-/*@*/
   const Row& row = datum.GetRowValue();
 
   if (!row.DataHasBeenSet()) {
@@ -277,8 +272,7 @@ ConversionResult::Type TrinoColumn::ParseRowType(
     return ConversionResult::Type::AI_NO_DATA;
   }
 
-/*@*/
-  const Aws::Vector< Datum >& valueVec = row.GetData();
+  const Aws::Vector< Datum >& valueVec = row.GetData(); /*@*/
   std::string result = "(";
   for (const auto& itr : valueVec) {
     char buf[BUFFER_SIZE]{};

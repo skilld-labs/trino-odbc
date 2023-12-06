@@ -24,7 +24,6 @@ namespace trino {
 namespace odbc {
 /** Auth Type enum. */
 struct IGNITE_IMPORT_EXPORT AuthType {
-  // enum class Type {IAM, AAD, OKTA };
   enum class Type { PASSWORD, OAUTH2, KERBEROS, CERTIFICATE, JWT, HEADER };
 
   /**

@@ -148,7 +148,8 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
    *
    * @return Shared Pointer to Trino query client.
    */
-  std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > GetQueryClient() const; /*#*/
+  std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > /*#*/
+  GetQueryClient() const;
 
   /**
    * Create statement associated with the connection.
@@ -322,13 +323,13 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   /**
    * Create TrinoQueryClient object.
    *
-   * @param credentials trino IAM credentials.
+   * @param credentials trino credentials.
    * @param clientCfg trino client configuration.
    * @return a shared_ptr to created TrinoQueryClient object.
    */
-  virtual std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
+  virtual std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > /*#*/
   CreateTrinoQueryClient(const Aws::Auth::AWSCredentials& credentials,
-                      const Aws::Client::ClientConfiguration& clientCfg); /*#*/ /*@*/
+                      const Aws::Client::ClientConfiguration& clientCfg); /*@*/
 
   /**
    * Create trino HttpClient object.
@@ -620,7 +621,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   static std::mutex mutex_;
 
   /** trino SDK has been initialization flag */
-  static bool trinoSDKReady_; /*@*/
+  static bool trinoSDKReady_;
 
   /** This class object count */
   static std::atomic< int > refCount_;

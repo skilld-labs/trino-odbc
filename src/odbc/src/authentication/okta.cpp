@@ -13,12 +13,12 @@
  * permissions and limitations under the License.
  *
  */
+/*#*/
 
 #include "trino/odbc/log.h"
 #include "trino/odbc/authentication/okta.h"
 #include "trino/odbc/utility.h"
 
-/*#*/
 #include <aws/core/Aws.h>
 #include <aws/core/auth/AWSCredentials.h>
 #include <aws/core/http/HttpClient.h>

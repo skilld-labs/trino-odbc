@@ -45,7 +45,7 @@ class TrinoCursor {
  public:
   /**
    * Constructor.
-   * @param rowVec Aws Row vector.
+   * @param rowVec Row vector.
    * @param columnMetadataVec Column metadata vector.
    */
   TrinoCursor(const Aws::Vector< Row > rowVec, const meta::ColumnMetaVector& columnMetadataVec); /*@*/
