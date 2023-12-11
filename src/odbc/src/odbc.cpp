@@ -350,7 +350,7 @@ SQLRETURN SQLConnect(SQLHDBC conn, SQLWCHAR* serverName,
 
   LOG_DEBUG_MSG("SQLConnect called\n");
 
-  Connection* connection = reinterpret_cast< Connection* >(conn);
+  Connection* connection = reinterpret_cast< Connection* >(conn);/*PPP10*/
 
   if (!connection) {
     LOG_ERROR_MSG("connection is nullptr");
@@ -367,14 +367,14 @@ SQLRETURN SQLConnect(SQLHDBC conn, SQLWCHAR* serverName,
                              &connection->GetDiagnosticRecords());
   if (userName) {
     std::string userNameStr = SqlWcharToString(userName, userNameLen);
-    config.SetUid(userNameStr);
+    config.SetUid(userNameStr); /*PPP9*/
   }
   if (auth) {
     std::string passwordStr = SqlWcharToString(auth, authLen);
-    config.SetPwd(passwordStr);
+    config.SetPwd(passwordStr); /*PPP9*/
   }
 
-  connection->Establish(config);
+  connection->Establish(config); /*PPP8*/
 
   return connection->GetDiagnosticRecords().GetReturnCode();
 }

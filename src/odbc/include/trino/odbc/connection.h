@@ -318,7 +318,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   /**
    * Constructor.
    */
-  Connection(Environment* env);
+  Connection();
 
   /**
    * Create TrinoQueryClient object.
@@ -589,9 +589,6 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
    */
   void SetClientProxy(Aws::Client::ClientConfiguration& clientCfg); /*@*/
 
-  /** Parent. */
-  Environment* env_;
-
   /** Connection timeout in seconds. */
   int32_t timeout_ = 0;
 
@@ -613,18 +610,6 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
 
   /** SAML credentials provider */
   std::shared_ptr< TrinoSAMLCredentialsProvider > samlCredProvider_;
-
-  /** trino SDK options. */
-  Aws::SDKOptions options_; /*#*/
-
-  /** mutex for exclusive access */
-  static std::mutex mutex_;
-
-  /** trino SDK has been initialization flag */
-  static bool trinoSDKReady_;
-
-  /** This class object count */
-  static std::atomic< int > refCount_;
 
   /** mutex for cursor names update */
   std::mutex cursorNameMutex_;

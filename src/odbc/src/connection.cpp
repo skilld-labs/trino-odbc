@@ -55,50 +55,13 @@ using trino::odbc::IgniteError;
 namespace trino {
 namespace odbc {
 
-std::mutex Connection::mutex_;
-bool Connection::trinoSDKReady_ = false;
-std::atomic< int > Connection::refCount_(0);
-
-Connection::Connection(Environment* env)
-    : env_(env), info_(config_), metadataID_(false) {
+Connection::Connection()
+    : info_(config_), metadataID_(false) {
   LOG_DEBUG_MSG("Connection is called");
-  // The trino SDK for C++ must be initialized by calling trino::InitAPI.
-  // It should only be initialized only once during the application running
-  // All Connections in different thread must wait before the InitAPI is
-  // finished.
-  if (!trinoSDKReady_) {
-    // Use trinoSDKReady_ and mutex_ to guarantee InitAPI is executed before all
-    // Connection objects start to run.
-    std::lock_guard< std::mutex > lock(mutex_);
-    if (!trinoSDKReady_) {
-      Aws::Utils::Logging::LogLevel trinoLogLvl = GetAWSLogLevelFromString(
-          ignite::odbc::common::GetEnv("TS_AWS_LOG_LEVEL")); /*@*/
-      options_.loggingOptions.logLevel = trinoLogLvl; /*#*/ /*@*/
-
-      LOG_INFO_MSG("trino SDK log level is set to: "
-                   << Aws::Utils::Logging::GetLogLevelName(trinoLogLvl)); /*#*/
-      Aws::InitAPI(options_); /*#*/
-      trinoSDKReady_ = true;
-      LOG_DEBUG_MSG("trino SDK is Initialized");
-    }
-  }
-
-  // record the Connection object in an atomic counter
-  ++refCount_;
 }
 
 Connection::~Connection() {
-  Close();
-
-  // Before the application terminates, the SDK must be shut down.
-  // It should be shutdown only once by the last Connection
-  // destructor during the application running. The atomic counter
-  // guarantees this.
-  if (0 == --refCount_) {
-    Aws::ShutdownAPI(options_); /*#*/
-    trinoSDKReady_ = false;
-    LOG_DEBUG_MSG("trino SDK is shut down");
-  }
+  Close(); /*PP0*/
 }
 
 const config::ConnectionInfo& Connection::GetInfo() const {
@@ -167,12 +130,12 @@ SqlResult::Type Connection::InternalEstablish(const std::string& connectStr,
   return InternalEstablish(config_);
 }
 
-void Connection::Establish(const config::Configuration& cfg) {
+void Connection::Establish(const config::Configuration& cfg) { /*PPP7*/
   IGNITE_ODBC_API_CALL(InternalEstablish(cfg));
 }
 
 SqlResult::Type Connection::InternalEstablish(
-    const config::Configuration& cfg) {
+    const config::Configuration& cfg) { /*PPP6*/
   LOG_DEBUG_MSG("InternalEstablish is called");
   config_ = cfg;
 
@@ -191,7 +154,7 @@ SqlResult::Type Connection::InternalEstablish(
   }
 
   IgniteError err;
-  bool connected = TryRestoreConnection(cfg, err);
+  bool connected = TryRestoreConnection(cfg, err); /*PPP5*/
 
   if (!connected) {
     std::string errMessage = "Failed to establish connection to Trino.\n";
@@ -242,7 +205,7 @@ SqlResult::Type Connection::InternalRelease() {
 
 void Connection::Close() {
   if (queryClient_) {
-    queryClient_.reset();
+    queryClient_.reset(); /*PP1*/
   }
 
 }
@@ -508,35 +471,35 @@ Aws::Utils::Logging::LogLevel Connection::GetAWSLogLevelFromString(std::string t
 
   switch (trinoLogLvl) {
   case "OFF":
-    return Aws::Utils::Logging::LogLevel::Off; /*#*/
+    return Aws::Utils::Logging::LogLevel::Off; /*@*/
 
   case "FATAL":
-    return Aws::Utils::Logging::LogLevel::Fatal; /*#*/
+    return Aws::Utils::Logging::LogLevel::Fatal; /*@*/
 
   case "ERROR":
-    return Aws::Utils::Logging::LogLevel::Error; /*#*/
+    return Aws::Utils::Logging::LogLevel::Error; /*@*/
 
   case "WARN":
-    return Aws::Utils::Logging::LogLevel::Warn; /*#*/
+    return Aws::Utils::Logging::LogLevel::Warn; /*@*/
 
   case "INFO":
-    return Aws::Utils::Logging::LogLevel::Info; /*#*/
+    return Aws::Utils::Logging::LogLevel::Info; /*@*/
 
   case "DEBUG":
-    return Aws::Utils::Logging::LogLevel::Debug; /*#*/
+    return Aws::Utils::Logging::LogLevel::Debug; /*@*/
 
   case "TRACE":
-    return Aws::Utils::Logging::LogLevel::Trace; /*#*/
+    return Aws::Utils::Logging::LogLevel::Trace; /*@*/
   
   default:
-    return Aws::Utils::Logging::LogLevel::Warn; /*#*/
+    return Aws::Utils::Logging::LogLevel::Warn; /*@*/
   }
 }
 
 void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) { /*@*/
   LOG_DEBUG_MSG("SetClientProxy is called");
   // proxy host
-  std::string proxyHost = utility::Trim(GetEnv("TS_PROXY_HOST")); /*@*/
+  std::string proxyHost = utility::Trim(GetEnv("TRINO_PROXY_HOST"));
   if (!proxyHost.empty()) {
     LOG_DEBUG_MSG("proxy host is " << proxyHost);
     clientCfg.proxyHost = proxyHost; /*@*/
@@ -544,7 +507,7 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) { /
 
   // proxy port
   int proxyPort = 0;
-  std::string portStr = utility::Trim(GetEnv("TS_PROXY_PORT")); /*@*/
+  std::string portStr = utility::Trim(GetEnv("TRINO_PROXY_PORT"));
   if (!portStr.empty()) {
     LOG_DEBUG_MSG("proxy port is " << portStr);
     proxyPort = utility::StringToInt(portStr);
@@ -554,7 +517,7 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) { /
   }
 
   // proxy scheme
-  std::string proxyScheme = utility::Trim(GetEnv("TS_PROXY_SCHEME")); /*@*/
+  std::string proxyScheme = utility::Trim(GetEnv("TRINO_PROXY_SCHEME"));
   if (!proxyScheme.empty()) {
     LOG_DEBUG_MSG("proxy scheme is " << proxyScheme);
     std::transform(proxyScheme.begin(), proxyScheme.end(), proxyScheme.begin(),
@@ -567,14 +530,14 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) { /
   }
 
   // proxy user name
-  std::string proxyUser = utility::Trim(GetEnv("TS_PROXY_USER")); /*@*/
+  std::string proxyUser = utility::Trim(GetEnv("TRINO_PROXY_USER"));
   if (!proxyUser.empty()) {
     LOG_DEBUG_MSG("proxy username is set");
     clientCfg.proxyUserName = proxyUser; /*@*/
   }
 
   // proxy user password
-  std::string proxyPassword = utility::Trim(GetEnv("TS_PROXY_PASSWORD")); /*@*/
+  std::string proxyPassword = utility::Trim(GetEnv("TRINO_PROXY_PASSWORD"));
   if (!proxyPassword.empty()) {
     LOG_DEBUG_MSG("proxy user password is set");
     clientCfg.proxyPassword = proxyPassword; /*@*/
@@ -582,7 +545,7 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) { /
 
   // proxy SSL certificate path
   std::string proxySSLCertPath =
-      utility::Trim(GetEnv("TS_PROXY_SSL_CERT_PATH")); /*@*/
+      utility::Trim(GetEnv("TRINO_PROXY_SSL_CERT_PATH"));
   if (!proxySSLCertPath.empty()) {
     LOG_DEBUG_MSG("proxy SSL certificate path is " << proxySSLCertPath);
     clientCfg.proxySSLCertPath = proxySSLCertPath; /*@*/
@@ -590,21 +553,21 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) { /
 
   // proxy SSL certificate type
   std::string proxySSLCertType =
-      utility::Trim(GetEnv("TS_PROXY_SSL_CERT_TYPE")); /*@*/
+      utility::Trim(GetEnv("TRINO_PROXY_SSL_CERT_TYPE"));
   if (!proxySSLCertType.empty()) {
     LOG_DEBUG_MSG("proxy SSL certificate type is " << proxySSLCertType);
     clientCfg.proxySSLCertType = proxySSLCertType; /*@*/
   }
 
   // proxy SSL key path
-  std::string proxySSLKeyPath = utility::Trim(GetEnv("TS_PROXY_SSL_KEY_PATH")); /*@*/
+  std::string proxySSLKeyPath = utility::Trim(GetEnv("TRINO_PROXY_SSL_KEY_PATH"));
   if (!proxySSLKeyPath.empty()) {
     LOG_DEBUG_MSG("proxy SSL key path is " << proxySSLKeyPath);
     clientCfg.proxySSLKeyPath = proxySSLKeyPath; /*@*/
   }
 
   // proxy SSL key type
-  std::string proxySSLKeyType = utility::Trim(GetEnv("TS_PROXY_SSL_KEY_TYPE")); /*@*/
+  std::string proxySSLKeyType = utility::Trim(GetEnv("TRINO_PROXY_SSL_KEY_TYPE"));
   if (!proxySSLKeyType.empty()) {
     LOG_DEBUG_MSG("proxy SSL key type is " << proxySSLKeyType);
     clientCfg.proxySSLCertType = proxySSLKeyType; /*@*/
@@ -612,7 +575,7 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) { /
 
   // proxy SSL key password
   std::string proxySSLKeyPassword =
-      utility::Trim(GetEnv("TS_PROXY_SSL_KEY_PASSWORD")); /*@*/
+      utility::Trim(GetEnv("TRINO_PROXY_SSL_KEY_PASSWORD"));
   if (!proxySSLKeyPassword.empty()) {
     LOG_DEBUG_MSG("proxy SSL key password is set");
     clientCfg.proxySSLKeyPassword = proxySSLKeyPassword; /*@*/
@@ -624,9 +587,9 @@ std::shared_ptr< Aws::STS::STSClient > Connection::GetStsClient() { /*@*/
 }
 
 bool Connection::TryRestoreConnection(const config::Configuration& cfg,
-                                      IgniteError& err) {
+                                      IgniteError& err) { /*PPP4*/
   LOG_DEBUG_MSG("TryRestoreConnection is called");
-  Aws::Auth::AWSCredentials credentials; /*#*/
+  Aws::Auth::AWSCredentials credentials; /*#*/ /*PPP1*/
   std::string errInfo("");
 
   AuthType::Type authType = cfg.GetAuthType();
@@ -658,7 +621,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
     return false;
   }
 
-  Aws::Client::ClientConfiguration clientCfg; /*#*/
+  Aws::Client::ClientConfiguration clientCfg; /*#*/ /*PPP1*/
   clientCfg.region = cfg.GetRegion();
   clientCfg.enableEndpointDiscovery = true;
   clientCfg.connectTimeoutMs = cfg.GetConnectionTimeout();
@@ -689,7 +652,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
     LOG_DEBUG_MSG("max retry count is " << cfg.GetMaxRetryCountClient());
   }
 
-  queryClient_ = CreateTRINOQueryClient(credentials, clientCfg);
+  queryClient_ = CreateTRINOQueryClient(credentials, clientCfg); /*PPP0*/
 
   const std::string& endpoint = cfg.GetEndpoint();
   // endpoint could not be set to empty string
