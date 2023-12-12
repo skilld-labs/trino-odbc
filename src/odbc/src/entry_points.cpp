@@ -116,9 +116,9 @@ SQLRETURN SQL_API SQLDriverConnect(SQLHDBC conn, SQLHWND windowHandle,
 SQLRETURN SQL_API SQLConnect(SQLHDBC conn, SQLWCHAR* serverName,
                              SQLSMALLINT serverNameLen, SQLWCHAR* userName,
                              SQLSMALLINT userNameLen, SQLWCHAR* auth,
-                             SQLSMALLINT authLen) { /*PPP12*/
+                             SQLSMALLINT authLen) {
   return trino::SQLConnect(conn, serverName, serverNameLen, userName,
-                                userNameLen, auth, authLen); /*PPP11*/
+                                userNameLen, auth, authLen);
 }
 
 SQLRETURN SQL_API SQLDisconnect(SQLHDBC conn) {

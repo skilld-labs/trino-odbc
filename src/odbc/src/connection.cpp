@@ -130,12 +130,12 @@ SqlResult::Type Connection::InternalEstablish(const std::string& connectStr,
   return InternalEstablish(config_);
 }
 
-void Connection::Establish(const config::Configuration& cfg) { /*PPP7*/
+void Connection::Establish(const config::Configuration& cfg) {
   IGNITE_ODBC_API_CALL(InternalEstablish(cfg));
 }
 
 SqlResult::Type Connection::InternalEstablish(
-    const config::Configuration& cfg) { /*PPP6*/
+    const config::Configuration& cfg) {
   LOG_DEBUG_MSG("InternalEstablish is called");
   config_ = cfg;
 
@@ -154,7 +154,7 @@ SqlResult::Type Connection::InternalEstablish(
   }
 
   IgniteError err;
-  bool connected = TryRestoreConnection(cfg, err); /*PPP5*/
+  bool connected = TryRestoreConnection(cfg, err); /*PPP3*/
 
   if (!connected) {
     std::string errMessage = "Failed to establish connection to Trino.\n";
@@ -587,7 +587,7 @@ std::shared_ptr< Aws::STS::STSClient > Connection::GetStsClient() { /*@*/
 }
 
 bool Connection::TryRestoreConnection(const config::Configuration& cfg,
-                                      IgniteError& err) { /*PPP4*/
+                                      IgniteError& err) { /*PPP2*/
   LOG_DEBUG_MSG("TryRestoreConnection is called");
   Aws::Auth::AWSCredentials credentials; /*#*/ /*PPP1*/
   std::string errInfo("");

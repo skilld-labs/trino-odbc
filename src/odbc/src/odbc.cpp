@@ -344,13 +344,13 @@ SQLRETURN SQLDriverConnect(SQLHDBC conn, SQLHWND windowHandle,
 SQLRETURN SQLConnect(SQLHDBC conn, SQLWCHAR* serverName,
                      SQLSMALLINT serverNameLen, SQLWCHAR* userName,
                      SQLSMALLINT userNameLen, SQLWCHAR* auth,
-                     SQLSMALLINT authLen) { /*PPP10*/
+                     SQLSMALLINT authLen) {
   using odbc::Connection;
   using odbc::config::Configuration;
 
   LOG_DEBUG_MSG("SQLConnect called\n");
 
-  Connection* connection = reinterpret_cast< Connection* >(conn);/*PPP9*/
+  Connection* connection = reinterpret_cast< Connection* >(conn);
 
   if (!connection) {
     LOG_ERROR_MSG("connection is nullptr");
@@ -367,14 +367,14 @@ SQLRETURN SQLConnect(SQLHDBC conn, SQLWCHAR* serverName,
                              &connection->GetDiagnosticRecords());
   if (userName) {
     std::string userNameStr = SqlWcharToString(userName, userNameLen);
-    config.SetUid(userNameStr); /*PPP9*/
+    config.SetUid(userNameStr);
   }
   if (auth) {
     std::string passwordStr = SqlWcharToString(auth, authLen);
-    config.SetPwd(passwordStr); /*PPP9*/
+    config.SetPwd(passwordStr);
   }
 
-  connection->Establish(config); /*PPP8*/
+  connection->Establish(config);
 
   return connection->GetDiagnosticRecords().GetReturnCode();
 }
