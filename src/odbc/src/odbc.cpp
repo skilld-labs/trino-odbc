@@ -344,13 +344,13 @@ SQLRETURN SQLDriverConnect(SQLHDBC conn, SQLHWND windowHandle,
 SQLRETURN SQLConnect(SQLHDBC conn, SQLWCHAR* serverName,
                      SQLSMALLINT serverNameLen, SQLWCHAR* userName,
                      SQLSMALLINT userNameLen, SQLWCHAR* auth,
-                     SQLSMALLINT authLen) {
+                     SQLSMALLINT authLen) { /*PPP10*/
   using odbc::Connection;
   using odbc::config::Configuration;
 
   LOG_DEBUG_MSG("SQLConnect called\n");
 
-  Connection* connection = reinterpret_cast< Connection* >(conn);/*PPP10*/
+  Connection* connection = reinterpret_cast< Connection* >(conn);/*PPP9*/
 
   if (!connection) {
     LOG_ERROR_MSG("connection is nullptr");
