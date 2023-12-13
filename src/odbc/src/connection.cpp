@@ -61,7 +61,7 @@ Connection::Connection()
 }
 
 Connection::~Connection() {
-  Close(); /*PP0*/
+  Close();
 }
 
 const config::ConnectionInfo& Connection::GetInfo() const {
@@ -205,7 +205,7 @@ SqlResult::Type Connection::InternalRelease() {
 
 void Connection::Close() {
   if (queryClient_) {
-    queryClient_.reset(); /*PP1*/
+    queryClient_.reset(); /*$*/
   }
 
 }
@@ -587,16 +587,16 @@ std::shared_ptr< Aws::STS::STSClient > Connection::GetStsClient() { /*@*/
 }
 
 bool Connection::TryRestoreConnection(const config::Configuration& cfg,
-                                      IgniteError& err) { /*PPP2*/
+                                      IgniteError& err) { /*$*/
   LOG_DEBUG_MSG("TryRestoreConnection is called");
-  Aws::Auth::AWSCredentials credentials; /*#*/ /*PPP1*/
+  // Aws::Auth::AWSCredentials credentials; /*$*/
   std::string errInfo("");
 
   AuthType::Type authType = cfg.GetAuthType();
   LOG_DEBUG_MSG("auth type is " << static_cast< int >(authType));
   if (authType == AuthType::Type::PASSWORD) {
-    Aws::Auth::ProfileConfigFileAWSCredentialsProvider credProvider(cfg.GetProfileName().data()); /*#*/
-    credentials = credProvider.GetAWSCredentials(); /*@*/
+    // Aws::Auth::ProfileConfigFileAWSCredentialsProvider credProvider(cfg.GetProfileName().data()); /*#*/ /*$*/
+    // credentials = credProvider.GetAWSCredentials(); /*@*/
     LOG_DEBUG_MSG("profile name is " << cfg.GetProfileName());
   } else {
     std::string errMsg =
@@ -610,23 +610,23 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
     return false;
   }
 
-  if (credentials.IsExpiredOrEmpty()) {
-    if (errInfo.empty())
-      errInfo += "Empty or expired credentials";
+  // if (credentials.IsExpiredOrEmpty()) { /*$*/
+  //   if (errInfo.empty())
+  //     errInfo += "Empty or expired credentials";
 
-    LOG_ERROR_MSG(errInfo);
-    err = IgniteError(IgniteError::IGNITE_ERR_TRINO_CONNECT, errInfo.data());
+  //   LOG_ERROR_MSG(errInfo);
+  //   err = IgniteError(IgniteError::IGNITE_ERR_TRINO_CONNECT, errInfo.data());
 
-    Close();
-    return false;
-  }
+  //   Close();
+  //   return false;
+  // }
 
-  Aws::Client::ClientConfiguration clientCfg; /*#*/ /*PPP1*/
-  clientCfg.region = cfg.GetRegion();
-  clientCfg.enableEndpointDiscovery = true;
-  clientCfg.connectTimeoutMs = cfg.GetConnectionTimeout();
-  clientCfg.requestTimeoutMs = cfg.GetReqTimeout();
-  clientCfg.maxConnections = cfg.GetMaxConnections();
+  // Aws::Client::ClientConfiguration clientCfg; /*#*/ /*$*/
+  // clientCfg.region = cfg.GetRegion();
+  // clientCfg.enableEndpointDiscovery = true;
+  // clientCfg.connectTimeoutMs = cfg.GetConnectionTimeout();
+  // clientCfg.requestTimeoutMs = cfg.GetReqTimeout();
+  // clientCfg.maxConnections = cfg.GetMaxConnections();
 
 #if defined(_WIN32)
   std::string platform("Windows");
@@ -636,23 +636,23 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
   std::string platform("Linux");
 #endif
   // pass driver info to Trino as user agent
-  clientCfg.userAgent = "trino-odbc." + utility::GetFormatedDriverVersion() + " on " + platform;
-  LOG_DEBUG_MSG("region is "
-                << cfg.GetRegion() << ", connection timeout is "
-                << clientCfg.connectTimeoutMs << ", request timeout is "
-                << clientCfg.requestTimeoutMs << ", max connection is "
-                << clientCfg.maxConnections << ", user agent is "
-                << clientCfg.userAgent);
+  // clientCfg.userAgent = "trino-odbc." + utility::GetFormatedDriverVersion() + " on " + platform; /*$*/
+  // LOG_DEBUG_MSG("region is "
+  //               << cfg.GetRegion() << ", connection timeout is "
+  //               << clientCfg.connectTimeoutMs << ", request timeout is "
+  //               << clientCfg.requestTimeoutMs << ", max connection is "
+  //               << clientCfg.maxConnections << ", user agent is "
+  //               << clientCfg.userAgent); /*$*/
 
-  SetClientProxy(clientCfg);
+  // SetClientProxy(clientCfg); /*$*/
 
   if (cfg.GetMaxRetryCountClient() > 0) {
-    clientCfg.retryStrategy =
-        std::make_shared< Aws::Client::DefaultRetryStrategy >(cfg.GetMaxRetryCountClient()); /*#*/
+    // clientCfg.retryStrategy =
+    //     std::make_shared< Aws::Client::DefaultRetryStrategy >(cfg.GetMaxRetryCountClient()); /*#*/ /*$*/
     LOG_DEBUG_MSG("max retry count is " << cfg.GetMaxRetryCountClient());
   }
 
-  queryClient_ = CreateTRINOQueryClient(credentials, clientCfg); /*PPP0*/
+  queryClient_ = CreateTRINOQueryClient(/* credentials, clientCfg */); /*$*/
 
   const std::string& endpoint = cfg.GetEndpoint();
   // endpoint could not be set to empty string
@@ -688,7 +688,7 @@ bool Connection::TryRestoreConnection(const config::Configuration& cfg,
 std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > /*@*/
 Connection::CreateTRINOQueryClient(
     const Aws::Auth::AWSCredentials& credentials,
-    const Aws::Client::ClientConfiguration& clientCfg) { /*@*/
+    const Aws::Client::ClientConfiguration& clientCfg) { /*@*/ /*$*/
   return std::make_shared< Aws::TrinoQuery::TrinoQueryClient >(credentials, clientCfg); /*@*/
 }
 

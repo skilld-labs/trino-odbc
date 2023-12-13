@@ -19,7 +19,7 @@
  */
 
 /*$*//*WIP marker*/
-/*PP[num]*//*path marker*/
+/*.*//*path marker*/
 /*@*//*aws marker*/
 /*#*//*direct aws marker*/
 

@@ -323,7 +323,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   /**
    * Create TrinoQueryClient object.
    *
-   * @param credentials trino credentials.
+* @param credentials trino credentials.
    * @param clientCfg trino client configuration.
    * @return a shared_ptr to created TrinoQueryClient object.
    */
@@ -609,7 +609,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > queryClient_; /*#*/
 
   /** SAML credentials provider */
-  std::shared_ptr< TrinoSAMLCredentialsProvider > samlCredProvider_;
+  std::shared_ptr< TrinoSAMLCredentialsProvider > samlCredProvider_; /*#*/
 
   /** mutex for cursor names update */
   std::mutex cursorNameMutex_;

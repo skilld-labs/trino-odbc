@@ -191,7 +191,6 @@ class Query {
   }
 
   /** Diagnostics collector. */
-  /*$*/
   trino::odbc::diagnostic::DiagnosableAdapter& diag;
 
   /** Query type. */
