@@ -34,16 +34,16 @@
 //     return false;
 //   }
 
-  std::transform(tableType.begin(), tableType.end(), tableType.begin(),
-                 toupper);
+//   std::transform(tableType.begin(), tableType.end(), tableType.begin(),
+//                  toupper);
 
-  if (tableType != "COMPUTER") {
-    std::cerr << "Invalid table type " << tableType << std::endl;
-    std::cerr << "Valid values are one of [COMPUTER]" << std::endl;
-    return false;
-  }
-  return true;
-}
+//   if (tableType != "COMPUTER") {
+//     std::cerr << "Invalid table type " << tableType << std::endl;
+//     std::cerr << "Valid values are one of [COMPUTER]" << std::endl;
+//     return false;
+//   }
+//   return true;
+// }
 
 int main(int argc, char* argv[]) {
   std::string usage("Usage: ");

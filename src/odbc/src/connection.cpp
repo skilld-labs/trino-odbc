@@ -153,17 +153,6 @@ SqlResult::Type Connection::InternalEstablish(
     return SqlResult::AI_ERROR;
   }
 
-  IgniteError err;
-  bool connected = TryRestoreConnection(cfg, err); /*PPP3*/
-
-  if (!connected) {
-    std::string errMessage = "Failed to establish connection to Trino.\n";
-    errMessage.append(err.GetText());
-    AddStatusRecord(SqlState::S08001_CANNOT_CONNECT, errMessage);
-
-    return SqlResult::AI_ERROR;
-  }
-
   bool errors = GetDiagnosticRecords().GetStatusRecordsNumber() > 0;
 
   LOG_DEBUG_MSG("errors is " << errors);
@@ -205,7 +194,7 @@ SqlResult::Type Connection::InternalRelease() {
 
 void Connection::Close() {
   if (queryClient_) {
-    queryClient_.reset(); /*$*/
+    queryClient_.reset();
   }
 
 }
@@ -584,105 +573,6 @@ void Connection::SetClientProxy(Aws::Client::ClientConfiguration& clientCfg) { /
 
 std::shared_ptr< Aws::STS::STSClient > Connection::GetStsClient() { /*@*/
   return std::make_shared< Aws::STS::STSClient >(); /*@*/
-}
-
-bool Connection::TryRestoreConnection(const config::Configuration& cfg,
-                                      IgniteError& err) { /*$*/
-  LOG_DEBUG_MSG("TryRestoreConnection is called");
-  // Aws::Auth::AWSCredentials credentials; /*$*/
-  std::string errInfo("");
-
-  AuthType::Type authType = cfg.GetAuthType();
-  LOG_DEBUG_MSG("auth type is " << static_cast< int >(authType));
-  if (authType == AuthType::Type::PASSWORD) {
-    // Aws::Auth::ProfileConfigFileAWSCredentialsProvider credProvider(cfg.GetProfileName().data()); /*#*/ /*$*/
-    // credentials = credProvider.GetAWSCredentials(); /*@*/
-    LOG_DEBUG_MSG("profile name is " << cfg.GetProfileName());
-  } else {
-    std::string errMsg =
-        "AuthType is not PASSWORD, but "
-        "TryRestoreConnection is "
-        "called.";
-    LOG_ERROR_MSG(errMsg);
-    err = IgniteError(IgniteError::IGNITE_ERR_TRINO_CONNECT, errMsg.data());
-
-    Close();
-    return false;
-  }
-
-  // if (credentials.IsExpiredOrEmpty()) { /*$*/
-  //   if (errInfo.empty())
-  //     errInfo += "Empty or expired credentials";
-
-  //   LOG_ERROR_MSG(errInfo);
-  //   err = IgniteError(IgniteError::IGNITE_ERR_TRINO_CONNECT, errInfo.data());
-
-  //   Close();
-  //   return false;
-  // }
-
-  // Aws::Client::ClientConfiguration clientCfg; /*#*/ /*$*/
-  // clientCfg.region = cfg.GetRegion();
-  // clientCfg.enableEndpointDiscovery = true;
-  // clientCfg.connectTimeoutMs = cfg.GetConnectionTimeout();
-  // clientCfg.requestTimeoutMs = cfg.GetReqTimeout();
-  // clientCfg.maxConnections = cfg.GetMaxConnections();
-
-#if defined(_WIN32)
-  std::string platform("Windows");
-#elif defined(__APPLE__)
-  std::string platform("macOS");
-#else
-  std::string platform("Linux");
-#endif
-  // pass driver info to Trino as user agent
-  // clientCfg.userAgent = "trino-odbc." + utility::GetFormatedDriverVersion() + " on " + platform; /*$*/
-  // LOG_DEBUG_MSG("region is "
-  //               << cfg.GetRegion() << ", connection timeout is "
-  //               << clientCfg.connectTimeoutMs << ", request timeout is "
-  //               << clientCfg.requestTimeoutMs << ", max connection is "
-  //               << clientCfg.maxConnections << ", user agent is "
-  //               << clientCfg.userAgent); /*$*/
-
-  // SetClientProxy(clientCfg); /*$*/
-
-  if (cfg.GetMaxRetryCountClient() > 0) {
-    // clientCfg.retryStrategy =
-    //     std::make_shared< Aws::Client::DefaultRetryStrategy >(cfg.GetMaxRetryCountClient()); /*#*/ /*$*/
-    LOG_DEBUG_MSG("max retry count is " << cfg.GetMaxRetryCountClient());
-  }
-
-  queryClient_ = CreateTRINOQueryClient(/* credentials, clientCfg */); /*$*/
-
-  const std::string& endpoint = cfg.GetEndpoint();
-  // endpoint could not be set to empty string
-  if (!endpoint.empty()) {
-    queryClient_->OverrideEndpoint(endpoint);
-    LOG_DEBUG_MSG("endpoint is set to " << endpoint);
-  }
-  // try a simple query with query client
-  Aws::TrinoQuery::Model::QueryRequest queryRequest; /*#*/
-  queryRequest.SetQueryString("SELECT 1");
-
-  Aws::TrinoQuery::Model::QueryOutcome outcome = queryClient_->Query(queryRequest); /*#*/ /*@*/
-  if (!outcome.IsSuccess()) {
-    auto error = outcome.GetError();
-    LOG_DEBUG_MSG("ERROR: " << error.GetExceptionName() << ": "
-                            << error.GetMessage());
-
-    err = IgniteError(IgniteError::IGNITE_ERR_TRINO_CONNECT,
-                      std::string(error.GetExceptionName())
-                          .append(": ")
-                          .append(error.GetMessage())
-                          .c_str());
-
-    Close();
-    return false;
-  }
-
-  UpdateConnectionRuntimeInfo(config_, info_);
-
-  return true;
 }
 
 std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > /*@*/

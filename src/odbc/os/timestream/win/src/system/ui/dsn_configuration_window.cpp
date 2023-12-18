@@ -354,7 +354,6 @@ void DsnConfigurationWindow::OnSelChanged(TabIndex::Type idx) {
   preSel = idx;
 }
 
-/*$*/
 void DsnConfigurationWindow::OnAuthTypeChanged() const {
   // get value of authType
   AuthType::Type authType =
@@ -808,7 +807,6 @@ void DsnConfigurationWindow::RetrieveBasicAuthParameters(
   // username and password intentionally not logged for security reasons
 }
 
-/*$*/
 void DsnConfigurationWindow::RetrieveAdvanceAuthParameters(
     config::Configuration& cfg) const {
   std::wstring authTypeWStr;
