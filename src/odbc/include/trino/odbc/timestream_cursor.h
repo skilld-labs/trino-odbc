@@ -34,7 +34,7 @@
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/trino-query/model/Row.h>
 
-using Aws::TrinoQuery::Model::Row; /*#*/
+using client::TrinoQuery::Model::Row; /*#*/
 
 namespace trino {
 namespace odbc {

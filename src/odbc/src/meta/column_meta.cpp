@@ -114,31 +114,31 @@ const std::string NULLABLE = "NULLABLE";
 const std::string ORDINAL_POSITION = "ORDINAL_POSITION";
 const std::string IS_AUTOINCREMENT = "IS_AUTOINCREMENT";
 
-Aws::TrinoQuery::Model::ScalarType ColumnMeta::GetScalarDataType(
+client::TrinoQuery::Model::ScalarType ColumnMeta::GetScalarDataType(
     const std::string& dataType) { /*@*/
   LOG_DEBUG_MSG("GetScalarDataType is called with dataType " << dataType);
   if (dataType == "varchar") {
-    return Aws::TrinoQuery::Model::ScalarType::VARCHAR; /*#*/
+    return client::TrinoQuery::Model::ScalarType::VARCHAR; /*#*/
   } else if (dataType == "bigint") {
-    return Aws::TrinoQuery::Model::ScalarType::BIGINT; /*#*/
+    return client::TrinoQuery::Model::ScalarType::BIGINT; /*#*/
   } else if (dataType == "double") {
-    return Aws::TrinoQuery::Model::ScalarType::DOUBLE; /*#*/
+    return client::TrinoQuery::Model::ScalarType::DOUBLE; /*#*/
   } else if (dataType == "boolean") {
-    return Aws::TrinoQuery::Model::ScalarType::BOOLEAN; /*#*/
+    return client::TrinoQuery::Model::ScalarType::BOOLEAN; /*#*/
   } else if (dataType == "timestamp") {
-    return Aws::TrinoQuery::Model::ScalarType::TIMESTAMP; /*#*/
+    return client::TrinoQuery::Model::ScalarType::TIMESTAMP; /*#*/
   } else if (dataType == "date") {
-    return Aws::TrinoQuery::Model::ScalarType::DATE; /*#*/
+    return client::TrinoQuery::Model::ScalarType::DATE; /*#*/
   } else if (dataType == "time") {
-    return Aws::TrinoQuery::Model::ScalarType::TIME; /*#*/
+    return client::TrinoQuery::Model::ScalarType::TIME; /*#*/
   } else if (dataType == "integer") {
-    return Aws::TrinoQuery::Model::ScalarType::INTEGER; /*#*/
+    return client::TrinoQuery::Model::ScalarType::INTEGER; /*#*/
   } else if (dataType == "interval day to second") {
-    return Aws::TrinoQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND; /*#*/
+    return client::TrinoQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND; /*#*/
   } else if (dataType == "interval year to month") {
-    return Aws::TrinoQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH; /*#*/
+    return client::TrinoQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH; /*#*/
   } else {
-    return Aws::TrinoQuery::Model::ScalarType::UNKNOWN; /*#*/
+    return client::TrinoQuery::Model::ScalarType::UNKNOWN; /*#*/
   }
 }
 
@@ -177,7 +177,7 @@ void ColumnMeta::Read(app::ColumnBindingMap& columnBindings, int32_t position) {
 
 void ColumnMeta::ReadMetadata(const ColumnInfo& trinoMetadata) {
   LOG_DEBUG_MSG("ReadMetadata is called");
-  using Aws::TrinoQuery::Model::Type; /*#*/
+  using client::TrinoQuery::Model::Type; /*#*/
 
   columnInfo = trinoMetadata;
 
@@ -190,7 +190,7 @@ void ColumnMeta::ReadMetadata(const ColumnInfo& trinoMetadata) {
     dataType = static_cast< int16_t >(columnType.GetScalarType());
   } else {
     dataType = static_cast< int16_t >(
-        Aws::TrinoQuery::Model::ScalarType::VARCHAR); /*#*/
+        client::TrinoQuery::Model::ScalarType::VARCHAR); /*#*/
   }
 }
 

@@ -25,7 +25,7 @@ namespace odbc {
 
 bool TrinoSAMLCredentialsProvider::FetchCredentialsWithSAMLAssertion(
     Aws::STS::Model::AssumeRoleWithSAMLRequest& samlRequest,
-    Aws::Auth::AWSCredentials& awsCredentials, std::string& errInfo) {
+    trino::auth::BasicAuthentication& awsCredentials, std::string& errInfo) {
   LOG_DEBUG_MSG("FetchCredentialsWithSAMLAssertion is called");
 
   Aws::STS::Model::AssumeRoleWithSAMLOutcome outcome =
@@ -48,7 +48,7 @@ bool TrinoSAMLCredentialsProvider::FetchCredentialsWithSAMLAssertion(
 }
 
 bool TrinoSAMLCredentialsProvider::GetAWSCredentials(
-    Aws::Auth::AWSCredentials& credentials, std::string& errInfo) {
+    trino::auth::BasicAuthentication& credentials, std::string& errInfo) {
   LOG_DEBUG_MSG("GetAWSCredentials is called");
 
   std::string samlAsseration = GetSAMLAssertion(errInfo);

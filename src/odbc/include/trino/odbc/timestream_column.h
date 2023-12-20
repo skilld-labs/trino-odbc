@@ -27,8 +27,8 @@
 /*#*/
 #include <aws/trino-query/model/Row.h>
 
-using Aws::TrinoQuery::Model::Datum; /*#*/
-using Aws::TrinoQuery::Model::Row; /*#*/
+using client::TrinoQuery::Model::Datum; /*#*/
+using client::TrinoQuery::Model::Row; /*#*/
 using trino::odbc::app::ApplicationDataBuffer;
 using trino::odbc::app::ConversionResult;
 

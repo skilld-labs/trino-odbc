@@ -34,9 +34,9 @@
 #include <mutex>
 #include <condition_variable>
 
-using Aws::TrinoQuery::Model::ColumnInfo; /*#*/
-using Aws::TrinoQuery::Model::QueryRequest; /*#*/
-using Aws::TrinoQuery::Model::QueryResult; /*#*/
+using client::TrinoQuery::Model::ColumnInfo; /*#*/
+using client::TrinoQuery::Model::QueryRequest; /*#*/
+using client::TrinoQuery::Model::QueryResult; /*#*/
 
 namespace trino {
 namespace odbc {
@@ -61,7 +61,7 @@ class IGNITE_IMPORT_EXPORT DataQueryContext {
   std::condition_variable cv_;
 
   /** queue to save query execution outcome objects. */
-  std::queue< Aws::TrinoQuery::Model::QueryOutcome > queue_; /*#*/
+  std::queue< client::TrinoQuery::Model::QueryOutcome > queue_; /*#*/
 
   /** Flag to indicate if the main thread is exiting or not. */
   bool isClosing_;
@@ -215,7 +215,7 @@ class IGNITE_IMPORT_EXPORT DataQuery : public trino::odbc::query::Query {
   /**
    * Set result set meta by reading Trino column metadata vector.
    *
-   * @param trinoVector Aws::TrinoQuery::Model::ColumnInfo vector.
+   * @param trinoVector client::TrinoQuery::Model::ColumnInfo vector.
    */
   void ReadColumnMetadataVector(const Aws::Vector< ColumnInfo >& trinoVector); /*@*/
 
@@ -283,7 +283,7 @@ class IGNITE_IMPORT_EXPORT DataQuery : public trino::odbc::query::Query {
   std::unique_ptr< TrinoCursor > cursor_;
 
   /** Trino query client. */
-  std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > queryClient_; /*#*/
+  std::shared_ptr< client::TrinoQuery::TrinoQueryClient > queryClient_; /*#*/
 
   /** Context for asynchornous result fetching. */
   DataQueryContext context_;

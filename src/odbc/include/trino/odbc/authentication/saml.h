@@ -52,7 +52,7 @@ class IGNITE_IMPORT_EXPORT TrinoSAMLCredentialsProvider {
    * @param errInfo Error message when there is a failure
    * @return @c true on success and @c false otherwise.
    */
-  bool GetAWSCredentials(Aws::Auth::AWSCredentials& credentials,
+  bool GetAWSCredentials(trino::auth::BasicAuthentication& credentials,
                          std::string& errInfo);
 
   /**
@@ -75,7 +75,7 @@ class IGNITE_IMPORT_EXPORT TrinoSAMLCredentialsProvider {
    */
   bool FetchCredentialsWithSAMLAssertion(
       Aws::STS::Model::AssumeRoleWithSAMLRequest& samlRequest,
-      Aws::Auth::AWSCredentials& credentials, std::string& errInfo);
+      trino::auth::BasicAuthentication& credentials, std::string& errInfo);
 
   /** Configuration object */
   config::Configuration config_;

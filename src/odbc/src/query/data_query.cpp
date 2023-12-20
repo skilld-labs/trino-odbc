@@ -78,7 +78,7 @@ SqlResult::Type DataQuery::Cancel() {
     }
 
     // Try to cancel current query
-    Aws::TrinoQuery::Model::CancelQueryRequest cancel_request; /*#*/
+    client::TrinoQuery::Model::CancelQueryRequest cancel_request; /*#*/
     cancel_request.SetQueryId(result_->GetQueryId());
 
     auto outcome = connection_.GetQueryClient()->CancelQuery(cancel_request);
@@ -128,10 +128,10 @@ const meta::ColumnMetaVector* DataQuery::GetMeta() {
  * @return void.
  */
 void AsyncFetchOnePage(
-    const std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > client, /*#*/
+    const std::shared_ptr< client::TrinoQuery::TrinoQueryClient > client, /*#*/
     const QueryRequest& request, DataQueryContext& context_) {
   LOG_DEBUG_MSG("AsyncFetchOnePage is called");
-  Aws::TrinoQuery::Model::QueryOutcome result; /*#*/
+  client::TrinoQuery::Model::QueryOutcome result; /*#*/
   result = client->Query(request);
 
   std::unique_lock< std::mutex > locker(context_.mutex_);
@@ -153,7 +153,7 @@ SqlResult::Type DataQuery::SwitchCursor() {
   LOG_DEBUG_MSG("SwitchCursor is called");
   std::unique_lock< std::mutex > locker(context_.mutex_);
   context_.cv_.wait(locker, [&]() { return !context_.queue_.empty(); });
-  Aws::TrinoQuery::Model::QueryOutcome outcome = context_.queue_.front(); /*#*/
+  client::TrinoQuery::Model::QueryOutcome outcome = context_.queue_.front(); /*#*/
   context_.queue_.pop();
   locker.unlock();
 
@@ -357,7 +357,7 @@ SqlResult::Type DataQuery::MakeRequestExecute() {
   }
 
   do {
-    Aws::TrinoQuery::Model::QueryOutcome outcome =
+    client::TrinoQuery::Model::QueryOutcome outcome =
         connection_.GetQueryClient()->Query(request_); /*#*/
 
     if (!outcome.IsSuccess()) {
@@ -438,7 +438,7 @@ SqlResult::Type DataQuery::MakeRequestResultsetMeta() {
   QueryRequest request;
   request.SetQueryString(sql_);
 
-  Aws::TrinoQuery::Model::QueryOutcome outcome =
+  client::TrinoQuery::Model::QueryOutcome outcome =
       connection_.GetQueryClient()->Query(request); /*@*/
 
   if (!outcome.IsSuccess()) {

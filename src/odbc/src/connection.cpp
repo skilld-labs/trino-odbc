@@ -37,9 +37,8 @@
 #include "trino/odbc/system/system_dsn.h"
 #include "trino/odbc/utility.h"
 
-/*@*/
-#include "trino/odbc/authentication/aad.h"
-#include "trino/odbc/authentication/okta.h"
+#include <trino/auth.h>
+#include <trino/client.h>
 
 /*#*/
 #include <aws/trino-query/model/QueryRequest.h>
@@ -168,7 +167,7 @@ void Connection::Deregister() {
   env_->DeregisterConnection(this);
 }
 
-std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > /*@*/
+std::shared_ptr< client::TrinoQuery::TrinoQueryClient > /*@*/
 Connection::GetQueryClient() const {
   return queryClient_;
 }
@@ -575,11 +574,11 @@ std::shared_ptr< Aws::STS::STSClient > Connection::GetStsClient() { /*@*/
   return std::make_shared< Aws::STS::STSClient >(); /*@*/
 }
 
-std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > /*@*/
+std::shared_ptr< client::TrinoQuery::TrinoQueryClient > /*@*/
 Connection::CreateTRINOQueryClient(
-    const Aws::Auth::AWSCredentials& credentials,
-    const Aws::Client::ClientConfiguration& clientCfg) { /*@*/ /*$*/
-  return std::make_shared< Aws::TrinoQuery::TrinoQueryClient >(credentials, clientCfg); /*@*/
+    const trino::auth::BasicAuthentication& credentials,
+    const Aws::Client::ClientConfiguration& clientCfg) { /*@*/
+  return std::make_shared< client::TrinoQuery::TrinoQueryClient >(credentials, clientCfg); /*@*/
 }
 
 Descriptor* Connection::CreateDescriptor() {

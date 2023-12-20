@@ -37,8 +37,8 @@
 #include <aws/trino-query/model/ColumnInfo.h>
 #include <aws/trino-query/model/ScalarType.h>
 
-using Aws::TrinoQuery::Model::ColumnInfo; /*#*/
-using Aws::TrinoQuery::Model::ScalarType; /*#*/
+using client::TrinoQuery::Model::ColumnInfo; /*#*/
+using client::TrinoQuery::Model::ScalarType; /*#*/
 
 namespace trino {
 namespace odbc {
@@ -236,7 +236,7 @@ class IGNITE_IMPORT_EXPORT ColumnMeta {
    * Get Aws ColumnInfo.
    * @return Aws ColumnInfo.
    */
-  const boost::optional< Aws::TrinoQuery::Model::ColumnInfo >& /*#*/
+  const boost::optional< client::TrinoQuery::Model::ColumnInfo >& /*#*/
   GetColumnInfo() const {
     return columnInfo;
   }
@@ -386,7 +386,7 @@ class IGNITE_IMPORT_EXPORT ColumnMeta {
   ScalarType GetScalarDataType(const std::string& dataType);
 
   /** columnInfo. */
-  boost::optional< Aws::TrinoQuery::Model::ColumnInfo > columnInfo; /*#*/
+  boost::optional< client::TrinoQuery::Model::ColumnInfo > columnInfo; /*#*/
 
   /** Catalog name. */
   boost::optional< std::string > catalogName;

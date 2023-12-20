@@ -29,7 +29,7 @@
 #include "trino/odbc/log.h"
 #include "trino/odbc/type_traits.h"
 
-using Aws::TrinoQuery::Model::ScalarType; /*#*/
+using client::TrinoQuery::Model::ScalarType; /*#*/
 
 namespace trino {
 namespace odbc {

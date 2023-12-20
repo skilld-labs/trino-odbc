@@ -148,7 +148,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
    *
    * @return Shared Pointer to Trino query client.
    */
-  std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > /*#*/
+  std::shared_ptr< client::TrinoQuery::TrinoQueryClient > /*#*/
   GetQueryClient() const;
 
   /**
@@ -327,9 +327,9 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
    * @param clientCfg trino client configuration.
    * @return a shared_ptr to created TrinoQueryClient object.
    */
-  virtual std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > /*#*/
-  CreateTrinoQueryClient(const Aws::Auth::AWSCredentials& credentials,
-                      const Aws::Client::ClientConfiguration& clientCfg); /*@*/
+  virtual std::shared_ptr< client::TrinoQuery::TrinoQueryClient > /*#*/
+  CreateTrinoQueryClient(const trino::auth::BasicAuthentication& credentials,
+                      const Aws::Client::ClientConfiguration& clientCfg); /*@*/ /*$*/
 
   /**
    * Create trino HttpClient object.
@@ -606,7 +606,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   config::ConnectionInfo info_;
 
   /** Trino query client. */
-  std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient > queryClient_; /*#*/
+  std::shared_ptr< client::TrinoQuery::TrinoQueryClient > queryClient_; /*#*/
 
   /** SAML credentials provider */
   std::shared_ptr< TrinoSAMLCredentialsProvider > samlCredProvider_; /*#*/ /*$*/
