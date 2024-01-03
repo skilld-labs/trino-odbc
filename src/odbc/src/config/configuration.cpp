@@ -35,7 +35,7 @@ using trino::odbc::common::EncodeURIComponent;
 namespace trino {
 namespace odbc {
 namespace config {
-// Connection (Basic Authentication) Settings
+// Connection (Basic Authentication) Settings /*$*/
 const std::string Configuration::DefaultValue::dsn = DEFAULT_DSN;
 const std::string Configuration::DefaultValue::driver = DEFAULT_DRIVER;
 const std::string Configuration::DefaultValue::uid = DEFAULT_UID;
@@ -48,7 +48,7 @@ const std::string Configuration::DefaultValue::profileName = DEFAULT_PROFILE_NAM
 const int32_t Configuration::DefaultValue::reqTimeout = DEFAULT_REQ_TIMEOUT;
 const int32_t Configuration::DefaultValue::connectionTimeout = DEFAULT_CONNECTION_TIMEOUT;
 const int32_t Configuration::DefaultValue::maxRetryCountClient = DEFAULT_MAX_RETRY_COUNT_CLIENT;
-const int32_t Configuration::DefaultValue::maxConnections = DEFAULT_MAX_CONNECTIONS;
+// const int32_t Configuration::DefaultValue::maxConnections = DEFAULT_MAX_CONNECTIONS; /*$*/
 
 // Endpoint Options
 const std::string Configuration::DefaultValue::endpoint = DEFAULT_ENDPOINT;

@@ -32,7 +32,7 @@
 #include "ignite/odbc/odbc_error.h"
 #include "trino/odbc/log_level.h"
 
-#define DEFAULT_DSN "Trino DSN"
+#define DEFAULT_DSN "Trino DSN" /*$*/
 #define DEFAULT_DRIVER "Trino ODBC Driver"
 #define DEFAULT_UID ""
 #define DEFAULT_PWD ""
@@ -42,7 +42,7 @@
 #define DEFAULT_REQ_TIMEOUT 3000
 #define DEFAULT_CONNECTION_TIMEOUT 1000
 #define DEFAULT_MAX_RETRY_COUNT_CLIENT 0
-#define DEFAULT_MAX_CONNECTIONS 25
+// #define DEFAULT_MAX_CONNECTIONS 25
 
 #define DEFAULT_ENDPOINT ""
 #define DEFAULT_REGION "us-east-1"
@@ -91,7 +91,7 @@ class IGNITE_IMPORT_EXPORT Configuration {
     static const int32_t maxRetryCountClient;
 
     /** Default value for maxConnections attribute. */
-    static const int32_t maxConnections;
+    // static const int32_t maxConnections; /*$*/
 
     /** Default value for endpoint attribute. */
     static const std::string endpoint;
