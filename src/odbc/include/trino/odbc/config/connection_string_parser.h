@@ -60,14 +60,8 @@ class IGNITE_IMPORT_EXPORT ConnectionStringParser {
     /** Connection attribute keyword for maxRetryCountClient attribute. */
     static const std::string maxRetryCountClient;
 
-    /** Connection attribute keyword for maxConnections attribute. */
-    static const std::string maxConnections;
-
     /** Connection attribute keyword for endpoint attribute. */
     static const std::string endpoint;
-
-    /** Connection attribute keyword for region attribute. */
-    static const std::string region;
 
     /** Connection attribute keyword for authType attribute. */
     static const std::string authType;

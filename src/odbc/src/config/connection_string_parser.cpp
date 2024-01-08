@@ -40,9 +40,7 @@ const std::string ConnectionStringParser::Key::profileName = "profilename";
 const std::string ConnectionStringParser::Key::reqTimeout = "requesttimeout";
 const std::string ConnectionStringParser::Key::connectionTimeout = "connectiontimeout";
 const std::string ConnectionStringParser::Key::maxRetryCountClient = "maxretrycountclient";
-const std::string ConnectionStringParser::Key::maxConnections = "maxconnections";
 const std::string ConnectionStringParser::Key::endpoint = "endpointoverride";
-const std::string ConnectionStringParser::Key::region = "region";
 const std::string ConnectionStringParser::Key::authType = "auth";
 const std::string ConnectionStringParser::Key::logLevel = "loglevel";
 const std::string ConnectionStringParser::Key::logPath = "logoutput";
@@ -299,63 +297,8 @@ void ConnectionStringParser::HandleAttributePair(
     }
 
     cfg.SetMaxRetryCountClient(static_cast< uint32_t >(numValue));
-  } else if (lKey == Key::maxConnections) {
-    if (value.empty()) {
-      if (diag) {
-        diag->AddStatusRecord(
-            SqlState::S01S02_OPTION_VALUE_CHANGED,
-            MakeErrorMessage("Max Connections attribute value is empty. Using "
-                             "default value.",
-                             key, value));
-      }
-      return;
-    }
-
-    if (!trino::odbc::common::AllDigits(value)) {
-      if (diag) {
-        diag->AddStatusRecord(
-            SqlState::S01S02_OPTION_VALUE_CHANGED,
-            MakeErrorMessage("Max Connections attribute value contains "
-                             "unexpected characters."
-                             " Using default value.",
-                             key, value));
-      }
-      return;
-    }
-
-    if (value.size() >= sizeof(std::to_string(UINT32_MAX))) {
-      if (diag) {
-        diag->AddStatusRecord(
-            SqlState::S01S02_OPTION_VALUE_CHANGED,
-            MakeErrorMessage("Max Connections attribute value is too large. "
-                             "Using default value.",
-                             key, value));
-      }
-      return;
-    }
-
-    int64_t numValue = 0;
-    std::stringstream conv;
-
-    conv << value;
-    conv >> numValue;
-
-    if (numValue <= 0 || numValue > UINT32_MAX) {
-      if (diag) {
-        diag->AddStatusRecord(
-            SqlState::S01S02_OPTION_VALUE_CHANGED,
-            MakeErrorMessage("Max Connections attribute value is out of range. "
-                             "Using default value.",
-                             key, value));
-      }
-      return;
-    }
-
-    cfg.SetMaxConnections(static_cast< uint32_t >(numValue));
   } else if (lKey == Key::endpoint) {
     cfg.SetEndpoint(value);
-  } else if (lKey == Key::region) {
-    cfg.SetRegion(value);
   } else if (lKey == Key::authType) {
     AuthType::Type authType = AuthType::FromString(value);
 

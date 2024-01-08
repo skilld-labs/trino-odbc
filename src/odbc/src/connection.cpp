@@ -55,7 +55,7 @@ namespace trino {
 namespace odbc {
 
 Connection::Connection()
-    : info_(config_)/* , metadataID_(false) */ {
+    : info_(config_), metadataID_(false) {
   LOG_DEBUG_MSG("Connection is called");
 }
 

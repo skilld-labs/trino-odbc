@@ -610,7 +610,7 @@ ConnectionInfo::ConnectionInfo(const Configuration& config)
 #endif  // WIN32
 #endif  // SQL_DRIVER_NAME
 #ifdef SQL_DBMS_NAME
-  strParams[SQL_DBMS_NAME] = "Amazon Trino";
+  strParams[SQL_DBMS_NAME] = "Trino";
 #endif  // SQL_DBMS_NAME
 
   // ODBC version.

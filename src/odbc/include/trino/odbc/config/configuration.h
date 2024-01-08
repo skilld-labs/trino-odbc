@@ -32,7 +32,7 @@
 #include "ignite/odbc/odbc_error.h"
 #include "trino/odbc/log_level.h"
 
-#define DEFAULT_DSN "Trino DSN" /*$*/
+#define DEFAULT_DSN "Trino DSN"
 #define DEFAULT_DRIVER "Trino ODBC Driver"
 #define DEFAULT_UID ""
 #define DEFAULT_PWD ""
@@ -42,10 +42,8 @@
 #define DEFAULT_REQ_TIMEOUT 3000
 #define DEFAULT_CONNECTION_TIMEOUT 1000
 #define DEFAULT_MAX_RETRY_COUNT_CLIENT 0
-// #define DEFAULT_MAX_CONNECTIONS 25
 
 #define DEFAULT_ENDPOINT ""
-#define DEFAULT_REGION "us-east-1"
 
 #define DEFAULT_AUTH_TYPE AuthType::Type::PASSWORD
 #define DEFAULT_LOG_LEVEL LogLevel::Type::WARNING_LEVEL
@@ -90,14 +88,8 @@ class IGNITE_IMPORT_EXPORT Configuration {
     /** Default value for maxRetryCountClient attribute. */
     static const int32_t maxRetryCountClient;
 
-    /** Default value for maxConnections attribute. */
-    // static const int32_t maxConnections; /*$*/
-
     /** Default value for endpoint attribute. */
     static const std::string endpoint;
-
-    /** Default value for region attribute. */
-    static const std::string region;
 
     /** Default value for authType attribute. */
     static const AuthType::Type authType;
@@ -346,27 +338,6 @@ class IGNITE_IMPORT_EXPORT Configuration {
   bool IsEndpointSet() const;
 
   /**
-   * Get region.
-   *
-   * @return value Region.
-   */
-  const std::string& GetRegion() const;
-
-  /**
-   * Set region.
-   *
-   * @param value region.
-   */
-  void SetRegion(const std::string& value);
-
-  /**
-   * Check if the value set.
-   *
-   * @return @true if the value set.
-   */
-  bool IsRegionSet() const;
-
-  /**
    * Get authType.
    *
    * @return value AuthType.
@@ -511,14 +482,8 @@ class IGNITE_IMPORT_EXPORT Configuration {
   SettableValue< int32_t > maxRetryCountClient =
       DefaultValue::maxRetryCountClient;
 
-  /** Max Connections.  */
-  SettableValue< int32_t > maxConnections = DefaultValue::maxConnections;
-
   /** Endpoint. */
   SettableValue< std::string > endpoint = DefaultValue::endpoint;
-
-  /** Region. */
-  SettableValue< std::string > region = DefaultValue::region;
 
   /** Auth Type. */
   SettableValue< AuthType::Type > authType = DefaultValue::authType;

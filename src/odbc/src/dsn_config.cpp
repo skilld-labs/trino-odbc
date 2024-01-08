@@ -174,23 +174,11 @@ void ReadDsnConfiguration(const char* dsn, Configuration& config,
   if (maxRetryCountClient.IsSet() && !config.IsMaxRetryCountClientSet())
     config.SetMaxRetryCountClient(maxRetryCountClient.GetValue());
 
-  SettableValue< int32_t > maxConnections =
-      ReadDsnInt(dsn, ConnectionStringParser::Key::maxConnections);
-
-  if (maxConnections.IsSet() && !config.IsMaxConnectionsSet())
-    config.SetMaxConnections(maxConnections.GetValue());
-
   SettableValue< std::string > endpoint =
       ReadDsnString(dsn, ConnectionStringParser::Key::endpoint);
 
   if (endpoint.IsSet() && !config.IsEndpointSet())
     config.SetEndpoint(endpoint.GetValue());
-
-  SettableValue< std::string > region =
-      ReadDsnString(dsn, ConnectionStringParser::Key::region);
-
-  if (region.IsSet() && !config.IsRegionSet())
-    config.SetRegion(region.GetValue());
 
   SettableValue< std::string > authType =
       ReadDsnString(dsn, ConnectionStringParser::Key::authType);

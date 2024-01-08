@@ -51,8 +51,8 @@ class Statement;
  */
 struct StatementAttributes {
   SqlUlen bindType;
-  SqlUlen concurrency; /*$*/
-  SqlUlen cursorType; /*$*/
+  SqlUlen concurrency;
+  SqlUlen cursorType;
   SqlUlen retrievData;
   SqlUlen rowsetSize;
 };
@@ -72,7 +72,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   };
 
   /** Default connection timeout in seconds. */
-  enum { DEFAULT_CONNECT_TIMEOUT = 5 }; /*$*/
+  enum { DEFAULT_CONNECT_TIMEOUT = 5 }; /*\*/
 
   /**
    * Destructor.
@@ -597,7 +597,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
 
   /** Metadata ID flag, indicate if the string arguments of catalog functions
    * are treated as identifiers. */
-  // bool metadataID_; /*$*/
+  bool metadataID_;
 
   /** Configuration. */
   config::Configuration config_;
@@ -607,9 +607,6 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
 
   /** Trino query client. */
   std::shared_ptr< client::TrinoQuery::TrinoQueryClient > queryClient_; /*#*/
-
-  /** SAML credentials provider */
-  std::shared_ptr< TrinoSAMLCredentialsProvider > samlCredProvider_; /*#*/ /*$*/
 
   /** mutex for cursor names update */
   std::mutex cursorNameMutex_;

@@ -35,7 +35,7 @@ using trino::odbc::common::EncodeURIComponent;
 namespace trino {
 namespace odbc {
 namespace config {
-// Connection (Basic Authentication) Settings /*$*/
+// Connection (Basic Authentication) Settings
 const std::string Configuration::DefaultValue::dsn = DEFAULT_DSN;
 const std::string Configuration::DefaultValue::driver = DEFAULT_DRIVER;
 const std::string Configuration::DefaultValue::uid = DEFAULT_UID;
@@ -48,11 +48,9 @@ const std::string Configuration::DefaultValue::profileName = DEFAULT_PROFILE_NAM
 const int32_t Configuration::DefaultValue::reqTimeout = DEFAULT_REQ_TIMEOUT;
 const int32_t Configuration::DefaultValue::connectionTimeout = DEFAULT_CONNECTION_TIMEOUT;
 const int32_t Configuration::DefaultValue::maxRetryCountClient = DEFAULT_MAX_RETRY_COUNT_CLIENT;
-// const int32_t Configuration::DefaultValue::maxConnections = DEFAULT_MAX_CONNECTIONS; /*$*/
 
 // Endpoint Options
 const std::string Configuration::DefaultValue::endpoint = DEFAULT_ENDPOINT;
-const std::string Configuration::DefaultValue::region = DEFAULT_REGION;
 
 // Advance Authentication Settings
 const AuthType::Type Configuration::DefaultValue::authType = DEFAULT_AUTH_TYPE;
@@ -208,18 +206,6 @@ bool Configuration::IsMaxRetryCountClientSet() const {
   return maxRetryCountClient.IsSet();
 }
 
-int32_t Configuration::GetMaxConnections() const {
-  return maxConnections.GetValue();
-}
-
-void Configuration::SetMaxConnections(int32_t count) {
-  this->maxConnections.SetValue(count);
-}
-
-bool Configuration::IsMaxConnectionsSet() const {
-  return maxConnections.IsSet();
-}
-
 const std::string& Configuration::GetEndpoint() const {
   return endpoint.GetValue();
 }
@@ -230,18 +216,6 @@ void Configuration::SetEndpoint(const std::string& value) {
 
 bool Configuration::IsEndpointSet() const {
   return endpoint.IsSet();
-}
-
-const std::string& Configuration::GetRegion() const {
-  return region.GetValue();
-}
-
-void Configuration::SetRegion(const std::string& value) {
-  this->region.SetValue(value);
-}
-
-bool Configuration::IsRegionSet() const {
-  return region.IsSet();
 }
 
 AuthType::Type Configuration::GetAuthType() const {
@@ -307,9 +281,7 @@ void Configuration::ToMap(ArgumentMap& res) const {
   AddToMap(res, ConnectionStringParser::Key::reqTimeout, reqTimeout);
   AddToMap(res, ConnectionStringParser::Key::connectionTimeout, connectionTimeout);
   AddToMap(res, ConnectionStringParser::Key::maxRetryCountClient, maxRetryCountClient);
-  AddToMap(res, ConnectionStringParser::Key::maxConnections, maxConnections);
   AddToMap(res, ConnectionStringParser::Key::endpoint, endpoint);
-  AddToMap(res, ConnectionStringParser::Key::region, region);
   AddToMap(res, ConnectionStringParser::Key::authType, authType);
   AddToMap(res, ConnectionStringParser::Key::logLevel, logLevel);
   AddToMap(res, ConnectionStringParser::Key::logPath, logPath);
