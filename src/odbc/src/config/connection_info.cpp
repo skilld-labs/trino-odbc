@@ -48,7 +48,7 @@ namespace config {
   case x:               \
     return #x
 
-const char* ConnectionInfo::InfoTypeToString(InfoType type) { /*$*/
+const char* ConnectionInfo::InfoTypeToString(InfoType type) {
   switch (type) {
 #ifdef SQL_ACCESSIBLE_PROCEDURES
     DBG_STR_CASE(SQL_ACCESSIBLE_PROCEDURES);

@@ -323,12 +323,12 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   /**
    * Create TrinoQueryClient object.
    *
-* @param credentials trino credentials.
+   * @param credentials trino credentials.
    * @param clientCfg trino client configuration.
    * @return a shared_ptr to created TrinoQueryClient object.
    */
   virtual std::shared_ptr< client::TrinoQuery::TrinoQueryClient > /*#*/
-  CreateTrinoQueryClient(const trino::auth::BasicAuthentication& credentials,
+  CreateTRINOQueryClient(const trino::auth::BasicAuthentication& credentials,
                       const Aws::Client::ClientConfiguration& clientCfg); /*@*/ /*$*/
 
   /**
