@@ -55,8 +55,6 @@ DsnConfigurationWindow::DsnConfigurationWindow(Window* parent,
       authTypeLabel(),
       profileNameEdit(),
       profileNameLabel(),
-      connectionTimeoutEdit(),
-      connectionTimeoutLabel(),
       reqTimeoutEdit(),
       reqTimeoutLabel(),
       maxRetryCountClientEdit(),
@@ -278,8 +276,6 @@ void DsnConfigurationWindow::ShowAdvanceAuth(bool visible) const {
 }
 
 void DsnConfigurationWindow::ShowAdvancedOptions(bool visible) const {
-  ShowWindow(connectionTimeoutEdit->GetHandle(), visible);
-  ShowWindow(connectionTimeoutLabel->GetHandle(), visible);
   ShowWindow(reqTimeoutEdit->GetHandle(), visible);
   ShowWindow(reqTimeoutLabel->GetHandle(), visible);
   ShowWindow(maxRetryCountClientEdit->GetHandle(), visible);
@@ -498,16 +494,6 @@ int DsnConfigurationWindow::CreateAdvancedOptionsGroup(int posX, int posY,
   int editPosX = labelPosX + LABEL_WIDTH + INTERVAL;
 
   int rowPos = posY;
-
-  std::wstring wVal = std::to_wstring(config.GetConnectionTimeout());
-  connectionTimeoutLabel = CreateLabel(labelPosX, rowPos, LABEL_WIDTH,
-                                       ROW_HEIGHT, L"Connection Timeout (ms):",
-                                       ChildId::CONNECTION_TIMEOUT_LABEL);
-  connectionTimeoutEdit =
-      CreateEdit(editPosX, rowPos, editSizeX, ROW_HEIGHT, wVal,
-                 ChildId::CONNECTION_TIMEOUT_EDIT, ES_NUMBER);
-
-  rowPos += INTERVAL + ROW_HEIGHT;
 
   wVal = std::to_wstring(config.GetReqTimeout());
   reqTimeoutLabel =
@@ -825,29 +811,17 @@ void DsnConfigurationWindow::RetrieveAdvanceAuthParameters(
 
 void DsnConfigurationWindow::RetrieveConnectionParameters(
     config::Configuration& cfg) const {
-  std::wstring connectionTimeoutWStr;
   std::wstring reqTimeoutWStr;
   std::wstring maxRetryCountWStr;
   std::wstring maxConWStr;
 
-  connectionTimeoutEdit->GetText(connectionTimeoutWStr);
   reqTimeoutEdit->GetText(reqTimeoutWStr);
   maxRetryCountClientEdit->GetText(maxRetryCountWStr);
   maxConnectionsEdit->GetText(maxConWStr);
 
-  std::string connectionTimeoutStr = TRIM_UTF8(connectionTimeoutWStr);
   std::string reqTimeoutStr = TRIM_UTF8(reqTimeoutWStr);
   std::string maxRetryCountStr = TRIM_UTF8(maxRetryCountWStr);
   std::string maxConStr = TRIM_UTF8(maxConWStr);
-
-  int32_t connectionTimeout =
-      connectionTimeoutStr.empty()
-          ? 0
-          : trino::odbc::common::LexicalCast< int32_t >(
-              connectionTimeoutStr);
-  if (connectionTimeout < 0) {
-    connectionTimeout = config::Configuration::DefaultValue::connectionTimeout;
-  }
 
   int32_t reqTimeout =
       reqTimeoutStr.empty()
@@ -876,12 +850,10 @@ void DsnConfigurationWindow::RetrieveConnectionParameters(
         IgniteError::IGNITE_ERR_GENERIC,
         "[Max Connections] Number of connections must be a positive number.");
 
-  cfg.SetConnectionTimeout(connectionTimeout);
   cfg.SetReqTimeout(reqTimeout);
   cfg.SetMaxRetryCountClient(maxRetryCountClient);
   cfg.SetMaxConnections(maxCon);
 
-  LOG_INFO_MSG("Connection timeout (ms):  " << connectionTimeout);
   LOG_INFO_MSG("Request timeout (ms): " << reqTimeout);
   LOG_INFO_MSG("Max retry count client:      " << maxRetryCountClient);
   LOG_INFO_MSG("Max connections:      " << maxCon);

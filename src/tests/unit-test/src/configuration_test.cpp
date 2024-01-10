@@ -52,7 +52,6 @@ const std::string testSessionToken = "testSessionToken";
 const AuthType::Type testAuthType = AuthType::FromString("okta");
 const std::string testProfileName = "test-profile";
 const int32_t testReqTimeoutMS = 300;
-const int32_t testConnectionTimeoutMS = 500;
 const int32_t testMaxRetryCountClient = 3;
 const int32_t testMaxConnections = 15;
 const std::string testEndpoint = "testEndpoint";
@@ -176,7 +175,6 @@ void CheckConnectionConfig(const Configuration& cfg) {
   BOOST_CHECK_EQUAL(cfg.GetSessionToken(), testSessionToken);
   BOOST_CHECK_EQUAL(cfg.GetProfileName(), testProfileName);
   BOOST_CHECK_EQUAL(cfg.GetReqTimeout(), testReqTimeoutMS);
-  BOOST_CHECK_EQUAL(cfg.GetConnectionTimeout(), testConnectionTimeoutMS);
   BOOST_CHECK_EQUAL(cfg.GetMaxRetryCountClient(), testMaxRetryCountClient);
   BOOST_CHECK_EQUAL(cfg.GetMaxConnections(), testMaxConnections);
   BOOST_CHECK_EQUAL(cfg.GetEndpoint(), testEndpoint);
@@ -202,7 +200,6 @@ void CheckConnectionConfig(const Configuration& cfg) {
               << "aadtenant=" << testAADTenant << ';'
               << "accesskeyid=" << testAccessKeyId << ';'
               << "auth=" << AuthType::ToString(testAuthType) << ';'
-              << "connectiontimeout=" << testConnectionTimeoutMS << ';'
               << "driver={" << testDriverName << "};"
               << "endpointoverride=" << testEndpoint << ';'
               << "idparn=" << testIdPArn << ';' << "idphost=" << testIdPHost
@@ -246,8 +243,6 @@ void CheckDsnConfig(const Configuration& cfg) {
                     Configuration::DefaultValue::profileName);
   BOOST_CHECK_EQUAL(cfg.GetReqTimeout(),
                     Configuration::DefaultValue::reqTimeout);
-  BOOST_CHECK_EQUAL(cfg.GetConnectionTimeout(),
-                    Configuration::DefaultValue::connectionTimeout);
   BOOST_CHECK_EQUAL(cfg.GetMaxRetryCountClient(),
                     Configuration::DefaultValue::maxRetryCountClient);
   BOOST_CHECK_EQUAL(cfg.GetMaxConnections(),
@@ -281,8 +276,6 @@ BOOST_AUTO_TEST_CASE(CheckTestValuesNotEqualDefault) {
   BOOST_CHECK_NE(testSessionToken, Configuration::DefaultValue::sessionToken);
   BOOST_CHECK_NE(testProfileName, Configuration::DefaultValue::profileName);
   BOOST_CHECK_NE(testReqTimeoutMS, Configuration::DefaultValue::reqTimeout);
-  BOOST_CHECK_NE(testConnectionTimeoutMS,
-                 Configuration::DefaultValue::connectionTimeout);
   BOOST_CHECK_NE(testMaxRetryCountClient,
                  Configuration::DefaultValue::maxRetryCountClient);
   BOOST_CHECK_NE(testMaxConnections,
@@ -317,7 +310,6 @@ BOOST_AUTO_TEST_CASE(TestConnectStringUppercase) {
               << ';' << "AUTH=" << AuthType::ToString(testAuthType) << ';'
               << "PROFILENAME=" << testProfileName << ';'
               << "REQUESTTIMEOUT=" << testReqTimeoutMS << ';'
-              << "CONNECTIONTIMEOUT=" << testConnectionTimeoutMS << ';'
               << "MAXRETRYCOUNTCLIENT=" << testMaxRetryCountClient << ';'
               << "MAXCONNECTIONS=" << testMaxConnections << ';'
               << "ENDPOINTOVERRIDE=" << testEndpoint << ';'
@@ -354,7 +346,6 @@ BOOST_AUTO_TEST_CASE(TestConnectStringLowercase) {
               << ';' << "auth=" << AuthType::ToString(testAuthType) << ';'
               << "profilename=" << testProfileName << ';'
               << "requesttimeout=" << testReqTimeoutMS << ';'
-              << "connectiontimeout=" << testConnectionTimeoutMS << ';'
               << "maxretrycountclient=" << testMaxRetryCountClient << ';'
               << "maxconnections=" << testMaxConnections << ';'
               << "endpointoverride=" << testEndpoint << ';'
@@ -391,7 +382,6 @@ BOOST_AUTO_TEST_CASE(TestConnectStringZeroTerminated) {
               << ';' << "auth=" << AuthType::ToString(testAuthType) << ';'
               << "profilename=" << testProfileName << ';'
               << "requesttimeout=" << testReqTimeoutMS << ';'
-              << "connectiontimeout=" << testConnectionTimeoutMS << ';'
               << "maxretrycountclient=" << testMaxRetryCountClient << ';'
               << "maxconnections=" << testMaxConnections << ';'
               << "endpointoverride=" << testEndpoint << ';'
@@ -430,7 +420,6 @@ BOOST_AUTO_TEST_CASE(TestConnectStringMixed) {
               << ';' << "Auth=" << AuthType::ToString(testAuthType) << ';'
               << "ProfileName=" << testProfileName << ';'
               << "RequestTimeout=" << testReqTimeoutMS << ';'
-              << "ConnectionTimeout=" << testConnectionTimeoutMS << ';'
               << "MaxRetryCountClient=" << testMaxRetryCountClient << ';'
               << "MaxConnections=" << testMaxConnections << ';'
               << "EndpointOverride=" << testEndpoint << ';'
@@ -469,7 +458,6 @@ BOOST_AUTO_TEST_CASE(TestConnectStringWhiteSpaces) {
               << " AUTH=" << AuthType::ToString(testAuthType) << ';'
               << "     PROFILENAME  = " << testProfileName << "    ; "
               << "  REQUESTTIMEOUT=" << testReqTimeoutMS << "  ;  "
-              << "CONNECTIONTIMEOUT=  " << testConnectionTimeoutMS << ";  "
               << "MAXRETRYCOUNTCLIENT=  " << testMaxRetryCountClient << " ;"
               << "MAXCONNECTIONS=  " << testMaxConnections << "  ; "
               << "ENDPOINTOVERRIDE=" << testEndpoint << "  ; "

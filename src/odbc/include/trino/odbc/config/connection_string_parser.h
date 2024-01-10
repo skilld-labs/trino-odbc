@@ -54,9 +54,6 @@ class IGNITE_IMPORT_EXPORT ConnectionStringParser {
     /** Connection attribute keyword for reqTimeout attribute. */
     static const std::string reqTimeout;
 
-    /** Connection attribute keyword for connectionTimeout attribute. */
-    static const std::string connectionTimeout;
-
     /** Connection attribute keyword for maxRetryCountClient attribute. */
     static const std::string maxRetryCountClient;
 

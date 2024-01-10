@@ -46,7 +46,6 @@ const std::string Configuration::DefaultValue::profileName = DEFAULT_PROFILE_NAM
 
 // Connection Options
 const int32_t Configuration::DefaultValue::reqTimeout = DEFAULT_REQ_TIMEOUT;
-const int32_t Configuration::DefaultValue::connectionTimeout = DEFAULT_CONNECTION_TIMEOUT;
 const int32_t Configuration::DefaultValue::maxRetryCountClient = DEFAULT_MAX_RETRY_COUNT_CLIENT;
 
 // Endpoint Options
@@ -182,18 +181,6 @@ bool Configuration::IsReqTimeoutSet() const {
   return reqTimeout.IsSet();
 }
 
-int32_t Configuration::GetConnectionTimeout() const {
-  return connectionTimeout.GetValue();
-}
-
-void Configuration::SetConnectionTimeout(int32_t ms) {
-  this->connectionTimeout.SetValue(ms);
-}
-
-bool Configuration::IsConnectionTimeoutSet() const {
-  return connectionTimeout.IsSet();
-}
-
 int32_t Configuration::GetMaxRetryCountClient() const {
   return maxRetryCountClient.GetValue();
 }
@@ -279,7 +266,6 @@ void Configuration::ToMap(ArgumentMap& res) const {
   AddToMap(res, ConnectionStringParser::Key::pwd, pwd);
   AddToMap(res, ConnectionStringParser::Key::profileName, profileName);
   AddToMap(res, ConnectionStringParser::Key::reqTimeout, reqTimeout);
-  AddToMap(res, ConnectionStringParser::Key::connectionTimeout, connectionTimeout);
   AddToMap(res, ConnectionStringParser::Key::maxRetryCountClient, maxRetryCountClient);
   AddToMap(res, ConnectionStringParser::Key::endpoint, endpoint);
   AddToMap(res, ConnectionStringParser::Key::authType, authType);

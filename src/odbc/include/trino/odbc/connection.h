@@ -71,9 +71,6 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
     enum T { SUCCESS, FAIL, TIMEOUT };
   };
 
-  /** Default connection timeout in seconds. */
-  enum { DEFAULT_CONNECT_TIMEOUT = 5 }; /*\*/
-
   /**
    * Destructor.
    */

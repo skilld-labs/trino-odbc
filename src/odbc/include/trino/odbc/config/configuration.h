@@ -40,7 +40,6 @@
 #define DEFAULT_PROFILE_NAME ""
 
 #define DEFAULT_REQ_TIMEOUT 3000
-#define DEFAULT_CONNECTION_TIMEOUT 1000
 #define DEFAULT_MAX_RETRY_COUNT_CLIENT 0
 
 #define DEFAULT_ENDPOINT ""
@@ -81,9 +80,6 @@ class IGNITE_IMPORT_EXPORT Configuration {
 
     /** Default value for reqTimeout attribute. */
     static const int32_t reqTimeout;
-
-    /** Default value for connectionTimeout attribute. */
-    static const int32_t connectionTimeout;
 
     /** Default value for maxRetryCountClient attribute. */
     static const int32_t maxRetryCountClient;
@@ -252,27 +248,6 @@ class IGNITE_IMPORT_EXPORT Configuration {
    * @return @true if the value set.
    */
   bool IsReqTimeoutSet() const;
-
-  /**
-   * Get connection timeout in milliseconds.
-   *
-   * @return ms Connection timeout.
-   */
-  int32_t GetConnectionTimeout() const;
-
-  /**
-   * Set connection timeout in milliseconds.
-   *
-   * @param ms Connection timeout.
-   */
-  void SetConnectionTimeout(int32_t ms);
-
-  /**
-   * Check if the value set.
-   *
-   * @return @true if the value set.
-   */
-  bool IsConnectionTimeoutSet() const;
 
   /**
    * Get maximum # of retry attempts.
@@ -474,9 +449,6 @@ class IGNITE_IMPORT_EXPORT Configuration {
 
   /** Request timeout in milliseconds.  */
   SettableValue< int32_t > reqTimeout = DefaultValue::reqTimeout;
-
-  /** Connection timeout in milliseconds.  */
-  SettableValue< int32_t > connectionTimeout = DefaultValue::connectionTimeout;
 
   /** Max Retry Count.  */
   SettableValue< int32_t > maxRetryCountClient =

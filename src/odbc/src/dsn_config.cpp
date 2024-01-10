@@ -162,12 +162,6 @@ void ReadDsnConfiguration(const char* dsn, Configuration& config,
   if (reqTimeout.IsSet() && !config.IsReqTimeoutSet())
     config.SetReqTimeout(reqTimeout.GetValue());
 
-  SettableValue< int32_t > connectionTimeout =
-      ReadDsnInt(dsn, ConnectionStringParser::Key::connectionTimeout);
-
-  if (reqTimeout.IsSet() && !config.IsConnectionTimeoutSet())
-    config.SetConnectionTimeout(connectionTimeout.GetValue());
-
   SettableValue< int32_t > maxRetryCountClient =
       ReadDsnInt(dsn, ConnectionStringParser::Key::maxRetryCountClient);
 

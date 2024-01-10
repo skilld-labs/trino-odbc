@@ -314,12 +314,6 @@ class DsnConfigurationWindow : public CustomWindow {
   /** Profile Name label. */
   std::unique_ptr< Window > profileNameLabel;
 
-  /** Connection timeout edit. */
-  std::unique_ptr< Window > connectionTimeoutEdit;
-
-  /** Connection timeout field label. */
-  std::unique_ptr< Window > connectionTimeoutLabel;
-
   /** Request timeout edit. */
   std::unique_ptr< Window > reqTimeoutEdit;
 
